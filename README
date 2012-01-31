@@ -1,0 +1,20 @@
+meta-selinux
+============
+
+This layer's purpose is enabling SE Linux support when used with Poky.
+
+The majority of this layers work is accomplished in bbappend files, used to
+enable SE Linux support in existing Poky packages.
+
+A new recipes-security was added.  The purpose of this category is to add
+software specific to system security.
+
+Please see the MAINTAINERS file for information on contacting the maintainers
+of this layer, as well as instructions for submitting patches.
+
+status
+------
+Jan 31, 2012 - Initial version of the layer available.  Basic functionality:
+  * new recipes-security -- includes all SE Linux core components
+  * enable kernel configuration of SE Linux components
+  * enable a few basic recipes to be used as examples for others
