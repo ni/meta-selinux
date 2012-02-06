@@ -27,3 +27,5 @@ PACKAGES += "${PN}-python"
 
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
+
+BBCLASSEXTEND = "native"
