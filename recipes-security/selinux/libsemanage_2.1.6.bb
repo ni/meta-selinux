@@ -15,6 +15,8 @@ SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 S = "${WORKDIR}/git/libsemanage"
 DEPENDS += "libsepol libselinux ustr bzip2 python"
 
+SRC_URI += "file://Fix-segfault-for-standard-policy.patch"
+
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
