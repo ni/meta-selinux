@@ -48,8 +48,21 @@ EXTRA_OEMAKE += "PREFIX=${D}"
 
 BBCLASSEXTEND = "native"
 
-do_install_append_virtclass-native() {
-	for PYTHSCRIPT in `grep -rIl /usr/bin/python ${D}${bindir} ${D}${sbindir} ${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages/`; do
-		sed -i -e '1s|^#!.*|#!/usr/bin/env python|' $PYTHSCRIPT
+PCU_NATIVE_CMDS = "setfiles semodule_package semodule semodule_link semodule_expand semodule_deps"
+
+do_compile_virtclass-native() {
+	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
+		oe_runmake -C $PCU_CMD \
+			INCLUDEDIR='${STAGING_INCDIR}' \
+			LIBDIR='${STAGING_LIBDIR}'
+	done
+}
+
+do_install_virtclass-native() {
+	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
+	     oe_runmake -C $PCU_CMD install \
+			DESTDIR="${D}" \
+			PREFIX="${D}/${prefix}" \
+			SBINDIR="${D}/${base_sbindir}"
 	done
 }
