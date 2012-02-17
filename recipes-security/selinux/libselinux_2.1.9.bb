@@ -18,6 +18,15 @@ PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/.debug/*"
 
+python __anonymous () {
+	import re
+	target = d.getVar('TARGET_ARCH', True)
+	extra_oemake = d.getVar('EXTRA_OEMAKE', True)
+	p = re.compile('i.86')
+	target = p.sub('i386',target)
+	d.setVar("EXTRA_OEMAKE", extra_oemake + " ARCH='" + target + "'")
+}
+
 do_compile_append() {
     oe_runmake pywrap -j1 \
             INCLUDEDIR='${STAGING_INCDIR}' \
