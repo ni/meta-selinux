@@ -16,15 +16,6 @@ EXTRA_OEMAKE += "LEX='flex'"
 
 BBCLASSEXTEND = "native"
 
-do_compile() {
-	oe_runmake checkpolicy checkmodule \
-            INCLUDEDIR='${STAGING_INCDIR}' \
-            LIBDIR='${STAGING_LIBDIR}'
-	oe_runmake -C test \
-            INCLUDEDIR='${STAGING_INCDIR}' \
-            LIBDIR='${STAGING_LIBDIR}'
-}
-
 do_install_append() {
 	install test/dismod ${D}/${bindir}/sedismod
 	install test/dispol ${D}/${bindir}/sedispol
