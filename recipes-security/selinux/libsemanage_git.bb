@@ -12,6 +12,7 @@ include selinux_git.inc
 inherit lib_package
 
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
+PV = "2.1.6+git${SRCPV}"
 S = "${WORKDIR}/git/libsemanage"
 DEPENDS += "libsepol libselinux ustr bzip2 python"
 

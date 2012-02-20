@@ -12,6 +12,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 include selinux_git.inc
 
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
+PV = "2.1.10+git${SRCPV}"
 S = "${WORKDIR}/git/policycoreutils"
 DEPENDS += "libsepol libselinux libsemanage libcap-ng libcgroup"
 DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
