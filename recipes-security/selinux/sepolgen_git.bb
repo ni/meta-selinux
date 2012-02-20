@@ -9,7 +9,6 @@ include selinux_git.inc
 
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "1.1.5+git${SRCPV}" 
-S = "${WORKDIR}/git/sepolgen"
  
 FILES_${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 
