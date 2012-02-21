@@ -14,5 +14,7 @@ inherit lib_package
 SRC_URI[md5sum] = "909dae553edb34ea2224002a0c529cb0"
 SRC_URI[sha256sum] = "8f5ea42ae6cc00b21f0e5f31f354d19fcce3edfe9328971d266245718714b1e8"
 
+SRC_URI += "file://libsepol-Change-ranlib-for-cross-compiling.patch"
+
 BBCLASSEXTEND = "native"
 

@@ -1,0 +1,31 @@
+From 2ee1e9651ec4aa78daf15dfef74e0b6aaeb8db1e Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Tue, 21 Feb 2012 14:47:45 +0800
+Subject: [PATCH] libsepol: Change ranlib for cross compiling.
+
+Use target host-tools to encapsulate any difference between local tools
+on different machines. For example, on local PC, libsepol.a's index could
+be added successfully by local ranlib, however, it will fail on some sever,
+so we'd better use host-tools $(AR) rather than any local ranlib.
+
+Signed-off-by: Harry Ciao<qingtao.cao@windriver.com>
+---
+ src/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index cd8e767..beea232 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -21,7 +21,7 @@ all: $(LIBA) $(LIBSO) $(LIBPC)
+ 
+ $(LIBA):  $(OBJS)
+ 	$(AR) rcs $@ $^
+-	ranlib $@
++	$(AR) s $@
+ 
+ $(LIBSO): $(LOBJS)
+ 	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $@ $^ -Wl,-soname,$(LIBSO),--version-script=libsepol.map,-z,defs
+-- 
+1.7.5.4
+
