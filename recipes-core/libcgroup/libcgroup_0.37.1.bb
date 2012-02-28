@@ -1,4 +1,12 @@
-DESCRIPTION = "Libcgroup"
+SUMMARY = "Library to control and monitor control groups"
+DESCRIPTION = "\
+Control Groups provide a mechanism for aggregating/partitioning sets of \
+tasks, and all their future children, into hierarchical groups with \
+specialized  behaviour. \n\
+This package contains tools and a library to allow users and applications \
+to manipulate, control, administrate and monitor control groups and the \
+associated controllers. \
+"
 SECTION = "libs"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=2d5025d4aa3495befef8f17206a5b0a1"
