@@ -4,7 +4,7 @@ process and file security contexts and to obtain security policy \
 decisions.  Required for any applications that use the SELinux API."
 SECTION = "base"
 PR = "r1"
-LICENSE = "NSA-Public_Domain"
+LICENSE = "Public Domain"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84b4d2c6ef954a2d4081e775a270d0d0"
 
 include selinux_20120216.inc
