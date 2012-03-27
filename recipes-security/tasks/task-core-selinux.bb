@@ -19,4 +19,5 @@ RDEPENDS_task-core-selinux = " \
 	sepolgen \
 	policycoreutils \
 	policycoreutils-python \
+	setools \
 	"
