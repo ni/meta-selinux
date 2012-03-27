@@ -14,15 +14,16 @@ include selinux_20120216.inc
 SRC_URI[md5sum] = "fefdede2815cdd2ba8b68599fef1f257"
 SRC_URI[sha256sum] = "8bbbc36b7d375edff891503932da93e37553f0dd7bdceded7ce9a45c80bec3d1"
 
-DEPENDS += "libsepol libselinux libsemanage libcap-ng libcgroup"
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
+DEPENDS += "libsepol libselinux libsemanage"
+DEPENDS_${BPN} += "libcap-ng libcgroup"
+DEPENDS_${BPN} += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
 
-RDEPENDS_${PN} += "\
+RDEPENDS_${BPN} += "\
 	libselinux-python \
 	libsemanage-python \
 	sepolgen \
 	"
-RDEPENDS_${PN} += "\
+RDEPENDS_${BPN} += "\
 	python \
 	python-unixadmin \
 	python-shell \
@@ -32,9 +33,7 @@ RDEPENDS_${PN} += "\
 	python-textutils \
 	python-IPy \
 	"
-#RDEPENDS_${PN} += "setools"
-
-RDEPENDS_${PN}_virtclass-native = "python-native sepolgen-native"
+RDEPENDS_${BPN} += "setools"
 
 
 PACKAGES =+ "${PN}-python ${PN}-sandbox"
@@ -44,7 +43,9 @@ FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
 
 CFLAGS_append = " -Wno-error=format-security"
-EXTRA_OEMAKE += "${@base_contains('DISTRO_FEATURES', 'pam', 'PAMH=y AUDITH=y', '', d)}"
+AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
+PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
+EXTRA_OEMAKE += "PAMH=${PAMH} AUDITH=${AUDITH} INOTIFYH=n"
 EXTRA_OEMAKE += "PREFIX=${D}"
 
 BBCLASSEXTEND = "native"
