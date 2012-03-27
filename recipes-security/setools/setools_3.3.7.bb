@@ -15,6 +15,7 @@ SRC_URI[sha256sum] = "2bfa0918746bdcc910b16b26a51109a4ffd07404c306141ada584cb36e
 
 SRC_URI += "file://setools-Add-seinfo-and-sesearch-python-bindings.patch"
 SRC_URI += "file://setools-seinfo-should-exit-with-correct-errno.patch"
+SRC_URI += "file://setools-neverallow-rules-all-always-fail.patch"
 SRC_URI += "file://setools-Fix-man-pages-and-getoptions.patch"
 SRC_URI += "file://setools-Fix-sepol-calls-to-work-with-latest-libsepol.patch"
 SRC_URI += "file://setools-Changes-to-support-named-file_trans-rules.patch"
