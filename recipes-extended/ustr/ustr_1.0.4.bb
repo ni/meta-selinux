@@ -35,7 +35,8 @@ FILES_${PN}-dbg += "${libdir}/libustr-debug* \
 EXTRA_OEMAKE_virtclass-native = "prefix=/usr"
 
 do_compile() {
-	oe_runmake all-shared
+	oe_runmake all-shared \
+		mlib=${SITEINFO_BITS}
 }
 
 do_install() {
