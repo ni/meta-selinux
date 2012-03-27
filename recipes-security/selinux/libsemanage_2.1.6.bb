@@ -17,6 +17,7 @@ SRC_URI[sha256sum] = "64e6849fe50fb463ec0ba24653a26e3452fa4aaa7d7e192213d5c5a7c5
 DEPENDS += "libsepol libselinux ustr bzip2 python"
 
 SRC_URI += "file://Fix-segfault-for-standard-policy.patch"
+SRC_URI += "file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
