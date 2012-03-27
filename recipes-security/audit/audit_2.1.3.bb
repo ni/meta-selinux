@@ -12,6 +12,8 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-2.1.3.tar.gz \
 	   file://disable-ldap.patch \
 	   file://audit-python.patch"
 
+SRC_URI += "file://audit-for-cross-compiling.patch"
+
 inherit autotools
 
 SRC_URI[md5sum] = "abf26e3ac09f666905c5636dd24611fa"
