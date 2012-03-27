@@ -27,15 +27,60 @@ SRC_URI += "file://setools-cross-ar.patch"
 
 SRC_URI += "file://setools-Fix-test-bug-for-unary-operator.patch"
 SRC_URI += "file://setools-Fix-python-setools-Makefile.am-for-cross.patch"
+
 SRC_URI += "file://setools-Don-t-build-python-bindings-if-disabled.patch"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
                     file://${S}/COPYING.GPL;md5=751419260aa954499f7abaabaa882bbe \
                     file://${S}/COPYING.LGPL;md5=fbc093901857fcd118f065f900982c24"
 
-DEPENDS += "python python-native libsepol libselinux refpolicy"
+DEPENDS += "python python-native libsepol libselinux"
+
+PACKAGES += "${PN}-libs ${PN}-console"
+
+FILES_${PN}-dbg += "\
+	${libdir}/python${PYTHON_BASEVERSION}/site-packages/setools/.debug \
+	"
+
+FILES_${PN}-libs = "\
+	${libdir}/libqpol.so.* \
+	${libdir}/libapol.so.* \
+	${libdir}/libpoldiff.so.* \
+	${libdir}/libsefs.so.* \
+	${libdir}/libseaudit.so.* \
+	${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.egg-info \
+	${libdir}/python${PYTHON_BASEVERSION}/site-packages/setools/*.so* \
+	${libdir}/python${PYTHON_BASEVERSION}/site-packages/setools/*.py* \
+	"
+
+FILES_${PN}-console = "\
+	${bindir}/seinfo \
+	${bindir}/sesearch \
+	${bindir}/indexcon \
+	${bindir}/findcon \
+	${bindir}/replcon \
+	${bindir}/sechecker \
+	${bindir}/sediff \
+	${datadir}/setools-3.3/sechecker-profiles/* \
+	${datadir}/setools-3.3/sechecker_help.txt \
+	${datadir}/setools-3.3/sediff_help.txt \
+	${datadir}/setools-3.3/sediffx* \
+	${mandir}/man1/findcon.1.gz \
+	${mandir}/man1/indexcon.1.gz \
+	${mandir}/man1/replcon.1.gz \
+	${mandir}/man1/sechecker.1.gz \
+	${mandir}/man1/sediff.1.gz \
+	${mandir}/man1/seinfo.1.gz \
+	${mandir}/man1/sesearch.1.gz \
+	"
 
 inherit autotools
+
+# need to export these variables for python-config to work
+export BUILD_SYS
+export HOST_SYS
+export STAGING_INCDIR
+export STAGING_LIBDIR
 
 do_configure() {
         autoreconf --force --install 
