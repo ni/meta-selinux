@@ -18,6 +18,7 @@ DEPENDS += "libsepol libselinux ustr bzip2 python"
 
 SRC_URI += "file://Fix-segfault-for-standard-policy.patch"
 SRC_URI += "file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch"
+SRC_URI += "file://libsemanage-semanage.conf-for-cross-compile.patch"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
