@@ -5,6 +5,9 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 S = "${WORKDIR}/refpolicy"
 
+FILES_${PN} = "${sysconfdir}/selinux/${POLICY_NAME}/ \
+	${datadir}/selinux/${POLICY_NAME}/"
+
 DEPENDS += "checkpolicy-native policycoreutils-native python-native m4-native"
 
 inherit autotools
