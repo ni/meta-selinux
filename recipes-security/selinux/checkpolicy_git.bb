@@ -1,5 +1,11 @@
 SUMMARY = "SELinux policy compiler"
-DESCRIPTION = "SELinux policy compiler"
+DESCRIPTION = "\
+This package contains checkpolicy, the SELinux policy compiler. Only \
+required for building policies. It uses libsepol to generate the \
+binary policy. checkpolicy uses the static libsepol since it deals \
+with low level details of the policy that have not been \
+encapsulated/abstracted by a proper shared library interface."
+
 SECTION = "base"
 PR = "r1"
 LICENSE = "GPLv2+"

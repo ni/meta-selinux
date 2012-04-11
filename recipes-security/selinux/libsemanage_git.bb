@@ -17,13 +17,15 @@ PV = "2.1.6+git${SRCPV}"
 DEPENDS += "libsepol libselinux ustr bzip2 python"
 
 SRC_URI += "file://Fix-segfault-for-standard-policy.patch"
+SRC_URI += "file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch"
+SRC_URI += "file://libsemanage-semanage.conf-for-cross-compile.patch"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
 
 do_compile_append() {
-    oe_runmake pywrap -j1 \
+    oe_runmake pywrap \
             INCLUDEDIR='${STAGING_INCDIR}' \
             LIBDIR='${STAGING_LIBDIR}' \
             PYLIBVER='python${PYTHON_BASEVERSION}' \
@@ -32,14 +34,18 @@ do_compile_append() {
             PYTHONLIBDIR='${PYLIB}'
 }
 
-do_install_append() {
+do_install() {
+    oe_runmake install \
+            DESTDIR="${D}" \
+            PREFIX="${D}/${prefix}" \
+            INCLUDEDIR="${D}/${includedir}" \
+            LIBDIR="${D}/${libdir}" \
+            SHLIBDIR="${D}/${libdir}"
+
     oe_runmake install-pywrap swigify \
             DESTDIR=${D} \
             PYLIBVER='python${PYTHON_BASEVERSION}' \
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
-    cd ${D}${libdir} && \
-            rm -f libsemanage.so && \
-            ln -s ../../`basename ${libdir}`/libsemanage.so.1 libsemanage.so
 }
 
 BBCLASSEXTEND = "native"
