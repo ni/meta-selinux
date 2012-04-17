@@ -13,6 +13,8 @@ inherit lib_package
 SRC_URI[md5sum] = "8ea0548dd65e9479b357ba1447f89221"
 SRC_URI[sha256sum] = "749d4b39c80aa9df8247b8b3187ab72442c0dbad6e70bf312e25052bd4e7063f"
 
+SRC_URI += "file://libselinux-fix-init-load-policy.patch"
+
 DEPENDS += "libsepol python python-native swig-native"
 
 PACKAGES += "${PN}-python"
