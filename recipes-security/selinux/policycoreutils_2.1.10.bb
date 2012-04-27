@@ -15,8 +15,16 @@ SRC_URI[md5sum] = "fefdede2815cdd2ba8b68599fef1f257"
 SRC_URI[sha256sum] = "8bbbc36b7d375edff891503932da93e37553f0dd7bdceded7ce9a45c80bec3d1"
 
 DEPENDS += "libsepol libselinux libsemanage"
-DEPENDS_${BPN} += "libcap-ng libcgroup"
-DEPENDS_${BPN} += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
+TARGET_EXTRA_DEPENDS = "libcap-ng libcgroup"
+TARGET_EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
+python __anonymous () {
+	dps = d.getVar('DEPENDS', True)
+	extra_dps = d.getVar('TARGET_EXTRA_DEPENDS', True)
+	pn = d.getVar('PN', True)
+	bpn = d.getVar('BPN', True)
+	if pn == bpn:
+		d.setVar("DEPENDS", dps + " " + extra_dps)
+}
 
 RDEPENDS_${BPN} += "\
 	libselinux-python \
