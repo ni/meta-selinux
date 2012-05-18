@@ -7,6 +7,7 @@ SECTION = "base"
 PR = "r1"
 LICENSE = "LGPLv2.1+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
+DEFAULT_PREFERENCE = "-1"
 
 include selinux_git.inc
 inherit lib_package

@@ -10,6 +10,7 @@ SECTION = "base"
 PR = "r1"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
+DEFAULT_PREFERENCE = "-1"
 
 include selinux_git.inc
 
