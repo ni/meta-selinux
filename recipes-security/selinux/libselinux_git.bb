@@ -20,14 +20,13 @@ PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/.debug/*"
 
-python __anonymous () {
+def get_policyconfigarch(d):
 	import re
 	target = d.getVar('TARGET_ARCH', True)
-	extra_oemake = d.getVar('EXTRA_OEMAKE', True)
 	p = re.compile('i.86')
 	target = p.sub('i386',target)
-	d.setVar("EXTRA_OEMAKE", extra_oemake + " ARCH='" + target + "'")
-}
+	return "ARCH=%s" % (target)
+EXTRA_OEMAKE += "${@get_policyconfigarch(d)}"
 
 do_compile_append() {
     oe_runmake pywrap -j1 \

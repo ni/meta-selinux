@@ -15,9 +15,10 @@ include selinux_git.inc
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "2.1.10+git${SRCPV}"
 
-DEPENDS += "libsepol libselinux libsemanage"
-DEPENDS_${BPN} += "libcap-ng libcgroup"
-DEPENDS_${BPN} += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
+DEPENDS += "libsepol libselinux libsemanage ${EXTRA_DEPENDS}"
+EXTRA_DEPENDS = "libcap-ng libcgroup"
+EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
+EXTRA_DEPENDS_virtclass-native = ""
 
 RDEPENDS_${BPN} += "\
 	libselinux-python \
