@@ -40,6 +40,17 @@ FILES_audispd-plugins += "${sysconfdir}/audisp ${sbindir}/audisp*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
 
+
+# The executables in lib/, which are named as gen_*_h, will run on the hosts to create
+# *_tables.h/*tabs.h header files for the targets.
+# In some old hosts, build will fail because audit.h in the old linux-libc-headers (<= 2.6.29) 
+# has a incomplete netlink message list for the audit system.
+do_compile_prepend() {
+        mkdir -p ${S}/lib/linux
+        cp -f ${STAGING_INCDIR}/linux/audit.h ${S}/lib/linux/
+        cp -f ${STAGING_INCDIR}/linux/elf-em.h ${S}/lib/linux/
+}
+
 do_install_append() {
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.a
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.la
