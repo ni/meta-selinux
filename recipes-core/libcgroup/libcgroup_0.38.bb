@@ -24,6 +24,8 @@ SRC_URI += "file://fix-LSB-routines.patch"
 EXTRA_OECONF = "${@base_contains('DISTRO_FEATURES', 'pam', '--enable-pam-module-dir=${base_libdir}/security --enable-pam=yes', '--enable-pam=no', d)}"
 EXTRA_OECONF += "--enable-initscript-install"
 
+EXTRA_OECONF_virtclass-native = "--enable-pam=no"
+
 # http://www.mail-archive.com/openembedded-devel@lists.openembedded.org/msg21444.html
 PARALLEL_MAKE = ""
 
