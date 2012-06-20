@@ -12,7 +12,10 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
 	   file://disable-ldap.patch \
 	   file://audit-python.patch"
 
-SRC_URI += "file://2.2.1-audit-for-cross-compiling.patch file://sbin-in-usr.patch file://auditd"
+SRC_URI += "file://2.2.1-audit-for-cross-compiling.patch \
+	   file://audit-python-configure.patch \
+	   file://sbin-in-usr.patch \
+	   file://auditd"
 
 inherit autotools
 
