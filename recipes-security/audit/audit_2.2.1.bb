@@ -46,6 +46,22 @@ FILES_audispd-plugins += "${sysconfdir}/audisp/audisp-remote.conf \
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
 
+# The executables in lib/, which are named as gen_*_h, will run on the hosts to create
+# *_tables.h/*tabs.h header files for the targets.
+# In some old hosts, build will fail because some .h files in the old linux-libc-headers (<= 2.6.29)
+# has incomplete DEFINE lists for the audit system.
+do_compile_prepend() {
+	mkdir -p ${S}/lib/linux
+	cp -f ${STAGING_INCDIR}/linux/audit.h ${S}/lib/linux/
+	cp -f ${STAGING_INCDIR}/linux/elf-em.h ${S}/lib/linux/
+	cp -f ${STAGING_INCDIR}/linux/net.h ${S}/lib/linux/
+	mkdir -p ${S}/lib/sys
+	cp -f ${STAGING_INCDIR}/sys/mount.h ${S}/lib/sys/
+	cp -f ${STAGING_INCDIR}/sys/personality.h ${S}/lib/sys/
+	mkdir -p ${S}/lib/bits
+	cp -f ${STAGING_INCDIR}/bits/socket.h ${S}/lib/bits
+}
+
 do_install_append() {
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.a
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.la
