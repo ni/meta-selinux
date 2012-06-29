@@ -32,7 +32,7 @@ RDEPENDS_${BPN} += "\
 	python-subprocess \
 	python-syslog \
 	python-textutils \
-	python-IPy \
+	python-ipy \
 	"
 RDEPENDS_${BPN} += "setools"
 
