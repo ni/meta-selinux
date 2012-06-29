@@ -24,17 +24,13 @@ SRC_URI[sha256sum] = "3daf6eae9f78de1e872c0b2b83cce35515b94d4bb8a074e48f331fd99e
 inherit lib_package
 inherit siteinfo
 
-FILES_${PN} = "${libdir}/libustr-1.0.so.*"
+LEAD_SONAME = "libustr-1.0.so.1"
 
 FILES_${PN}-dev += "${bindir}/ustr-import \
 			${libexecdir}/ustr-${PV}/ustr-import-* \
 			${datadir}/.gdb_init \
 			${datadir}/ustr-${PV} \
-			${mandir}"
-
-FILES_${PN}-dbg += "${libdir}/libustr-debug* \
-			${libdir}/pkgconfig/*-debug.* \
-			${base_libdir}/debug/${libdir}"
+			"
 
 EXTRA_OEMAKE_virtclass-native = "prefix=/usr"
 
