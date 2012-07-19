@@ -1,6 +1,6 @@
 PR .= ".1"
 
-FILESEXTRAPATHS_prepend := ":${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://rpm-fix-build-bug.patch \
 	   "
