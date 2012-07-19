@@ -1,0 +1,81 @@
+From 613c4585de3a55db82b209088cb0792b23d1afd8 Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Tue, 3 Jul 2012 10:57:44 +0800
+Subject: [PATCH] refpolicy: fix mount to write mountpoints/dirs.
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+---
+ policy/modules/kernel/files.if |   36 ++++++++++++++++++++++++++++++++++++
+ policy/modules/system/mount.te |    2 ++
+ 2 files changed, 38 insertions(+), 0 deletions(-)
+
+diff --git a/policy/modules/kernel/files.if b/policy/modules/kernel/files.if
+index deb24b4..79966aa 100644
+--- a/policy/modules/kernel/files.if
++++ b/policy/modules/kernel/files.if
+@@ -1482,6 +1482,42 @@ interface(`files_dontaudit_list_all_mountpoints',`
+ 
+ ########################################
+ ## <summary>
++##     Write all mount points.
++## </summary>
++## <param name="domain">
++##     <summary>
++##     Domain allowed access.
++##     </summary>
++## </param>
++#
++interface(`files_write_all_mountpoints',`
++       gen_require(`
++               attribute mountpoint;
++       ')
++
++       allow $1 mountpoint:dir write;
++')
++
++########################################
++## <summary>
++##     Write all file type directories.
++## </summary>
++## <param name="domain">
++##     <summary>
++##     Domain allowed access.
++##     </summary>
++## </param>
++#
++interface(`files_write_all_dirs',`
++       gen_require(`
++               attribute file_type;
++       ')
++
++       allow $1 file_type:dir write;
++')
++
++########################################
++## <summary>
+ ##	List the contents of the root directory.
+ ## </summary>
+ ## <param name="domain">
+diff --git a/policy/modules/system/mount.te b/policy/modules/system/mount.te
+index fba350b..991bf62 100644
+--- a/policy/modules/system/mount.te
++++ b/policy/modules/system/mount.te
+@@ -79,6 +79,7 @@ files_manage_etc_runtime_files(mount_t)
+ files_etc_filetrans_etc_runtime(mount_t, file)
+ files_mounton_all_mountpoints(mount_t)
+ files_unmount_rootfs(mount_t)
++files_write_all_mountpoints(mount_t)
+ # These rules need to be generalized.  Only admin, initrc should have it:
+ files_relabelto_all_file_type_fs(mount_t)
+ files_mount_all_file_type_fs(mount_t)
+@@ -89,6 +90,7 @@ files_read_isid_type_files(mount_t)
+ # For reading cert files
+ files_read_usr_files(mount_t)
+ files_list_mnt(mount_t)
++files_write_all_dirs(mount_t)
+ files_dontaudit_write_root_dirs(mount_t)
+ 
+ fs_getattr_xattr_fs(mount_t)
+-- 
+1.7.5.4
+
