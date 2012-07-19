@@ -20,6 +20,7 @@ RDEPENDS_task-core-selinux = " \
 	policycoreutils \
 	policycoreutils-python \
 	setools \
+	selinux-config \
 	refpolicy-standard \
 	refpolicy-mls \
 	"
