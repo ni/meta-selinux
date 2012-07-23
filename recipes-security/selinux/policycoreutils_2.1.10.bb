@@ -14,6 +14,8 @@ include selinux_20120216.inc
 SRC_URI[md5sum] = "fefdede2815cdd2ba8b68599fef1f257"
 SRC_URI[sha256sum] = "8bbbc36b7d375edff891503932da93e37553f0dd7bdceded7ce9a45c80bec3d1"
 
+SRC_URI += "file://policycoreutils-fix-format-security.patch"
+
 DEPENDS += "libsepol libselinux libsemanage ${EXTRA_DEPENDS}"
 EXTRA_DEPENDS = "libcap-ng libcgroup"
 EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
@@ -43,7 +45,6 @@ FILES_${PN}-sandbox = "${datadir}/sandbox/*"
 FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
 
-CFLAGS_append = " -Wno-error=format-security"
 AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
 PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
 EXTRA_OEMAKE += "PAMH=${PAMH} AUDITH=${AUDITH} INOTIFYH=n"

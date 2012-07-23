@@ -15,6 +15,8 @@ include selinux_git.inc
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "2.1.10+git${SRCPV}"
 
+SRC_URI += "file://policycoreutils-fix-format-security.patch"
+
 DEPENDS += "libsepol libselinux libsemanage ${EXTRA_DEPENDS}"
 EXTRA_DEPENDS = "libcap-ng libcgroup"
 EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
@@ -44,7 +46,6 @@ FILES_${PN}-sandbox = "${datadir}/sandbox/*"
 FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
 
-CFLAGS_append = " -Wno-error=format-security"
 AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
 PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
 EXTRA_OEMAKE += "PAMH=${PAMH} AUDITH=${AUDITH} INOTIFYH=n"
