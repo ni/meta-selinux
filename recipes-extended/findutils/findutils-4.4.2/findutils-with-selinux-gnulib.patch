@@ -1,28 +1,31 @@
-From: Xin Ouyang <Xin.Ouyang@windriver.com>
-Date: Tue, 26 Jun 2012 13:56:52 +0800
-Subject: [PATCH 2/2] findutils: support selinux and gnulib
+Subject: [PATCH] findutils: support selinux and gnulib
 
 Upstream-Status: Inappropriate [configuration]
 
-This is a F13 SRPM patch.
+This is modified from a F13 SRPM patch.
 
 Once the selinux-at module appears on the list within import-gnulib.config,
 this patch is no longer needed.
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 ---
  aclocal.m4                     |    2 +
- gnulib/lib/Makefile.am         |   43 ++++++
+ gnulib/lib/Makefile.am         |   44 +++++++
  gnulib/lib/at-func.c           |   98 ++++++++++----
  gnulib/lib/getfilecon.c        |   87 ++++++++++++
  gnulib/lib/openat.c            |  285 ++++++++++++++++++++--------------------
  gnulib/lib/openat.h            |   88 ++++++-------
- gnulib/lib/se-selinux.in.h     |   73 ++++++++++
+ gnulib/lib/se-context.in.h     |   34 +++++
+ gnulib/lib/se-selinux.in.h     |  103 +++++++++++++++
  gnulib/lib/selinux-at.c        |   72 ++++++++++
  gnulib/lib/selinux-at.h        |   52 ++++++++
  gnulib/m4/gnulib-comp.m4       |   12 ++
+ gnulib/m4/include_next.m4      |   29 +++-
  gnulib/m4/selinux-context-h.m4 |   16 +++
  gnulib/m4/selinux-selinux-h.m4 |   57 ++++++++
- 12 files changed, 665 insertions(+), 220 deletions(-)
+ 14 files changed, 753 insertions(+), 226 deletions(-)
  create mode 100644 gnulib/lib/getfilecon.c
+ create mode 100644 gnulib/lib/se-context.in.h
  create mode 100644 gnulib/lib/se-selinux.in.h
  create mode 100644 gnulib/lib/selinux-at.c
  create mode 100644 gnulib/lib/selinux-at.h
@@ -30,10 +33,10 @@ this patch is no longer needed.
  create mode 100644 gnulib/m4/selinux-selinux-h.m4
 
 diff --git a/aclocal.m4 b/aclocal.m4
-index 95ff111..0034170 100644
+index 1f97dda..61ad660 100644
 --- a/aclocal.m4
 +++ b/aclocal.m4
-@@ -115,6 +115,8 @@ m4_include([gnulib/m4/rpmatch.m4])
+@@ -1039,6 +1039,8 @@ m4_include([gnulib/m4/rpmatch.m4])
  m4_include([gnulib/m4/same.m4])
  m4_include([gnulib/m4/save-cwd.m4])
  m4_include([gnulib/m4/savedir.m4])
@@ -43,10 +46,10 @@ index 95ff111..0034170 100644
  m4_include([gnulib/m4/ssize_t.m4])
  m4_include([gnulib/m4/st_dm_mode.m4])
 diff --git a/gnulib/lib/Makefile.am b/gnulib/lib/Makefile.am
-index 59ed5f2..b13e509 100644
+index 59ed5f2..7f105a9 100644
 --- a/gnulib/lib/Makefile.am
 +++ b/gnulib/lib/Makefile.am
-@@ -1007,6 +1007,49 @@ EXTRA_libgnulib_a_SOURCES += savedir.c
+@@ -1007,6 +1007,50 @@ EXTRA_libgnulib_a_SOURCES += savedir.c
  
  ## end   gnulib module savedir
  
@@ -70,6 +73,7 @@ index 59ed5f2..b13e509 100644
 +	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 +	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 +	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
++	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 +	      -e 's|@''NEXT_SELINUX_SELINUX_H''@|$(NEXT_SELINUX_SELINUX_H)|g' \
 +	      < $(srcdir)/se-selinux.in.h; \
 +	} > $@-t && \
@@ -825,18 +829,75 @@ index b5e4f11..433b998 100644
 +#endif
 +
 +#endif /* _GL_HEADER_OPENAT */
+diff --git a/gnulib/lib/se-context.in.h b/gnulib/lib/se-context.in.h
+new file mode 100644
+index 0000000..a34a7fb
+--- /dev/null
++++ b/gnulib/lib/se-context.in.h
+@@ -0,0 +1,34 @@
++#ifndef SELINUX_CONTEXT_H
++# define SELINUX_CONTEXT_H
++
++# include <errno.h>
++
++#ifndef _GL_UNUSED_PARAMETER
++# if __GNUC__ >= 3 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
++#  define _GL_UNUSED_PARAMETER __attribute__ ((__unused__))
++# else
++#  define _GL_UNUSED_PARAMETER
++# endif
++#endif
++
++typedef int context_t;
++static inline context_t context_new (char const *s _GL_UNUSED_PARAMETER)
++  { errno = ENOTSUP; return 0; }
++static inline char *context_str (context_t con _GL_UNUSED_PARAMETER)
++  { errno = ENOTSUP; return (void *) 0; }
++static inline void context_free (context_t c _GL_UNUSED_PARAMETER) {}
++
++static inline int context_user_set (context_t sc _GL_UNUSED_PARAMETER,
++                                    char const *s _GL_UNUSED_PARAMETER)
++  { errno = ENOTSUP; return -1; }
++static inline int context_role_set (context_t sc _GL_UNUSED_PARAMETER,
++                                    char const *s _GL_UNUSED_PARAMETER)
++  { errno = ENOTSUP; return -1; }
++static inline int context_range_set (context_t sc _GL_UNUSED_PARAMETER,
++                                     char const *s _GL_UNUSED_PARAMETER)
++  { errno = ENOTSUP; return -1; }
++static inline int context_type_set (context_t sc _GL_UNUSED_PARAMETER,
++                                    char const *s _GL_UNUSED_PARAMETER)
++  { errno = ENOTSUP; return -1; }
++
++#endif
 diff --git a/gnulib/lib/se-selinux.in.h b/gnulib/lib/se-selinux.in.h
 new file mode 100644
-index 0000000..3f30a3c
+index 0000000..d683101
 --- /dev/null
 +++ b/gnulib/lib/se-selinux.in.h
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,103 @@
++/* Replacement <selinux/selinux.h> for platforms that lack it.
++   Copyright (C) 2008-2011 Free Software Foundation, Inc.
++
++   This program is free software: you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
++
 +#ifndef _GL_SELINUX_SELINUX_H
 +# define _GL_SELINUX_SELINUX_H
 +
 +# if __GNUC__ >= 3
-+#pragma GCC system_header
++@PRAGMA_SYSTEM_HEADER@
 +# endif
++@PRAGMA_COLUMNS@
 +
 +# if HAVE_SELINUX_SELINUX_H
 +
@@ -847,60 +908,73 @@ index 0000000..3f30a3c
 +#  include <sys/types.h>
 +#  include <errno.h>
 +
++#ifndef _GL_UNUSED_PARAMETER
++# if __GNUC__ >= 3 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
++#  define _GL_UNUSED_PARAMETER __attribute__ ((__unused__))
++# else
++#  define _GL_UNUSED_PARAMETER
++# endif
++#endif
++
++#  if !GNULIB_defined_security_types
++
 +typedef unsigned short security_class_t;
-+#  define security_context_t char*
-+#  define is_selinux_enabled() 0
++#   define security_context_t char*
++#   define is_selinux_enabled() 0
 +
-+static inline int getcon (security_context_t *con _UNUSED_PARAMETER_)
++static inline int getcon (security_context_t *con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline void freecon (security_context_t con _UNUSED_PARAMETER_) {}
++static inline void freecon (security_context_t con _GL_UNUSED_PARAMETER) {}
 +
 +
-+static inline int getfscreatecon (security_context_t *con _UNUSED_PARAMETER_)
++static inline int getfscreatecon (security_context_t *con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int setfscreatecon (security_context_t con _UNUSED_PARAMETER_)
++static inline int setfscreatecon (security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int matchpathcon (char const *file _UNUSED_PARAMETER_,
-+				mode_t m _UNUSED_PARAMETER_,
-+				security_context_t *con _UNUSED_PARAMETER_)
++static inline int matchpathcon (char const *file _GL_UNUSED_PARAMETER,
++                                mode_t m _GL_UNUSED_PARAMETER,
++                                security_context_t *con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int getfilecon (char const *file _UNUSED_PARAMETER_,
-+			      security_context_t *con _UNUSED_PARAMETER_)
++static inline int getfilecon (char const *file _GL_UNUSED_PARAMETER,
++                              security_context_t *con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int lgetfilecon (char const *file _UNUSED_PARAMETER_,
-+			       security_context_t *con _UNUSED_PARAMETER_)
++static inline int lgetfilecon (char const *file _GL_UNUSED_PARAMETER,
++                               security_context_t *con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
 +static inline int fgetfilecon (int fd,
-+			       security_context_t *con _UNUSED_PARAMETER_)
++                               security_context_t *con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int setfilecon (char const *file _UNUSED_PARAMETER_,
-+			      security_context_t con _UNUSED_PARAMETER_)
++static inline int setfilecon (char const *file _GL_UNUSED_PARAMETER,
++                              security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int lsetfilecon (char const *file _UNUSED_PARAMETER_,
-+			       security_context_t con _UNUSED_PARAMETER_)
++static inline int lsetfilecon (char const *file _GL_UNUSED_PARAMETER,
++                               security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int fsetfilecon (int fd _UNUSED_PARAMETER_,
-+			       security_context_t con _UNUSED_PARAMETER_)
++static inline int fsetfilecon (int fd _GL_UNUSED_PARAMETER,
++                               security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
 +
 +static inline int security_check_context
-+    (security_context_t con _UNUSED_PARAMETER_)
++    (security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
 +static inline int security_check_context_raw
-+    (security_context_t con _UNUSED_PARAMETER_)
++    (security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
-+static inline int setexeccon (security_context_t con _UNUSED_PARAMETER_)
++static inline int setexeccon (security_context_t con _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
 +static inline int security_compute_create
-+    (security_context_t scon _UNUSED_PARAMETER_,
-+     security_context_t tcon _UNUSED_PARAMETER_,
-+     security_class_t tclass _UNUSED_PARAMETER_,
-+     security_context_t *newcon _UNUSED_PARAMETER_)
++    (security_context_t scon _GL_UNUSED_PARAMETER,
++     security_context_t tcon _GL_UNUSED_PARAMETER,
++     security_class_t tclass _GL_UNUSED_PARAMETER,
++     security_context_t *newcon _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
 +static inline int matchpathcon_init_prefix
-+    (char const *path _UNUSED_PARAMETER_,
-+     char const *prefix _UNUSED_PARAMETER_)
++    (char const *path _GL_UNUSED_PARAMETER,
++     char const *prefix _GL_UNUSED_PARAMETER)
 +  { errno = ENOTSUP; return -1; }
++
++#   define GNULIB_defined_security_types 1
++#  endif
 +
 +# endif
 +#endif /* _GL_SELINUX_SELINUX_H */
@@ -1084,6 +1158,52 @@ index 1efe223..87f11dd 100644
    m4/setenv.m4
    m4/size_max.m4
    m4/ssize_t.m4
+diff --git a/gnulib/m4/include_next.m4 b/gnulib/m4/include_next.m4
+index 7ce472b..79edd7c 100644
+--- a/gnulib/m4/include_next.m4
++++ b/gnulib/m4/include_next.m4
+@@ -36,18 +36,35 @@ EOF
+      CPPFLAGS="$save_CPPFLAGS"
+      rm -rf conftestd1 conftestd2
+     ])
++  PRAGMA_SYSTEM_HEADER=
+   if test $gl_cv_have_include_next = yes; then
+-
+-    dnl FIXME: Remove HAVE_INCLUDE_NEXT and update everything that uses it
+-    dnl to use @INCLUDE_NEXT@ instead.
+-    AC_DEFINE([HAVE_INCLUDE_NEXT], 1,
+-	      [Define if your compiler supports the #include_next directive.])
+-
+     INCLUDE_NEXT=include_next
++    if test -n "$GCC"; then
++      PRAGMA_SYSTEM_HEADER='#pragma GCC system_header'
++    fi
+   else
+     INCLUDE_NEXT=include
+   fi
+   AC_SUBST([INCLUDE_NEXT])
++  AC_SUBST([PRAGMA_SYSTEM_HEADER])
++  AC_CACHE_CHECK([whether system header files limit the line length],
++    [gl_cv_pragma_columns],
++    [dnl HP NonStop systems, which define __TANDEM, have this misfeature.
++     AC_EGREP_CPP([choke me],
++       [
++#ifdef __TANDEM
++choke me
++#endif
++       ],
++       [gl_cv_pragma_columns=yes],
++       [gl_cv_pragma_columns=no])
++    ])
++  if test $gl_cv_pragma_columns = yes; then
++    PRAGMA_COLUMNS="#pragma COLUMNS 10000"
++  else
++    PRAGMA_COLUMNS=
++  fi
++  AC_SUBST([PRAGMA_COLUMNS])
+ ])
+ 
+ # gl_CHECK_NEXT_HEADERS(HEADER1 HEADER2 ...)
 diff --git a/gnulib/m4/selinux-context-h.m4 b/gnulib/m4/selinux-context-h.m4
 new file mode 100644
 index 0000000..6b0bed1
@@ -1170,5 +1290,5 @@ index 0000000..767c4f7
 +  fi
 +])
 -- 
-1.7.5.4
+1.7.9.6
 

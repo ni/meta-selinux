@@ -1,87 +1,44 @@
-From: Xin Ouyang <Xin.Ouyang@windriver.com>
-Date: Tue, 26 Jun 2012 13:48:44 +0800
-Subject: [PATCH 1/2] findutils: support selinux
+Subject: [PATCH] findutils: support selinux
 
 Upstream-Status: Backport
 
-This is modified from a F13'sx SRPM patch.
+This is modified from a F13'sx SRPM patch, with conditional
+selinux support.
 
-================================================================================
-
-    Author: James Youngman <jay@gnu.org>
-    Date:   Sat Jul 11 19:55:27 2009 +0100
-
-    Fix Savannah bug #27017: find -D opt / -fstype ext3 -print , -quit coredump.
-
-    Fix Savannah bug #27017: find -D opt / -fstype ext3 -print , -quit
-    coredumps.
-    * find/tree.c (set_new_parent): Initialise struct
-    predicate->arg_text to NULL (instead of leaving it uninitialised).
-    (get_new_pred_noarg): Likewise.
-    (get_new_pred): Initialise predicate->arg_text to
-    "ThisShouldBeSetToSomethingElse" to make it easier to notice
-    bugs.
-    (get_new_pred_chk_op): Use get_new_pred_noarg.
-    (print_predicate): Use an if statement instead of
-    two ternary operators.
-    * find/util.c (insert_primary_withpred): Accept new argument, arg,
-    being the argument (if any) of this predicate.  Pass it to
-    get_new_pred_chk_op.
-    (insert_primary): Likewise (pass arg to insert_primary_withpred).
-    (insert_primary_noarg): New function; calls insert_primary with
-    arg=NULL.
-    * find/parser.c (collect_arg_stat_info): Add an output parameter;
-    the filename from which we collected the stat information.
-    (parse_closeparen, parse_delete, parse_and, parse_or,
-    parse_comma): Use get_new_pred_noarg.
-    (parse_cnewer, parse_newer, parse_anewer): Use new
-    collect_arg_stat_info and insert_primary interface.
-    (parse_print, parse_prune, parse_nouser, parse_empty): Use
-    insert_primary_noarg.
-    (parse_accesscheck, parse_false): Use insert_primary_noarg.
-    (parse_used, parse_iname, parse_fprint, insert_fprint,
-    parse_fstype, parse_ilname): Use new collect_arg and
-    insert_primary interfaces.
-    (parse_ipath, parse_lname, do_parse_xmin, parse_name, parse_path,
-    parse_perm, parse_size, parse_user, parse_time): Use new
-    collect_arg and insert_primary_withpred interface.
-    (parse_negate, parse_openparen): Use new get_new_pred_chk_op interface.
-    (parse_newerXY, parse_nogroup): Use new insert_primary interface.
-    (insert_regex, parse_samefile): Use new insert_primary_withpred
-    interface.
-    (insert_type, insert_fprintf, new_insert_exec_ok, insert_num): Use
-    new insert_primary_withpred interface.
-    * find/defs.h (struct predicate.arg_text): make const.
-    Add declarations for new function get_new_pred_noarg and
-    insert_primary_noarg.  Add 'arg' parameter to get_new_pred_chk_op
-    and insert_primary_withpred.
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 ---
- NEWS             |    6 +++
- doc/find.texi    |   18 +++++++-
+ configure.ac     |   11 ++++
+ doc/find.texi    |   18 ++++++-
  find/Makefile.am |    2 +-
- find/defs.h      |    6 +++
+ find/defs.h      |   14 +++++
  find/find.1      |    4 ++
- find/parser.c    |  128 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
- find/pred.c      |   47 ++++++++++++++++++++
- find/tree.c      |    2 +
- 8 files changed, 209 insertions(+), 4 deletions(-)
+ find/parser.c    |  155 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ find/pred.c      |   54 +++++++++++++++++++
+ find/tree.c      |    6 +++
+ 8 files changed, 261 insertions(+), 3 deletions(-)
 
-diff --git a/NEWS b/NEWS
-index 342a3d3..df0681c 100644
---- a/NEWS
-+++ b/NEWS
-@@ -1,5 +1,11 @@
- GNU findutils NEWS - User visible changes.	-*- outline -*- (allout)
+diff --git a/configure.ac b/configure.ac
+index f4849b3..2dd3b13 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -114,6 +114,17 @@ AC_CHECK_LIB([m],[fabs],[FINDLIBS="-lm $FINDLIBS"]
+   AC_DEFINE_UNQUOTED(HAVE_FABS_IN_LIBM,1,[fabs is defined in -lm]))
+ AC_SUBST([FINDLIBS])
  
-+* Major changes in release 4.4.2, 2009-11-26
++AC_ARG_WITH([selinux],
++  AS_HELP_STRING([--without-selinux], [disable SELinux support]),
++  [:],
++  [AC_CHECK_LIB([selinux], [is_selinux_enabled], [with_selinux=yes], [with_selinux=no])])
++if test x$with_selinux = xyes; then
++  AC_DEFINE([WITH_SELINUX], [1], [Define to support SELinux])
++  AC_SUBST([LIBSELINUX], [-lselinux])
++else
++  AC_SUBST([LIBSELINUX], [ ])
++fi
 +
-+** Functional Enhancements to find
-+
-+patch #4848: Patch - Support for SELinux
-+
- * Major changes in release 4.4.2, 2009-05-16
- 
- ** Bug Fixes
+ dnl Checks for header files.
+ AC_HEADER_STDC
+ dnl Assume unistd.h is present - coreutils does too.
 diff --git a/doc/find.texi b/doc/find.texi
 index 391ffa0..f599bbc 100644
 --- a/doc/find.texi
@@ -141,44 +98,52 @@ index b001509..6fc7df3 100644
  EXTRA_DIST = defs.h $(man_MANS)
  INCLUDES = -I../gnulib/lib -I$(top_srcdir)/lib -I$(top_srcdir)/gnulib/lib -I../intl -DLOCALEDIR=\"$(localedir)\"
 -LDADD = ./libfindtools.a ../lib/libfind.a ../gnulib/lib/libgnulib.a @INTLLIBS@ @LIB_CLOCK_GETTIME@ @FINDLIBS@
-+LDADD = ./libfindtools.a ../lib/libfind.a ../gnulib/lib/libgnulib.a @INTLLIBS@ @LIB_CLOCK_GETTIME@ @FINDLIBS@ @LIB_SELINUX@
++LDADD = ./libfindtools.a ../lib/libfind.a ../gnulib/lib/libgnulib.a @INTLLIBS@ @LIB_CLOCK_GETTIME@ @FINDLIBS@ @LIBSELINUX@
  man_MANS = find.1
  SUBDIRS = . testsuite
  
 diff --git a/find/defs.h b/find/defs.h
-index 4539fd9..e7e3a69 100644
+index 4539fd9..4f3b168 100644
 --- a/find/defs.h
 +++ b/find/defs.h
-@@ -48,6 +48,7 @@ Please stop compiling the program now
+@@ -48,6 +48,9 @@ Please stop compiling the program now
  #include <stdbool.h>		/* for bool/boolean */
  #include <stdint.h>		/* for uintmax_t */
  #include <sys/stat.h> /* S_ISUID etc. */
++#ifdef WITH_SELINUX
 +#include <selinux/selinux.h>
++#endif
  
  
  
-@@ -315,6 +316,7 @@ struct predicate
+@@ -315,6 +318,9 @@ struct predicate
      struct samefile_file_id samefileid; /* samefile */
      mode_t type;		/* type */
      struct format_val printf_vec; /* printf fprintf fprint ls fls print0 fprint0 print */
++#ifdef WITH_SELINUX
 +    security_context_t scontext; /* security context */
++#endif
    } args;
  
    /* The next predicate in the user input sequence,
-@@ -459,6 +461,7 @@ PREDICATEFUNCTION pred_used;
+@@ -459,6 +465,9 @@ PREDICATEFUNCTION pred_used;
  PREDICATEFUNCTION pred_user;
  PREDICATEFUNCTION pred_writable;
  PREDICATEFUNCTION pred_xtype;
++#ifdef WITH_SELINUX
 +PREDICATEFUNCTION pred_context;
++#endif
  
  
  
-@@ -604,6 +607,9 @@ struct options
+@@ -604,6 +613,11 @@ struct options
     */
    int regex_options;
  
++#ifdef WITH_SELINUX
 +  /* function used to get file context */
 +  int (*x_getfilecon) (int, const char *, security_context_t *);
++#endif
 +
    /* Optimisation level.  One is the default. 
     */
@@ -206,38 +171,45 @@ index 8b67ae3..1d23b17 100644
  A `%' character followed by any other character is discarded, but the
  other character is printed (don't rely on this, as further format
 diff --git a/find/parser.c b/find/parser.c
-index 08758ee..d7fc9ce 100644
+index 08758ee..02f9067 100644
 --- a/find/parser.c
 +++ b/find/parser.c
-@@ -53,6 +53,8 @@
+@@ -53,6 +53,10 @@
  #include <unistd.h>
  #include <sys/stat.h>
  
++#ifdef WITH_SELINUX
 +#include "selinux-at.h"
++#endif
 +
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -155,6 +157,7 @@ static boolean parse_noignore_race PARAMS((const struct parser_table*, char *arg
+@@ -155,6 +159,9 @@ static boolean parse_noignore_race PARAMS((const struct parser_table*, char *arg
  static boolean parse_warn          PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
  static boolean parse_xtype         PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
  static boolean parse_quit          PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
++#ifdef WITH_SELINUX
 +static boolean parse_context       PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
++#endif
  
  boolean parse_print             PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
  
-@@ -251,6 +254,7 @@ static struct parser_table const parse_table[] =
+@@ -251,6 +258,9 @@ static struct parser_table const parse_table[] =
    PARSE_TEST       ("cmin",                  cmin),	     /* GNU */
    PARSE_TEST       ("cnewer",                cnewer),	     /* GNU */
    {ARG_TEST,       "ctime",                  parse_time, pred_ctime}, /* POSIX */
++#ifdef WITH_SELINUX
 +  PARSE_TEST       ("context",               context),      /* GNU */
++#endif
    PARSE_POSOPT     ("daystart",              daystart),	     /* GNU */
    PARSE_ACTION     ("delete",                delete), /* GNU, Mac OS, FreeBSD */
    PARSE_OPTION     ("d",                     d), /* Mac OS X, FreeBSD, NetBSD, OpenBSD, but deprecated  in favour of -depth */
-@@ -347,6 +351,86 @@ static struct parser_table const parse_table[] =
+@@ -347,6 +357,89 @@ static struct parser_table const parse_table[] =
  static const char *first_nonoption_arg = NULL;
  static const struct parser_table *noop = NULL;
  
++#ifdef WITH_SELINUX
 +static int
 +fallback_getfilecon (int fd, const char *name, security_context_t *p,
 +		     int prev_rv)
@@ -318,59 +290,75 @@ index 08758ee..d7fc9ce 100644
 +{
 +  return lgetfileconat (fd, name, p);
 +}
++
++#endif
  
  void
  check_option_combinations(const struct predicate *p)
-@@ -450,11 +534,13 @@ set_follow_state(enum SymlinkOption opt)
+@@ -450,11 +543,17 @@ set_follow_state(enum SymlinkOption opt)
  	{
  	case SYMLINK_ALWAYS_DEREF:  /* -L */
  	  options.xstat = optionl_stat;
++#ifdef WITH_SELINUX
 +	  options.x_getfilecon = optionl_getfilecon;
++#endif
  	  options.no_leaf_check = true;
  	  break;
  
  	case SYMLINK_NEVER_DEREF:	/* -P (default) */
  	  options.xstat = optionp_stat;
++#ifdef WITH_SELINUX
 +	  options.x_getfilecon = optionp_getfilecon;
++#endif
  	  /* Can't turn no_leaf_check off because the user might have specified
  	   * -noleaf anyway
  	   */
-@@ -462,6 +548,7 @@ set_follow_state(enum SymlinkOption opt)
+@@ -462,6 +561,9 @@ set_follow_state(enum SymlinkOption opt)
  
  	case SYMLINK_DEREF_ARGSONLY: /* -H */
  	  options.xstat = optionh_stat;
++#ifdef WITH_SELINUX
 +	  options.x_getfilecon = optionh_getfilecon;
++#endif
  	  options.no_leaf_check = true;
  	}
      }
-@@ -1146,8 +1233,10 @@ tests (N can be +N or -N or N): -amin N -anewer FILE -atime N -cmin N\n\
+@@ -1146,8 +1248,14 @@ tests (N can be +N or -N or N): -amin N -anewer FILE -atime N -cmin N\n\
        -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN\n\
        -readable -writable -executable\n\
        -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n\
 -      -used N -user NAME -xtype [bcdpfls]\n"));
 +      -used N -user NAME -xtype [bcdpfls]"));
++#ifdef WITH_SELINUX
    puts (_("\
 +      -context CONTEXT\n"));
++#else
++  puts (_("\n"));
++#endif
 +  puts (_("\n\
  actions: -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print \n\
        -fprint0 FILE -fprint FILE -ls -fls FILE -prune -quit\n\
        -exec COMMAND ; -exec COMMAND {} + -ok COMMAND ;\n\
-@@ -2574,6 +2663,11 @@ parse_version (const struct parser_table* entry, char **argv, int *arg_ptr)
+@@ -2574,6 +2682,13 @@ parse_version (const struct parser_table* entry, char **argv, int *arg_ptr)
    printf("LEAF_OPTIMISATION ");
    ++features;
  #endif
++#ifdef WITH_SELINUX
 +  if (0 < is_selinux_enabled ())
 +    {
 +      printf ("SELINUX ");
 +      ++features;
 +    }
++#endif
  
    flags = 0;
    if (is_fts_enabled(&flags))
-@@ -2609,6 +2703,31 @@ parse_version (const struct parser_table* entry, char **argv, int *arg_ptr)
+@@ -2608,6 +2723,33 @@ parse_version (const struct parser_table* entry, char **argv, int *arg_ptr)
+   exit (0);
  }
  
- static boolean
++#ifdef WITH_SELINUX
++static boolean
 +parse_context (const struct parser_table* entry, char **argv, int *arg_ptr)
 +{
 +  struct predicate *our_pred;
@@ -394,58 +382,68 @@ index 08758ee..d7fc9ce 100644
 +  (*arg_ptr)++;
 +  return true;
 +}
++#endif
 +
-+static boolean
+ static boolean
  parse_xdev (const struct parser_table* entry, char **argv, int *arg_ptr)
  {
-   options.stay_on_filesystem = true;
-@@ -2861,7 +2980,7 @@ insert_fprintf (struct format_val *vec,
+@@ -2861,7 +3003,11 @@ insert_fprintf (struct format_val *vec,
  	  if (*scan2 == '.')
  	    for (scan2++; ISDIGIT (*scan2); scan2++)
  	      /* Do nothing. */ ;
--	  if (strchr ("abcdDfFgGhHiklmMnpPsStuUyY", *scan2))
++#ifdef WITH_SELINUX
 +	  if (strchr ("abcdDfFgGhHiklmMnpPsStuUyYZ", *scan2))
++#else
+ 	  if (strchr ("abcdDfFgGhHiklmMnpPsStuUyY", *scan2))
++#endif
  	    {
  	      segmentp = make_segment (segmentp, format, scan2 - format,
  				       KIND_FORMAT, *scan2, 0,
-@@ -2991,6 +3110,11 @@ make_segment (struct segment **segment,
+@@ -2991,6 +3137,13 @@ make_segment (struct segment **segment,
        *fmt++ = 's';
        break;
  
++#ifdef WITH_SELINUX
 +    case 'Z':			/* SELinux security context */
 +      mycost = NeedsAccessInfo;
 +      *fmt++ = 's';
 +      break;
++#endif
 +
      case 'H':			/* ARGV element file was found under */
        *fmt++ = 's';
        break;
 diff --git a/find/pred.c b/find/pred.c
-index b1f48a0..7c34119 100644
+index b1f48a0..43cfd19 100644
 --- a/find/pred.c
 +++ b/find/pred.c
-@@ -48,6 +48,8 @@
+@@ -48,6 +48,10 @@
  #include "error.h"
  #include "verify.h"
  
++#ifdef WITH_SELINUX
 +#include <selinux/selinux.h>
++#endif
 +
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -230,6 +232,7 @@ struct pred_assoc pred_table[] =
+@@ -230,6 +234,9 @@ struct pred_assoc pred_table[] =
    {pred_user, "user    "},
    {pred_writable, "writable "},
    {pred_xtype, "xtype   "},
++#ifdef WITH_SELINUX
 +  {pred_context, "context"},
++#endif
    {0, "none    "}
  };
  #endif
-@@ -1054,6 +1057,30 @@ do_fprintf(struct format_val *dest,
+@@ -1054,6 +1061,32 @@ do_fprintf(struct format_val *dest,
  			     mode_to_filetype(stat_buf->st_mode & S_IFMT));
  	  }
  	  break;
 +
++#ifdef WITH_SELINUX
 +	case 'Z':               /* SELinux security context */
 +	  {
 +	    security_context_t scontext;
@@ -469,15 +467,16 @@ index b1f48a0..7c34119 100644
 +	      }
 +	  }
 +	  break;
++#endif
  	}
        /* end of KIND_FORMAT case */
        break;
-@@ -1844,6 +1871,26 @@ pred_xtype (const char *pathname, struct stat *stat_buf, struct predicate *pred_
+@@ -1844,6 +1877,27 @@ pred_xtype (const char *pathname, struct stat *stat_buf, struct predicate *pred_
     */
    return (pred_type (pathname, &sbuf, pred_ptr));
  }
 +
-+
++#ifdef WITH_SELINUX
 +boolean
 +pred_context (const char *pathname, struct stat *stat_buf,
 +	      struct predicate *pred_ptr)
@@ -495,30 +494,35 @@ index b1f48a0..7c34119 100644
 +  freecon (scontext);
 +  return rv;
 +}
++#endif
 +
  
  /*  1) fork to get a child; parent remembers the child pid
      2) child execs the command requested
 diff --git a/find/tree.c b/find/tree.c
-index 60a0601..63100fb 100644
+index 60a0601..6d48c09 100644
 --- a/find/tree.c
 +++ b/find/tree.c
-@@ -909,6 +909,7 @@ static struct pred_cost_lookup costlookup[] =
+@@ -909,6 +909,9 @@ static struct pred_cost_lookup costlookup[] =
      { pred_cmin      ,  NeedsStatInfo,       },
      { pred_cnewer    ,  NeedsStatInfo,       },
      { pred_comma     ,  NeedsNothing,        },
++#ifdef WITH_SELINUX
 +    { pred_context   ,  NeedsAccessInfo      },
++#endif
      { pred_ctime     ,  NeedsStatInfo,       },
      { pred_delete    ,  NeedsSyncDiskHit     },
      { pred_empty     ,  NeedsStatInfo        },
-@@ -1453,6 +1454,7 @@ get_new_pred (const struct parser_table *entry)
+@@ -1453,6 +1456,9 @@ get_new_pred (const struct parser_table *entry)
    last_pred->p_cost = NeedsUnknown;
    last_pred->arg_text = "ThisShouldBeSetToSomethingElse";
    last_pred->args.str = NULL;
++#ifdef WITH_SELINUX
 +  last_pred->args.scontext = NULL;
++#endif
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
 -- 
-1.7.5.4
+1.7.9.6
 
