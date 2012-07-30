@@ -18,3 +18,40 @@ Jan 31, 2012 - Initial version of the layer available.  Basic functionality:
   * new recipes-security -- includes all SE Linux core components
   * enable kernel configuration of SE Linux components
   * enable a few basic recipes to be used as examples for others
+
+
+Dependencies
+------------
+
+This layer depends on the Poky metadata.  For more information on Poky see
+the Yocto Project website:
+
+http://www.yoctoproject.org
+
+
+Maintenance
+-----------
+Please see the MAINTAINERS file for information on contacting the maintainers
+of this layer, as well as instructions for submitting patches.
+
+
+Building the meta-selinux layer
+-------------------------------
+In order to add selinux support to the poky build this layer should be added
+to the bblayers.conf file.  In addition you should modify your local.conf
+to specify the "poky-selinux" distribution.
+
+
+An "oe-selinux" distribution is also included as a convienence for people
+working with this layer, without the additional Poky meta data.  This
+approach may work, but is not generally tested by the maintainers.
+
+
+License
+-------
+
+All metadata is MIT licensed unless otherwise stated. Source code included
+in tree for individual recipes is under the LICENSE stated in each recipe
+(.bb file) unless otherwise stated.
+
+This README document is Copyright (C) 2012 Wind River Systems, Inc.
