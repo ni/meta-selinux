@@ -14,7 +14,7 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-2.1.3.tar.gz \
 
 SRC_URI += "file://audit-for-cross-compiling.patch"
 
-inherit autotools
+inherit autotools pythonnative
 
 SRC_URI[md5sum] = "abf26e3ac09f666905c5636dd24611fa"
 SRC_URI[sha256sum] = "1c61858d8ed299128aa6bd8e85bac758bfe33e61358d259e52acb7d961fee90e"
