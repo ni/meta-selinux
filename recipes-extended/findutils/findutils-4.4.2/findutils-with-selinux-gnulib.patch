@@ -1,0 +1,55 @@
+Subject: [PATCH] selinux: fetch proper version of gnulib.
+
+This patch will fetch a proper version of gnulib, and import
+needed modules including selinux-at.
+
+* lstat module has removed lstat.h and now we should include
+  <sys/stat.h> instead.
+  - http://git.savannah.gnu.org/cgit/gnulib.git/tree/modules/lstat
+
+Upstream-Status: Backport
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+---
+ import-gnulib.config |    3 ++-
+ lib/dircallback.c    |    2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/import-gnulib.config b/import-gnulib.config
+index f2e8998..aeeb638 100644
+--- a/import-gnulib.config
++++ b/import-gnulib.config
+@@ -1,7 +1,7 @@
+ # findutils gnulib.config -*- sh -*-
+ 
+ # What version of gnulib to use?
+-gnulib_version="e5573b1bad88bfabcda181b9e0125fb0c52b7d3b"
++gnulib_version="0e0635af0b23826911dc456bd0da40dcb19247de"
+ destdir="gnulib"
+ 
+ # Random extra gnulib files needed for findutils.
+@@ -68,6 +68,7 @@ realloc
+ regex
+ rpmatch
+ savedir
++selinux-at
+ stat-macros
+ stat-time
+ stpcpy
+diff --git a/lib/dircallback.c b/lib/dircallback.c
+index 5dbf3b3..a692b38 100644
+--- a/lib/dircallback.c
++++ b/lib/dircallback.c
+@@ -28,8 +28,8 @@
+ #include <errno.h>
+ 
+ #include "fcntl--.h"
+-#include "lstat.h"
+ #include "save-cwd.h"
++#include <sys/stat.h>
+ 
+ 
+ #ifdef HAVE_LOCALE_H
+-- 
+1.7.5.4
+
