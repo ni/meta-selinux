@@ -16,10 +16,10 @@ SRC_URI[sha256sum] = "8bbbc36b7d375edff891503932da93e37553f0dd7bdceded7ce9a45c80
 
 SRC_URI += "file://policycoreutils-fix-format-security.patch"
 
-DEPENDS += "libsepol libselinux libsemanage ${EXTRA_DEPENDS}"
+DEPENDS += "libsepol libselinux libsemanage"
+DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' == '${BPN}']}"
 EXTRA_DEPENDS = "libcap-ng libcgroup"
 EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
-EXTRA_DEPENDS_virtclass-native = ""
 
 RDEPENDS_${BPN} += "\
 	libselinux-python \
