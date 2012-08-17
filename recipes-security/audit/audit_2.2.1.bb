@@ -60,6 +60,7 @@ do_compile_prepend() {
 	cp -f ${STAGING_INCDIR}/sys/personality.h ${S}/lib/sys/
 	mkdir -p ${S}/lib/bits
 	cp -f ${STAGING_INCDIR}/bits/socket.h ${S}/lib/bits
+	cp -f ${STAGING_INCDIR}/bits/socket_type.h ${S}/lib/bits
 }
 
 do_install_append() {
