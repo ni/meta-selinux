@@ -21,11 +21,11 @@ FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinu
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/.debug/*"
 
 def get_git_policyconfigarch(d):
-	import re
-	target = d.getVar('TARGET_ARCH', True)
-	p = re.compile('i.86')
-	target = p.sub('i386',target)
-	return "ARCH=%s" % (target)
+    import re
+    target = d.getVar('TARGET_ARCH', True)
+    p = re.compile('i.86')
+    target = p.sub('i386',target)
+    return "ARCH=%s" % (target)
 EXTRA_OEMAKE += "${@get_git_policyconfigarch(d)}"
 
 do_compile_append() {
