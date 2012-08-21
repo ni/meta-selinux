@@ -13,13 +13,17 @@ ALLOW_EMPTY = "1"
 RDEPENDS_task-core-selinux = " \
 	ustr \
 	libsepol \
+	libsepol-bin \
 	libselinux \
+	libselinux-bin \
 	libsemanage \
 	checkpolicy \
 	sepolgen \
 	policycoreutils \
+	policycoreutils-sandbox \
 	policycoreutils-python \
 	setools \
+	setools-console \
 	selinux-config \
 	refpolicy-standard \
 	refpolicy-mls \
