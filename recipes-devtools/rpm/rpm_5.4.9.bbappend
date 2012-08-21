@@ -1,4 +1,4 @@
-PR .= ".1"
+PR .= ".2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
@@ -10,5 +10,5 @@ FILES_${PN} += "${libdir}/rpm/bin/spooktool \
                "
 
 # Fix incorrect dependency in upstream version
-PACKAGECONFIG[selinux] = "${WITH_SELINUX},${WITHOUT_SELINUX},libselinux,"
+PACKAGECONFIG[selinux] = "${WITH_SELINUX},${WITHOUT_SELINUX},libsemanage,"
 PACKAGECONFIG_append = " ${@base_contains('DISTRO_FEATURES', 'selinux', 'selinux', '', d)}"
