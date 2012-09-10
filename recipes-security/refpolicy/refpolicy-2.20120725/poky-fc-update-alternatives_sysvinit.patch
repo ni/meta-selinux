@@ -1,8 +1,6 @@
-From 11230c7bad442d70484880f59929a6d5cdc8a2e6 Mon Sep 17 00:00:00 2001
-From: Xin Ouyang <Xin.Ouyang@windriver.com>
-Date: Mon, 2 Jul 2012 14:53:21 +0800
-Subject: [PATCH] refpolicy: sysvinit fix.
+Subject: [PATCH] fix update-alternatives for sysvinit
 
+Upstream-Status: Inappropriate [only for Poky]
 ---
  policy/modules/contrib/shutdown.fc    |    1 +
  policy/modules/kernel/corecommands.fc |    1 +
@@ -21,7 +19,7 @@ index 97671a3..6cad0fd 100644
  
  /var/run/shutdown\.pid	--	gen_context(system_u:object_r:shutdown_var_run_t,s0)
 diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
-index 6590490..9eb091a 100644
+index db981df..f051c4a 100644
 --- a/policy/modules/kernel/corecommands.fc
 +++ b/policy/modules/kernel/corecommands.fc
 @@ -10,6 +10,7 @@
@@ -33,10 +31,10 @@ index 6590490..9eb091a 100644
  /bin/tcsh			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /bin/yash			--	gen_context(system_u:object_r:shell_exec_t,s0)
 diff --git a/policy/modules/system/init.fc b/policy/modules/system/init.fc
-index d94bcc3..d4d7489 100644
+index d2e40b8..80150ef 100644
 --- a/policy/modules/system/init.fc
 +++ b/policy/modules/system/init.fc
-@@ -34,6 +34,7 @@ ifdef(`distro_gentoo', `
+@@ -32,6 +32,7 @@ ifdef(`distro_gentoo', `
  # /sbin
  #
  /sbin/init(ng)?		--	gen_context(system_u:object_r:init_exec_t,s0)
