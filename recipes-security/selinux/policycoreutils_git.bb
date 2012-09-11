@@ -5,7 +5,7 @@ load_policy to load policies, setfiles to label filesystems, newrole \
 to switch roles, and run_init to run /etc/init.d scripts in the proper \
 context."
 SECTION = "base"
-PR = "r4"
+PR = "r5"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 DEFAULT_PREFERENCE = "-1"
@@ -15,12 +15,18 @@ include selinux_git.inc
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "2.1.10+git${SRCPV}"
 
-SRC_URI += "file://policycoreutils-fix-format-security.patch"
+SRC_URI += "file://policycoreutils-fix-format-security.patch \
+            ${@base_contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
+           "
 
-DEPENDS += "libsepol libselinux libsemanage ${EXTRA_DEPENDS}"
+PAM_SRC_URI = "file://pam.d/newrole \
+               file://pam.d/run_init \
+              "
+
+DEPENDS += "libsepol libselinux libsemanage"
+DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 EXTRA_DEPENDS = "libcap-ng libcgroup"
 EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
-EXTRA_DEPENDS_virtclass-native = ""
 
 RDEPENDS_${BPN} += "\
 	libselinux-python \
@@ -37,7 +43,7 @@ RDEPENDS_${BPN} += "\
 	python-textutils \
 	python-ipy \
 	"
-RDEPENDS_${BPN} += "setools"
+RDEPENDS_${BPN} += "setools setools-libs ${BPN}-python"
 
 WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
 ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"
@@ -74,4 +80,13 @@ do_install_virtclass-native() {
 			PREFIX="${D}/${prefix}" \
 			SBINDIR="${D}/${base_sbindir}"
 	done
+}
+
+do_install_append() {
+	test "${CLASSOVERRIDE}" = "class-native" && return 0
+
+	if [ -e ${WORKDIR}/pam.d ]; then
+		install -d ${D}${sysconfdir}/pam.d/
+		install -m 0644 ${WORKDIR}/pam.d/* ${D}${sysconfdir}/pam.d/
+	fi
 }
