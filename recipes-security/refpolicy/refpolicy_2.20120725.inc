@@ -15,4 +15,17 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-fix-real-path_login.patch \
            "
 
+# Specific policy for Poky
+SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
+            file://poky-policy-add-rules-for-var-log-symlink.patch \
+            file://poky-policy-add-rules-for-tmp-symlink.patch \
+            file://poky-policy-add-rules-for-bsdpty_device_t.patch \
+            file://poky-policy-don-t-audit-tty_device_t.patch \
+            file://poky-policy-allow-dbusd-to-setrlimit-itself.patch \
+            file://poky-policy-allow-dbusd-to-exec-shell-commands.patch \
+            file://poky-policy-allow-nfsd-to-exec-shell-commands.patch \
+            file://poky-policy-allow-setfiles_t-to-read-symlinks.patch \
+            file://poky-policy-fix-new-SELINUXMNT-in-sys.patch \
+           "
+
 include refpolicy_common.inc
