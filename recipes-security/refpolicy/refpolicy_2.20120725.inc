@@ -28,4 +28,8 @@ SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
             file://poky-policy-fix-new-SELINUXMNT-in-sys.patch \
            "
 
+# Other policy fixes 
+SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
+           "
+
 include refpolicy_common.inc
