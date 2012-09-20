@@ -7,7 +7,7 @@ This meta-package depends upon the main packages necessary to run \
 SETools."
 SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://oss.tresys.com/projects/setools/chrome/site/dists/setools-${PV}/setools-${PV}.tar.bz2;"
 SRC_URI[md5sum] = "0377d7a06028825434cd7b41a80865a5"
@@ -33,7 +33,7 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
                     file://${S}/COPYING.GPL;md5=751419260aa954499f7abaabaa882bbe \
                     file://${S}/COPYING.LGPL;md5=fbc093901857fcd118f065f900982c24"
 
-DEPENDS += "python python-native libsepol libselinux"
+DEPENDS += "python libsepol libselinux"
 
 PACKAGES += "${PN}-libs ${PN}-console"
 
@@ -73,7 +73,7 @@ FILES_${PN}-console = "\
 	${mandir}/man1/sesearch.1.gz \
 	"
 
-inherit autotools
+inherit autotools pythonnative
 
 # need to export these variables for python-config to work
 export BUILD_SYS
