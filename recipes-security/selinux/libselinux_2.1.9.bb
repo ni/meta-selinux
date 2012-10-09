@@ -3,8 +3,8 @@ DESCRIPTION = "libselinux provides an API for SELinux applications to get and se
 process and file security contexts and to obtain security policy \
 decisions.  Required for any applications that use the SELinux API."
 SECTION = "base"
-PR = "r2"
-LICENSE = "Public Domain"
+PR = "r3"
+LICENSE = "PD"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84b4d2c6ef954a2d4081e775a270d0d0"
 
 include selinux_20120216.inc
