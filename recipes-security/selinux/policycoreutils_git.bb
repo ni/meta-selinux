@@ -5,7 +5,7 @@ load_policy to load policies, setfiles to label filesystems, newrole \
 to switch roles, and run_init to run /etc/init.d scripts in the proper \
 context."
 SECTION = "base"
-PR = "r5"
+PR = "r6"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 DEFAULT_PREFERENCE = "-1"
@@ -16,6 +16,7 @@ SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "2.1.10+git${SRCPV}"
 
 SRC_URI += "file://policycoreutils-fix-format-security.patch \
+            file://policycoreutils-remove-empty-po-files.patch \
             ${@base_contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
            "
 
