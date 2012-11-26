@@ -3,11 +3,12 @@ DESCRIPTION = "\
 This is the reference policy for SELinux built with type enforcement \
 only."
 
-PR = "r2"
+PR = "r3"
 
 POLICY_NAME = "standard"
 POLICY_TYPE = "standard"
 POLICY_DISTRO = "redhat"
+POLICY_UBAC = "n"
 POLICY_UNK_PERMS = "allow"
 POLICY_DIRECT_INITRC = "n"
 POLICY_MONOLITHIC = "n"

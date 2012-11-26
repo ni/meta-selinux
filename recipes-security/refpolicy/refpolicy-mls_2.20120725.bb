@@ -5,11 +5,12 @@ It allows giving data labels such as \"Top Secret\" and preventing \
 such data from leaking to processes or files with lower classification. \
 "
 
-PR = "r2"
+PR = "r3"
 
 POLICY_NAME = "mls"
 POLICY_TYPE = "mls"
 POLICY_DISTRO = "redhat"
+POLICY_UBAC = "n"
 POLICY_UNK_PERMS = "allow"
 POLICY_DIRECT_INITRC = "n"
 POLICY_MONOLITHIC = "n"
