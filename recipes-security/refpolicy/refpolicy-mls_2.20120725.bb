@@ -5,7 +5,7 @@ It allows giving data labels such as \"Top Secret\" and preventing \
 such data from leaking to processes or files with lower classification. \
 "
 
-PR = "r1"
+PR = "r2"
 
 POLICY_NAME = "mls"
 POLICY_TYPE = "mls"
