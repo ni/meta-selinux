@@ -4,7 +4,7 @@ It is used by checkpolicy (the policy compiler) and similar tools, as well \
 as by programs like load_policy that need to perform specific transformations \
 on binary policies such as customizing policy boolean settings."
 SECTION = "base"
-PR = "r1"
+PR = "r2"
 LICENSE = "LGPLv2.1+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
 DEFAULT_PREFERENCE = "-1"
@@ -15,7 +15,7 @@ inherit lib_package
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "2.1.6+git${SRCPV}"
 
-DEPENDS += "libsepol libselinux ustr bzip2 python"
+DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native"
 
 SRC_URI += "file://Fix-segfault-for-standard-policy.patch"
 SRC_URI += "file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch"
