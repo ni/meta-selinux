@@ -1,6 +1,4 @@
-PR .= ".2"
-
-SRC_URI = "${SOURCEFORGE_MIRROR}/project/libcg/${BPN}/v${PV}/${BPN}-${PV}.tar.bz2"
+PR .= ".3"
 
 EXTRA_OECONF_virtclass-native = "--enable-pam=no"
 
