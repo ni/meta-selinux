@@ -5,7 +5,7 @@ load_policy to load policies, setfiles to label filesystems, newrole \
 to switch roles, and run_init to run /etc/init.d scripts in the proper \
 context."
 SECTION = "base"
-PR = "r6"
+PR = "r7"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
@@ -61,6 +61,7 @@ AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/li
 PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
 EXTRA_OEMAKE += "${@base_contains('DISTRO_FEATURES', 'pam', 'PAMH=${PAMH} AUDITH=${AUDITH}', 'PAMH= AUDITH= ', d)} INOTIFYH=n"
 EXTRA_OEMAKE += "PREFIX=${D}"
+EXTRA_OEMAKE += "INITDIR=${D}/etc/init.d"
 
 BBCLASSEXTEND = "native"
 
