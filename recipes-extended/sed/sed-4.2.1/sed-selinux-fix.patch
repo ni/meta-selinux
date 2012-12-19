@@ -1,0 +1,68 @@
+Subject: [PATCH] sed: enable selinux only when incs and libs exist.
+
+Upstream-Status: Pending
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+---
+ m4/selinux-selinux-h.m4 |    4 ++++
+ sed/execute.c           |    8 ++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/m4/selinux-selinux-h.m4 b/m4/selinux-selinux-h.m4
+index 20dc77c..542b4e6 100644
+--- a/m4/selinux-selinux-h.m4
++++ b/m4/selinux-selinux-h.m4
+@@ -34,6 +34,10 @@ AC_DEFUN([gl_LIBSELINUX],
+                  [test "$ac_cv_search_setfilecon" = "none required" ||
+                   LIB_SELINUX=$ac_cv_search_setfilecon])
+   AC_SUBST([LIB_SELINUX])
++  if test "$ac_cv_search_setfilecon" != no &&
++     test "$ac_cv_header_selinux_selinux_h" != no ; then
++    AC_DEFINE(HAVE_LIBSELINUX, 1, [libselinux enabled])
++  fi
+   LIBS=$gl_save_LIBS
+ 
+   # Warn if SELinux is found but libselinux is absent;
+diff --git a/sed/execute.c b/sed/execute.c
+index 6fbfff6..7e55e18 100644
+--- a/sed/execute.c
++++ b/sed/execute.c
+@@ -31,7 +31,7 @@
+ extern int errno;
+ #endif
+ 
+-#ifndef BOOTSTRAP
++#ifdef HAVE_LIBSELINUX
+ #include <selinux/selinux.h>
+ #include <selinux/context.h>
+ #endif
+@@ -718,7 +718,7 @@ open_next_file(name, input)
+     {
+       int input_fd;
+       char *tmpdir, *p;
+-#ifndef BOOTSTRAP
++#ifdef HAVE_LIBSELINUX
+       security_context_t old_fscreatecon;
+       int reset_fscreatecon = 0;
+       memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
+@@ -744,7 +744,7 @@ open_next_file(name, input)
+       if (!S_ISREG (input->st.st_mode))
+         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
+ 
+-#ifndef BOOTSTRAP
++#ifdef HAVE_LIBSELINUX
+       if (is_selinux_enabled ())
+ 	{
+           security_context_t con;
+@@ -771,7 +771,7 @@ open_next_file(name, input)
+       output_file.missing_newline = false;
+       free (tmpdir);
+ 
+-#ifndef BOOTSTRAP
++#ifdef HAVE_LIBSELINUX
+       if (reset_fscreatecon)
+ 	{
+ 	  setfscreatecon (old_fscreatecon);
+-- 
+1.7.9.5
+
