@@ -1,9 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux audit', '', d)}"
+PR .= ".3"
 
-EXTRA_OECONF += "${@base_contains('DISTRO_FEATURES', 'selinux', '--with-selinux', '--without-selinux', d)}"
-EXTRA_OECONF += "${@base_contains('DISTRO_FEATURES', 'selinux', '--with-audit', '--without-audit', d)}"
-
-PR .= ".2"
-
+inherit with-selinux with-audit

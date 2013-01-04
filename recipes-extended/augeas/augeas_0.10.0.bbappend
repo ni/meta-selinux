@@ -1,6 +1,3 @@
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux', '', d)}"
+PR .= ".2"
 
-EXTRA_OECONF += "${@base_contains('DISTRO_FEATURES', 'selinux', '--with-selinux', '--without-selinux', d)}"
-
-PR .= ".1"
-
+inherit with-selinux
