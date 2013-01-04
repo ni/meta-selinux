@@ -1,9 +1,11 @@
-PR .= ".1"
+PR .= ".2"
 
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux', '', d)}"
+inherit selinux
+
+DEPENDS += "${LIBSELINUX}"
 
 do_configure_prepend () {
-	export LINUX_HASSELINUX="${@base_contains('DISTRO_FEATURES', 'selinux', 'Y', 'N', d)}"
+	export LINUX_HASSELINUX="${@target_selinux(d, 'Y', 'N')}"
 	export LSOF_CFGF="${CFLAGS}"
 	export LSOF_CFGL="${LDFLAGS}"
 	export LSOF_CC="${BUILD_CC}"

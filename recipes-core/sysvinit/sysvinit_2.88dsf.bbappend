@@ -4,9 +4,11 @@ B = "${S}"
 
 SRC_URI += "file://sysvinit-fix-is_selinux_enabled.patch"
 
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux', '', d)}"
+inherit selinux
 
-EXTRA_OEMAKE += "${@base_contains('DISTRO_FEATURES', 'selinux', 'WITH_SELINUX=\"yes\"', '', d)}"
+DEPENDS += "${LIBSELINUX}"
 
-PR .= ".1"
+EXTRA_OEMAKE += "${@target_selinux(d, 'WITH_SELINUX=\"yes\"')}"
+
+PR .= ".2"
 

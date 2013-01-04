@@ -1,7 +1,9 @@
-PR .= ".1"
+PR .= ".2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
 SRC_URI += "file://sed-selinux-fix.patch"
 
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux', '', d)}"
+inherit selinux
+
+DEPENDS += "${LIBSELINUX}"

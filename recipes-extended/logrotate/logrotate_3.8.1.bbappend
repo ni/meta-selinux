@@ -1,5 +1,7 @@
-PR .= ".1"
+PR .= ".2"
 
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux', '', d)}"
+inherit selinux
 
-EXTRA_OEMAKE += "${@base_contains('DISTRO_FEATURES', 'selinux', 'WITH_SELINUX=\"yes\"', '', d)}"
+DEPENDS += "${LIBSELINUX}"
+
+EXTRA_OEMAKE += "${@target_selinux(d, 'WITH_SELINUX=\"yes\"')}"
