@@ -3,11 +3,8 @@ FILESPATH_append := ":${@base_set_filespath(['${THISDIR}/${PN}'], d)}"
 
 SRC_URI += "file://sepermit-add-DESTDIR-prefix.patch"
 
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'selinux', 'libselinux', '', d)}"
+PR .= ".4"
 
-RDEPENDS_${PN}-runtime += "${@base_contains('DISTRO_FEATURES', 'selinux', 'pam-plugin-selinux', '', d)}"
+inherit enable-selinux
 
-EXTRA_OECONF += "${@base_contains('DISTRO_FEATURES', 'selinux', '', '--disable-selinux', d)}"
-
-PR .= ".3"
-
+RDEPENDS_${PN}-runtime += "${@target_selinux(d, 'pam-plugin-selinux')}"
