@@ -4,7 +4,7 @@ def target_selinux(d, truevar = 'selinux', falsevar = ''):
 
     pn = d.getVar("PN", True) 
     type = pn.replace(d.getVar("BPN", True), "") 
-    if type in ("-native", "-nativesdk", "-cross", "-crosssdk"):
+    if type in ("-native", "nativesdk-", "-cross", "-crosssdk"):
         return falsevar
 
     return truevar 
