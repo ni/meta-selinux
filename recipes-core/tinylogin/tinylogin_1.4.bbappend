@@ -1,4 +1,4 @@
-PR .= ".2"
+PR .= ".3"
 
 do_install () {
 	install -d ${D}${base_bindir}
@@ -10,5 +10,6 @@ do_install () {
 	done
 }
 
-ALTERNATIVE_${PN} += "login"
+ALTERNATIVE_${PN} += "login passwd"
 ALTERNATIVE_LINK_NAME[login] = "${base_bindir}/login"
+ALTERNATIVE_LINK_NAME[passwd] = "${bindir}/passwd"
