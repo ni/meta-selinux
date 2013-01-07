@@ -44,26 +44,26 @@ do_install() {
 		DESTDIR=${D}
 
 	# Prepare to create policy store
-	mkdir -p ${D}/etc/selinux/
-	cat <<-EOF > ${D}/etc/selinux/semanage.conf
+	mkdir -p ${D}${sysconfdir}/selinux/
+	cat <<-EOF > ${D}${sysconfdir}/selinux/semanage.conf
 module-store = direct
 [setfiles]
 path = ${STAGING_DIR_NATIVE}${base_sbindir_native}/setfiles
 args = -q -c \$@ \$<
 [end]
 EOF
-	mkdir -p ${D}/etc/selinux/${POLICY_NAME}/policy
-	mkdir -p ${D}/etc/selinux/${POLICY_NAME}/modules/active/modules
-	mkdir -p ${D}/etc/selinux/${POLICY_NAME}/contexts/files
-	bzip2 -c ${D}/usr/share/selinux/${POLICY_NAME}/base.pp  > \
-		${D}/etc/selinux/${POLICY_NAME}/modules/active/base.pp
-	for i in ${D}/usr/share/selinux/${POLICY_NAME}/*.pp; do
+	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/policy
+	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
+	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
+	bzip2 -c ${D}${datadir}/selinux/${POLICY_NAME}/base.pp  > \
+		${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
+	for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
 		if [ "`basename $i`" != "base.pp" ]; then
-			bzip2 -c $i > ${D}/etc/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`;
+			bzip2 -c $i > ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`;
 		fi
 	done
 
 	# Create policy store and build the policy
 	semodule -p ${D} -s ${POLICY_NAME} -n -B
-	rm -f ${D}/etc/selinux/semanage.conf
+	rm -f ${D}${sysconfdir}/selinux/semanage.conf
 }
