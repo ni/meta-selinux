@@ -1,7 +1,13 @@
+PRINC = "1"
+
 SECTION = "base"
 LICENSE = "GPLv2"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
+
+# Specific config files for Poky
+SRC_URI += "file://customizable_types \
+	   "
 
 S = "${WORKDIR}/refpolicy"
 
@@ -66,4 +72,7 @@ EOF
 	# Create policy store and build the policy
 	semodule -p ${D} -s ${POLICY_NAME} -n -B
 	rm -f ${D}${sysconfdir}/selinux/semanage.conf
+
+	cat ${WORKDIR}/customizable_types >> \
+		${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/customizable_types
 }
