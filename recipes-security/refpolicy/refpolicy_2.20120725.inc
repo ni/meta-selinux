@@ -13,6 +13,7 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-fix-prefix-path_rpc.patch \
             file://poky-fc-fix-real-path_resolv.conf.patch \
             file://poky-fc-fix-real-path_login.patch \
+            file://poky-fc-fix-real-path_shadow.patch \
            "
 
 # Specific policy for Poky

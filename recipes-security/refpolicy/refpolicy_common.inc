@@ -1,4 +1,4 @@
-PRINC = "1"
+PRINC = "2"
 
 SECTION = "base"
 LICENSE = "GPLv2"
