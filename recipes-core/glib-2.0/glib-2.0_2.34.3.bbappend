@@ -1,3 +1,3 @@
-PR .= ".2"
+PR .= ".3"
 
-inherit with-selinux
+inherit enable-selinux
