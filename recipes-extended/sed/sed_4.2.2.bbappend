@@ -1,9 +1,3 @@
-PR .= ".2"
+PR .= ".3"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
-
-SRC_URI += "file://sed-selinux-fix.patch"
-
-inherit selinux
-
-DEPENDS += "${LIBSELINUX}"
+inherit with-selinux
