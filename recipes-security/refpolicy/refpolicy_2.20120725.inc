@@ -31,6 +31,7 @@ SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
 
 # Other policy fixes 
 SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
+            file://poky-policy-fix-seutils-manage-config-files.patch \
             file://poky-policy-fix-nfsd_t.patch \
            "
 
