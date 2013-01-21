@@ -18,7 +18,7 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DESC="audit daemon"
 NAME=auditd
-DAEMON=/usr/sbin/auditd
+DAEMON=/sbin/auditd
 PIDFILE=/var/run/"$NAME".pid
 SCRIPTNAME=/etc/init.d/"$NAME"
 
@@ -48,7 +48,7 @@ do_start()
 		|| return 2
 	if [ -f /etc/audit/audit.rules ]
 	then
-		/usr/sbin/auditctl -R /etc/audit/audit.rules >/dev/null
+		/sbin/auditctl -R /etc/audit/audit.rules >/dev/null
 	fi
 }
 
@@ -71,7 +71,7 @@ do_stop()
 	# Remove watches so shutdown works cleanly
 	case "$AUDITD_CLEAN_STOP" in
 		no|NO) ;;
-		*) /usr/sbin/auditctl -D >/dev/null ;;
+		*) /sbin/auditctl -D >/dev/null ;;
 	esac
 	return "$RETVAL"
 }
@@ -86,6 +86,7 @@ do_reload() {
 
 if [ ! -e /var/log/audit ]; then
 	mkdir -p /var/log/audit
+	[ -x /sbin/restorecon ] && /sbin/restorecon /var/log/audit
 fi
 
 case "$1" in
