@@ -7,7 +7,7 @@ This meta-package depends upon the main packages necessary to run \
 SETools."
 SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://oss.tresys.com/projects/setools/chrome/site/dists/setools-${PV}/setools-${PV}.tar.bz2;"
 SRC_URI[md5sum] = "0377d7a06028825434cd7b41a80865a5"
@@ -87,7 +87,7 @@ do_configure() {
 	export PYTHON=python
 	export PYLIBVER='python${PYTHON_BASEVERSION}'
 	export PYTHON_CPPFLAGS="-I${STAGING_INCDIR}/${PYLIBVER}"
-	export PYTHON_LDFLAGS="-L${STAGING_LIBDIR}/${PYLIBVER} -l${PYLIBVER}"
+	export PYTHON_LDFLAGS="${STAGING_LIBDIR}/lib${PYLIBVER}.so"
 	export PYTHON_SITE_PKG="${libdir}/${PYLIBVER}/site-packages"
         oe_runconf --disable-bwidget-check --disable-selinux-check \
 		--disable-swig-python --disable-swig-java --disable-swig-tcl \
