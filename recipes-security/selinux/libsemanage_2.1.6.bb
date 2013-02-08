@@ -1,4 +1,4 @@
-PR = "r3"
+PR = "r4"
 
 include selinux_20120216.inc
 include ${BPN}.inc
@@ -11,4 +11,5 @@ SRC_URI[sha256sum] = "64e6849fe50fb463ec0ba24653a26e3452fa4aaa7d7e192213d5c5a7c5
 SRC_URI += "file://Fix-segfault-for-standard-policy.patch \
 	file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \
 	file://libsemanage-semanage.conf-for-cross-compile.patch \
-	file://libsemanage-fix-path-len-limit.patch"
+	file://libsemanage-fix-path-len-limit.patch \
+	file://libsemanage-fix-path-nologin.patch"
