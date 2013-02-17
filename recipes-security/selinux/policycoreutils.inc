@@ -1,4 +1,4 @@
-PRINC = "2"
+PRINC = "3"
 
 SUMMARY = "SELinux policy core utilities"
 DESCRIPTION = "policycoreutils contains the policy core utilities that are required \
@@ -16,9 +16,11 @@ PAM_SRC_URI = "file://pam.d/newrole \
               "
 
 DEPENDS += "libsepol libselinux libsemanage"
+EXTRA_DEPENDS = "libcap-ng libcgroup"
+DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
 inherit selinux
-DEPENDS += "${@target_selinux(d, 'libcap-ng libcgroup libpam audit')}"
+DEPENDS += "${@target_selinux(d, 'libpam audit')}"
 
 RDEPENDS_${BPN} += "\
 	libselinux-python \
