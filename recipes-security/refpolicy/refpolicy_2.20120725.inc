@@ -19,6 +19,7 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
 # Specific policy for Poky
 SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
             file://poky-policy-add-rules-for-var-log-symlink.patch \
+            file://poky-policy-add-rules-for-var-cache-symlink.patch \
             file://poky-policy-add-rules-for-tmp-symlink.patch \
             file://poky-policy-add-rules-for-bsdpty_device_t.patch \
             file://poky-policy-don-t-audit-tty_device_t.patch \
