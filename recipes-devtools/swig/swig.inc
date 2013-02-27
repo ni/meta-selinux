@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=e7807a6282784a7dde4c846626b08fc6 \
                     file://LICENSE-UNIVERSITIES;md5=e0eaeeef7b2662c0c2d0d3c0b2509f75"
 
 SECTION = "devel"
-INC_PR = "r1"
+INC_PR = "r2"
 
 DEPENDS = "python"
 
@@ -22,3 +22,10 @@ do_configure() {
 	oe_runconf
 }
 
+def swiglib_relpath(d):
+    swiglib = d.getVar('datadir', True) + "/" + d.getVar('BPN', True) + "/" + d.getVar('PV', True)
+    return os.path.relpath(swiglib, d.getVar('bindir', True))
+
+do_install_append_class-native() {
+	create_wrapper ${D}${bindir}/swig SWIG_LIB='`dirname $''realpath`'/${@swiglib_relpath(d)}
+}
