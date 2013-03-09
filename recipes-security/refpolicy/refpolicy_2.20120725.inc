@@ -15,6 +15,7 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-fix-real-path_login.patch \
             file://poky-fc-fix-real-path_shadow.patch \
             file://poky-fc-fix-bind.patch \
+            file://poky-fc-fix-portmap.patch \
            "
 
 # Specific policy for Poky
@@ -27,6 +28,8 @@ SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
             file://poky-policy-allow-dbusd-to-setrlimit-itself.patch \
             file://poky-policy-allow-dbusd-to-exec-shell-commands.patch \
             file://poky-policy-allow-nfsd-to-exec-shell-commands.patch \
+            file://poky-policy-fix-nfsd_t-to-mount_nfsd_fs_t.patch \
+            file://poky-policy-allow-nfsd-to-bind-nfs-port.patch \
             file://poky-policy-allow-setfiles_t-to-read-symlinks.patch \
             file://poky-policy-fix-new-SELINUXMNT-in-sys.patch \
            "
@@ -34,7 +37,6 @@ SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
 # Other policy fixes 
 SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
             file://poky-policy-fix-seutils-manage-config-files.patch \
-            file://poky-policy-fix-nfsd_t.patch \
            "
 
 include refpolicy_common.inc

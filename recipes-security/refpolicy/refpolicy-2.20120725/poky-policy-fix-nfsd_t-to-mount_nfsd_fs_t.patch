@@ -1,4 +1,4 @@
-Subject: [PATCH] fix policy to allow nfsserver to work fine.
+Subject: [PATCH] fix policy for nfsserver to mount nfsd_fs_t.
 
 Upstream-Status: Pending
 
@@ -56,11 +56,12 @@ diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
 index ab9b6cd..15d3814 100644
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -284,6 +284,7 @@ mls_process_read_up(kernel_t)
+@@ -284,6 +284,8 @@ mls_process_read_up(kernel_t)
  mls_process_write_down(kernel_t)
  mls_file_write_all_levels(kernel_t)
  mls_file_read_all_levels(kernel_t)
 +mls_socket_write_all_levels(kernel_t)
++mls_fd_use_all_levels(kernel_t)
  
  ifdef(`distro_redhat',`
  	# Bugzilla 222337
