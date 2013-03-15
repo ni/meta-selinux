@@ -4,7 +4,7 @@ DESCRIPTION = "Micro string library, very low overhead from plain strdup() (Ave.
 just include a single header file into your .c and start using it."
 
 SECTION = "base"
-PR = "r1"
+PR = "r2"
 LICENSE = "MIT | LGPLv2+ | BSD"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c79c6e2ae13418d16d7dc82df960a1e7 \
 		    file://LICENSE_BSD;md5=ceb504b0b6471e76cc9cb32cfb150f3c \
@@ -43,11 +43,11 @@ do_install() {
 	oe_runmake install-multilib-linux  \
 		mlib=${SITEINFO_BITS} \
 		DESTDIR=${D} LDCONFIG=/bin/true
-	mkdir -p ${D}/${datadir}/doc/${PN}-${PV}
-	install ChangeLog ${D}/${datadir}/doc/${PN}-${PV}
-	install LICENSE* ${D}/${datadir}/doc/${PN}-${PV}
-	install README ${D}/${datadir}/doc/${PN}-${PV}
-	install NEWS ${D}/${datadir}/doc/${PN}-${PV}
+	mkdir -p ${D}/${datadir}/doc/${BPN}-${PV}
+	install ChangeLog ${D}/${datadir}/doc/${BPN}-${PV}
+	install LICENSE* ${D}/${datadir}/doc/${BPN}-${PV}
+	install README ${D}/${datadir}/doc/${BPN}-${PV}
+	install NEWS ${D}/${datadir}/doc/${BPN}-${PV}
 	mv ${D}/${docdir}/ustr-devel-${PV}/strdup\ vs.\ ustr.gnumeric \
 		${D}/${docdir}/ustr-devel-${PV}/strdup_vs._ustr.gnumeric
 }
