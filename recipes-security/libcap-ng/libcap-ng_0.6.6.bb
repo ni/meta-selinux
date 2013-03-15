@@ -5,7 +5,7 @@ It includes utilities that can analyze all currently running \
 applications to locate applications that may have too many privileges."
 HOMEPAGE = "http://freecode.com/projects/libcap-ng"
 SECTION = "base"
-PR = "r2"
+PR = "r3"
 LICENSE = "GPLv2+ & LGPLv2.1+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f \
 		    file://COPYING.LIB;md5=e3eda01d9815f8d24aae2dbd89b68b06"
@@ -28,3 +28,13 @@ FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
 
 BBCLASSEXTEND = "native"
+
+do_install_append() {
+	# Moving libcap-ng to base_libdir
+	if [ ! ${D}${libdir} -ef ${D}${base_libdir} ]; then
+		mkdir -p ${D}/${base_libdir}/
+		mv -f ${D}${libdir}/libcap-ng.so.* ${D}${base_libdir}/
+		relpath=${@os.path.relpath("${base_libdir}", "${libdir}")}
+		ln -sf ${relpath}/libcap-ng.so.0.0.0 ${D}${libdir}/libcap-ng.so
+	fi
+}
