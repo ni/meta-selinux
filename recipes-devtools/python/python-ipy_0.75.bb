@@ -9,7 +9,7 @@ DEPENDS = "python"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://COPYING;md5=ebc0028ff5cdaf7796604875027dcd55"
 
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://pypi.python.org/packages/source/I/IPy/IPy-${PV}.tar.gz"
 
@@ -29,6 +29,6 @@ export STAGING_LIBDIR
 BBCLASSEXTEND = "native"
 
 do_install_append() {
-	install -d ${D}/${datadir}/doc/${PN}-${PV}
-	install AUTHORS COPYING ChangeLog PKG-INFO README ${D}/${datadir}/doc/${PN}-${PV}
+	install -d ${D}/${datadir}/doc/${BPN}-${PV}
+	install AUTHORS COPYING ChangeLog PKG-INFO README ${D}/${datadir}/doc/${BPN}-${PV}
 }
