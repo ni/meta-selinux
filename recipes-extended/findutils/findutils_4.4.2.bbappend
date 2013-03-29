@@ -9,6 +9,6 @@ SRC_URI += "file://findutils-with-selinux-gnulib.patch"
 inherit with-selinux
 
 do_configure_prepend() {
-       ./import-gnulib.sh -d ${WORKDIR}/git
+	cd ${S} && ./import-gnulib.sh -d ${WORKDIR}/git && cd ${B}
 }
 
