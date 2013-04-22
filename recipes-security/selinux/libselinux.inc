@@ -9,7 +9,7 @@ LICENSE = "PD"
 
 inherit lib_package pythonnative
 
-DEPENDS += "libsepol python swig-native"
+DEPENDS += "libsepol python libpcre swig-native"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/*"
@@ -22,6 +22,8 @@ def get_policyconfigarch(d):
     target = p.sub('i386',target)
     return "ARCH=%s" % (target)
 EXTRA_OEMAKE += "${@get_policyconfigarch(d)}"
+
+EXTRA_OEMAKE += "LDFLAGS='${LDFLAGS} -lpcre'"
 
 do_compile_append() {
     oe_runmake pywrap -j1 \
@@ -38,6 +40,7 @@ do_install_append() {
             DESTDIR=${D} \
             PYLIBVER='python${PYTHON_BASEVERSION}' \
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
+    rm -rf ${D}${base_sbindir}
 }
 
 BBCLASSEXTEND = "native"

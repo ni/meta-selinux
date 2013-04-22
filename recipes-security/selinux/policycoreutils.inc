@@ -43,11 +43,12 @@ RDEPENDS_${BPN} += "setools setools-libs ${BPN}-python"
 WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
 ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"
 
-PACKAGES =+ "${PN}-python ${PN}-sandbox"
+PACKAGES =+ "${PN}-python ${PN}-sandbox system-config-selinux"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-sandbox = "${datadir}/sandbox/*"
 FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
+FILES_system-config-selinux = "${datadir}/system-config-selinux/*"
 
 inherit pythonnative
 
