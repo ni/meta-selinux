@@ -7,7 +7,7 @@ LICENSE = "MIT"
 IMAGE_INSTALL = "\
 	${CORE_IMAGE_BASE_INSTALL} \
 	packagegroup-core-basic \
-	task-core-selinux \
+	packagegroup-core-selinux \
 "   
 
 inherit core-image
