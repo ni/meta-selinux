@@ -1,4 +1,4 @@
-PR = "r4"
+PR = "r5"
 PV = "2.1.6+git${SRCPV}"
 
 include selinux_git.inc
@@ -10,4 +10,6 @@ SRC_URI += "file://Fix-segfault-for-standard-policy.patch \
 	file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \
 	file://libsemanage-semanage.conf-for-cross-compile.patch \
 	file://libsemanage-fix-path-len-limit.patch \
-	file://libsemanage-fix-path-nologin.patch"
+	file://libsemanage-fix-path-nologin.patch \
+	file://libsemanage-drop-Wno-unused-but-set-variable.patch \
+	"

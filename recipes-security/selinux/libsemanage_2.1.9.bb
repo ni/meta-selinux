@@ -1,4 +1,4 @@
-PR = "r0"
+PR = "r1"
 
 include selinux_20120924.inc
 include ${BPN}.inc
@@ -11,4 +11,6 @@ SRC_URI[sha256sum] = "6f01d17f9751412f7b76e6e7daafeb2faf301b9bfeea83506160c81bec
 SRC_URI += "\
 	file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \
 	file://libsemanage-fix-path-len-limit.patch \
-	file://libsemanage-fix-path-nologin.patch"
+	file://libsemanage-fix-path-nologin.patch \
+	file://libsemanage-drop-Wno-unused-but-set-variable.patch \
+	"
