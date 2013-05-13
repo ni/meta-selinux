@@ -2,10 +2,11 @@ PRINC = "1"
 
 do_install_append () {
 	if [ ! ${D}${libdir} -ef ${D}${base_libdir} ]; then
+		realsofile=`readlink ${D}${libdir}/libpcre.so`
 		mkdir -p ${D}/${base_libdir}/
 		mv -f ${D}${libdir}/libpcre.so.* ${D}${base_libdir}/
 		relpath=${@os.path.relpath("${base_libdir}", "${libdir}")}
-		ln -sf ${relpath}/libpcre.so.0.0.1 ${D}${libdir}/libpcre.so
+		ln -sf ${relpath}/${realsofile} ${D}${libdir}/libpcre.so
 	fi
 }
 
