@@ -1,4 +1,4 @@
-PR = "r1"
+PR = "r2"
 
 include selinux_20120924.inc
 include ${BPN}.inc
@@ -10,6 +10,6 @@ SRC_URI[sha256sum] = "8dad879380e0ce1e4ab67195a08f6052c1396493bcb12fe92a033f49f7
 
 SRC_URI += "\
         file://libselinux-fix-init-load-policy.patch \
-        file://libselinux-pcre-link-order.patch \
         file://libselinux-drop-Wno-unused-but-set-variable.patch \
+        file://libselinux-revert-libpcre.patch \
         "
