@@ -1,0 +1,40 @@
+From 0b2d9e47c759bf2d0842f20d6af5c4e678e9c34c Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Tue, 4 Jun 2013 17:04:44 +0800
+Subject: [PATCH] policycoreutils: Revert "run_init: If open_init_pty ..."
+
+This reverts commit d46e88abb6e1f7b0228c30c98ba4fb739e63cda3.
+
+In d46e88ab, run_init will not use open_init_pty as Redhat did. Our
+old refpolicy still does no work well with this, and make init scripts
+fail to start so revert it.
+
+This patch should be dropped while refpolicy is upreved to 2.20120725+.
+
+Upstream-Status: Inappropriate [for old refpolicy]
+
+---
+ run_init/run_init.c | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/run_init/run_init.c b/run_init/run_init.c
+index 92034be..9db766c 100644
+--- a/run_init/run_init.c
++++ b/run_init/run_init.c
+@@ -406,13 +406,6 @@ int main(int argc, char *argv[])
+ 			new_context);
+ 		exit(-1);
+ 	}
+-	if (! access("/usr/sbin/open_init_pty", X_OK)) {
+-		if (execvp(argv[1], argv + 1)) {
+-			perror("execvp");
+-			exit(-1);
+-		}
+-		return 0;
+-	}
+ 	/*
+ 	 * Do not execvp the command directly from run_init; since it would run
+ 	 * under with a pty under sysadm_devpts_t. Instead, we call open_init_tty,
+-- 
+1.8.1.2
+
