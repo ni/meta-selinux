@@ -19,6 +19,12 @@ Please keep this list in alphabetical order.
 Maintainers List (try to look for most precise areas first)
 
 COMMON
+M:	Xin Ouyang <xin.ouyang@windriver.com>
+F:	conf
+F:	classes
+F:	recipes-*
+
+COMMON
 M:	Mark Hatle <mark.hatle@windriver.com>
 F:	conf
 F:	recipes-*
