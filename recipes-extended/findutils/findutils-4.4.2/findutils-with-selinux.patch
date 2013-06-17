@@ -71,9 +71,9 @@ index 391ffa0..f599bbc 100644
  * Location Directives::
  * Time Directives::
 +* Other Directives::
- * Formatting Flags::
  @end menu
  
+ @node Name Directives
 @@ -1890,6 +1898,14 @@ File's last modification time in the format specified by @var{k}
  (@pxref{Time Formats}).
  @end table
