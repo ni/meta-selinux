@@ -52,6 +52,11 @@ FILES_system-config-selinux = "${datadir}/system-config-selinux/*"
 
 inherit pythonnative
 
+export STAGING_INCDIR
+export STAGING_LIBDIR
+export BUILD_SYS
+export HOST_SYS
+
 AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
 PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
 EXTRA_OEMAKE += "${@target_selinux(d, 'PAMH=${PAMH} AUDITH=${AUDITH}', 'PAMH= AUDITH= ')} INOTIFYH=n"
@@ -68,6 +73,14 @@ do_compile_virtclass-native() {
 			INCLUDEDIR='${STAGING_INCDIR}' \
 			LIBDIR='${STAGING_LIBDIR}'
 	done
+}
+
+do_compile_prepend() {
+	export PYTHON=python
+	export PYLIBVER='python${PYTHON_BASEVERSION}'
+	export PYTHON_CPPFLAGS="-I${STAGING_INCDIR}/${PYLIBVER}"
+	export PYTHON_LDFLAGS="${STAGING_LIBDIR}/lib${PYLIBVER}.so"
+	export PYTHON_SITE_PKG="${libdir}/${PYLIBVER}/site-packages"
 }
 
 do_install_virtclass-native() {

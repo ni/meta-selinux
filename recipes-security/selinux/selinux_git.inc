@@ -1,4 +1,4 @@
-SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
+SRCREV = "3f52a123af40bae33bde2a1f2ecfb2320b61f9ad"
 
 SRC_URI = "git://oss.tresys.com/git/selinux.git;protocol=http"
 SRC_URI[md5sum] = "4ec64a0d24aaa77c80b86e74d271e464"

@@ -1,0 +1,31 @@
+Subject: [PATCH] libselinux: Put -lpcre in LDADD for correct linking order
+
+Upstream-Status: pending
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+---
+ src/Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index c4f5d4c..8f5aec5 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -20,7 +20,7 @@ RUBYINC ?= $(shell pkg-config --cflags ruby)
+ RUBYINSTALL ?= $(LIBDIR)/ruby/site_ruby/$(RUBYLIBVER)/$(RUBYPLATFORM)
+ LIBBASE=$(shell basename $(LIBDIR))
+ 
+-LDFLAGS ?= -lpcre -lpthread
++LDADD ?= -lpcre -lpthread
+ 
+ VERSION = $(shell cat ../VERSION)
+ LIBVERSION = 1
+@@ -116,7 +116,7 @@ $(LIBA): $(OBJS)
+ 	$(RANLIB) $@
+ 
+ $(LIBSO): $(LOBJS)
+-	$(CC) $(CFLAGS) -shared -o $@ $^ -ldl $(LDFLAGS) -L$(LIBDIR) -Wl,-soname,$(LIBSO),-z,defs,-z,relro
++	$(CC) $(CFLAGS) -shared -o $@ $^ -ldl $(LDFLAGS) -L$(LIBDIR) -Wl,-soname,$(LIBSO),-z,defs,-z,relro $(LDADD)
+ 	ln -sf $@ $(TARGET) 
+ 
+ $(LIBPC): $(LIBPC).in ../VERSION
