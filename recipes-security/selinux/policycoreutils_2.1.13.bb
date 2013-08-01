@@ -1,4 +1,4 @@
-PR = "r2"
+PR = "r3"
 
 include selinux_20120924.inc
 include ${BPN}.inc
@@ -11,4 +11,5 @@ SRC_URI[sha256sum] = "34040f06f3111d9ee957576e4095841d35b9ca9141ee8d80aab036cbef
 SRC_URI += "\
 	file://policycoreutils-revert-restorecon-update-type.patch \
 	file://policycoreutils-revert-run_init-open_init_pty.patch \
+	file://scripts_makefile.patch \
 	"
