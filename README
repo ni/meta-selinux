@@ -14,6 +14,12 @@ of this layer, as well as instructions for submitting patches.
 
 status
 ------
+Sep 17, 2013 - Updated to match oe-core/poky master for what will be the
+	1.5 release
+  * Misc bug fixes
+  * Update distro config
+  * Uprev various packages
+
 Jan 31, 2012 - Initial version of the layer available.  Basic functionality:
   * new recipes-security -- includes all SE Linux core components
   * enable kernel configuration of SE Linux components
