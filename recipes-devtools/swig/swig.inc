@@ -3,23 +3,51 @@ HOMEPAGE = "http://swig.sourceforge.net/"
 LICENSE = "BSD & GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=e7807a6282784a7dde4c846626b08fc6 \
                     file://LICENSE-GPL;md5=d32239bcb673463ab874e80d47fae504 \
-                    file://LICENSE-UNIVERSITIES;md5=e0eaeeef7b2662c0c2d0d3c0b2509f75"
+                    file://LICENSE-UNIVERSITIES;md5=8ce9dcc8f7c994de4a408b205c72ba08"
 
 SECTION = "devel"
-INC_PR = "r2"
+INC_PR = "r3"
 
-DEPENDS = "python"
+DEPENDS = "libpcre python"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${BPN}/${BPN}-${PV}.tar.gz"
 
-inherit autotools
+inherit autotools pythonnative
 
-EXTRA_OECONF = " --without-guile "
+EXTRA_OECONF = " \
+    --with-python=${PYTHON} \
+    --without-allegrocl \
+    --without-android \
+    --without-boost \
+    --without-chicken \
+    --without-clisp \
+    --without-csharp \
+    --without-d \
+    --without-gcj \
+    --without-go \
+    --without-guile \
+    --without-java \
+    --without-lua \
+    --without-mzscheme \
+    --without-ocaml \
+    --without-octave \
+    --without-perl5 \
+    --without-pike \
+    --without-php \
+    --without-python3 \
+    --without-r \
+    --without-ruby \
+    --without-tcl \
+"
 
-BBCLASSEXTEND = "native"
+BBCLASSEXTEND = "native nativesdk"
 
 do_configure() {
-	oe_runconf
+    install -m 0755 ${STAGING_DATADIR_NATIVE}/gnu-config/config.guess ${S}/Tools/config
+    install -m 0755 ${STAGING_DATADIR_NATIVE}/gnu-config/config.sub ${S}/Tools/config
+    install -m 0755 ${STAGING_DATADIR_NATIVE}/gnu-config/config.guess ${S}
+    install -m 0755 ${STAGING_DATADIR_NATIVE}/gnu-config/config.sub ${S}
+    oe_runconf
 }
 
 def swiglib_relpath(d):
