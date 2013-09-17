@@ -1,19 +1,22 @@
-From d4535ddce48f821a05cfa1409b7ff4611a09e84a Mon Sep 17 00:00:00 2001
-From: builder <builder@pek-yocto-build1.(none)>
-Date: Wed, 21 Mar 2012 14:56:32 +0800
-Subject: [PATCH] audit: for cross-compiling.
+Make dynamically generated files able to be generated in a cross environment
 
----
- auparse/Makefile.am |   26 ++++++++++++++++++++++++++
- configure.ac        |    9 +++++++++
- lib/Makefile.am     |   32 ++++++++++++++++++++++++++++++++
- 3 files changed, 67 insertions(+), 0 deletions(-)
+We define a way to generate the specific files in a cross compile friendly
+way.
 
-diff --git a/auparse/Makefile.am b/auparse/Makefile.am
-index ea2360d..eabaacf 100644
---- a/auparse/Makefile.am
-+++ b/auparse/Makefile.am
-@@ -54,69 +54,95 @@ noinst_PROGRAMS = gen_captabs_h gen_clone-flagtabs_h gen_epoll_ctls_h \
+Signed-off-by: Mark Hatle <mark.hatle@windriver.com>
+
+Index: audit-2.3.2/auparse/Makefile.am
+===================================================================
+--- audit-2.3.2.orig/auparse/Makefile.am
++++ audit-2.3.2/auparse/Makefile.am
+@@ -71,185 +71,257 @@ noinst_PROGRAMS = gen_accesstabs_h gen_c
+ 
+ gen_accesstabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h accesstab.h
+ gen_accesstabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="accesstab.h"'
++gen_accesstabs_h: $(gen_accesstabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_accesstabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ accesstabs.h: gen_accesstabs_h Makefile
+ 	./gen_accesstabs_h --i2s-transtab access > $@
  
  gen_captabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h captab.h
  gen_captabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="captab.h"'
@@ -21,6 +24,13 @@ index ea2360d..eabaacf 100644
 +	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_captabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
  captabs.h: gen_captabs_h Makefile
  	./gen_captabs_h --i2s cap > $@
+ 
+ gen_clock_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h clocktab.h
+ gen_clock_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="clocktab.h"'
++gen_clock_h: $(gen_clock_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_clock_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ clocktabs.h: gen_clock_h Makefile
+ 	./gen_clock_h --i2s clock > $@
  
  gen_clone_flagtabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h \
  	clone-flagtab.h
@@ -74,6 +84,41 @@ index ea2360d..eabaacf 100644
  ipctabs.h: gen_ipctabs_h Makefile
  	./gen_ipctabs_h --i2s ipc > $@
  
+ gen_ipccmdtabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h ipccmdtab.h
+ gen_ipccmdtabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="ipccmdtab.h"'
++gen_ipccmdtabs_h: $(gen_ipccmdtabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_ipccmdtabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ ipccmdtabs.h: gen_ipccmdtabs_h Makefile
+ 	./gen_ipccmdtabs_h --i2s-transtab ipccmd > $@
+ 
+ gen_ipoptnametabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h ipoptnametab.h
+ gen_ipoptnametabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="ipoptnametab.h"'
++gen_ipoptnametabs_h: $(gen_ipoptnametabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_ipoptnametabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ ipoptnametabs.h: gen_ipoptnametabs_h Makefile
+ 	./gen_ipoptnametabs_h --i2s ipoptname > $@
+ 
+ gen_ip6optnametabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h ip6optnametab.h
+ gen_ip6optnametabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="ip6optnametab.h"'
++gen_ip6optnametabs_h: $(gen_ip6optnametabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_ip6optnametabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ ip6optnametabs.h: gen_ip6optnametabs_h Makefile
+ 	./gen_ip6optnametabs_h --i2s ip6optname > $@
+ 
+ gen_mmaptabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h mmaptab.h
+ gen_mmaptabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="mmaptab.h"'
++gen_mmaptabs_h: $(gen_mmaptabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_mmaptabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ mmaptabs.h: gen_mmaptabs_h Makefile
+ 	./gen_mmaptabs_h --i2s-transtab mmap > $@
+ 
+ gen_mounttabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h mounttab.h
+ gen_mounttabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="mounttab.h"'
++gen_mounttabs_h: $(gen_mounttabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_mounttabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ mounttabs.h: gen_mounttabs_h Makefile
+ 	./gen_mounttabs_h --i2s-transtab mount > $@
+ 
  gen_nfprototabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h nfprototab.h
  gen_nfprototabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="nfprototab.h"'
 +gen_nfprototabs_h: $(gen_nfprototabs_h_SOURCES)
@@ -89,12 +134,103 @@ index ea2360d..eabaacf 100644
  open-flagtabs.h: gen_open-flagtabs_h Makefile
  	./gen_open-flagtabs_h --i2s-transtab open_flag > $@
  
- gen_seeks_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h seek.h
- gen_seeks_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="seek.h"'
-+gen_seeks_h: $(gen_seeks_h_SOURCES)
-+	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_seeks_h_CFLAGS) $(LDFLAGS) -o $@ $<
- seeks.h: gen_seeks_h Makefile
- 	./gen_seeks_h --i2s seek > $@
+ gen_persontabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h persontab.h
+ gen_persontabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="persontab.h"'
++gen_persontabs_h: $(gen_persontabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_persontabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ persontabs.h: gen_persontabs_h Makefile
+ 	./gen_persontabs_h --i2s person > $@
+ 
+ gen_ptracetabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h ptracetab.h
+ gen_ptracetabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="ptracetab.h"'
++gen_ptracetabs_h: $(gen_ptracetabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_ptracetabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ ptracetabs.h: gen_ptracetabs_h Makefile
+ 	./gen_ptracetabs_h --i2s ptrace > $@
+ 
+ gen_prctl_opttabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h prctl-opt-tab.h
+ gen_prctl_opttabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="prctl-opt-tab.h"'
++gen_prctl_opttabs_h: $(gen_prctl_opttabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_prctl_opttabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ prctl_opttabs.h: gen_prctl_opttabs_h Makefile
+ 	./gen_prctl_opttabs_h --i2s prctl_opt > $@
+ 
+ gen_pktoptnametabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h pktoptnametab.h
+ gen_pktoptnametabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="pktoptnametab.h"'
++gen_pktoptnametabs_h: $(gen_pktoptnametabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_pktoptnametabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ pktoptnametabs.h: gen_pktoptnametabs_h Makefile
+ 	./gen_pktoptnametabs_h --i2s pktoptname > $@
+ 
+ gen_prottabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h prottab.h
+ gen_prottabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="prottab.h"'
++gen_prottabs_h: $(gen_prottabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_prottabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ prottabs.h: gen_prottabs_h Makefile
+ 	./gen_prottabs_h --i2s-transtab prot > $@
+ 
+ gen_recvtabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h recvtab.h
+ gen_recvtabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="recvtab.h"'
++gen_recvtabs_h: $(gen_recvtabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_recvtabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ recvtabs.h: gen_recvtabs_h Makefile
+ 	./gen_recvtabs_h --i2s-transtab recv > $@
+ 
+ gen_rlimit_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h rlimittab.h
+ gen_rlimit_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="rlimittab.h"'
++gen_rlimit_h: $(gen_rlimit_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_rlimit_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ rlimittabs.h: gen_rlimit_h Makefile
+ 	./gen_rlimit_h --i2s rlimit > $@
+ 
+ gen_schedtabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h schedtab.h
+ gen_schedtabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="schedtab.h"'
++gen_schedtabs_h: $(gen_schedtabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_schedtabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ schedtabs.h: gen_schedtabs_h Makefile
+ 	./gen_schedtabs_h --i2s sched > $@
+ 
+ gen_seccomptabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h seccomptab.h
+ gen_seccomptabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="seccomptab.h"'
++gen_seccomptabs_h: $(gen_seccomptabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_seccomptabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ seccomptabs.h: gen_seccomptabs_h Makefile
+ 	./gen_seccomptabs_h --i2s seccomp > $@
+ 
+ gen_seektabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h seektab.h
+ gen_seektabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="seektab.h"'
++gen_seektabs_h: $(gen_seektabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_seektabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ seektabs.h: gen_seektabs_h Makefile
+ 	./gen_seektabs_h --i2s seek > $@
+ 
+ gen_shm_modetabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h shm_modetab.h
+ gen_shm_modetabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="shm_modetab.h"'
++gen_shm_modetabs_h: $(gen_shm_modetabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_shm_modetabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ shm_modetabs.h: gen_shm_modetabs_h Makefile
+ 	./gen_shm_modetabs_h --i2s-transtab shm_mode > $@
+ 
+ gen_signals_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h signaltab.h
+ gen_signals_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="signaltab.h"'
++gen_signals_h: $(gen_signals_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_signals_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ signaltabs.h: gen_signals_h Makefile
+ 	./gen_signals_h --i2s signal > $@
+ 
+ gen_sockleveltabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h sockleveltab.h
+ gen_sockleveltabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="sockleveltab.h"'
++gen_sockleveltabs_h: $(gen_sockleveltabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_sockleveltabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ sockleveltabs.h: gen_sockleveltabs_h Makefile
+ 	./gen_sockleveltabs_h --i2s socklevel > $@
+ 
+ gen_sockoptnametabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h sockoptnametab.h
+ gen_sockoptnametabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="sockoptnametab.h"'
++gen_sockoptnametabs_h: $(gen_sockoptnametabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_sockoptnametabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ sockoptnametabs.h: gen_sockoptnametabs_h Makefile
+ 	./gen_sockoptnametabs_h --i2s sockoptname > $@
  
  gen_socktabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h socktab.h
  gen_socktabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="socktab.h"'
@@ -103,37 +239,39 @@ index ea2360d..eabaacf 100644
  socktabs.h: gen_socktabs_h Makefile
  	./gen_socktabs_h --i2s sock > $@
  
+ gen_socktypetabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h socktypetab.h
+ gen_socktypetabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="socktypetab.h"'
++gen_socktypetabs_h: $(gen_socktypetabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_socktypetabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ socktypetabs.h: gen_socktypetabs_h Makefile
+ 	./gen_socktypetabs_h --i2s sock_type > $@
+ 
+ gen_tcpoptnametabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h tcpoptnametab.h
+ gen_tcpoptnametabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="tcpoptnametab.h"'
++gen_tcpoptnametabs_h: $(gen_tcpoptnametabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_tcpoptnametabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ tcpoptnametabs.h: gen_tcpoptnametabs_h Makefile
+ 	./gen_tcpoptnametabs_h --i2s tcpoptname > $@
+ 
  gen_typetabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h typetab.h
  gen_typetabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="typetab.h"'
 +gen_typetabs_h: $(gen_typetabs_h_SOURCES)
 +	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_typetabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
  typetabs.h: gen_typetabs_h Makefile
  	./gen_typetabs_h --s2i type > $@
-diff --git a/configure.ac b/configure.ac
-index 3c2efb1..23a7d02 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -79,6 +79,15 @@ if test x"$GCC" = x"yes"; then
-     esac
- fi
  
-+if test -z "$CC_FOR_BUILD"; then
-+	if test "x$cross_compiling" = "xno"; then
-+	    CC_FOR_BUILD='$(CC)'
-+    else
-+	    CC_FOR_BUILD=gcc
-+    fi
-+fi
-+AC_SUBST(CC_FOR_BUILD)
-+
- #gssapi
- AC_ARG_ENABLE(gssapi_krb5,
- 	[AS_HELP_STRING([--enable-gssapi-krb5],[Enable GSSAPI Kerberos 5 support @<:@default=no@:>@])],
-diff --git a/lib/Makefile.am b/lib/Makefile.am
-index c5952f9..ad744c2 100644
---- a/lib/Makefile.am
-+++ b/lib/Makefile.am
-@@ -60,12 +60,16 @@ noinst_PROGRAMS += gen_armeb_tables_h
+ gen_umounttabs_h_SOURCES = ../lib/gen_tables.c ../lib/gen_tables.h umounttab.h
+ gen_umounttabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="umounttab.h"'
++gen_umounttabs_h: $(gen_umounttabs_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../lib $(gen_umounttabs_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ umounttabs.h: gen_umounttabs_h Makefile
+ 	./gen_umounttabs_h --i2s-transtab umount > $@
+ 
+Index: audit-2.3.2/lib/Makefile.am
+===================================================================
+--- audit-2.3.2.orig/lib/Makefile.am
++++ audit-2.3.2/lib/Makefile.am
+@@ -66,12 +66,16 @@ noinst_PROGRAMS += gen_aarch64_tables_h
  endif
  gen_actiontabs_h_SOURCES = gen_tables.c gen_tables.h actiontab.h
  gen_actiontabs_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="actiontab.h"'
@@ -150,7 +288,7 @@ index c5952f9..ad744c2 100644
  alpha_tables.h: gen_alpha_tables_h Makefile
  	./gen_alpha_tables_h --lowercase --i2s --s2i alpha_syscall > $@
  endif
-@@ -73,73 +77,101 @@ endif
+@@ -79,6 +83,8 @@ endif
  if USE_ARMEB
  gen_armeb_tables_h_SOURCES = gen_tables.c gen_tables.h armeb_table.h
  gen_armeb_tables_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="armeb_table.h"'
@@ -158,6 +296,15 @@ index c5952f9..ad744c2 100644
 +	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../auparse $(gen_armeb_tables_h_CFLAGS) $(LDFLAGS) -o $@ $<
  armeb_tables.h: gen_armeb_tables_h Makefile
  	./gen_armeb_tables_h --lowercase --i2s --s2i armeb_syscall > $@
+ endif
+@@ -86,73 +92,101 @@ endif
+ if USE_AARCH64
+ gen_aarch64_tables_h_SOURCES = gen_tables.c gen_tables.h aarch64_table.h
+ gen_aarch64_tables_h_CFLAGS = $(AM_CFLAGS) '-DTABLE_H="aarch64_table.h"'
++gen_aarch64_tables_h: $(gen_aarch64_tables_h_SOURCES)
++	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../auparse $(gen_aarch64_tables_h_CFLAGS) $(LDFLAGS) -o $@ $<
+ aarch64_tables.h: gen_aarch64_tables_h Makefile
+ 	./gen_aarch64_tables_h --lowercase --i2s --s2i aarch64_syscall > $@
  endif
  
  gen_errtabs_h_SOURCES = gen_tables.c gen_tables.h errtab.h
@@ -252,6 +399,23 @@ index c5952f9..ad744c2 100644
 +	$(CC_FOR_BUILD) -DHAVE_CONFIG_H -I. -I.. -I../auparse $(gen_x86_64_tables_h_CFLAGS) $(LDFLAGS) -o $@ $<
  x86_64_tables.h: gen_x86_64_tables_h Makefile
  	./gen_x86_64_tables_h --lowercase --i2s --s2i x86_64_syscall > $@
--- 
-1.7.5.4
-
+Index: audit-2.3.2/configure.ac
+===================================================================
+--- audit-2.3.2.orig/configure.ac
++++ audit-2.3.2/configure.ac
+@@ -79,6 +79,15 @@ if test x"$GCC" = x"yes"; then
+     esac
+ fi
+ 
++if test -z "$CC_FOR_BUILD"; then
++       if test "x$cross_compiling" = "xno"; then
++           CC_FOR_BUILD='$(CC)'
++    else
++           CC_FOR_BUILD=gcc
++    fi
++fi
++AC_SUBST(CC_FOR_BUILD)
++
+ AC_MSG_CHECKING(whether to create python bindings)
+ AC_ARG_WITH(python,
+ AS_HELP_STRING([--with-python],[enable building python bindings]),

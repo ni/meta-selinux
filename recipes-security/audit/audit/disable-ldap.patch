@@ -6,9 +6,10 @@ Disable LDAP support
 
 Signed-off-by: Mark Hatle <mark.hatle@windriver.com>
 
-diff -ur audit-2.1.3.orig/audisp/plugins/Makefile.am audit-2.1.3/audisp/plugins/Makefile.am
---- audit-2.1.3.orig/audisp/plugins/Makefile.am	2011-08-15 12:30:59.000000000 -0500
-+++ audit-2.1.3/audisp/plugins/Makefile.am	2012-01-30 12:04:19.986834936 -0600
+Index: audit-2.3.2/audisp/plugins/Makefile.am
+===================================================================
+--- audit-2.3.2.orig/audisp/plugins/Makefile.am
++++ audit-2.3.2/audisp/plugins/Makefile.am
 @@ -22,8 +22,10 @@
  
  CONFIG_CLEAN_FILES = *.loT *.rej *.orig
@@ -22,10 +23,11 @@ diff -ur audit-2.1.3.orig/audisp/plugins/Makefile.am audit-2.1.3/audisp/plugins/
  if HAVE_PRELUDE
  SUBDIRS += prelude
  endif
-diff -ur audit-2.1.3.orig/configure.ac audit-2.1.3/configure.ac
---- audit-2.1.3.orig/configure.ac	2011-08-15 12:30:58.000000000 -0500
-+++ audit-2.1.3/configure.ac	2012-01-30 12:09:54.933961471 -0600
-@@ -181,6 +181,12 @@
+Index: audit-2.3.2/configure.ac
+===================================================================
+--- audit-2.3.2.orig/configure.ac
++++ audit-2.3.2/configure.ac
+@@ -241,6 +241,12 @@ else
  fi
  AM_CONDITIONAL(HAVE_PRELUDE, test x$have_prelude = xyes)
  
@@ -38,17 +40,20 @@ diff -ur audit-2.1.3.orig/configure.ac audit-2.1.3/configure.ac
  AC_MSG_CHECKING(whether to use libwrap)
  AC_ARG_WITH(libwrap,
  [  --with-libwrap[=PATH]   Compile in libwrap (tcp_wrappers) support.],
-diff -ur audit-2.1.3.orig/docs/Makefile.am audit-2.1.3/docs/Makefile.am
---- audit-2.1.3.orig/docs/Makefile.am	2011-08-15 12:31:01.000000000 -0500
-+++ audit-2.1.3/docs/Makefile.am	2012-01-30 12:05:49.352834294 -0600
-@@ -53,6 +53,8 @@
+Index: audit-2.3.2/docs/Makefile.am
+===================================================================
+--- audit-2.3.2.orig/docs/Makefile.am
++++ audit-2.3.2/docs/Makefile.am
+@@ -53,7 +53,9 @@ ausearch_add_expression.3 ausearch_add_t
  ausearch_clear.3 \
  ausearch_next_event.3 ausearch_set_stop.3 \
  autrace.8 get_auditfail_action.3 set_aumessage_mode.3 \
 -audispd.8 audispd.conf.5 audispd-zos-remote.8 libaudit.conf.5 \
+-augenrules.8 \
 -zos-remote.conf.5 
-+audispd.8 audispd.conf.5 libaudit.conf.5
++audispd.8 audispd.conf.5 libaudit.conf.5 \
++augenrules.8
  
 +if HAVE_LDAP
-+man_MANS += audispd-zos-remote.8 zos-remote.conf.5
++man_MANS += audispd-zos-remote.8 zos-remote.conf.5 
 +endif

@@ -10,11 +10,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
 	   file://disable-ldap.patch \
-	   file://audit-python.patch"
-
-SRC_URI += "\
+	   file://audit-python.patch \
 	   file://audit-python-configure.patch \
-	   file://audit-cross-compiling.patch \
+	   file://audit-for-cross-compiling.patch \
 	   file://auditd \
 	   file://fix-swig-host-contamination.patch"
 
@@ -24,8 +22,8 @@ UPDATERCPN = "auditd"
 INITSCRIPT_NAME = "auditd"
 INITSCRIPT_PARAMS = "defaults"
 
-SRC_URI[md5sum] = "dc099fcb2f9242d47ecc35b46d71dfd1"
-SRC_URI[sha256sum] = "9865ca89f5b975ccf25441ddf45a874448f2bba944005aa8cd5e3c3148713a63"
+SRC_URI[md5sum] = "4e8d065b5cc16b77b9b61e93a9ed160e"
+SRC_URI[sha256sum] = "8872e0b5392888789061db8034164305ef0e1b34543e1e7004d275f039081d29"
 
 DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30)"
 
