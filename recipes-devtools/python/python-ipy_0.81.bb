@@ -9,12 +9,10 @@ DEPENDS = "python"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://COPYING;md5=ebc0028ff5cdaf7796604875027dcd55"
 
-PR = "r2"
-
 SRC_URI = "http://pypi.python.org/packages/source/I/IPy/IPy-${PV}.tar.gz"
 
-SRC_URI[md5sum] = "d56716a3d8c77fe8539b6e90c88010bd"
-SRC_URI[sha256sum] = "0fa14af4792cc0b6f61cb5a1cd8fbdf7ddbaa6864ef82681021b750e9e6b2b61"
+SRC_URI[md5sum] = "7a305c0b60950a9a90c89e9a6f9e06f4"
+SRC_URI[sha256sum] = "4bc17a9b5e72e893a034e77193b82c2bc321ddf8d8c345281f2bb81bb007b939"
 
 S = "${WORKDIR}/IPy-${PV}"
 
