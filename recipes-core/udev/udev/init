@@ -13,74 +13,122 @@ export TZ=/etc/localtime
 
 [ -d /sys/class ] || exit 1
 [ -r /proc/mounts ] || exit 1
-[ -x /sbin/udevd ] || exit 1
+[ -x @UDEVD@ ] || exit 1
 [ -f /etc/default/udev-cache ] && . /etc/default/udev-cache
 [ -f /etc/udev/udev.conf ] && . /etc/udev/udev.conf
+[ -f /etc/default/rcS ] && . /etc/default/rcS
 
-readfile () {
-   filename=$1
+readfiles () {
    READDATA=""
-   if [ -r $filename ]; then
-       while read line; do
-           READDATA="$READDATA$line"
-       done < $filename
-   fi
+   for filename in $@; do
+	   if [ -r $filename ]; then
+		   while read line; do
+			   READDATA="$READDATA$line"
+		   done < $filename
+	   fi
+   done
 }
 
-kill_udevd() {
-	pid=`pidof -x udevd`
-	[ -n "$pid" ] && kill $pid
+kill_udevd () {
+    pid=`pidof -x udevd`
+    [ -n "$pid" ] && kill $pid
 }
 
-export ACTION=add
-# propagate /dev from /sys
-echo "Starting udev"
+case "$1" in
+  start)
+    export ACTION=add
+    # propagate /dev from /sys
+    echo "Starting udev"
 
-# mount the tmpfs on /dev, if not already done
-LANG=C awk '$2 == "/dev" && ($3 == "tmpfs" || $3 == "devtmpfs") { exit 1 }' /proc/mounts && {
-	mount -n -o mode=0755 -t tmpfs none "/dev"
-}
-[ -e /dev/pts ] || mkdir -m 0755 /dev/pts
-[ -e /dev/shm ] || mkdir -m 1777 /dev/shm
+    # Check for requireed devtmpfs before trying to start udev and
+    # mount a no-existant fs.
+    if ! grep -q devtmpfs /proc/filesystems
+    then
+        echo "Missing devtmpfs, which is required for udev to run";
+        echo "Halting..."
+        halt
+    fi
+    # mount the devtmpfs on /dev, if not already done
+    LANG=C awk '$2 == "/dev" && ($3 == "devtmpfs") { exit 1 }' /proc/mounts && {
+            mount -n -o mode=0755 -t devtmpfs none "/dev"
+    }
+    [ -e /dev/pts ] || mkdir -m 0755 /dev/pts
+    [ -e /dev/shm ] || mkdir -m 1777 /dev/shm
+    mount -a -t tmpfs 2>/dev/null
+    mkdir -p /var/volatile/tmp
 
-# cache handling
-if [ "$DEVCACHE" != "" ]; then
-	readfile /proc/version
-	VERSION="$READDATA"
-	readfile /proc/cmdline
-	CMDLINE="$READDATA"
-	readfile /proc/devices
-	DEVICES="$READDATA"
-	readfile /proc/atags
-	ATAGS="$READDATA"
+    # Cache handling.
+    # A list of files which are used as a criteria to judge whether the udev cache could be reused.
+    CMP_FILE_LIST="/proc/version /proc/cmdline /proc/devices /proc/atags"
+    if [ "$DEVCACHE" != "" ]; then
+            if [ -e $DEVCACHE ]; then
+		    readfiles $CMP_FILE_LIST
+		    NEWDATA="$READDATA"
+		    readfiles /etc/udev/cache.data
+		    OLDDATA="$READDATA"
+		    if [ "$OLDDATA" = "$NEWDATA" ]; then
+                            (cd /; tar xf $DEVCACHE > /dev/null 2>&1)
+                            not_first_boot=1
+                            [ "$VERBOSE" != "no" ] && echo "udev: using cache file $DEVCACHE"
+                            [ -e /dev/shm/udev.cache ] && rm -f /dev/shm/udev.cache
+                    else
+			    # Output detailed reason why the cached /dev is not used
+			    if [ "$VERBOSE" != "no" ]; then
+				    echo "udev: udev cache not used"
+				    echo "udev: we use $CMP_FILE_LIST as criteria to judge whether the cache /dev could be resued"
+				    echo "udev: olddata: $OLDDATA"
+				    echo "udev: newdata: $NEWDATA"
+			    fi
+			    echo "$NEWDATA" > /dev/shm/udev.cache
+                    fi
+	    else
+		    if [ "$ROOTFS_READ_ONLY" != "yes" ]; then
+			    # If rootfs is not read-only, it's possible that a new udev cache would be generated;
+			    # otherwise, we do not bother to read files.
+			    readfiles $CMP_FILE_LIST
+			    echo "$READDATA" > /dev/shm/udev.cache
+		    fi
+            fi
+    fi
 
-	if [ -e $DEVCACHE ]; then
-		readfile /etc/udev/cache.data
-		if [ "$READDATA" = "$VERSION$CMDLINE$DEVICES$ATAGS" ]; then
-			(cd /; tar xf $DEVCACHE > /dev/null 2>&1)
-			not_first_boot=1
-		fi
+    # make_extra_nodes
+    kill_udevd > "/dev/null" 2>&1
 
-		echo "$VERSION$CMDLINE$DEVICES$ATAGS" > /dev/shm/udev.cache
-	fi
-fi
+    # trigger the sorted events
+    echo -e '\000\000\000\000' > /proc/sys/kernel/hotplug
+    @UDEVD@ -d
 
-# make_extra_nodes
-kill_udevd > "/dev/null" 2>&1
+    /usr/bin/udevadm control --env=STARTUP=1
+    if [ "$not_first_boot" != "" ];then
+            /usr/bin/udevadm trigger --action=add --subsystem-nomatch=tty --subsystem-nomatch=mem --subsystem-nomatch=vc --subsystem-nomatch=vtconsole --subsystem-nomatch=misc --subsystem-nomatch=dcon --subsystem-nomatch=pci_bus  --subsystem-nomatch=graphics	 --subsystem-nomatch=backlight --subsystem-nomatch=video4linux	--subsystem-nomatch=platform
+            (/usr/bin/udevadm settle --timeout=3; /usr/bin/udevadm control --env=STARTUP=)&
+    else
+            /usr/bin/udevadm trigger --action=add
+            /usr/bin/udevadm settle
+    fi
 
-# trigger the sorted events
-echo -e '\000\000\000\000' > /proc/sys/kernel/hotplug
-/sbin/udevd -d
+    test ! -x /sbin/restorecon || /sbin/restorecon -F /dev
 
-/sbin/udevadm control --env=STARTUP=1
-if [ "$not_first_boot" != "" ];then
-	/sbin/udevadm trigger --action=add --subsystem-nomatch=tty --subsystem-nomatch=mem --subsystem-nomatch=vc --subsystem-nomatch=vtconsole --subsystem-nomatch=misc --subsystem-nomatch=dcon --subsystem-nomatch=pci_bus  --subsystem-nomatch=graphics	 --subsystem-nomatch=backlight --subsystem-nomatch=video4linux	--subsystem-nomatch=platform
-	(/sbin/udevadm settle --timeout=3; /sbin/udevadm control --env=STARTUP=)&
-else
-	/sbin/udevadm trigger --action=add
-	/sbin/udevadm settle
-fi
-
-test ! -x /sbin/restorecon || /sbin/restorecon -F /dev
-
+    ;;
+  stop)
+    echo "Stopping udevd"
+    start-stop-daemon --stop --name udevd --quiet
+    ;;
+  restart)
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+  status)
+    pid=`pidof -x udevd`
+    if [ -n "$pid" ]; then
+	echo "udevd (pid $pid) is running ..."
+    else
+	echo "udevd is stopped"
+    fi
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|status|restart}"
+    exit 1
+esac
 exit 0
