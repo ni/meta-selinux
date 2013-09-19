@@ -7,20 +7,14 @@ This meta-package depends upon the main packages necessary to run \
 SETools."
 SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
-PR = "r2"
 
 SRC_URI = "http://oss.tresys.com/projects/setools/chrome/site/dists/setools-${PV}/setools-${PV}.tar.bz2;"
-SRC_URI[md5sum] = "0377d7a06028825434cd7b41a80865a5"
-SRC_URI[sha256sum] = "2bfa0918746bdcc910b16b26a51109a4ffd07404c306141ada584cb36e3c895a"
+SRC_URI[md5sum] = "d68d0d4e4da0f01da0f208782ff04b91"
+SRC_URI[sha256sum] = "44387ecc9a231ec536a937783440cd8960a72c51f14bffc1604b7525e341e999"
 
-SRC_URI += "file://setools-Add-seinfo-and-sesearch-python-bindings.patch"
-SRC_URI += "file://setools-seinfo-should-exit-with-correct-errno.patch"
 SRC_URI += "file://setools-neverallow-rules-all-always-fail.patch"
-SRC_URI += "file://setools-Fix-man-pages-and-getoptions.patch"
 SRC_URI += "file://setools-Fix-sepol-calls-to-work-with-latest-libsepol.patch"
-SRC_URI += "file://setools-Changes-to-support-named-file_trans-rules.patch"
-SRC_URI += "file://setools-Remove-unused-variables.patch"
-SRC_URI += "file://setools-Fix-output-to-match-policy-lines.patch"
+#SRC_URI += "file://setools-Changes-to-support-named-file_trans-rules.patch"
 
 SRC_URI += "file://setools-Don-t-check-selinux-policies-if-disabled.patch"
 SRC_URI += "file://setools-configure-ac.patch"
@@ -35,7 +29,9 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
 
 DEPENDS += "python libsepol libselinux libxml2"
 
-PACKAGES += "${PN}-libs ${PN}-console"
+PACKAGE_BEFORE_PN += "${PN}-libs"
+
+RPROVIDES_${PN} += "${PN}-console"
 
 FILES_${PN}-dbg += "\
 	${libdir}/python${PYTHON_BASEVERSION}/site-packages/setools/.debug \
@@ -52,7 +48,7 @@ FILES_${PN}-libs = "\
 	${libdir}/python${PYTHON_BASEVERSION}/site-packages/setools/*.py* \
 	"
 
-FILES_${PN}-console = "\
+FILES_${PN} += "\
 	${bindir}/seinfo \
 	${bindir}/sesearch \
 	${bindir}/indexcon \
@@ -60,7 +56,7 @@ FILES_${PN}-console = "\
 	${bindir}/replcon \
 	${bindir}/sechecker \
 	${bindir}/sediff \
-	${datadir}/setools-3.3/sechecker-profiles/* \
+	${datadir}/setools-3.3/sechecker-profiles \
 	${datadir}/setools-3.3/sechecker_help.txt \
 	${datadir}/setools-3.3/sediff_help.txt \
 	${datadir}/setools-3.3/sediffx* \
@@ -99,3 +95,5 @@ do_configure() {
 do_install_append() {
 	rm -f ${D}/${libdir}/*.a
 }
+
+BBCLASSEXTEND = "native"
