@@ -43,3 +43,6 @@ SELINUXTYPE=${DEFAULT_POLICY}
 	install -m 0644 ${WORKDIR}/config ${D}/${sysconfdir}/selinux/
 }
 
+sysroot_stage_all_append () {
+	sysroot_stage_dir ${D}${sysconfdir} ${SYSROOT_DESTDIR}${sysconfdir}
+}
