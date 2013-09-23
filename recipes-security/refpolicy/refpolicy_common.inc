@@ -58,10 +58,15 @@ module-store = direct
 path = ${STAGING_DIR_NATIVE}${base_sbindir_native}/setfiles
 args = -q -c \$@ \$<
 [end]
+[sefcontext_compile]
+path = ${STAGING_DIR_NATIVE}${sbindir_native}/sefcontext_compile
+args = \$@
+[end]
 EOF
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/policy
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
+	touch ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files/file_contexts.local
 	bzip2 -c ${D}${datadir}/selinux/${POLICY_NAME}/base.pp  > \
 		${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
 	for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
