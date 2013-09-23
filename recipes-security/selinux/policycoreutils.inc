@@ -16,7 +16,7 @@ PAM_SRC_URI = "file://pam.d/newrole \
               "
 
 DEPENDS += "libsepol libselinux libsemanage"
-EXTRA_DEPENDS = "libcap-ng libcgroup"
+EXTRA_DEPENDS = "libcap-ng libcgroup setools"
 DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
 inherit selinux
@@ -43,8 +43,13 @@ RDEPENDS_${BPN} += "setools setools-libs ${BPN}-python"
 WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
 ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"
 
+inherit pythonnative
+
 PACKAGES =+ "${PN}-python ${PN}-sandbox system-config-selinux"
-FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
+FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/seobject.py* \
+	${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy*.egg-info \
+	${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/*"
+FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/.debug/*"
 FILES_${PN}-sandbox = "${datadir}/sandbox/*"
 FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
@@ -52,8 +57,6 @@ FILES_system-config-selinux = " \
     ${bindir}/sepolgen \
     ${datadir}/system-config-selinux/* \
 "
-
-inherit pythonnative
 
 export STAGING_INCDIR
 export STAGING_LIBDIR
@@ -84,6 +87,11 @@ do_compile_prepend() {
 	export PYTHON_CPPFLAGS="-I${STAGING_INCDIR}/${PYLIBVER}"
 	export PYTHON_LDFLAGS="${STAGING_LIBDIR}/lib${PYLIBVER}.so"
 	export PYTHON_SITE_PKG="${libdir}/${PYLIBVER}/site-packages"
+}
+
+do_install_prepend() {
+	export PYTHON=python
+	export SEMODULE_PATH=${sbindir}
 }
 
 do_install_virtclass-native() {
