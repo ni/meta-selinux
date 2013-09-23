@@ -59,13 +59,13 @@ if [ "`${SECON} -t --pid 1`" = "kernel_t" ]; then
 	echo " * First booting, filesystem will be relabeled..."
 	test -x /etc/init.d/auditd && /etc/init.d/auditd start
 	${SETENFORCE} 0
-	${RESTORECON} -R /
-	${RESTORECON} /
+	${RESTORECON} -RF /
+	${RESTORECON} -F /
 	echo " * Relabel done, rebooting the system."
 	/sbin/reboot -f
 fi
 
 # Now, we should relabel /dev for most services.
-${RESTORECON} -R /dev
+${RESTORECON} -RF /dev
 
 exit 0

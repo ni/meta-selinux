@@ -81,6 +81,6 @@ else
 	/sbin/udevadm settle
 fi
 
-test ! -x /sbin/restorecon || /sbin/restorecon /dev
+test ! -x /sbin/restorecon || /sbin/restorecon -F /dev
 
 exit 0

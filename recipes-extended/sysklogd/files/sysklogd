@@ -37,7 +37,7 @@ create_xconsole()
 	chmod 0640 /dev/xconsole
     fi
     chown root:adm /dev/xconsole
-    test ! -x /sbin/restorecon || /sbin/restorecon /dev/xconsole
+    test ! -x /sbin/restorecon || /sbin/restorecon -F /dev/xconsole
 }
 
 log_begin_msg () {
@@ -92,7 +92,7 @@ case "$1" in
     log_begin_msg "Starting system log daemon..."
     create_xconsole
     start-stop-daemon --start --quiet --pidfile $pidfile_syslogd --name syslogd --startas $binpath_syslogd -- $SYSLOGD
-    test ! -x /sbin/restorecon || /sbin/restorecon -R /dev/log /var/log/
+    test ! -x /sbin/restorecon || /sbin/restorecon -RF /dev/log /var/log/
     log_end_msg $?
     log_begin_msg "Starting kernel log daemon..."
     start-stop-daemon --start --quiet --pidfile $pidfile_klogd --name klogd --startas $binpath_klogd -- $KLOGD
