@@ -103,9 +103,7 @@ do_install_virtclass-native() {
 	done
 }
 
-do_install_append() {
-	test "${CLASSOVERRIDE}" = "class-native" && return 0
-
+do_install_append_class-target() {
 	if [ -e ${WORKDIR}/pam.d ]; then
 		install -d ${D}${sysconfdir}/pam.d/
 		install -m 0644 ${WORKDIR}/pam.d/* ${D}${sysconfdir}/pam.d/
