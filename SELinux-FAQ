@@ -111,6 +111,14 @@ For example, when you are using qemu targets,
 
   $ runqemu qemumips core-image-selinux ext3 nographic bootparams="selinux=0"
 
+The initial filesystem relabel step requires considerable memory and can result
+in unexpected, sometimes impossible to reproduce, failures if an OOM condition
+occurs while it is in progress.  Therefore you should consider allocating at a
+minimum 512MB of RAM to your qemu image.  1GB or more is recommended.  This is
+accomplished by adding qemuparams="-m 1024" to your runqemu options.
+
+The defaults for various platforms vary, though it is usually around 256MB.
+
 3.2 - How do I turn enforcing mode on/off?
 
 You can specify the SELinux mode in /etc/selinux/config.
