@@ -12,7 +12,8 @@ SRC_URI += "file://customizable_types \
 S = "${WORKDIR}/refpolicy"
 
 FILES_${PN} = "${sysconfdir}/selinux/${POLICY_NAME}/ \
-	${datadir}/selinux/${POLICY_NAME}/"
+	${datadir}/selinux/${POLICY_NAME}/*.pp"
+FILES_${PN}-dev =+ "${datadir}/selinux/${POLICY_NAME}/include/"
 
 DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
 RDEPENDS_${PN} += "policycoreutils selinux-config"
@@ -75,4 +76,7 @@ EOF
 
 	cat ${WORKDIR}/customizable_types >> \
 		${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/customizable_types
+
+	# install policy headers
+	oe_runmake install-headers DESTDIR=${D}
 }
