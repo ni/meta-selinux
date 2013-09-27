@@ -48,7 +48,10 @@ FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-sandbox = "${datadir}/sandbox/*"
 FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
-FILES_system-config-selinux = "${datadir}/system-config-selinux/*"
+FILES_system-config-selinux = " \
+    ${bindir}/sepolgen \
+    ${datadir}/system-config-selinux/* \
+"
 
 inherit pythonnative
 
