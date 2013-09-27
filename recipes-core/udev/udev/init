@@ -14,7 +14,9 @@ export TZ=/etc/localtime
 [ -d /sys/class ] || exit 1
 [ -r /proc/mounts ] || exit 1
 [ -x @UDEVD@ ] || exit 1
-[ -f /etc/default/udev-cache ] && . /etc/default/udev-cache
+if [ "$use_udev_cache" != "" ]; then
+	[ -f /etc/default/udev-cache ] && . /etc/default/udev-cache
+fi
 [ -f /etc/udev/udev.conf ] && . /etc/udev/udev.conf
 [ -f /etc/default/rcS ] && . /etc/default/rcS
 
@@ -60,35 +62,38 @@ case "$1" in
     # Cache handling.
     # A list of files which are used as a criteria to judge whether the udev cache could be reused.
     CMP_FILE_LIST="/proc/version /proc/cmdline /proc/devices /proc/atags"
-    if [ "$DEVCACHE" != "" ]; then
-            if [ -e $DEVCACHE ]; then
-		    readfiles $CMP_FILE_LIST
-		    NEWDATA="$READDATA"
-		    readfiles /etc/udev/cache.data
-		    OLDDATA="$READDATA"
-		    if [ "$OLDDATA" = "$NEWDATA" ]; then
-                            (cd /; tar xf $DEVCACHE > /dev/null 2>&1)
-                            not_first_boot=1
-                            [ "$VERBOSE" != "no" ] && echo "udev: using cache file $DEVCACHE"
-                            [ -e /dev/shm/udev.cache ] && rm -f /dev/shm/udev.cache
-                    else
-			    # Output detailed reason why the cached /dev is not used
-			    if [ "$VERBOSE" != "no" ]; then
-				    echo "udev: udev cache not used"
-				    echo "udev: we use $CMP_FILE_LIST as criteria to judge whether the cache /dev could be resued"
-				    echo "udev: olddata: $OLDDATA"
-				    echo "udev: newdata: $NEWDATA"
-			    fi
-			    echo "$NEWDATA" > /dev/shm/udev.cache
-                    fi
-	    else
-		    if [ "$ROOTFS_READ_ONLY" != "yes" ]; then
-			    # If rootfs is not read-only, it's possible that a new udev cache would be generated;
-			    # otherwise, we do not bother to read files.
+    if [ "$use_udev_cache" != "" ]; then
+	    if [ "$DEVCACHE" != "" ]; then
+		    if [ -e $DEVCACHE ]; then
 			    readfiles $CMP_FILE_LIST
-			    echo "$READDATA" > /dev/shm/udev.cache
+			    NEWDATA="$READDATA"
+			    readfiles /etc/udev/cache.data
+			    OLDDATA="$READDATA"
+			    if [ "$OLDDATA" = "$NEWDATA" ]; then
+				    tar --directory=/ -xf $DEVCACHE > /dev/null 2>&1
+				    not_first_boot=1
+				    [ "$VERBOSE" != "no" ] && echo "udev: using cache file $DEVCACHE"
+				    [ -e /dev/shm/udev.cache ] && rm -f /dev/shm/udev.cache
+			    else
+				    # Output detailed reason why the cached /dev is not used
+				    if [ "$VERBOSE" != "no" ]; then
+					    echo "udev: udev cache not used"
+					    echo "udev: we use $CMP_FILE_LIST as criteria to judge whether the cache /dev could be resued"
+					    echo "udev: olddata: $OLDDATA"
+					    echo "udev: newdata: $NEWDATA"
+				    fi
+				    echo "$NEWDATA" > /dev/shm/udev.cache
+			    fi
+			    /usr/sbin/setenforce 1
+		    else
+			    if [ "$ROOTFS_READ_ONLY" != "yes" ]; then
+				    # If rootfs is not read-only, it's possible that a new udev cache would be generated;
+				    # otherwise, we do not bother to read files.
+				    readfiles $CMP_FILE_LIST
+				    echo "$READDATA" > /dev/shm/udev.cache
+			    fi
 		    fi
-            fi
+	    fi
     fi
 
     # make_extra_nodes
@@ -101,7 +106,7 @@ case "$1" in
     /usr/bin/udevadm control --env=STARTUP=1
     if [ "$not_first_boot" != "" ];then
             /usr/bin/udevadm trigger --action=add --subsystem-nomatch=tty --subsystem-nomatch=mem --subsystem-nomatch=vc --subsystem-nomatch=vtconsole --subsystem-nomatch=misc --subsystem-nomatch=dcon --subsystem-nomatch=pci_bus  --subsystem-nomatch=graphics	 --subsystem-nomatch=backlight --subsystem-nomatch=video4linux	--subsystem-nomatch=platform
-            (/usr/bin/udevadm settle --timeout=3; /usr/bin/udevadm control --env=STARTUP=)&
+            (/usr/bin/udevadm settle --timeout=10; /usr/bin/udevadm control --env=STARTUP=)&
     else
             /usr/bin/udevadm trigger --action=add
             /usr/bin/udevadm settle
