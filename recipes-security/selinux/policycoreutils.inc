@@ -22,21 +22,6 @@ DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 inherit selinux
 DEPENDS += "${@target_selinux(d, 'libpam audit')}"
 
-RDEPENDS_${BPN} += "\
-	libselinux-python \
-	libsemanage-python \
-	sepolgen \
-"
-RDEPENDS_${BPN} += "\
-	python \
-	python-unixadmin \
-	python-shell \
-	python-crypt \
-	python-subprocess \
-	python-syslog \
-	python-textutils \
-	python-ipy \
-"
 RDEPENDS_${BPN}-audit2allow = "\
 	python-textutils \
 	libselinux-python \
