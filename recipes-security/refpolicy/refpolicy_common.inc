@@ -16,7 +16,7 @@ FILES_${PN} = "${sysconfdir}/selinux/${POLICY_NAME}/ \
 FILES_${PN}-dev =+ "${datadir}/selinux/${POLICY_NAME}/include/"
 
 DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
-RDEPENDS_${PN} += "policycoreutils selinux-config"
+RDEPENDS_${PN} += "selinux-config"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
