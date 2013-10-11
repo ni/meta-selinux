@@ -12,4 +12,5 @@ SRC_URI += "\
         file://libselinux-fix-init-load-policy.patch \
         file://libselinux-pcre-link-order.patch \
         file://libselinux-drop-Wno-unused-but-set-variable.patch \
+        file://libselinux-make-O_CLOEXEC-optional.patch \
         "

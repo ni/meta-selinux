@@ -12,4 +12,5 @@ SRC_URI += "\
 	file://policycoreutils-fix-strict-prototypes.patch \
 	file://policycoreutils-revert-run_init-open_init_pty.patch \
 	file://policycoreutils-fix-sepolicy-install-path.patch \
+	file://policycoreutils-make-O_CLOEXEC-optional.patch \
 	"
