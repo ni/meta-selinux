@@ -13,4 +13,5 @@ SRC_URI += "\
 	file://libsemanage-fix-path-len-limit.patch \
 	file://libsemanage-fix-path-nologin.patch \
 	file://libsemanage-drop-Wno-unused-but-set-variable.patch \
+	file://libsemanage-define-FD_CLOEXEC-as-necessary.patch;striplevel=2 \
 	"
