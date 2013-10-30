@@ -5,14 +5,6 @@ only."
 
 PR = "r3"
 
-POLICY_NAME = "standard"
 POLICY_TYPE = "standard"
-POLICY_DISTRO = "redhat"
-POLICY_UBAC = "n"
-POLICY_UNK_PERMS = "allow"
-POLICY_DIRECT_INITRC = "n"
-POLICY_MONOLITHIC = "n"
-POLICY_CUSTOM_BUILDOPT = ""
-POLICY_QUIET = "y"
 
 include refpolicy_${PV}.inc
