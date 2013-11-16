@@ -28,8 +28,8 @@ index 10e7ed2..35792cd 100644
 	$(LN_S) -f at atrm
  
  atd: $(RUNOBJECTS)
--	$(CC) $(CFLAGS) -o atd $(RUNOBJECTS) $(LIBS) $(PAMLIB) $(LDFLAGS)
-+	$(CC) $(CFLAGS) -o atd $(RUNOBJECTS) $(LIBS) $(PAMLIB) $(SELINUXLIB) $(LDFLAGS)
+-	$(CC) $(LDFLAGS) -o atd $(RUNOBJECTS) $(LIBS) $(PAMLIB)
++	$(CC) $(LDFLAGS) -o atd $(RUNOBJECTS) $(LIBS) $(PAMLIB) $(SELINUXLIB)
  
  y.tab.c y.tab.h: parsetime.y
 	$(YACC) -d parsetime.y
