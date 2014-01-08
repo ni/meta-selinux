@@ -176,7 +176,7 @@ FILES_${PN}-sandbox += "\
 FILES_${PN}-secon += "${bindir}/secon"
 FILES_${PN}-semanage = "\
 	${sbindir}/semanage \
-	${sysconfdir}/bash_completion.d/semanage-bash-completion.sh \
+	${datadir}/bash-completion/completions/semanage \
 "
 FILES_${PN}-semodule += "${sbindir}/semodule"
 FILES_${PN}-semodule-deps += "${bindir}/semodule_deps"
@@ -188,7 +188,9 @@ FILES_${PN}-semodule-package += "\
 "
 FILES_${PN}-sepolicy += "\
 	${bindir}/sepolicy \
-	${sysconfdir}/bash_completion.d/sepolicy-bash-completion.sh \
+	${datadir}/bash-completion/completions/sepolicy \
+	${datadir}/dbus-1/system-services/org.selinux.service \
+	${datadir}/polkit-1/actions/org.selinux.policy \
 "
 FILES_${PN}-sepolgen-ifgen += "\
 	${bindir}/sepolgen-ifgen \
@@ -204,11 +206,13 @@ FILES_${PN}-setfiles += "\
 "
 FILES_${PN}-setsebool += "\
 	${sbindir}/setsebool \
-	${sysconfdir}/bash_completion.d/setsebool-bash-completion.sh \
+	${datadir}/bash-completion/completions/setsebool \
 "
 FILES_system-config-selinux = " \
     ${bindir}/sepolgen \
     ${datadir}/system-config-selinux/* \
+    ${datadir}/icons/hicolor/24x24/apps/system-config-selinux.png \
+    ${datadir}/polkit-1/actions/org.selinux.config.policy \
 "
 
 export STAGING_INCDIR
