@@ -1,3 +1,7 @@
 PR .= ".2"
 
-inherit with-selinux
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+SRC_URI += "file://pstree-compiles-with-SE-Linux.patch"
+
+inherit enable-selinux
