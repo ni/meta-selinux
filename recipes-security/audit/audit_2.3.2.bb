@@ -31,7 +31,7 @@ DEPENDS_class-native = ""
 EXTRA_OECONF += "--without-prelude \
 	--with-libwrap \
 	--enable-gssapi-krb5=no \
-	--disable-ldap \
+	--without-ldap \
 	--with-libcap-ng=yes \
 	--with-python=yes \
 	--libdir=${base_libdir} \
