@@ -11,10 +11,13 @@ LICENSE = "LGPLv2.1+"
 inherit lib_package
 
 DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native"
+DEPENDS_class-target += "audit"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
+
+EXTRA_OEMAKE_class-native += "DISABLE_AUDIT=y"
 
 do_compile_append() {
     oe_runmake pywrap \
