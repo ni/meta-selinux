@@ -26,7 +26,6 @@ SRC_URI[md5sum] = "4e8d065b5cc16b77b9b61e93a9ed160e"
 SRC_URI[sha256sum] = "8872e0b5392888789061db8034164305ef0e1b34543e1e7004d275f039081d29"
 
 DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30)"
-DEPENDS_class-native = ""
 
 EXTRA_OECONF += "--without-prelude \
 	--with-libwrap \
@@ -37,9 +36,6 @@ EXTRA_OECONF += "--without-prelude \
 	--libdir=${base_libdir} \
 	--sbindir=${base_sbindir} \
 	"
-
-# Remove extra configs for native build
-EXTRA_OECONF_class-native = "--with-python=no"
 
 EXTRA_OEMAKE += "PYLIBVER='python${PYTHON_BASEVERSION}' \
 	PYINC='${STAGING_INCDIR}/$(PYLIBVER)' \
@@ -66,7 +62,7 @@ FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
 FILES_${PN}-dev += "${base_libdir}/*.so ${base_libdir}/*.la"
 
-do_install_append_class-target() {
+do_install_append() {
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.a
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.la
 
@@ -79,5 +75,3 @@ do_install_append_class-target() {
 	install -D -m 0755 ${S}/../auditd ${D}/etc/init.d/auditd
 	rm -rf ${D}/etc/rc.d
 }
-
-BBCLASSEXTEND = "native"
