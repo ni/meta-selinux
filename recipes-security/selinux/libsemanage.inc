@@ -11,7 +11,7 @@ LICENSE = "LGPLv2.1+"
 inherit lib_package
 
 DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native"
-DEPENDS_class-target += "audit"
+DEPENDS_append_class-target += "audit"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
