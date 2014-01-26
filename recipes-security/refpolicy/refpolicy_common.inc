@@ -109,4 +109,8 @@ EOF
 
 	# install policy headers
 	oe_runmake install-headers DESTDIR=${D}
+
+	# Fix symbol link policy.kern
+	link_path=`readlink -f ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern`
+	ln -sf ../../policy/`basename $link_path` ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern
 }
