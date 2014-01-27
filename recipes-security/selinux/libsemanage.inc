@@ -41,6 +41,10 @@ do_install() {
             DESTDIR=${D} \
             PYLIBVER='python${PYTHON_BASEVERSION}' \
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
+
+    # Update "policy-version" for semanage.conf
+    sed -i 's/^#\s*\(policy-version\s*=\).*$/\1 28/' \
+	${D}/etc/selinux/semanage.conf
 }
 
 BBCLASSEXTEND = "native"
