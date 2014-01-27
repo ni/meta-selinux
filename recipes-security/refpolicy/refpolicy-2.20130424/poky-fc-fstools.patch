@@ -1,17 +1,17 @@
-From 852860529f24547b662d9383c0eaa821c9efa406 Mon Sep 17 00:00:00 2001
-From: Xin Ouyang <Xin.Ouyang@windriver.com>
-Date: Thu, 22 Aug 2013 19:18:39 +0800
-Subject: [PATCH] efpolicy: fix real path for fstools
+From 7fdfd2ef8764ddfaeb43e53a756af83d42d8ac8b Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Mon, 27 Jan 2014 03:54:01 -0500
+Subject: [PATCH] refpolicy: fix real path for fstools
 
 Upstream-Status: Inappropriate [configuration]
 
-Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
- policy/modules/system/fstools.fc |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ policy/modules/system/fstools.fc |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/policy/modules/system/fstools.fc b/policy/modules/system/fstools.fc
-index 7a46b45..9656352 100644
+index 7a46b45..a724776 100644
 --- a/policy/modules/system/fstools.fc
 +++ b/policy/modules/system/fstools.fc
 @@ -1,6 +1,8 @@
@@ -36,7 +36,7 @@ index 7a46b45..9656352 100644
  /sbin/install-mbr	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/jfs_.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/losetup.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -24,21 +29,27 @@
+@@ -24,21 +29,28 @@
  /sbin/mkraid		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/mkreiserfs	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/mkswap		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -55,6 +55,7 @@ index 7a46b45..9656352 100644
  /sbin/sfdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 +/usr/sbin/sfdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/swapoff		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
++/sbin/swapoff\.util-linux	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/swapon.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/tune2fs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  
