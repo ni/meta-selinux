@@ -52,4 +52,8 @@ SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
             file://poky-policy-fix-dmesg-to-use-dev-kmsg.patch \
            "
 
+# Backport from upstream
+SRC_URI += "file://Allow-ping-to-get-set-capabilities.patch \
+           "
+
 include refpolicy_common.inc
