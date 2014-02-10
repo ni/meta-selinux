@@ -51,6 +51,8 @@ SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
             file://poky-policy-fix-seutils-manage-config-files.patch \
             file://poky-policy-fix-setfiles-statvfs-get-file-count.patch \
             file://poky-policy-fix-dmesg-to-use-dev-kmsg.patch \
+            file://hostname-do-not-audit-attempts-by-hostname-to-read-a.patch \
+            file://sysnetwork-dhcpc-binds-socket-to-random-high-udp-por.patch \
            "
 
 # Backport from upstream
