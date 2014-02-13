@@ -30,6 +30,7 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-udevd.patch \
             file://poky-fc-rpm.patch \
             file://poky-fc-ftpwho-dir.patch \
+            file://poky-fc-fix-real-path_su.patch \
            "
 
 # Specific policy for Poky
