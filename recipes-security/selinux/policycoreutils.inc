@@ -75,6 +75,8 @@ RDEPENDS_${BPN}-secon += "libselinux"
 RDEPENDS_${BPN}-semanage = "\
 	python-core \
 	python-ipy \
+	python-compression \
+	python-xml \
 	${BPN}-python \
 	libselinux-python \
 "
