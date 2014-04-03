@@ -45,6 +45,7 @@ SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
             file://poky-policy-fix-nfsd_t-to-mount_nfsd_fs_t.patch \
             file://poky-policy-allow-setfiles_t-to-read-symlinks.patch \
             file://poky-policy-fix-new-SELINUXMNT-in-sys.patch \
+            file://poky-policy-allow-sysadm-to-run-rpcinfo.patch \
            "
 
 # Other policy fixes 
