@@ -14,13 +14,18 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
 	   file://audit-python-configure.patch \
 	   file://audit-for-cross-compiling.patch \
 	   file://auditd \
-	   file://fix-swig-host-contamination.patch"
+	   file://fix-swig-host-contamination.patch \
+	   file://auditd.service \
+	   file://audit-volatile.conf \
+"
 
-inherit autotools pythonnative update-rc.d
+inherit autotools pythonnative update-rc.d systemd
 
 UPDATERCPN = "auditd"
 INITSCRIPT_NAME = "auditd"
 INITSCRIPT_PARAMS = "defaults"
+
+SYSTEMD_SERVICE_${PN} = "auditd.service"
 
 SRC_URI[md5sum] = "4e8d065b5cc16b77b9b61e93a9ed160e"
 SRC_URI[sha256sum] = "8872e0b5392888789061db8034164305ef0e1b34543e1e7004d275f039081d29"
@@ -74,4 +79,13 @@ do_install_append() {
 	# replace init.d
 	install -D -m 0755 ${S}/../auditd ${D}/etc/init.d/auditd
 	rm -rf ${D}/etc/rc.d
+
+	if ${@base_contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+		install -d ${D}${sysconfdir}/tmpfiles.d/
+		install -m 0644 ${WORKDIR}/audit-volatile.conf ${D}${sysconfdir}/tmpfiles.d/
+	fi
+	
+	# install systemd unit files
+	install -d ${D}${systemd_unitdir}/system
+	install -m 0644 ${WORKDIR}/auditd.service ${D}${systemd_unitdir}/system
 }
