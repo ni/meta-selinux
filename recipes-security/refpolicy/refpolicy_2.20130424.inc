@@ -60,6 +60,7 @@ SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
 
 # Backport from upstream
 SRC_URI += "file://Allow-ping-to-get-set-capabilities.patch \
+            file://filesystem-associate-tmpfs_t-shm-to-device_t-devtmpf.patch \
            "
 
 include refpolicy_common.inc
