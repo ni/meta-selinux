@@ -88,4 +88,7 @@ do_install_append() {
 	# install systemd unit files
 	install -d ${D}${systemd_unitdir}/system
 	install -m 0644 ${WORKDIR}/auditd.service ${D}${systemd_unitdir}/system
+
+	chmod 750 ${D}/etc/audit ${D}/etc/audit/rules.d
+	chmod 640 ${D}/etc/audit/auditd.conf ${D}/etc/audit/rules.d/audit.rules
 }
