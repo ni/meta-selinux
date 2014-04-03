@@ -1,4 +1,4 @@
-PR = "r0"
+PR = "r1"
 
 include selinux_20131030.inc
 include ${BPN}.inc
@@ -13,4 +13,5 @@ SRC_URI += "\
 	file://policycoreutils-fix-sepolicy-install-path.patch \
 	file://policycoreutils-make-O_CLOEXEC-optional.patch \
 	file://policycoreutils-loadpolicy-symlink.patch \
+	file://policycoreutils-semanage-edit-user.patch \
 	"
