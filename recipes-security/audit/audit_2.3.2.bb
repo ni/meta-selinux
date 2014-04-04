@@ -67,6 +67,8 @@ FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
 FILES_${PN}-dev += "${base_libdir}/*.so ${base_libdir}/*.la"
 
+CONFFILES_auditd += "${sysconfdir}/audit/audit.rules"
+
 do_install_append() {
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.a
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.la
@@ -91,4 +93,7 @@ do_install_append() {
 
 	chmod 750 ${D}/etc/audit ${D}/etc/audit/rules.d
 	chmod 640 ${D}/etc/audit/auditd.conf ${D}/etc/audit/rules.d/audit.rules
+
+	# Based on the audit.spec "Copy default rules into place on new installation"
+	cp ${D}/etc/audit/rules.d/audit.rules ${D}/etc/audit/audit.rules
 }
