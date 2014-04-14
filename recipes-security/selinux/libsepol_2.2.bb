@@ -1,4 +1,4 @@
-PR = "r0"
+PR = "r99"
 
 include selinux_20131030.inc
 include ${BPN}.inc
