@@ -1,5 +1,3 @@
-PRINC = "1"
-
 SUMMARY = "SELinux policy compiler"
 DESCRIPTION = "\
 This package contains checkpolicy, the SELinux policy compiler. Only \
