@@ -1,5 +1,3 @@
-PRINC = "1"
-
 SUMMARY = "SELinux binary policy manipulation library"
 DESCRIPTION = "libsemanage provides an API for the manipulation of SELinux binary policies. \
 It is used by checkpolicy (the policy compiler) and similar tools, as well \
