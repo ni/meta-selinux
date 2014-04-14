@@ -1,5 +1,3 @@
-PRINC = "1"
-
 SUMMARY = "SELinux library and simple utilities"
 DESCRIPTION = "libselinux provides an API for SELinux applications to get and set \
 process and file security contexts and to obtain security policy \
