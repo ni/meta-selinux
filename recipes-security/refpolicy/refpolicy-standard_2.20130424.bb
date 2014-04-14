@@ -3,7 +3,7 @@ DESCRIPTION = "\
 This is the reference policy for SELinux built with type enforcement \
 only."
 
-PR = "r3"
+PR = "r99"
 
 POLICY_TYPE = "standard"
 

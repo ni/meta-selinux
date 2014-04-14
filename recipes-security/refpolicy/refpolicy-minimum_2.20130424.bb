@@ -1,3 +1,5 @@
+PR = "r99"
+
 include refpolicy-targeted_${PV}.bb
 
 SUMMARY = "SELinux minimum policy"

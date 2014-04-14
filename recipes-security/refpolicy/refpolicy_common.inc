@@ -1,5 +1,3 @@
-PRINC = "4"
-
 SECTION = "base"
 LICENSE = "GPLv2"
 
