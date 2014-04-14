@@ -1,4 +1,4 @@
-PR = "r0"
+PR = "r99"
 PV = "1.2.1+git${SRCPV}"
 
 include selinux_git.inc

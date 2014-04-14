@@ -1,5 +1,3 @@
-PRINC = "1"
-
 SUMMARY = "Python modules for supporting various SELinux utilities."
 DESCRIPTION = "\
 This package contains a Python module that forms the core of the \
