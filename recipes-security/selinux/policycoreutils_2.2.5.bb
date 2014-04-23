@@ -13,4 +13,5 @@ SRC_URI += "\
 	file://policycoreutils-make-O_CLOEXEC-optional.patch \
 	file://policycoreutils-loadpolicy-symlink.patch \
 	file://policycoreutils-semanage-edit-user.patch \
+	file://policycoreutils-process-ValueError-for-sepolicy-seobject.patch \
 	"
