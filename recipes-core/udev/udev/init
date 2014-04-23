@@ -114,7 +114,7 @@ case "$1" in
             udevadm settle
     fi
 
-    test ! -x /sbin/restorecon || /sbin/restorecon -F /dev
+    test ! -x /sbin/restorecon || /sbin/restorecon -F /dev /dev/shm /dev/pts
 
     ;;
   stop)
