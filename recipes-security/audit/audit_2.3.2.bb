@@ -18,6 +18,7 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
 	   file://auditd.service \
 	   file://audit-volatile.conf \
 "
+SRC_URI_append_arm = "file://add-system-call-table-for-ARM.patch"
 
 inherit autotools pythonnative update-rc.d systemd
 
@@ -41,6 +42,7 @@ EXTRA_OECONF += "--without-prelude \
 	--libdir=${base_libdir} \
 	--sbindir=${base_sbindir} \
 	"
+EXTRA_OECONF_append_arm = " --with-armeb=yes"
 
 EXTRA_OEMAKE += "PYLIBVER='python${PYTHON_BASEVERSION}' \
 	PYINC='${STAGING_INCDIR}/$(PYLIBVER)' \
