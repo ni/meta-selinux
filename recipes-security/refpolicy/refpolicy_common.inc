@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 # Specific config files for Poky
 SRC_URI += "file://customizable_types \
+            file://setrans-mls.conf \
+            file://setrans-mcs.conf \
 	   "
 
 S = "${WORKDIR}/refpolicy"
@@ -108,6 +110,12 @@ EOF
 
 	cat ${WORKDIR}/customizable_types >> \
 		${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/customizable_types
+
+	# install setrans.conf for mls/mcs policy
+	if [ -f ${WORKDIR}/setrans-${POLICY_TYPE}.conf ]; then
+		install -m 0644 ${WORKDIR}/setrans-${POLICY_TYPE}.conf \
+			${D}${sysconfdir}/selinux/${POLICY_NAME}/setrans.conf
+	fi
 
 	# install policy headers
 	oe_runmake install-headers DESTDIR=${D}
