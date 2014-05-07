@@ -1,4 +1,3 @@
-PRINC = "1"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 # Enable selinux support in the kernel if the feature is enabled
