@@ -15,4 +15,5 @@ SRC_URI += "\
 	file://libsemanage-drop-Wno-unused-but-set-variable.patch \
 	file://libsemanage-define-FD_CLOEXEC-as-necessary.patch;striplevel=2 \
 	file://libsemanage-allow-to-disable-audit-support.patch \
+	file://libsemanage-disable-expand-check-on-policy-load.patch \
 	"
