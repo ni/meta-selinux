@@ -1,5 +1,7 @@
 PR .= ".3"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 do_install_append () {
 	cat <<-EOF >> ${D}${sysconfdir}/init.d/populate-volatile.sh
 touch /var/log/lastlog
