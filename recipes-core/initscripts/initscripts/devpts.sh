@@ -24,5 +24,6 @@ then
 	then
 		mkdir -p /dev/pts
 		mount -t devpts devpts /dev/pts -ogid=${TTYGRP},mode=${TTYMODE}
+		test ! -x /sbin/restorecon || /sbin/restorecon -F /dev/pts
 	fi
 fi
