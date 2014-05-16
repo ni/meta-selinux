@@ -77,19 +77,19 @@ export HOST_SYS
 export STAGING_INCDIR
 export STAGING_LIBDIR
 
-do_configure() {
-        autoreconf --force --install 
+EXTRA_OECONF = "-disable-bwidget-check --disable-selinux-check \
+                --disable-swig-python --disable-swig-java --disable-swig-tcl \
+                --disable-profiling --disable-gui --with-tk=no --with-tcl=no \
+                --with-sepol-devel=${STAGING_LIBDIR}/.. \
+                --with-selinux-devel=${STAGING_LIBDIR}/.."
+
+do_configure_prepend() {
 	export ac_cv_policydb_version_max=26
 	export PYTHON=python
 	export PYLIBVER='python${PYTHON_BASEVERSION}'
 	export PYTHON_CPPFLAGS="-I${STAGING_INCDIR}/${PYLIBVER}"
 	export PYTHON_LDFLAGS="${STAGING_LIBDIR}/lib${PYLIBVER}.so"
 	export PYTHON_SITE_PKG="${libdir}/${PYLIBVER}/site-packages"
-        oe_runconf --disable-bwidget-check --disable-selinux-check \
-		--disable-swig-python --disable-swig-java --disable-swig-tcl \
-		--disable-profiling --disable-gui --with-tk=no --with-tcl=no \
-		--with-sepol-devel=${STAGING_LIBDIR}/.. \
-		--with-selinux-devel=${STAGING_LIBDIR}/.. 
 }
 
 do_install_append() {
