@@ -22,7 +22,7 @@ RDEPENDS_${PN} += "selinux-config"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit autotools pythonnative
+inherit pythonnative
 
 PARALLEL_MAKE = ""
 
@@ -61,8 +61,7 @@ do_compile() {
 }
 
 do_install() {
-	oe_runmake install \
-		DESTDIR=${D}
+	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install
 
 	# Prepare to create policy store
 	mkdir -p ${D}${sysconfdir}/selinux/
@@ -116,7 +115,7 @@ EOF
 	fi
 
 	# install policy headers
-	oe_runmake install-headers DESTDIR=${D}
+	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install-headers
 
 	# Fix symbol link policy.kern
 	link_path=`readlink -f ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern`
