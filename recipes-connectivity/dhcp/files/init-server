@@ -15,11 +15,19 @@ fi
 # should listen on.)
 . /etc/default/dhcp-server
 
+# Restorecon for /var/lib/dhcp/{dhcpd.leases,dhcpd6.leases}
+restorecon_dhcpd_leases(){
+	test ! -x /sbin/restorecon || for x in dhcpd.leases dhcpd6.leases; do
+		[ -f /var/lib/dhcp/$x ] && /sbin/restorecon -F /var/lib/dhcp/$x
+	done
+}
+
 case "$1" in
 	start)
 		echo -n "Starting DHCP server: "
 		test -d /var/lib/dhcp/ || mkdir -p /var/lib/dhcp/
 		test -f /var/lib/dhcp/dhcpd.leases || touch /var/lib/dhcp/dhcpd.leases	
+		restorecon_dhcpd_leases
 		start-stop-daemon -S -x /usr/sbin/dhcpd -- -q $INTERFACES
 		echo "."
 		;;
