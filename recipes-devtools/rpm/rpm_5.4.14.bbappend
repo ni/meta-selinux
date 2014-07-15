@@ -1,5 +1,3 @@
-PR .= ".3"
-
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://rpm-fix-build-bug.patch \
