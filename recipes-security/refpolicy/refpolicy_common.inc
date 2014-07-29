@@ -60,24 +60,11 @@ do_compile() {
 	oe_runmake policy
 }
 
-do_install() {
+prepare_policy_store () {
 	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install
 
 	# Prepare to create policy store
 	mkdir -p ${D}${sysconfdir}/selinux/
-	cat <<-EOF > ${D}${sysconfdir}/selinux/semanage.conf
-module-store = direct
-[setfiles]
-path = ${STAGING_DIR_NATIVE}${base_sbindir_native}/setfiles
-args = -q -c \$@ \$<
-[end]
-[sefcontext_compile]
-path = ${STAGING_DIR_NATIVE}${sbindir_native}/sefcontext_compile
-args = \$@
-[end]
-
-policy-version = 28
-EOF
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/policy
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
@@ -100,11 +87,29 @@ EOF
 			fi
 		done
 	fi
+}
+
+rebuild_policy () {
+	cat <<-EOF > ${D}${sysconfdir}/selinux/semanage.conf
+module-store = direct
+[setfiles]
+path = ${STAGING_DIR_NATIVE}${base_sbindir_native}/setfiles
+args = -q -c \$@ \$<
+[end]
+[sefcontext_compile]
+path = ${STAGING_DIR_NATIVE}${sbindir_native}/sefcontext_compile
+args = \$@
+[end]
+
+policy-version = 28
+EOF
 
 	# Create policy store and build the policy
 	semodule -p ${D} -s ${POLICY_NAME} -n -B
 	rm -f ${D}${sysconfdir}/selinux/semanage.conf
+}
 
+install_misc_files () {
 	cat ${WORKDIR}/customizable_types >> \
 		${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/customizable_types
 
@@ -120,4 +125,10 @@ EOF
 	# Fix symbol link policy.kern
 	link_path=`readlink -f ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern`
 	ln -sf ../../policy/`basename $link_path` ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern
+}
+
+do_install () {
+	prepare_policy_store
+	rebuild_policy
+	install_misc_files
 }
