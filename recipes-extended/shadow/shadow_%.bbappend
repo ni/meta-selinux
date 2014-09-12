@@ -1,4 +1,4 @@
-PR .= ".6"
+PR .= ".1"
 
 inherit with-selinux with-audit
 
