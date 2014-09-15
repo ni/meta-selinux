@@ -5,8 +5,8 @@ include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84b4d2c6ef954a2d4081e775a270d0d0"
 
-SRC_URI[md5sum] = "55026eb4654c4f732a27c191b39bebaf"
-SRC_URI[sha256sum] = "30ab363416806da907b86b97f1d31c252473e3200358bb1570f563c8312b5a3e"
+SRC_URI[md5sum] = "c13ea5de171f21fee399abfd4aef9481"
+SRC_URI[sha256sum] = "cc8354d67d7bef11fb2a03d23e788c6f4e8510b6760c3778dc7baf6dcfa97539"
 
 SRC_URI += "\
         file://libselinux-drop-Wno-unused-but-set-variable.patch \

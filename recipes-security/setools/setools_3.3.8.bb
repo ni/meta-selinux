@@ -8,7 +8,7 @@ SETools."
 SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
 
-SRC_URI = "http://oss.tresys.com/projects/setools/chrome/site/dists/setools-${PV}/setools-${PV}.tar.bz2;"
+SRC_URI = "https://raw.githubusercontent.com/wiki/TresysTechnology/setools3/files/dists/setools-${PV}/setools-${PV}.tar.bz2"
 SRC_URI[md5sum] = "d68d0d4e4da0f01da0f208782ff04b91"
 SRC_URI[sha256sum] = "44387ecc9a231ec536a937783440cd8960a72c51f14bffc1604b7525e341e999"
 

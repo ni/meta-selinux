@@ -1,9 +1,13 @@
-HOMEPAGE = "http://userspace.selinuxproject.org"
+HOMEPAGE = "https://github.com/SELinuxProject"
 
 # EXTRA_OEMAKE is typically: -e MAKEFLAGS=
 # "MAKEFLAGS= " causes problems as ENV variables will not pass to subdirs, so
 # we redefine EXTRA_OEMAKE here
 EXTRA_OEMAKE = "-e"
+
+# Releases are now from the base of the full tree, necessitating our skipping
+# through an extra level of directories.
+S = "${WORKDIR}/selinux-${BPN}-${PV}/${BPN}"
 
 do_compile() {
     oe_runmake all \
