@@ -13,7 +13,7 @@ S = "${WORKDIR}/refpolicy"
 
 FILES_${PN} = " \
 	${sysconfdir}/selinux/${POLICY_NAME}/ \
-	${@base_contains('DISTRO_FEATURES', 'compressed_policy', '${datadir}/selinux/${POLICY_NAME}/*.pp.bz2', '${datadir}/selinux/${POLICY_NAME}/*.pp', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'compressed_policy', '${datadir}/selinux/${POLICY_NAME}/*.pp.bz2', '${datadir}/selinux/${POLICY_NAME}/*.pp', d)} \
 	"
 FILES_${PN}-dev =+ "${datadir}/selinux/${POLICY_NAME}/include/"
 
@@ -69,7 +69,7 @@ prepare_policy_store () {
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
 	touch ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files/file_contexts.local
-	if  ${@base_contains('DISTRO_FEATURES','compressed_policy','true','false',d)}; then
+	if  ${@bb.utils.contains('DISTRO_FEATURES','compressed_policy','true','false',d)}; then
 		for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
 			bzip2 $i
 			if [ "`basename $i`" != "base.pp" ]; then
