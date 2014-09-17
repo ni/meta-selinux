@@ -1,5 +1,5 @@
 def target_selinux(d, truevar = 'selinux', falsevar = ''):
-    if not base_contains("DISTRO_FEATURES", "selinux", True, False, d):
+    if not bb.utils.contains("DISTRO_FEATURES", "selinux", True, False, d):
         return falsevar
 
     pn = d.getVar("PN", True) 

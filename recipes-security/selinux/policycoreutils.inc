@@ -7,7 +7,7 @@ context."
 SECTION = "base"
 LICENSE = "GPLv2+"
 
-SRC_URI += "${@base_contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)}"
+SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)}"
 
 PAM_SRC_URI = "file://pam.d/newrole \
                file://pam.d/run_init \
@@ -154,7 +154,7 @@ FILES_${PN}-loadpolicy += "\
 "
 FILES_${PN}-newrole += "\
 	${bindir}/newrole \
-	${@base_contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/newrole', '', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/newrole', '', d)} \
 "
 FILES_${PN}-python = "\
 	${libdir}/python${PYTHON_BASEVERSION}/site-packages/seobject.py* \
@@ -164,7 +164,7 @@ FILES_${PN}-python = "\
 FILES_${PN}-runinit += "\
 	${sbindir}/run_init \
 	${sbindir}/open_init_pty \
-	${@base_contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
 "
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/.debug/*"
 FILES_${PN}-sandbox += "\
