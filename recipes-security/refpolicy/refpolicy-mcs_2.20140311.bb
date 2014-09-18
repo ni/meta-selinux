@@ -6,8 +6,6 @@ level. This is useful on systems where a hierarchical policy (MLS) isn't \
 needed (pretty much all systems) but the non-hierarchical categories are. \
 "
 
-PR = "r99"
-
 POLICY_TYPE = "mcs"
 
 include refpolicy_${PV}.inc

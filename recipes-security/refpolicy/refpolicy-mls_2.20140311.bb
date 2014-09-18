@@ -5,8 +5,6 @@ It allows giving data labels such as \"Top Secret\" and preventing \
 such data from leaking to processes or files with lower classification. \
 "
 
-PR = "r99"
-
 POLICY_TYPE = "mls"
 
 include refpolicy_${PV}.inc
