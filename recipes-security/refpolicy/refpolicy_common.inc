@@ -13,7 +13,7 @@ S = "${WORKDIR}/refpolicy"
 
 FILES_${PN} = " \
 	${sysconfdir}/selinux/${POLICY_NAME}/ \
-	${@base_contains('DISTRO_FEATURES', 'compressed_policy', '${datadir}/selinux/${POLICY_NAME}/*.pp.bz2', '${datadir}/selinux/${POLICY_NAME}/*.pp', d)} \
+	${datadir}/selinux/${POLICY_NAME}/*.pp \
 	"
 FILES_${PN}-dev =+ "${datadir}/selinux/${POLICY_NAME}/include/"
 
@@ -69,24 +69,14 @@ prepare_policy_store () {
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
 	touch ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files/file_contexts.local
-	if  ${@base_contains('DISTRO_FEATURES','compressed_policy','true','false',d)}; then
-		for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
-			bzip2 $i
-			if [ "`basename $i`" != "base.pp" ]; then
-				cp ${i}.bz2 ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`
-			else
-				cp ${i}.bz2 ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/`basename $i`
-			fi
-		done
-	else
-		bzip2 -c ${D}${datadir}/selinux/${POLICY_NAME}/base.pp  >\
-			${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
-		for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
-			if [ "`basename $i`" != "base.pp" ]; then
-				bzip2 -c $i > ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`;
-			fi
-		done
-	fi
+	for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
+		bzip2 -f $i && mv -f $i.bz2 $i
+		if [ "`basename $i`" != "base.pp" ]; then
+			cp $i ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`
+		else
+			cp $i ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/`basename $i`
+		fi
+	done
 }
 
 rebuild_policy () {
