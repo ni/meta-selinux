@@ -211,7 +211,7 @@ FILES_${PN}-setsebool += "\
 FILES_system-config-selinux = " \
     ${bindir}/sepolgen \
     ${datadir}/system-config-selinux/* \
-    ${datadir}/icons/hicolor/24x24/apps/system-config-selinux.png \
+    ${datadir}/icons/hicolor/ \
     ${datadir}/polkit-1/actions/org.selinux.config.policy \
 "
 

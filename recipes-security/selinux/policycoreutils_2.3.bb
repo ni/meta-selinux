@@ -1,12 +1,10 @@
-PR = "r99"
-
-include selinux_20131030.inc
+include selinux_20140506.inc
 include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
-SRC_URI[md5sum] = "f330a90c566c8b564858d45399ce3dd1"
-SRC_URI[sha256sum] = "3d2c8806742004693c2d4726abbc4f412340ee07bed407976dd8abeda09a4333"
+SRC_URI[md5sum] = "4f5c508e3c3867c8beb343e993d353dd"
+SRC_URI[sha256sum] = "11e8815ac13debb87897d2781381b89ec5c6c746a3d44223a493bc7ace6cc71f"
 
 SRC_URI += "\
 	file://policycoreutils-fix-sepolicy-install-path.patch \

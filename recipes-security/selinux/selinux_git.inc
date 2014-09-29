@@ -1,6 +1,6 @@
 SRCREV = "edc2e99687b050d5be21a78a66d038aa1fc068d9"
 
-SRC_URI = "git://oss.tresys.com/git/selinux.git;protocol=http"
+SRC_URI = "git://github.com/SELinuxProject/selinux.git;protocol=http"
 
 include selinux_common.inc
 

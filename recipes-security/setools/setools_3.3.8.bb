@@ -14,7 +14,6 @@ SRC_URI[sha256sum] = "44387ecc9a231ec536a937783440cd8960a72c51f14bffc1604b7525e3
 
 SRC_URI += "file://setools-neverallow-rules-all-always-fail.patch"
 SRC_URI += "file://setools-Fix-sepol-calls-to-work-with-latest-libsepol.patch"
-#SRC_URI += "file://setools-Changes-to-support-named-file_trans-rules.patch"
 
 SRC_URI += "file://setools-Don-t-check-selinux-policies-if-disabled.patch"
 SRC_URI += "file://setools-configure-ac.patch"
@@ -22,6 +21,8 @@ SRC_URI += "file://setools-cross-ar.patch"
 
 SRC_URI += "file://setools-Fix-test-bug-for-unary-operator.patch"
 SRC_URI += "file://setools-Fix-python-setools-Makefile.am-for-cross.patch"
+
+SRC_URI += "file://setools-replcon-correct-invalid-prototype-for-lsetfilecon_ra.patch"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
                     file://${S}/COPYING.GPL;md5=751419260aa954499f7abaabaa882bbe \
