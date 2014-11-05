@@ -1,5 +1,3 @@
-PR = "r99"
-
 include refpolicy-targeted_${PV}.bb
 
 SUMMARY = "SELinux minimum policy"
@@ -40,19 +38,11 @@ prepare_policy_store () {
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
 	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
 	touch ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files/file_contexts.local
-	if  ${@bb.utils.contains('DISTRO_FEATURES','compressed_policy','true','false',d)}; then
-		bzip2 base.pp
-		cp base.pp.bz2 ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
-		for i in ${POLICY_MODULES_MIN}; do
-			bzip2 $i
-			cp ${i}.bz2 ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`
-		done
-	else
-		bzip2 -c ${D}${datadir}/selinux/${POLICY_NAME}/base.pp  > \
-			${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
-		for i in ${POLICY_MODULES_MIN}; do
-			bzip2 -c ${D}${datadir}/selinux/${POLICY_NAME}/$i.pp > \
-				${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/$i.pp
-		done
-	fi
+	for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
+		bzip2 -f $i && mv -f $i.bz2 $i
+	done
+	cp base.pp ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
+	for i in ${POLICY_MODULES_MIN}; do
+		cp ${i}.pp ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i.pp`
+	done
 }

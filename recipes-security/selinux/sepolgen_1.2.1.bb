@@ -1,6 +1,4 @@
-PR = "r99"
-
-include selinux_20131030.inc
+include selinux_20140506.inc
 include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"

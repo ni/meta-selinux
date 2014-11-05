@@ -6,6 +6,7 @@ Subject: [PATCH] fix policy for nfsserver to mount nfsd_fs_t.
 Upstream-Status: Pending
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/contrib/rpc.te       |    5 +++++
  policy/modules/contrib/rpcbind.te   |    5 +++++
@@ -13,11 +14,9 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/kernel/kernel.te     |    2 ++
  4 files changed, 13 insertions(+)
 
-diff --git a/policy/modules/contrib/rpc.te b/policy/modules/contrib/rpc.te
-index 5605205..9e9f468 100644
 --- a/policy/modules/contrib/rpc.te
 +++ b/policy/modules/contrib/rpc.te
-@@ -256,6 +256,11 @@ tunable_policy(`nfs_export_all_ro',`
+@@ -263,6 +263,11 @@ tunable_policy(`nfs_export_all_ro',`
  
  optional_policy(`
  	mount_exec(nfsd_t)
@@ -29,27 +28,23 @@ index 5605205..9e9f468 100644
  ')
  
  ########################################
-diff --git a/policy/modules/contrib/rpcbind.te b/policy/modules/contrib/rpcbind.te
-index 196f168..9c75677 100644
 --- a/policy/modules/contrib/rpcbind.te
 +++ b/policy/modules/contrib/rpcbind.te
-@@ -71,6 +71,11 @@ miscfiles_read_localization(rpcbind_t)
+@@ -70,6 +70,11 @@ logging_send_syslog_msg(rpcbind_t)
  
- sysnet_dns_name_resolve(rpcbind_t)
+ miscfiles_read_localization(rpcbind_t)
  
 +# nfsd_t would not be allowed to send unix_stream_socket to rpcbind_t,
 +# because the are running in different level. So add rules to allow this.
 +mls_socket_read_all_levels(rpcbind_t)
 +mls_socket_write_all_levels(rpcbind_t)
 +
- optional_policy(`
- 	nis_use_ypbind(rpcbind_t)
+ ifdef(`distro_debian',`
+ 	term_dontaudit_use_unallocated_ttys(rpcbind_t)
  ')
-diff --git a/policy/modules/kernel/filesystem.te b/policy/modules/kernel/filesystem.te
-index 1c66416..2b9e7ce 100644
 --- a/policy/modules/kernel/filesystem.te
 +++ b/policy/modules/kernel/filesystem.te
-@@ -119,6 +119,7 @@ genfscon mvfs / gen_context(system_u:object_r:mvfs_t,s0)
+@@ -119,6 +119,7 @@ genfscon mvfs / gen_context(system_u:obj
  
  type nfsd_fs_t;
  fs_type(nfsd_fs_t)
@@ -57,11 +52,9 @@ index 1c66416..2b9e7ce 100644
  genfscon nfsd / gen_context(system_u:object_r:nfsd_fs_t,s0)
  
  type oprofilefs_t;
-diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
-index 49fde6e..a731078 100644
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -284,6 +284,8 @@ mls_process_read_up(kernel_t)
+@@ -293,6 +293,8 @@ mls_process_read_up(kernel_t)
  mls_process_write_down(kernel_t)
  mls_file_write_all_levels(kernel_t)
  mls_file_read_all_levels(kernel_t)
@@ -70,6 +63,3 @@ index 49fde6e..a731078 100644
  
  ifdef(`distro_redhat',`
  	# Bugzilla 222337
--- 
-1.7.9.5
-

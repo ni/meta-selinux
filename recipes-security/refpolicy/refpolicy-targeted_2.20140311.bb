@@ -12,8 +12,9 @@ POLICY_NAME = "targeted"
 POLICY_TYPE = "mcs"
 POLICY_MLS_SENS = "0"
 
-PR = "r99"
 include refpolicy_${PV}.inc
 
-SRC_URI += "file://refpolicy-fix-optional-issue-on-sysadm-module.patch \
-	file://refpolicy-unconfined_u-default-user.patch"
+SRC_URI += " \
+            file://refpolicy-fix-optional-issue-on-sysadm-module.patch \
+            file://refpolicy-unconfined_u-default-user.patch \
+           "

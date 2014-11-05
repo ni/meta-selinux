@@ -6,19 +6,17 @@ mapping to the pathes in file_contexts.
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
- config/file_contexts.subs_dist |    8 ++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+ config/file_contexts.subs_dist |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/config/file_contexts.subs_dist b/config/file_contexts.subs_dist
-index 32b87a4..ebba73d 100644
 --- a/config/file_contexts.subs_dist
 +++ b/config/file_contexts.subs_dist
-@@ -5,3 +5,14 @@
- /usr/lib32 /usr/lib
- /usr/lib64 /usr/lib
+@@ -19,3 +19,13 @@
+ /usr/local/lib64 /usr/lib
+ /usr/local/lib /usr/lib
  /var/run/lock /var/lock
-+/etc/init.d /etc/rc.d/init.d
 +/var/volatile/log /var/log
 +/var/volatile/run /var/run
 +/var/volatile/cache /var/cache
@@ -29,6 +27,3 @@ index 32b87a4..ebba73d 100644
 +/usr/lib/busybox/bin /bin
 +/usr/lib/busybox/sbin /sbin
 +/usr/lib/busybox/usr /usr
--- 
-1.7.5.4
-

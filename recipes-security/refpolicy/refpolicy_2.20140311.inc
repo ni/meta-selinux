@@ -1,8 +1,8 @@
-SRC_URI = "http://oss.tresys.com/files/refpolicy/refpolicy-${PV}.tar.bz2;"
-SRC_URI[md5sum] = "6a5c975258cc8eb92c122f11b11a5085"
-SRC_URI[sha256sum] = "6039ba854f244a39dc727cc7db25632f7b933bb271c803772d754d4354f5aef4"
+SRC_URI = "https://raw.githubusercontent.com/wiki/TresysTechnology/refpolicy/files/refpolicy-${PV}.tar.bz2;"
+SRC_URI[md5sum] = "418f8d2a6ada3a299816153e70970449"
+SRC_URI[sha256sum] = "f69437db95548c78a5dec44c236397146b144153149009ea554d2e536e5436f7"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-2.20130424:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-2.20140311:"
 
 # Fix file contexts for Poky
 SRC_URI += "file://poky-fc-subs_dist.patch \
@@ -49,19 +49,11 @@ SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
            "
 
 # Other policy fixes 
-SRC_URI += "file://poky-policy-fix-xconsole_device_t-as-a-dev_node.patch \
+SRC_URI += " \
             file://poky-policy-fix-seutils-manage-config-files.patch \
             file://poky-policy-fix-setfiles-statvfs-get-file-count.patch \
             file://poky-policy-fix-dmesg-to-use-dev-kmsg.patch \
-            file://hostname-do-not-audit-attempts-by-hostname-to-read-a.patch \
-            file://sysnetwork-dhcpc-binds-socket-to-random-high-udp-por.patch \
             file://ftp-add-ftpd_t-to-mlsfilewrite.patch \
-           "
-
-# Backport from upstream
-SRC_URI += "file://Allow-ping-to-get-set-capabilities.patch \
-            file://filesystem-associate-tmpfs_t-shm-to-device_t-devtmpf.patch \
-            file://Allow-udev-the-block_suspend-capability.patch \
            "
 
 include refpolicy_common.inc
