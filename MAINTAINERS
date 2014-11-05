@@ -19,6 +19,11 @@ Please keep this list in alphabetical order.
 Maintainers List (try to look for most precise areas first)
 
 COMMON
+M:	Joe MacDonald <joe_macdonald@mentor.com>
+F:	conf
+F:	classes
+F:	recipes-*
+
 M:	Xin Ouyang <xin.ouyang@windriver.com>
 F:	conf
 F:	classes
