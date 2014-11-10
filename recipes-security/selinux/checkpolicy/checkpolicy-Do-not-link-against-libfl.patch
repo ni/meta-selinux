@@ -8,6 +8,8 @@ no longer get errors about undefined references to yylex.
 Upstream-status: Pending
 
 Signed-off-by: Chong Lu <Chong.Lu@windriver.com>
+Signed-off-by: Shrikant Bobade <Shrikant_Bobade@mentor.com>¶
+
 ---
  Makefile      |    2 +-
  test/Makefile |    2 +-
@@ -34,8 +36,8 @@ index 63b4d24..0f19a8a 100644
  CFLAGS ?= -g -Wall -W -Werror -O2 -pipe
  override CFLAGS += -I$(INCLUDEDIR)
  
--LDLIBS=-lfl -lselinux $(LIBDIR)/libsepol.a -L$(LIBDIR)
-+LDLIBS=-lselinux $(LIBDIR)/libsepol.a -L$(LIBDIR)
+-LDLIBS=-lfl $(LIBDIR)/libsepol.a -L$(LIBDIR)
++LDLIBS=$(LIBDIR)/libsepol.a -L$(LIBDIR)
  
  all: dispol dismod
  
