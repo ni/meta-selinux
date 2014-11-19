@@ -48,7 +48,7 @@ if [ -f /.autorelabel ]; then
 	${FIXFILES} -F -f relabel
 	/bin/rm -f /.autorelabel
 	echo " * Relabel done, rebooting the system."
-	/sbin/reboot -f
+	/sbin/reboot
 fi
 
 # If first booting, the security context type of init would be
@@ -62,7 +62,7 @@ if [ "`${SECON} -t --pid 1`" = "kernel_t" ]; then
 	${RESTORECON} -RF /
 	${RESTORECON} -F /
 	echo " * Relabel done, rebooting the system."
-	/sbin/reboot -f
+	/sbin/reboot
 fi
 
 # Now, we should relabel /dev for most services.
