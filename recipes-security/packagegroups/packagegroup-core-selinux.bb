@@ -25,4 +25,5 @@ RDEPENDS_${PN} = " \
 	selinux-config \
 	refpolicy-standard \
 	refpolicy-mls \
+	coreutils \
 	"
