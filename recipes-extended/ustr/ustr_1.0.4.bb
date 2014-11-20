@@ -11,11 +11,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=c79c6e2ae13418d16d7dc82df960a1e7 \
 		    file://LICENSE_LGPL;md5=d8045f3b8f929c1cb29a1e3fd737b499 \
 		    file://LICENSE_MIT;md5=c61e779b782608472bd87593c3c3916f"
 
-# Official upstream seems to be offline.. replace w/ a Fedora Project mirror.
-# http://www.and.org/ustr/1.0.4/ustr-1.0.4.tar.bz2 
-
 SRC_URI = "\
-    http://pkgs.fedoraproject.org/repo/pkgs/ustr/ustr-1.0.4.tar.bz2/93147d9f0c9765d4cd0f04f7e44bdfce/ustr-1.0.4.tar.bz2 \
+    http://www.and.org/ustr/${BPV}/${BPN}-${PV}.tar.bz2 \
     file://ustr-makefile-fix.patch;patch=1 \
     file://ustr-fix__va_copy-not-defined.patch;patch=2"
 SRC_URI[md5sum] = "93147d9f0c9765d4cd0f04f7e44bdfce"
