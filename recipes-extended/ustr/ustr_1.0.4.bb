@@ -14,7 +14,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=c79c6e2ae13418d16d7dc82df960a1e7 \
 SRC_URI = "\
     http://www.and.org/ustr/${BPV}/${BPN}-${PV}.tar.bz2 \
     file://ustr-makefile-fix.patch;patch=1 \
-    file://ustr-fix__va_copy-not-defined.patch;patch=2"
+    file://ustr-fix__va_copy-not-defined.patch;patch=2 \
+    file://ustr-c99-inline.patch;patch=3"
 SRC_URI[md5sum] = "93147d9f0c9765d4cd0f04f7e44bdfce"
 SRC_URI[sha256sum] = "3daf6eae9f78de1e872c0b2b83cce35515b94d4bb8a074e48f331fd99e1fc2c4"
 
