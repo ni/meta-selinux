@@ -38,6 +38,7 @@ RDEPENDS_${BPN}-chcat = "\
 "
 RDEPENDS_${BPN}-fixfiles += "\
 	${BPN}-setfiles \
+        bash \
 "
 RDEPENDS_${BPN}-genhomedircon += "\
 	${BPN}-genhomedircon \
@@ -71,6 +72,7 @@ RDEPENDS_${BPN}-sandbox += "\
 	python-unixadmin \
 	libselinux-python \
 	${BPN}-python \
+        bash \
 "
 RDEPENDS_${BPN}-secon += "libselinux"
 RDEPENDS_${BPN}-semanage = "\
