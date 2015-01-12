@@ -14,22 +14,29 @@ export TZ=/etc/localtime
 [ -d /sys/class ] || exit 1
 [ -r /proc/mounts ] || exit 1
 [ -x @UDEVD@ ] || exit 1
+SYSCONF_CACHED="/etc/udev/cache.data"
+SYSCONF_TMP="/dev/shm/udev.cache"
+DEVCACHE_REGEN="/dev/shm/udev-regen" # create to request cache regen
+
+# A list of files which are used as a criteria to judge whether the udev cache could be reused.
+CMP_FILE_LIST="/proc/version /proc/cmdline /proc/devices"
+[ -f /proc/atags ] && CMP_FILE_LIST="$CMP_FILE_LIST /proc/atags"
+
+# List of files whose metadata (size/mtime/name) will be included in cached
+# system state.
+META_FILE_LIST="lib/udev/rules.d/* etc/udev/rules.d/*"
+
+# Command to compute system configuration.
+sysconf_cmd () {
+	cat -- $CMP_FILE_LIST
+	stat -L -c '%s %Y %n' -- $META_FILE_LIST | awk -F/ '{print $1 " " $NF;}'
+}
+
 if [ "$use_udev_cache" != "" ]; then
 	[ -f /etc/default/udev-cache ] && . /etc/default/udev-cache
 fi
 [ -f /etc/udev/udev.conf ] && . /etc/udev/udev.conf
 [ -f /etc/default/rcS ] && . /etc/default/rcS
-
-readfiles () {
-   READDATA=""
-   for filename in $@; do
-	   if [ -r $filename ]; then
-		   while read line; do
-			   READDATA="$READDATA$line"
-		   done < $filename
-	   fi
-   done
-}
 
 kill_udevd () {
     pid=`pidof -x udevd`
@@ -59,40 +66,37 @@ case "$1" in
     # the automount rule for udev needs /tmp directory available, as /tmp is a symlink
     # to /var/tmp which in turn is a symlink to /var/volatile/tmp, we need to make sure
     # /var/volatile/tmp directory to be available.
-    mkdir -p /var/volatile/tmp
+    mkdir -m 1777 -p /var/volatile/tmp
 
     # Cache handling.
-    # A list of files which are used as a criteria to judge whether the udev cache could be reused.
-    CMP_FILE_LIST="/proc/version /proc/cmdline /proc/devices /proc/atags"
     if [ "$use_udev_cache" != "" ]; then
 	    if [ "$DEVCACHE" != "" ]; then
 		    if [ -e $DEVCACHE ]; then
-			    readfiles $CMP_FILE_LIST
-			    NEWDATA="$READDATA"
-			    readfiles /etc/udev/cache.data
-			    OLDDATA="$READDATA"
-			    if [ "$OLDDATA" = "$NEWDATA" ]; then
-				    tar --directory=/ -xf $DEVCACHE > /dev/null 2>&1
+			    sysconf_cmd > "$SYSCONF_TMP"
+			    if cmp $SYSCONF_CACHED $SYSCONF_TMP >/dev/null; then
+				    tar xmf $DEVCACHE -C / -m
 				    not_first_boot=1
 				    [ "$VERBOSE" != "no" ] && echo "udev: using cache file $DEVCACHE"
-				    [ -e /dev/shm/udev.cache ] && rm -f /dev/shm/udev.cache
+				    [ -e $SYSCONF_TMP ] && rm -f "$SYSCONF_TMP"
+				    [ -e "$DEVCACHE_REGEN" ] && rm -f "$DEVCACHE_REGEN"
 			    else
 				    # Output detailed reason why the cached /dev is not used
-				    if [ "$VERBOSE" != "no" ]; then
-					    echo "udev: udev cache not used"
-					    echo "udev: we use $CMP_FILE_LIST as criteria to judge whether the cache /dev could be resued"
-					    echo "udev: olddata: $OLDDATA"
-					    echo "udev: newdata: $NEWDATA"
-				    fi
-				    echo "$NEWDATA" > /dev/shm/udev.cache
+				    cat <<EOF
+udev: Not using udev cache because of changes detected in the following files:
+udev:     $CMP_FILE_LIST
+udev:     $META_FILE_LIST
+udev: The udev cache will be regenerated. To identify the detected changes,
+udev: compare the cached sysconf at   $SYSCONF_CACHED
+udev: against the current sysconf at  $SYSCONF_TMP
+EOF
+				    touch "$DEVCACHE_REGEN"
 			    fi
 			    /usr/sbin/setenforce 1
 		    else
 			    if [ "$ROOTFS_READ_ONLY" != "yes" ]; then
 				    # If rootfs is not read-only, it's possible that a new udev cache would be generated;
 				    # otherwise, we do not bother to read files.
-				    readfiles $CMP_FILE_LIST
-				    echo "$READDATA" > /dev/shm/udev.cache
+				    touch "$DEVCACHE_REGEN"
 			    fi
 		    fi
 	    fi
@@ -107,8 +111,13 @@ case "$1" in
 
     udevadm control --env=STARTUP=1
     if [ "$not_first_boot" != "" ];then
-            udevadm trigger --action=add --subsystem-nomatch=tty --subsystem-nomatch=mem --subsystem-nomatch=vc --subsystem-nomatch=vtconsole --subsystem-nomatch=misc --subsystem-nomatch=dcon --subsystem-nomatch=pci_bus  --subsystem-nomatch=graphics	 --subsystem-nomatch=backlight --subsystem-nomatch=video4linux	--subsystem-nomatch=platform
-            (udevadm settle --timeout=10; udevadm control --env=STARTUP=)&
+            if [ "$PROBE_PLATFORM_BUS" != "yes" ]; then
+                PLATFORM_BUS_NOMATCH="--subsystem-nomatch=platform"
+            else
+                PLATFORM_BUS_NOMATCH=""
+            fi
+            udevadm trigger --action=add --subsystem-nomatch=tty --subsystem-nomatch=mem --subsystem-nomatch=vc --subsystem-nomatch=vtconsole --subsystem-nomatch=misc --subsystem-nomatch=dcon --subsystem-nomatch=pci_bus --subsystem-nomatch=graphics --subsystem-nomatch=backlight --subsystem-nomatch=video4linux $PLATFORM_BUS_NOMATCH
+            (udevadm settle --timeout=3; udevadm control --env=STARTUP=)&
     else
             udevadm trigger --action=add
             udevadm settle
