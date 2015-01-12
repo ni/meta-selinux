@@ -88,7 +88,6 @@ udev: against the current sysconf at  $SYSCONF_TMP
 EOF
 			    touch "$DEVCACHE_REGEN"
 		    fi
-		    /usr/sbin/setenforce 1
 	    else
 		    if [ "$ROOTFS_READ_ONLY" != "yes" ]; then
 			    # If rootfs is not read-only, it's possible that a new udev cache would be generated;
