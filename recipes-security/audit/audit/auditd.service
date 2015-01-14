@@ -5,7 +5,6 @@ After=local-fs.target
 Conflicts=shutdown.target
 Before=sysinit.target shutdown.target
 After=systemd-tmpfiles-setup.service
-RefuseManualStop=yes
 
 [Service]
 ExecStart=/sbin/auditd -n
