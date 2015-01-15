@@ -1,5 +1,3 @@
-PR .= ".2"
-
 inherit selinux
 
 DEPENDS += "${LIBSELINUX}"
