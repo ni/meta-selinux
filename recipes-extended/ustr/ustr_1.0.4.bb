@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=c79c6e2ae13418d16d7dc82df960a1e7 \
 		    file://LICENSE_MIT;md5=c61e779b782608472bd87593c3c3916f"
 
 SRC_URI = "\
-    http://www.and.org/ustr/${BPV}/${BPN}-${PV}.tar.bz2 \
+    http://www.and.org/ustr/${PV}/${BPN}-${PV}.tar.bz2 \
     file://ustr-makefile-fix.patch;patch=1 \
     file://ustr-fix__va_copy-not-defined.patch;patch=2 \
     file://ustr-c99-inline.patch;patch=3"
