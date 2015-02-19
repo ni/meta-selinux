@@ -34,6 +34,19 @@ the Yocto Project website:
 
 http://www.yoctoproject.org
 
+This layer also optionally depends on the following layers:
+
+URI: git://github.com/openembedded/meta-oe.git
+branch: master
+revision: HEAD
+layers: meta-oe
+        meta-networking
+        meta-python
+
+URI: git://git.yoctoproject.org/meta-virtualization
+branch: master
+revision: HEAD
+
 
 Maintenance
 -----------
