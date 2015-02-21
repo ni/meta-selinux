@@ -7,7 +7,10 @@ context."
 SECTION = "base"
 LICENSE = "GPLv2+"
 
-SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)}"
+SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
+            file://policycoreutils-fixfiles-de-bashify.patch \
+            file://policycoreutils-sandbox-de-bashify.patch \
+           "
 
 PAM_SRC_URI = "file://pam.d/newrole \
                file://pam.d/run_init \
@@ -97,7 +100,7 @@ RDEPENDS_${BPN}-sepolicy += "\
 "
 # static link to libsepol
 DEPENDS_${BPN}-sepolgen-ifgen += "libsepol"
-RDEPENDS_${BPN}-sepolgen-ifgen += "libselinux-python"
+RDEPENDS_${BPN}-sepolgen-ifgen += "python libselinux-python"
 RDEPENDS_${BPN}-sestatus += "libselinux"
 RDEPENDS_${BPN}-setfiles += "\
 	libselinux \
