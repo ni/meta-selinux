@@ -61,6 +61,9 @@ case "$1" in
     # /var/volatile/tmp directory to be available.
     mkdir -p /var/volatile/tmp
 
+    # restorecon /run early to allow mdadm creating dir /run/mdadm
+    test ! -x /sbin/restorecon || /sbin/restorecon -F /run
+
     # Cache handling.
     # A list of files which are used as a criteria to judge whether the udev cache could be reused.
     CMP_FILE_LIST="/proc/version /proc/cmdline /proc/devices /proc/atags"
