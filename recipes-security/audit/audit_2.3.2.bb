@@ -70,6 +70,7 @@ FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
 FILES_${PN}-dev += "${base_libdir}/*.so ${base_libdir}/*.la"
 
 CONFFILES_auditd += "${sysconfdir}/audit/audit.rules"
+RDEPENDS_auditd += "bash"
 
 do_install_append() {
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.a
