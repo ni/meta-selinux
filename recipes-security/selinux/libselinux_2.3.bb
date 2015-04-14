@@ -11,4 +11,5 @@ SRC_URI += "\
         file://libselinux-make-O_CLOEXEC-optional.patch \
         file://libselinux-make-SOCK_CLOEXEC-optional.patch \
         file://libselinux-define-FD_CLOEXEC-as-necessary.patch \
+        file://libselinux-mount-procfs-before-check.patch \
         "
