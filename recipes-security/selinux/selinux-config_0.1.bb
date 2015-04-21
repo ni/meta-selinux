@@ -11,6 +11,8 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 PR = "r3"
 
+S = "${WORKDIR}"
+
 SRC_URI = "file://selinux-init.sh"
 
 inherit update-rc.d
