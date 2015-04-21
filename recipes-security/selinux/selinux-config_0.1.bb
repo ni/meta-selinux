@@ -1,4 +1,5 @@
 DEFAULT_POLICY = "mls"
+DEFAULT_ENFORCING = "enforcing"
 
 SUMMARY = "SELinux configuration"
 DESCRIPTION = "\
@@ -33,7 +34,7 @@ do_install () {
 #     enforcing - SELinux security policy is enforced.
 #     permissive - SELinux prints warnings instead of enforcing.
 #     disabled - No SELinux policy is loaded.
-SELINUX=enforcing
+SELINUX=${DEFAULT_ENFORCING}
 # SELINUXTYPE= can take one of these two values:
 #     standard - Standard Security protection.
 #     mls - Multi Level Security protection.
