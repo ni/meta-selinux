@@ -62,8 +62,10 @@ err_cleanup () {
 	trap 'err_cleanup' EXIT
 	udevadm control --stop-exec-queue
 	sysconf_cmd > "$SYSCONF_TMP"
-	find /dev -xdev \( -type b -o -type c -o -type l \) | cut -c 2- \
-		| xargs tar cf "${DEVCACHE_TMP}" --selinux --xattrs
+	cd /
+	find dev -xdev \( -type b -o -type c -o -type l \) \
+		| TAR_OPTIONS="--no-unquote --selinux --xattrs" tar cf "${DEVCACHE_TMP}" -T-
+	cd "$OLDPWD"
 	gzip < "${DEVCACHE_TMP}" > "$DEVCACHE"
 	rm -f "${DEVCACHE_TMP}"
 	mv "$SYSCONF_TMP" "$SYSCONF_CACHED"
