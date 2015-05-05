@@ -28,6 +28,9 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
                     file://${S}/COPYING.GPL;md5=751419260aa954499f7abaabaa882bbe \
                     file://${S}/COPYING.LGPL;md5=fbc093901857fcd118f065f900982c24"
 
+CFLAGS_append = " -fPIC"
+CXXFLAGS_append = " -fPIC"
+
 DEPENDS += "bison-native flex-native python libsepol libselinux libxml2"
 
 PACKAGE_BEFORE_PN += "${PN}-libs"
