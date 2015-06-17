@@ -15,4 +15,5 @@ SRC_URI += "\
 	file://policycoreutils-fix-TypeError-for-seobject.py.patch \
 	file://0001-mcstrans-fix-the-init-script.patch \
 	file://enable-mcstrans.patch \
+	file://policycoreutils-fts_flags-FTS_NOCHDIR.patch \
 	"
