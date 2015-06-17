@@ -11,4 +11,4 @@ IMAGE_INSTALL = "\
 	packagegroup-core-selinux \
 "   
 
-inherit core-image
+inherit selinux-image
