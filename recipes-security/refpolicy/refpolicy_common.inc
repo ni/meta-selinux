@@ -15,7 +15,10 @@ FILES_${PN} = " \
 	${sysconfdir}/selinux/${POLICY_NAME}/ \
 	${datadir}/selinux/${POLICY_NAME}/*.pp \
 	"
-FILES_${PN}-dev =+ "${datadir}/selinux/${POLICY_NAME}/include/"
+FILES_${PN}-dev =+ " \
+        ${datadir}/selinux/${POLICY_NAME}/include/ \
+        ${sysconfdir}/selinux/sepolgen.conf \
+"
 
 DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
 RDEPENDS_${PN} += "selinux-config"
@@ -121,4 +124,9 @@ do_install () {
 	prepare_policy_store
 	rebuild_policy
 	install_misc_files
+}
+
+do_install_append(){
+	# While building policies on target, Makefile will be searched from SELINUX_DEVEL_PATH
+	echo "SELINUX_DEVEL_PATH=${datadir}/selinux/${POLICY_NAME}/include" > ${D}${sysconfdir}/selinux/sepolgen.conf
 }
