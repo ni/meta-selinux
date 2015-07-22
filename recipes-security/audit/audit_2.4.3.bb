@@ -9,15 +9,16 @@ LICENSE = "GPLv2+ & LGPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
-	   file://disable-ldap.patch \
-	   file://audit-python.patch \
-	   file://audit-python-configure.patch \
-	   file://audit-for-cross-compiling.patch \
-	   file://auditd \
-	   file://fix-swig-host-contamination.patch \
-	   file://auditd.service \
-	   file://audit-volatile.conf \
+           file://audit-python-configure.patch \
+           file://audit-python.patch \
+           file://fix-swig-host-contamination.patch \
+           file://auditd \
+           file://auditd.service \
+           file://audit-volatile.conf \
 "
+SRC_URI[md5sum] = "544d863af2016b76afd8d1691b251164"
+SRC_URI[sha256sum] = "9c914704fecc602e143e37152f3efbab2469692684c1a8cc1b801c1b49c7abc6"
+
 SRC_URI_append_arm = "file://add-system-call-table-for-ARM.patch"
 
 inherit autotools pythonnative update-rc.d systemd
@@ -28,19 +29,17 @@ INITSCRIPT_PARAMS = "defaults"
 
 SYSTEMD_SERVICE_${PN} = "auditd.service"
 
-SRC_URI[md5sum] = "4e8d065b5cc16b77b9b61e93a9ed160e"
-SRC_URI[sha256sum] = "8872e0b5392888789061db8034164305ef0e1b34543e1e7004d275f039081d29"
-
 DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30)"
 
 EXTRA_OECONF += "--without-prelude \
 	--with-libwrap \
 	--enable-gssapi-krb5=no \
-	--without-ldap \
 	--with-libcap-ng=yes \
 	--with-python=yes \
 	--libdir=${base_libdir} \
 	--sbindir=${base_sbindir} \
+        --without-python3 \
+        --disable-zos-remote \
 	"
 EXTRA_OECONF_append_arm = " --with-armeb=yes"
 
@@ -67,7 +66,7 @@ FILES_audispd-plugins += "${sysconfdir}/audisp/audisp-remote.conf \
 	"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
-FILES_${PN}-dev += "${base_libdir}/*.so ${base_libdir}/*.la"
+FILES_${PN}-dev += "${base_libdir}/*.so ${base_libdir}/*.la ${base_libdir}/pkgconfig/*"
 
 CONFFILES_auditd += "${sysconfdir}/audit/audit.rules"
 RDEPENDS_auditd += "bash"

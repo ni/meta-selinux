@@ -1,27 +1,44 @@
-From cace630b0eb42418dea4f3d98c69d0d777bfc1be Mon Sep 17 00:00:00 2001
-From: Xin Ouyang <Xin.Ouyang@windriver.com>
-Date: Wed, 20 Jun 2012 16:34:19 +0800
+From be689ee1748c6aa531dbca982e0218d077ac901c Mon Sep 17 00:00:00 2001
+From: Li xin <lixin.fnst@cn.fujitsu.com>
+Date: Sun, 19 Jul 2015 00:49:13 +0900
 Subject: [PATCH] audit: python cross-compile
 
+Upstream-Status: pending
+
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Li Xin <lixin.fnst@cn.fujitsu.com>
 ---
- configure.ac |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ configure.ac | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 3db7d45..9a07db6 100644
+index 4be62a3..d1842e2 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -90,7 +90,8 @@ if test x$use_python = xno ; then
+@@ -94,21 +94,8 @@ if test x$use_python = xno ; then
  else
  AC_MSG_RESULT(testing)
  AM_PATH_PYTHON
--if test -f /usr/include/python${am_cv_python_version}/Python.h ; then
-+PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
-+if test -f $PY_PREFIX/include/python${am_cv_python_version}/Python.h ; then
- 	python_found="yes"
- 	AC_MSG_NOTICE(Python bindings will be built)
- else
+-PYINCLUDEDIR=`python${am_cv_python_version} -c "from distutils import sysconfig; print(sysconfig.get_config_var('INCLUDEPY'))"`
+-if test -f ${PYINCLUDEDIR}/Python.h ; then
+-	python_found="yes"
+-	AC_SUBST(PYINCLUDEDIR)
+-	pybind_dir="python"
+-	AC_SUBST(pybind_dir)
+-	AC_MSG_NOTICE(Python bindings will be built)
+-else
+-	python_found="no"
+-	if test x$use_python = xyes ; then
+-		AC_MSG_ERROR([Python explicitly required and python headers found])
+-	else
+-		AC_MSG_WARN("Python headers not found - python bindings will not be made")
+-	fi
+-fi
++python_found="yes"
++AC_MSG_NOTICE(Python bindings will be built)
+ fi
+ AM_CONDITIONAL(HAVE_PYTHON, test ${python_found} = "yes")
+ 
 -- 
-1.7.7
+1.8.4.2
 
