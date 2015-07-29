@@ -17,6 +17,8 @@ FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*
 
 EXTRA_OEMAKE_class-native += "DISABLE_AUDIT=y"
 
+CFLAGS_append = " -fgnu89-inline"
+
 do_compile_append() {
     oe_runmake pywrap \
             INCLUDEDIR='${STAGING_INCDIR}' \
