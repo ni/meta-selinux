@@ -19,6 +19,8 @@ SRC_URI = "\
 SRC_URI[md5sum] = "93147d9f0c9765d4cd0f04f7e44bdfce"
 SRC_URI[sha256sum] = "3daf6eae9f78de1e872c0b2b83cce35515b94d4bb8a074e48f331fd99e1fc2c4"
 
+CFLAGS_append = " -fgnu89-inline"
+
 inherit lib_package
 inherit siteinfo
 
