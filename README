@@ -66,6 +66,16 @@ working with this layer, without the additional Poky meta data.  This
 approach may work, but is not generally tested by the maintainers.
 
 
+Using different versions of linux-yocto
+---------------------------------------
+To prepare selinux enabled images using different ver. of linux-yocto,
+we can choose supported versions of linux-yocto,
+currently supported: v3.14, v3.19, v4.1(by default).
+
+* enable the preferred linux-yocto to local.conf or oe-selinux.conf
+e.g. PREFERRED_VERSION_linux-yocto_qemuarm = "3.19%"
+
+
 License
 -------
 
