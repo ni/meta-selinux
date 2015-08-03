@@ -75,6 +75,20 @@ currently supported: v3.14, v3.19, v4.1(by default).
 * enable the preferred linux-yocto to local.conf or oe-selinux.conf
 e.g. PREFERRED_VERSION_linux-yocto_qemuarm = "3.19%"
 
+Using different versions of refpolicy
+-------------------------------------
+To prepare selinux enabled images using different ver. of refpolicy,
+we can choose supported releases of refpolicy
+refer to available versions under recipes-security/refpolicy
+
+We can use the refpolicy directly from git repository instead of release tarballs.
+By default refpolicy from git builds head commit of master branch, we can update
+SRCREV for refpolicy and refpolicy-contrib as appropriate at refpolicy_git.inc
+to check refpolicy as per required commits.
+
+* enable the preferred refpolicy-mls to local.conf or oe-selinux.conf
+e.g. REFERRED_VERSION_refpolicy-mls = "2.20140311"
+
 
 License
 -------
