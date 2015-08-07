@@ -10,6 +10,7 @@ LICENSE = "GPLv2+"
 SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
             file://policycoreutils-fixfiles-de-bashify.patch \
             file://policycoreutils-sandbox-de-bashify.patch \
+            file://mcstrans-de-bashify.patch \
            "
 
 PAM_SRC_URI = "file://pam.d/newrole \
