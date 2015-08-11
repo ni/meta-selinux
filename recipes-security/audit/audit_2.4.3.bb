@@ -19,8 +19,6 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
 SRC_URI[md5sum] = "544d863af2016b76afd8d1691b251164"
 SRC_URI[sha256sum] = "9c914704fecc602e143e37152f3efbab2469692684c1a8cc1b801c1b49c7abc6"
 
-SRC_URI_append_arm = "file://add-system-call-table-for-ARM.patch"
-
 inherit autotools pythonnative update-rc.d systemd
 
 UPDATERCPN = "auditd"
