@@ -41,7 +41,7 @@ EXTRA_OECONF += "--without-prelude \
         --without-python3 \
         --disable-zos-remote \
 	"
-EXTRA_OECONF_append_arm = " --with-armeb=yes"
+EXTRA_OECONF_append_arm = " --with-arm=yes"
 
 EXTRA_OEMAKE += "PYLIBVER='python${PYTHON_BASEVERSION}' \
 	PYINC='${STAGING_INCDIR}/$(PYLIBVER)' \
