@@ -11,8 +11,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=ebc0028ff5cdaf7796604875027dcd55"
 
 SRC_URI = "http://pypi.python.org/packages/source/I/IPy/IPy-${PV}.tar.gz"
 
-SRC_URI[md5sum] = "7a305c0b60950a9a90c89e9a6f9e06f4"
-SRC_URI[sha256sum] = "4bc17a9b5e72e893a034e77193b82c2bc321ddf8d8c345281f2bb81bb007b939"
+SRC_URI[md5sum] = "7b8c6eb4111b15aea31b67108e769712"
+SRC_URI[sha256sum] = "61da5a532b159b387176f6eabf11946e7458b6df8fb8b91ff1d345ca7a6edab8"
 
 S = "${WORKDIR}/IPy-${PV}"
 
@@ -28,5 +28,5 @@ BBCLASSEXTEND = "native"
 
 do_install_append() {
 	install -d ${D}/${datadir}/doc/${BPN}-${PV}
-	install AUTHORS COPYING ChangeLog PKG-INFO README ${D}/${datadir}/doc/${BPN}-${PV}
+	install AUTHORS COPYING ChangeLog README ${D}/${datadir}/doc/${BPN}-${PV}
 }
