@@ -1,15 +1,15 @@
-DEFAULT_POLICY = "mls"
-DEFAULT_ENFORCING = "enforcing"
+DEFAULT_POLICY ??= "mls"
+DEFAULT_ENFORCING ??= "enforcing"
 
 SUMMARY = "SELinux configuration"
 DESCRIPTION = "\
-This is the configuration files for SELinux on WRLinux system.  \
+SELinux configuration files for Yocto. \
 "
 
 SECTION = "base"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
-PR = "r3"
+PR = "r4"
 
 S = "${WORKDIR}"
 
@@ -37,9 +37,11 @@ do_install () {
 #     permissive - SELinux prints warnings instead of enforcing.
 #     disabled - No SELinux policy is loaded.
 SELINUX=${DEFAULT_ENFORCING}
-# SELINUXTYPE= can take one of these two values:
+# SELINUXTYPE= can take one of these values:
 #     standard - Standard Security protection.
 #     mls - Multi Level Security protection.
+#     targeted - Targeted processes are protected.
+#     mcs - Multi Category Security protection.
 SELINUXTYPE=${DEFAULT_POLICY}
 " > ${WORKDIR}/config
 	install -d ${D}/${sysconfdir}/selinux
