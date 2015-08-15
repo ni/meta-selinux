@@ -5,10 +5,6 @@ HOMEPAGE = "https://github.com/SELinuxProject"
 # we redefine EXTRA_OEMAKE here
 EXTRA_OEMAKE = "-e"
 
-# Releases are now from the base of the full tree, necessitating our skipping
-# through an extra level of directories.
-S = "${WORKDIR}/selinux-${BPN}-${PV}/${BPN}"
-
 do_compile() {
     oe_runmake all \
             INCLUDEDIR='${STAGING_INCDIR}' \

@@ -3,8 +3,8 @@ include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
-SRC_URI[md5sum] = "4f5c508e3c3867c8beb343e993d353dd"
-SRC_URI[sha256sum] = "11e8815ac13debb87897d2781381b89ec5c6c746a3d44223a493bc7ace6cc71f"
+SRC_URI[md5sum] = "9a5db20adfe2250f53833b277ac796ae"
+SRC_URI[sha256sum] = "864cfaee58b5d2f15b140c354e59666e57143293c89f2b2e85bc0d0e4beefcd2"
 
 SRC_URI += "\
 	file://policycoreutils-fix-sepolicy-install-path.patch \
