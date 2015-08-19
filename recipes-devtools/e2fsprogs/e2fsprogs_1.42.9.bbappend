@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-DEPENDS += "linux-libc-headers"
+DEPENDS += "linux-libc-headers attr"
 
 SRC_URI += " \
     file://misc-xattr-add-xattr-module-stub.patch \
