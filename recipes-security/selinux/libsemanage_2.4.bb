@@ -1,10 +1,10 @@
-include selinux_20140506.inc
+include selinux_20150202.inc
 include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
 
-SRC_URI[md5sum] = "e564e2b92d18db35707060da29cddab9"
-SRC_URI[sha256sum] = "03e09e35e611c286e446bef92b6023ef2623815996f5a53394bb02e49a312e4b"
+SRC_URI[md5sum] = "cd551eb1cc5d20652660bda037972f0d"
+SRC_URI[sha256sum] = "1a4cace4ef16786531ec075c0e7b2f961e2fee5dc86c5f983a689058899a6484"
 
 SRC_URI += "\
 	file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \
@@ -15,3 +15,4 @@ SRC_URI += "\
 	file://libsemanage-allow-to-disable-audit-support.patch \
 	file://libsemanage-disable-expand-check-on-policy-load.patch \
 	"
+FILES_${PN} += "/usr/libexec"

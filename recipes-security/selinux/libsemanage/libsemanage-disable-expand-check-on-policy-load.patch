@@ -16,17 +16,15 @@ Signed-off-by: Joe MacDonald <joe@deserted.net>
  src/semanage.conf |    4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/src/semanage.conf b/src/semanage.conf
-index 24e1999..42050a7 100644
---- a/src/semanage.conf
-+++ b/src/semanage.conf
-@@ -36,3 +36,6 @@ module-store = direct
- # version is necessary.
- #policy-version = 19
-
+Index: libsemanage-2.4/src/semanage.conf
+===================================================================
+--- libsemanage-2.4.orig/src/semanage.conf
++++ libsemanage-2.4/src/semanage.conf
+@@ -39,3 +39,7 @@ module-store = direct
+ # By default, semanage will generate policies for the SELinux target.
+ # To build policies for Xen, uncomment the following line.
+ #target-platform = xen
++
 +# Don't check the entire policy hierarchy when inserting / expanding a policy
 +# module.  This results in a significant speed-up in policy loading.
 +expand-check=0
--- 
-1.7.10.4
-
