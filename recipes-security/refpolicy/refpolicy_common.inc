@@ -14,6 +14,7 @@ S = "${WORKDIR}/refpolicy"
 FILES_${PN} = " \
 	${sysconfdir}/selinux/${POLICY_NAME}/ \
 	${datadir}/selinux/${POLICY_NAME}/*.pp \
+	${localstatedir}/lib/selinux/${POLICY_NAME}/ \
 	"
 FILES_${PN}-dev =+ " \
         ${datadir}/selinux/${POLICY_NAME}/include/ \
@@ -65,20 +66,33 @@ do_compile() {
 
 prepare_policy_store () {
 	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install
+	POL_PRIORITY=100
+	POL_SRC=${D}${datadir}/selinux/${POLICY_NAME}
+	POL_STORE=${D}${localstatedir}/lib/selinux/${POLICY_NAME}
+	POL_ACTIVE_MODS=${POL_STORE}/active/modules/${POL_PRIORITY}
 
 	# Prepare to create policy store
-	mkdir -p ${D}${sysconfdir}/selinux/
-	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/policy
-	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
-	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
-	touch ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files/file_contexts.local
-	for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
-		bzip2 -f $i && mv -f $i.bz2 $i
-		if [ "`basename $i`" != "base.pp" ]; then
-			cp $i ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i`
+	mkdir -p ${POL_STORE}
+	mkdir -p ${POL_ACTIVE_MODS}
+
+	# get hll type from suffix on base policy module
+	HLL_TYPE=$(echo ${POL_SRC}/base.* | awk -F . '{if (NF>1) {print $NF}}')
+	HLL_BIN=${STAGING_DIR_NATIVE}${prefix}/libexec/selinux/hll/${HLL_TYPE}
+
+	for i in ${POL_SRC}/*.${HLL_TYPE}; do
+		MOD_NAME=$(basename $i | sed "s/\.${HLL_TYPE}$//")
+		MOD_DIR=${POL_ACTIVE_MODS}/${MOD_NAME}
+		mkdir -p ${MOD_DIR}
+		echo -n "${HLL_TYPE}" > ${MOD_DIR}/lang_ext
+		if ! bzip2 -qt $i 2>/dev/null; then
+			${HLL_BIN} $i | bzip2 --stdout > ${MOD_DIR}/cil
+			bzip2 -f $i && mv -f $i.bz2 $i
 		else
-			cp $i ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/`basename $i`
+			bunzip2 --stdout $i | \
+				${HLL_BIN} | \
+				bzip2 --stdout > ${MOD_DIR}/cil
 		fi
+		cp $i ${MOD_DIR}/hll
 	done
 }
 
@@ -100,6 +114,8 @@ EOF
 	# Create policy store and build the policy
 	semodule -p ${D} -s ${POLICY_NAME} -n -B
 	rm -f ${D}${sysconfdir}/selinux/semanage.conf
+	# no need to leave tmp dir created by semanage lanying around
+	rm -rf ${D}${localstatedir}/lib/selinux/tmp
 }
 
 install_misc_files () {
@@ -114,10 +130,6 @@ install_misc_files () {
 
 	# install policy headers
 	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install-headers
-
-	# Fix symbol link policy.kern
-	link_path=`readlink -f ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern`
-	ln -sf ../../policy/`basename $link_path` ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/policy.kern
 }
 
 do_install () {
