@@ -126,6 +126,7 @@ PACKAGES =+ "\
 	${PN}-chcat \
 	${PN}-fixfiles \
 	${PN}-genhomedircon \
+	${PN}-hll \
 	${PN}-loadpolicy \
 	${PN}-newrole \
 	${PN}-python \
@@ -195,7 +196,7 @@ FILES_${PN}-runinit += "\
 	${sbindir}/open_init_pty \
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
 "
-FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/.debug/*"
+FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/.debug/* ${prefix}/libexec/selinux/hll/.debug"
 FILES_${PN}-sandbox += "\
 	${datadir}/sandbox/* \
 	${bindir}/sandbox \
@@ -215,6 +216,8 @@ FILES_${PN}-semodule-package += "\
 	${bindir}/semodule_package \
 	${bindir}/semodule_unpackage \
 "
+FILES_${PN}-hll += "${prefix}/libexec/selinux/hll/*"
+
 FILES_${PN}-sepolicy += "\
 	${bindir}/sepolicy \
 	${datadir}/bash-completion/completions/sepolicy \
@@ -274,7 +277,7 @@ EXTRA_OEMAKE += "INITDIR=${D}/etc/init.d"
 
 BBCLASSEXTEND = "native"
 
-PCU_NATIVE_CMDS = "setfiles semodule_package semodule semodule_link semodule_expand semodule_deps"
+PCU_NATIVE_CMDS = "setfiles semodule_package semodule semodule_link semodule_expand semodule_deps hll"
 
 do_compile_virtclass-native() {
 	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
@@ -282,6 +285,10 @@ do_compile_virtclass-native() {
 			INCLUDEDIR='${STAGING_INCDIR}' \
 			LIBDIR='${STAGING_LIBDIR}'
 	done
+}
+
+sysroot_stage_dirs_append_virtclass-native() {
+	cp -R $from/${prefix}/libexec $to/${prefix}/libexec
 }
 
 do_compile_prepend() {

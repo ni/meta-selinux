@@ -1,10 +1,10 @@
-include selinux_20140506.inc
+include selinux_20150202.inc
 include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
-SRC_URI[md5sum] = "9a5db20adfe2250f53833b277ac796ae"
-SRC_URI[sha256sum] = "864cfaee58b5d2f15b140c354e59666e57143293c89f2b2e85bc0d0e4beefcd2"
+SRC_URI[md5sum] = "795b05c3ad58253cba61249ec65b28ef"
+SRC_URI[sha256sum] = "b819f876f12473783ccce9f63b9a79cd77177477cd6d46818441f808cc4c3479"
 
 SRC_URI += "\
 	file://policycoreutils-fix-sepolicy-install-path.patch \
@@ -16,4 +16,5 @@ SRC_URI += "\
 	file://0001-mcstrans-fix-the-init-script.patch \
 	file://enable-mcstrans.patch \
 	file://policycoreutils-fts_flags-FTS_NOCHDIR.patch \
+	file://policycoreutils-pp-builtin-roles.patch \
 	"
