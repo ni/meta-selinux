@@ -22,7 +22,7 @@ SRC_URI += "file://setools-cross-ar.patch"
 SRC_URI += "file://setools-Fix-test-bug-for-unary-operator.patch"
 SRC_URI += "file://setools-Fix-python-setools-Makefile.am-for-cross.patch"
 
-SRC_URI += "file://setools-replcon-correct-invalid-prototype-for-lsetfilecon_ra.patch"
+SRC_URI += "file://setools-Update-for-2015-02-02-Userspace-release.patch"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
                     file://${S}/COPYING.GPL;md5=751419260aa954499f7abaabaa882bbe \
