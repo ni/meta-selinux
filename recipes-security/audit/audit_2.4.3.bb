@@ -15,6 +15,7 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
+           file://audit-auvirt-get-inline-functions-work-with-gnu89-gnu11.patch \
 "
 SRC_URI[md5sum] = "544d863af2016b76afd8d1691b251164"
 SRC_URI[sha256sum] = "9c914704fecc602e143e37152f3efbab2469692684c1a8cc1b801c1b49c7abc6"
