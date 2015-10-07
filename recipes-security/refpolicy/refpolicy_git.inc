@@ -3,6 +3,7 @@ SRC_URI += "git://github.com/TresysTechnology/refpolicy-contrib.git;protocol=git
 
 SRCREV_refpolicy = "${AUTOREV}"
 SRCREV_refpolicy-contrib = "${AUTOREV}"
+SRCREV_FORMAT = "refpolicy.refpolicy-contrib"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-git:"
 
