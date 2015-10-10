@@ -84,7 +84,7 @@ prepare_policy_store () {
 		MOD_DIR=${POL_ACTIVE_MODS}/${MOD_NAME}
 		mkdir -p ${MOD_DIR}
 		echo -n "${HLL_TYPE}" > ${MOD_DIR}/lang_ext
-		if ! bzip2 -qt $i 2>/dev/null; then
+		if ! bzip2 -t $i >/dev/null 2>&1; then
 			${HLL_BIN} $i | bzip2 --stdout > ${MOD_DIR}/cil
 			bzip2 -f $i && mv -f $i.bz2 $i
 		else
