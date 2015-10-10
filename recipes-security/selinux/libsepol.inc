@@ -12,4 +12,6 @@ inherit lib_package
 # local ranlib.
 EXTRA_OEMAKE += "RANLIB='$(AR) s'"
 
+DEPENDS += "flex-native"
+
 BBCLASSEXTEND = "native"
