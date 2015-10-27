@@ -26,23 +26,42 @@ EXTRA_POLICY_MODULES += "nscd"
 # "login", so "login" process will access to /var/spool/mail.
 EXTRA_POLICY_MODULES += "mta"
 
+# sysnetwork requires type definitions (insmod_t, consoletype_t,
+# hostname_t, ping_t, netutils_t) from modules:
+EXTRA_POLICY_MODULES += "modutils consoletype hostname netutils"
+
 POLICY_MODULES_MIN = "${CORE_POLICY_MODULES} ${EXTRA_POLICY_MODULES}"
 
 # re-write the same func from refpolicy_common.inc
 prepare_policy_store () {
 	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install
+	POL_PRIORITY=100
+	POL_SRC=${D}${datadir}/selinux/${POLICY_NAME}
+	POL_STORE=${D}${localstatedir}/lib/selinux/${POLICY_NAME}
+	POL_ACTIVE_MODS=${POL_STORE}/active/modules/${POL_PRIORITY}
 
 	# Prepare to create policy store
-	mkdir -p ${D}${sysconfdir}/selinux/
-	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/policy
-	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules
-	mkdir -p ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files
-	touch ${D}${sysconfdir}/selinux/${POLICY_NAME}/contexts/files/file_contexts.local
-	for i in ${D}${datadir}/selinux/${POLICY_NAME}/*.pp; do
-		bzip2 -f $i && mv -f $i.bz2 $i
-	done
-	cp base.pp ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/base.pp
-	for i in ${POLICY_MODULES_MIN}; do
-		cp ${i}.pp ${D}${sysconfdir}/selinux/${POLICY_NAME}/modules/active/modules/`basename $i.pp`
+	mkdir -p ${POL_STORE}
+	mkdir -p ${POL_ACTIVE_MODS}
+
+	# get hll type from suffix on base policy module
+	HLL_TYPE=$(echo ${POL_SRC}/base.* | awk -F . '{if (NF>1) {print $NF}}')
+	HLL_BIN=${STAGING_DIR_NATIVE}${prefix}/libexec/selinux/hll/${HLL_TYPE}
+
+	for i in base ${POLICY_MODULES_MIN}; do
+		MOD_FILE=${POL_SRC}/${i}.${HLL_TYPE}
+		MOD_DIR=${POL_ACTIVE_MODS}/${i}
+		mkdir -p ${MOD_DIR}
+		echo -n "${HLL_TYPE}" > ${MOD_DIR}/lang_ext
+
+		if ! bzip2 -t ${MOD_FILE} >/dev/null 2>&1; then
+			${HLL_BIN} ${MOD_FILE} | bzip2 --stdout > ${MOD_DIR}/cil
+			bzip2 -f ${MOD_FILE} && mv -f ${MOD_FILE}.bz2 ${MOD_FILE}
+		else
+			bunzip2 --stdout ${MOD_FILE} | \
+				${HLL_BIN} | \
+				bzip2 --stdout > ${MOD_DIR}/cil
+		fi
+		cp ${MOD_FILE} ${MOD_DIR}/hll
 	done
 }
