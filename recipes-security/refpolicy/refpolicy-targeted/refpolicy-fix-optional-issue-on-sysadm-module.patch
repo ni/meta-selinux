@@ -10,41 +10,42 @@ So, we could make the minimum policy without sysadm module.
 Upstream-Status: pending
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
  policy/modules/system/init.te       | 14 ++++++++------
  policy/modules/system/locallogin.te |  4 +++-
  2 files changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
-index 4a88fa1..4548a7e 100644
+index c058f0c..d710fb0 100644
 --- a/policy/modules/system/init.te
 +++ b/policy/modules/system/init.te
-@@ -188,12 +188,14 @@ ifdef(`distro_redhat',`
- 	fs_tmpfs_filetrans(init_t, initctl_t, fifo_file)
+@@ -292,12 +292,14 @@ ifdef(`init_systemd',`
+ 		modutils_domtrans_insmod(init_t)
+ 	')
+ ',`
+-	tunable_policy(`init_upstart',`
+-		corecmd_shell_domtrans(init_t, initrc_t)
+-	',`
+-		# Run the shell in the sysadm role for single-user mode.
+-		# causes problems with upstart
+-		sysadm_shell_domtrans(init_t)
++	optional_policy(`
++		tunable_policy(`init_upstart',`
++			corecmd_shell_domtrans(init_t, initrc_t)
++		',`
++			# Run the shell in the sysadm role for single-user mode.
++			# causes problems with upstart
++			sysadm_shell_domtrans(init_t)
++		')
+ 	')
  ')
  
--tunable_policy(`init_upstart',`
--	corecmd_shell_domtrans(init_t, initrc_t)
--',`
--	# Run the shell in the sysadm role for single-user mode.
--	# causes problems with upstart
--	sysadm_shell_domtrans(init_t)
-+# Run the shell in the sysadm role for single-user mode.
-+# causes problems with upstart
-+optional_policy(`
-+	tunable_policy(`init_upstart',`
-+		corecmd_shell_domtrans(init_t, initrc_t)
-+	',`
-+		sysadm_shell_domtrans(init_t)
-+	')
- ')
- 
- optional_policy(`
 diff --git a/policy/modules/system/locallogin.te b/policy/modules/system/locallogin.te
-index f5a5de7..d942f05 100644
+index 0781eae..ea2493a 100644
 --- a/policy/modules/system/locallogin.te
 +++ b/policy/modules/system/locallogin.te
-@@ -239,7 +239,9 @@ userdom_use_unpriv_users_fds(sulogin_t)
+@@ -246,7 +246,9 @@ userdom_use_unpriv_users_fds(sulogin_t)
  userdom_search_user_home_dirs(sulogin_t)
  userdom_use_user_ptys(sulogin_t)
  
@@ -56,5 +57,5 @@ index f5a5de7..d942f05 100644
  # suse and debian do not use pam with sulogin...
  ifdef(`distro_suse', `define(`sulogin_no_pam')')
 -- 
-1.7.11.7
+1.9.1
 
