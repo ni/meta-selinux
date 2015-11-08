@@ -13,23 +13,11 @@ PR = "r4"
 
 S = "${WORKDIR}"
 
-SRC_URI = "file://selinux-init.sh"
-
-inherit update-rc.d
-
-INITSCRIPT_NAME = "0selinux-init"
-INITSCRIPT_PARAMS = "start 00 S ."
-
-CONFFILES_${PN} += "${sysconfdir}/selinux/config \
-	${sysconfdir}/init.d/0selinux-init \
-	"
+CONFFILES_${PN} += "${sysconfdir}/selinux/config"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 do_install () {
-	install -d ${D}${sysconfdir}/init.d/
-	install -m 0755 ${WORKDIR}/selinux-init.sh ${D}${sysconfdir}/init.d/0selinux-init
-
 	echo "\
 # This file controls the state of SELinux on the system.
 # SELINUX= can take one of these three values:
