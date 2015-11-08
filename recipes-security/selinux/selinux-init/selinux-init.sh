@@ -34,12 +34,6 @@ check_rootfs()
 	/sbin/shutdown -f -h now
 }
 
-# Because /dev/console is not relabeled by kernel, many commands
-# would can not use it, including restorecon.
-${CHCON} -t `${MATCHPATHCON} -n /dev/null | cut -d: -f3` /dev/null
-${CHCON} -t `${MATCHPATHCON} -n /dev/console | cut -d: -f3` /dev/console
-
-
 # If /.autorelabel placed, the whole file system should be relabeled
 if [ -f /.autorelabel ]; then
 	echo "Checking SELinux security contexts:"
@@ -64,8 +58,5 @@ if [ "`${SECON} -t --pid 1`" = "kernel_t" ]; then
 	echo " * Relabel done, rebooting the system."
 	/sbin/reboot
 fi
-
-# Now, we should relabel /dev for most services.
-${RESTORECON} -RF /dev
 
 exit 0

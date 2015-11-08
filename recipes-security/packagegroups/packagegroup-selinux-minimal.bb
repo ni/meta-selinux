@@ -22,6 +22,6 @@ RDEPENDS_${PN} = "\
 	policycoreutils-sestatus \
 	policycoreutils-setfiles \
 	selinux-config \
-	selinux-init \
+	selinux-labeldev \
 	refpolicy-mls \
 "

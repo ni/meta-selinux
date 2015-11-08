@@ -24,6 +24,7 @@ RDEPENDS_${PN} = " \
 	setools-console \
 	selinux-config \
 	selinux-init \
+	selinux-labeldev \
 	refpolicy-standard \
 	refpolicy-mls \
 	coreutils \
