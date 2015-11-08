@@ -23,6 +23,7 @@ RDEPENDS_${PN} = " \
 	setools \
 	setools-console \
 	selinux-config \
+	selinux-autorelabel \
 	selinux-init \
 	selinux-labeldev \
 	refpolicy-standard \

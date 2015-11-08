@@ -4,12 +4,11 @@
 
 CHCON=/usr/bin/chcon
 MATCHPATHCON=/usr/sbin/matchpathcon
-FIXFILES=/sbin/fixfiles
 RESTORECON=/sbin/restorecon
 SECON=/usr/bin/secon
 SETENFORCE=/usr/sbin/setenforce
 
-for i in ${CHCON} ${MATCHPATHCON} ${FIXFILES} ${RESTORECON} ${SECON} ${SETENFORCE}; do
+for i in ${CHCON} ${MATCHPATHCON} ${RESTORECON} ${SECON} ${SETENFORCE}; do
 	test -x $i && continue
 	echo "$i is missing in the system."
 	echo "Please add \"selinux=0\" in the kernel command line to disable SELinux."
@@ -33,17 +32,6 @@ check_rootfs()
 	echo "* Halting the system now."
 	/sbin/shutdown -f -h now
 }
-
-# If /.autorelabel placed, the whole file system should be relabeled
-if [ -f /.autorelabel ]; then
-	echo "Checking SELinux security contexts:"
-	check_rootfs
-	echo " * /.autorelabel placed, filesystem will be relabeled..."
-	${FIXFILES} -F -f relabel
-	/bin/rm -f /.autorelabel
-	echo " * Relabel done, rebooting the system."
-	/sbin/reboot
-fi
 
 # If first booting, the security context type of init would be
 # "kernel_t", and the whole file system should be relabeled.

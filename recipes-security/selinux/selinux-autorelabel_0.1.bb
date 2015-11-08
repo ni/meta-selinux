@@ -1,16 +1,13 @@
-SUMMARY = "SELinux init script"
+SUMMARY = "SELinux autorelabel script"
 DESCRIPTION = "\
-Script to detect and attempt to correct a misconfigured SELinux system at \
-boot time. \
+Script to reset SELinux labels on the root file system when /.autorelabel \
+file is present.\
 "
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
 ${PN}_RDEPENDS = " \
-    coreutils \
-    libselinux-bin \
-    policycoreutils-secon \
     policycoreutils-setfiles \
 "
 
