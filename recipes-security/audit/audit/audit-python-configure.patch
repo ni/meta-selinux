@@ -7,12 +7,13 @@ Upstream-Status: pending
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Li Xin <lixin.fnst@cn.fujitsu.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
  configure.ac | 17 ++---------------
  1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 4be62a3..d1842e2 100644
+index 1f48cb4..cdb5219 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -94,21 +94,8 @@ if test x$use_python = xno ; then
@@ -29,7 +30,7 @@ index 4be62a3..d1842e2 100644
 -else
 -	python_found="no"
 -	if test x$use_python = xyes ; then
--		AC_MSG_ERROR([Python explicitly required and python headers found])
+-		AC_MSG_ERROR([Python explicitly requested and python headers were not found])
 -	else
 -		AC_MSG_WARN("Python headers not found - python bindings will not be made")
 -	fi
@@ -40,5 +41,5 @@ index 4be62a3..d1842e2 100644
  AM_CONDITIONAL(HAVE_PYTHON, test ${python_found} = "yes")
  
 -- 
-1.8.4.2
+1.9.1
 

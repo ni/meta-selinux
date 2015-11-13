@@ -17,8 +17,8 @@ SRC_URI = "http://people.redhat.com/sgrubb/audit/audit-${PV}.tar.gz \
            file://audit-volatile.conf \
            file://audit-auvirt-get-inline-functions-work-with-gnu89-gnu11.patch \
 "
-SRC_URI[md5sum] = "544d863af2016b76afd8d1691b251164"
-SRC_URI[sha256sum] = "9c914704fecc602e143e37152f3efbab2469692684c1a8cc1b801c1b49c7abc6"
+SRC_URI[md5sum] = "72b0fd94d32846142bc472f0d91e62b4"
+SRC_URI[sha256sum] = "25f57f465f3230d7b1166b615ffd6748818a3dc225d0e8b396c5b2e951674e23"
 
 inherit autotools pythonnative update-rc.d systemd
 
