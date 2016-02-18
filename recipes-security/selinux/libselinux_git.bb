@@ -12,4 +12,5 @@ SRC_URI += "\
 	file://libselinux-make-SOCK_CLOEXEC-optional.patch \
 	file://libselinux-define-FD_CLOEXEC-as-necessary.patch \
 	file://libselinux-get-pywrap-depends-on-selinux.py.patch \
+	file://0001-src-Makefile-fix-includedir-in-libselinux.pc.patch \
 	"
