@@ -8,6 +8,7 @@ Upstream-Status: pending
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Li Xin <lixin.fnst@cn.fujitsu.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: T.O. Radzy Radzykewycz <radzy@windriver.com>
 ---
  configure.ac | 17 ++---------------
  1 file changed, 2 insertions(+), 15 deletions(-)
@@ -29,7 +30,7 @@ index 1f48cb4..cdb5219 100644
 -	AC_MSG_NOTICE(Python bindings will be built)
 -else
 -	python_found="no"
--	if test x$use_python = xyes ; then
+-	if test "x$use_python" = xyes ; then
 -		AC_MSG_ERROR([Python explicitly requested and python headers were not found])
 -	else
 -		AC_MSG_WARN("Python headers not found - python bindings will not be made")
