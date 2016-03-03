@@ -3,7 +3,7 @@
 ### BEGIN INIT INFO
 # Provides:          udev
 # Required-Start:    mountvirtfs
-# Required-Stop:     
+# Required-Stop:
 # Default-Start:     S
 # Default-Stop:
 # Short-Description: Start udevd, populate /dev and load drivers.
