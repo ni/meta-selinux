@@ -1,8 +1,8 @@
 SRC_URI = "https://raw.githubusercontent.com/wiki/TresysTechnology/refpolicy/files/refpolicy-${PV}.tar.bz2;"
-SRC_URI[md5sum] = "69594ede341987904dc2a8b7f2129a93"
-SRC_URI[sha256sum] = "f438209c430d8a2d4ddcbe4bdd3edb46f6af7dc4913637af0b73c635e40c1522"
+SRC_URI[md5sum] = "7b1ca12e9ea0254508391559cb8f2c41"
+SRC_URI[sha256sum] = "2dd2f45a7132137afe8302805c3b7839739759b9ab73dd1815c01afe34ac99de"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-2.20141203:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-2.20151208:"
 
 # Fix file contexts for Poky
 SRC_URI += "file://poky-fc-subs_dist.patch \
