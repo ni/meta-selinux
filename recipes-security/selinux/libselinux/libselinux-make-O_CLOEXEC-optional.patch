@@ -24,13 +24,13 @@ Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
  src/stringrep.c  |    8 +++++++-
  4 files changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/src/label_file.c b/src/label_file.c
-index 5f697f3..49bb8df 100644
---- a/src/label_file.c
-+++ b/src/label_file.c
-@@ -255,7 +255,13 @@ static int load_mmap(struct selabel_handle *rec, const char *path, struct stat *
- 	if (rc >= sizeof(mmap_path))
- 		return -1;
+Index: libselinux-2.5/src/label_file.c
+===================================================================
+--- libselinux-2.5.orig/src/label_file.c	2016-02-25 13:10:00.159980383 -0500
++++ libselinux-2.5/src/label_file.c	2016-02-25 13:10:00.155980383 -0500
+@@ -124,7 +124,13 @@
+ 			return -1;
+ 	}
  
 -	mmapfd = open(mmap_path, O_RDONLY | O_CLOEXEC);
 +	mmapfd = open(mmap_path, O_RDONLY 
@@ -43,30 +43,30 @@ index 5f697f3..49bb8df 100644
  	if (mmapfd < 0)
  		return -1;
  
-diff --git a/src/procattr.c b/src/procattr.c
-index 6c5b45a..6cfe589 100644
---- a/src/procattr.c
-+++ b/src/procattr.c
-@@ -86,7 +86,13 @@ static int openattr(pid_t pid, const char *attr, int flags)
- 	if (rc < 0)
- 		return -1;
- 
--	fd = open(path, flags | O_CLOEXEC);
-+	fd = open(path, flags
+Index: libselinux-2.5/src/procattr.c
+===================================================================
+--- libselinux-2.5.orig/src/procattr.c	2016-02-25 13:10:00.159980383 -0500
++++ libselinux-2.5/src/procattr.c	2016-02-25 13:11:58.527980013 -0500
+@@ -76,7 +76,13 @@
+ 		rc = asprintf(&path, "/proc/thread-self/attr/%s", attr);
+ 		if (rc < 0)
+ 			return -1;
+-		fd = open(path, flags | O_CLOEXEC);
++		fd = open(path, flags
 +#ifdef O_CLOEXEC
-+             | O_CLOEXEC
++			  | O_CLOEXEC
 +#else
 +#warning O_CLOEXEC undefined on this platform, this may leak file descriptors
 +#endif
-+             );
- 	free(path);
- 	return fd;
- }
-diff --git a/src/sestatus.c b/src/sestatus.c
-index ed29dc5..0cb15b6 100644
---- a/src/sestatus.c
-+++ b/src/sestatus.c
-@@ -268,7 +268,13 @@ int selinux_status_open(int fallback)
++			);
+ 		if (fd >= 0 || errno != ENOENT)
+ 			goto out;
+ 		free(path);
+Index: libselinux-2.5/src/sestatus.c
+===================================================================
+--- libselinux-2.5.orig/src/sestatus.c	2016-02-25 13:10:00.159980383 -0500
++++ libselinux-2.5/src/sestatus.c	2016-02-25 13:10:00.155980383 -0500
+@@ -268,7 +268,13 @@
  		return -1;
  
  	snprintf(path, sizeof(path), "%s/status", selinux_mnt);
@@ -81,11 +81,11 @@ index ed29dc5..0cb15b6 100644
  	if (fd < 0)
  		goto error;
  
-diff --git a/src/stringrep.c b/src/stringrep.c
-index ba75ccd..e6ccfd5 100644
---- a/src/stringrep.c
-+++ b/src/stringrep.c
-@@ -258,7 +258,13 @@ static struct discover_class_node * discover_class(const char *s)
+Index: libselinux-2.5/src/stringrep.c
+===================================================================
+--- libselinux-2.5.orig/src/stringrep.c	2016-02-25 13:10:00.159980383 -0500
++++ libselinux-2.5/src/stringrep.c	2016-02-25 13:10:00.155980383 -0500
+@@ -105,7 +105,13 @@
  		struct stat m;
  
  		snprintf(path, sizeof path, "%s/class/%s/perms/%s", selinux_mnt,s,dentry->d_name);
@@ -100,6 +100,3 @@ index ba75ccd..e6ccfd5 100644
  		if (fd < 0)
  			goto err4;
  
--- 
-1.7.10.4
-
