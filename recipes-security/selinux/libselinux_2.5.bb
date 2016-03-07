@@ -11,6 +11,8 @@ SRC_URI += "\
         file://libselinux-make-O_CLOEXEC-optional.patch \
         file://libselinux-make-SOCK_CLOEXEC-optional.patch \
         file://libselinux-define-FD_CLOEXEC-as-necessary.patch \
+        file://libselinux-procattr-return-einval-for-0-pid.patch \
+        file://libselinux-procattr-return-error-on-invalid-pid.patch \
         file://libselinux-only-mount-proc-if-necessary.patch \
         file://0001-src-Makefile-fix-includedir-in-libselinux.pc.patch \
         "
