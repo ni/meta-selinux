@@ -114,8 +114,8 @@ EOF
 	# Create policy store and build the policy
 	semodule -p ${D} -s ${POLICY_NAME} -n -B
 	rm -f ${D}${sysconfdir}/selinux/semanage.conf
-	# no need to leave tmp dir created by semanage lanying around
-	rm -rf ${D}${localstatedir}/lib/selinux/tmp
+	# no need to leave final dir created by semanage laying around
+	rm -rf ${D}${localstatedir}/lib/selinux/final
 }
 
 install_misc_files () {
