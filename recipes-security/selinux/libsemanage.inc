@@ -11,6 +11,9 @@ inherit lib_package
 DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native"
 DEPENDS_append_class-target += "audit"
 
+# For /usr/libexec/selinux/semanage_migrate_store
+RDEPENDS_${PN} += "python"
+
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"

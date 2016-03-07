@@ -12,11 +12,11 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  tests/Makefile      |   10 +++++++++-
  3 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/src/Makefile b/src/Makefile
-index 359d738..24dbf29 100644
---- a/src/Makefile
-+++ b/src/Makefile
-@@ -28,6 +28,14 @@ ifeq ($(DEBUG),1)
+Index: libsemanage-2.5/src/Makefile
+===================================================================
+--- libsemanage-2.5.orig/src/Makefile	2016-02-25 13:20:30.867978414 -0500
++++ libsemanage-2.5/src/Makefile	2016-02-25 13:20:30.859978414 -0500
+@@ -28,6 +28,14 @@
  	export LDFLAGS = -g
  endif
  
@@ -31,7 +31,7 @@ index 359d738..24dbf29 100644
  LEX = flex
  LFLAGS = -s
  YACC = bison
-@@ -92,7 +100,7 @@ $(LIBA): $(OBJS)
+@@ -92,7 +100,7 @@
  	$(RANLIB) $@
  
  $(LIBSO): $(LOBJS)
@@ -40,11 +40,11 @@ index 359d738..24dbf29 100644
  	ln -sf $@ $(TARGET)
  
  $(LIBPC): $(LIBPC).in ../VERSION
-diff --git a/src/seusers_local.c b/src/seusers_local.c
-index 63ab40c..8bdc7da 100644
---- a/src/seusers_local.c
-+++ b/src/seusers_local.c
-@@ -8,7 +8,11 @@ typedef struct semanage_seuser record_t;
+Index: libsemanage-2.5/src/seusers_local.c
+===================================================================
+--- libsemanage-2.5.orig/src/seusers_local.c	2016-02-25 13:20:30.867978414 -0500
++++ libsemanage-2.5/src/seusers_local.c	2016-02-25 13:20:30.863978414 -0500
+@@ -8,7 +8,11 @@
  
  #include <sepol/policydb.h>
  #include <sepol/context.h>
@@ -56,7 +56,7 @@ index 63ab40c..8bdc7da 100644
  #include <errno.h>
  #include "user_internal.h"
  #include "seuser_internal.h"
-@@ -51,6 +55,7 @@ static char *semanage_user_roles(semanage_handle_t * handle, const char *sename)
+@@ -51,6 +55,7 @@
  	return roles;
  }
  
@@ -64,7 +64,7 @@ index 63ab40c..8bdc7da 100644
  static int semanage_seuser_audit(semanage_handle_t * handle,
  			  const semanage_seuser_t * seuser,
  			  const semanage_seuser_t * previous,
-@@ -114,6 +119,7 @@ err:
+@@ -114,6 +119,7 @@
  	free(proles);
  	return rc;
  }
@@ -72,7 +72,7 @@ index 63ab40c..8bdc7da 100644
  
  int semanage_seuser_modify_local(semanage_handle_t * handle,
  				 const semanage_seuser_key_t * key,
-@@ -157,8 +163,11 @@ int semanage_seuser_modify_local(semanage_handle_t * handle,
+@@ -158,8 +164,11 @@
  	(void) semanage_seuser_query(handle, key, &previous);
  	handle->msg_callback = callback;
  	rc = dbase_modify(handle, dconfig, key, new);
@@ -84,7 +84,7 @@ index 63ab40c..8bdc7da 100644
  err:
  	if (previous)
  		semanage_seuser_free(previous);
-@@ -174,8 +183,12 @@ int semanage_seuser_del_local(semanage_handle_t * handle,
+@@ -175,8 +184,12 @@
  	dbase_config_t *dconfig = semanage_seuser_dbase_local(handle);
  	rc = dbase_del(handle, dconfig, key);
  	semanage_seuser_query(handle, key, &seuser);
@@ -97,15 +97,15 @@ index 63ab40c..8bdc7da 100644
  	if (seuser)
  		semanage_seuser_free(seuser);
  	return rc;
-diff --git a/tests/Makefile b/tests/Makefile
-index 418d701..7839db6 100644
---- a/tests/Makefile
-+++ b/tests/Makefile
-@@ -13,7 +13,15 @@ EXECUTABLE = libsemanage-tests
+Index: libsemanage-2.5/tests/Makefile
+===================================================================
+--- libsemanage-2.5.orig/tests/Makefile	2016-02-25 13:20:30.867978414 -0500
++++ libsemanage-2.5/tests/Makefile	2016-02-25 13:22:05.171978120 -0500
+@@ -13,7 +13,15 @@
  CC = gcc
- CFLAGS = -c -g -o0 -Wall -W -Wundef -Wmissing-noreturn -Wmissing-format-attribute -Wno-unused-parameter
+ CFLAGS += -g -O0 -Wall -W -Wundef -Wmissing-noreturn -Wmissing-format-attribute -Wno-unused-parameter
  INCLUDE = -I$(TESTSRC) -I$(TESTSRC)/../include
--LDFLAGS = -lcunit -lustr -lbz2 -laudit
+-LDFLAGS += -lcunit -lustr -lbz2 -laudit
 +DISABLE_AUDIT ?= n
 +ifeq ($(DISABLE_AUDIT),y)
 +	LIBAUDIT =
@@ -114,10 +114,7 @@ index 418d701..7839db6 100644
 +	LIBAUDIT = -laudit
 +endif
 +
-+LDFLAGS = -lcunit -lustr -lbz2 $(LIBAUDIT)
++LDFLAGS += -lcunit -lustr -lbz2 $(LIBAUDIT)
  OBJECTS = $(SOURCES:.c=.o) 
  
  all: $(EXECUTABLE) 
--- 
-1.7.9.5
-
