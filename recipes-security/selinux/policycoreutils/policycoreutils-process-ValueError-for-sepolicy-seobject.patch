@@ -14,10 +14,10 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  semanage/semanage |    9 +++++++--
  1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/semanage/semanage b/semanage/semanage
-index 36b41cd..a36a3f9 100644
---- a/semanage/semanage
-+++ b/semanage/semanage
+Index: policycoreutils-2.5/semanage/semanage
+===================================================================
+--- policycoreutils-2.5.orig/semanage/semanage	2016-02-25 13:38:39.947975015 -0500
++++ policycoreutils-2.5/semanage/semanage	2016-02-25 13:40:50.627974607 -0500
 @@ -24,9 +24,15 @@
  #
  
@@ -32,17 +32,16 @@ index 36b41cd..a36a3f9 100644
 +        print "Error: %s\n" % e
 +        sys.exit(1)
 +
- PROGNAME="policycoreutils"
+ PROGNAME = "policycoreutils"
  try:
-        gettext.install(PROGNAME,
-@@ -59,7 +65,6 @@ usage_interface_dict = {' --add':('-t TYPE','-r RANGE','interface'),' --modify':
+     kwargs = {}
+@@ -66,9 +72,6 @@
  usage_boolean = "semanage boolean [-h] [-n] [-N] [-s STORE] ["
- usage_boolean_dict = {' --modify':('(','--on','|','--off',')','boolean'), ' --list':('-C',), '  --extract':('',), ' --deleteall':('',)}
+ usage_boolean_dict = {' --modify': ('(', '--on', '|', '--off', ')', 'boolean'), ' --list': ('-C',), '  --extract': ('',), ' --deleteall': ('',)}
  
 -import sepolicy
+-
+-
  class CheckRole(argparse.Action):
+ 
      def __call__(self, parser, namespace, value, option_string=None):
-         newval = getattr(namespace, self.dest)
--- 
-1.7.9.5
-
