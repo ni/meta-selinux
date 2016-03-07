@@ -9,7 +9,7 @@ encapsulated/abstracted by a proper shared library interface."
 SECTION = "base"
 LICENSE = "GPLv2+"
 
-DEPENDS += "libsepol libselinux bison-native flex-native"
+DEPENDS += "libsepol bison-native flex-native"
 
 SRC_URI += "file://checkpolicy-Do-not-link-against-libfl.patch"
 
