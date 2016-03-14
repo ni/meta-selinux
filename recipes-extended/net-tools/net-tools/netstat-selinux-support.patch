@@ -5,13 +5,14 @@ Subject: [PATCH] net-tools: netstat add SELinux support.
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Adrian Dudau <adrian.dudau@enea.com>
 ---
- Makefile  |    9 +++++++-
- netstat.c |   69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ Makefile  |  9 ++++++++-
+ netstat.c | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
  2 files changed, 74 insertions(+), 4 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 8fcc55c..dca8fbc 100644
+index 8fcc55c..0b5c395 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -116,6 +116,13 @@ NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
@@ -38,12 +39,12 @@ index 8fcc55c..dca8fbc 100644
  iptunnel:	$(NET_LIB) iptunnel.o
  		$(CC) $(LDFLAGS) -o iptunnel iptunnel.o $(NLIB) $(RESLIB)
 diff --git a/netstat.c b/netstat.c
-index c3a7bb1..71be41f 100644
+index fc10414..a773e81 100644
 --- a/netstat.c
 +++ b/netstat.c
-@@ -86,6 +86,12 @@
- #include <net/if.h>
- #include <dirent.h>
+@@ -90,6 +90,12 @@
+ #include <sys/types.h>
+ #include <asm-generic/param.h>
  
 +#if HAVE_SELINUX
 +#include <selinux/selinux.h>
@@ -54,7 +55,7 @@ index c3a7bb1..71be41f 100644
  #include "net-support.h"
  #include "pathnames.h"
  #include "version.h"
-@@ -97,6 +103,7 @@
+@@ -101,6 +107,7 @@
  #include "proc.h"
  
  #define PROGNAME_WIDTH 20
@@ -62,7 +63,7 @@ index c3a7bb1..71be41f 100644
  
  #if !defined(s6_addr32) && defined(in6a_words)
  #define s6_addr32 in6a_words	/* libinet6			*/
-@@ -153,6 +160,7 @@ int flag_wide= 0;
+@@ -180,6 +187,7 @@ int flag_wide= 0;
  int flag_prg = 0;
  int flag_arg = 0;
  int flag_ver = 0;
@@ -70,7 +71,7 @@ index c3a7bb1..71be41f 100644
  
  FILE *procinfo;
  
-@@ -216,12 +224,17 @@ FILE *procinfo;
+@@ -243,12 +251,17 @@ FILE *procinfo;
  #define PROGNAME_WIDTH1(s) PROGNAME_WIDTH2(s)
  #define PROGNAME_WIDTH2(s) #s
  
@@ -88,7 +89,7 @@ index c3a7bb1..71be41f 100644
  } *prg_hash[PRG_HASH_SIZE];
  
  static char prg_cache_loaded = 0;
-@@ -229,9 +242,12 @@ static char prg_cache_loaded = 0;
+@@ -256,9 +269,12 @@ static char prg_cache_loaded = 0;
  #define PRG_HASHIT(x) ((x) % PRG_HASH_SIZE)
  
  #define PROGNAME_BANNER "PID/Program name"
@@ -101,7 +102,7 @@ index c3a7bb1..71be41f 100644
  #define PRG_LOCAL_ADDRESS "local_address"
  #define PRG_INODE	 "inode"
  #define PRG_SOCKET_PFX    "socket:["
-@@ -253,7 +269,7 @@ static char prg_cache_loaded = 0;
+@@ -280,7 +296,7 @@ static char prg_cache_loaded = 0;
  /* NOT working as of glibc-2.0.7: */
  #undef  DIRENT_HAVE_D_TYPE_WORKS
  
@@ -110,7 +111,7 @@ index c3a7bb1..71be41f 100644
  {
      unsigned hi = PRG_HASHIT(inode);
      struct prg_node **pnp,*pn;
-@@ -274,6 +290,14 @@ static void prg_cache_add(unsigned long inode, char *name)
+@@ -301,6 +317,14 @@ static void prg_cache_add(unsigned long inode, char *name)
      if (strlen(name)>sizeof(pn->name)-1) 
  	name[sizeof(pn->name)-1]='\0';
      strcpy(pn->name,name);
@@ -125,7 +126,7 @@ index c3a7bb1..71be41f 100644
  }
  
  static const char *prg_cache_get(unsigned long inode)
-@@ -286,6 +310,16 @@ static const char *prg_cache_get(unsigned long inode)
+@@ -313,6 +337,16 @@ static const char *prg_cache_get(unsigned long inode)
      return("-");
  }
  
@@ -142,7 +143,7 @@ index c3a7bb1..71be41f 100644
  static void prg_cache_clear(void)
  {
      struct prg_node **pnp,*pn;
-@@ -357,6 +391,7 @@ static void prg_cache_load(void)
+@@ -384,6 +418,7 @@ static void prg_cache_load(void)
      const char *cs,*cmdlp;
      DIR *dirproc=NULL,*dirfd=NULL;
      struct dirent *direproc,*direfd;
@@ -150,7 +151,7 @@ index c3a7bb1..71be41f 100644
  
      if (prg_cache_loaded || !flag_prg) return;
      prg_cache_loaded=1;
-@@ -426,7 +461,15 @@ static void prg_cache_load(void)
+@@ -453,7 +488,15 @@ static void prg_cache_load(void)
  	    }
  
  	    snprintf(finbuf, sizeof(finbuf), "%s/%s", direproc->d_name, cmdlp);
@@ -167,7 +168,7 @@ index c3a7bb1..71be41f 100644
  	}
  	closedir(dirfd); 
  	dirfd = NULL;
-@@ -546,6 +589,8 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
+@@ -573,6 +616,8 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
      }
      if (flag_prg)
  	printf(" %-16s",prg_cache_get(inode));
@@ -176,7 +177,7 @@ index c3a7bb1..71be41f 100644
      if (flag_opt)
  	printf(" %s", timers);
      putchar('\n');
-@@ -1238,6 +1283,8 @@ static void unix_do_one(int nr, const char *line)
+@@ -1566,6 +1611,8 @@ static void unix_do_one(int nr, const char *line)
  	printf("-        ");
      if (flag_prg)
  	printf("%-" PROGNAME_WIDTHs "s",(has & HAS_INODE?prg_cache_get(inode):"-"));
@@ -185,7 +186,7 @@ index c3a7bb1..71be41f 100644
      puts(path);
  }
  
-@@ -1256,6 +1303,7 @@ static int unix_info(void)
+@@ -1584,6 +1631,7 @@ static int unix_info(void)
  
      printf(_("\nProto RefCnt Flags       Type       State         I-Node  "));
      print_progname_banner();
@@ -193,15 +194,15 @@ index c3a7bb1..71be41f 100644
      printf(_(" Path\n"));	/* xxx */
  
      {
-@@ -1546,6 +1594,7 @@ static void usage(void)
+@@ -1874,6 +1922,7 @@ static void usage(void)
      fprintf(stderr, _("        -o, --timers             display timers\n"));
      fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
      fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 +    fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n\n"));
  
-     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
+     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-S|--sctp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
      fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
-@@ -1591,6 +1640,7 @@ int main
+@@ -1920,6 +1969,7 @@ int main
  	{"cache", 0, 0, 'C'},
  	{"fib", 0, 0, 'F'},
  	{"groups", 0, 0, 'g'},
@@ -209,16 +210,16 @@ index c3a7bb1..71be41f 100644
  	{NULL, 0, 0, 0}
      };
  
-@@ -1602,7 +1652,7 @@ int main
+@@ -1931,7 +1981,7 @@ int main
      getroute_init();		/* Set up AF routing support */
  
      afname[0] = '\0';
--    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuWVv?wxl64", longopts, &lop)) != EOF)
-+    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuWVv?wxlZ64", longopts, &lop)) != EOF)
+-    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuSWVv?wxl64", longopts, &lop)) != EOF)
++    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuSWVv?wxlZ64", longopts, &lop)) != EOF)
  	switch (i) {
  	case -1:
  	    break;
-@@ -1705,6 +1755,19 @@ int main
+@@ -2036,6 +2086,19 @@ int main
  	    if (aftrans_opt("unix"))
  		exit(1);
  	    break;
@@ -239,5 +240,5 @@ index c3a7bb1..71be41f 100644
  	case 'h':
  	    usage();
 -- 
-1.7.5.4
+1.9.1
 
