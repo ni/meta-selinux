@@ -22,7 +22,6 @@ RDEPENDS_${PN} = " \
 	packagegroup-selinux-policycoreutils \
 	setools \
 	setools-console \
-	selinux-config \
 	selinux-autorelabel \
 	selinux-init \
 	selinux-labeldev \

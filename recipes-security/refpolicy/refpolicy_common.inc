@@ -1,3 +1,5 @@
+DEFAULT_ENFORCING ??= "enforcing"
+
 SECTION = "base"
 LICENSE = "GPLv2"
 
@@ -14,7 +16,8 @@ SRC_URI += "file://customizable_types \
 
 S = "${WORKDIR}/refpolicy"
 
-FILES_${PN} = " \
+CONFFILES_${PN} += "${sysconfdir}/selinux/config"
+FILES_${PN} += " \
 	${sysconfdir}/selinux/${POLICY_NAME}/ \
 	${datadir}/selinux/${POLICY_NAME}/*.pp \
 	${localstatedir}/lib/selinux/${POLICY_NAME}/ \
@@ -25,7 +28,6 @@ FILES_${PN}-dev =+ " \
 "
 
 DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
-RDEPENDS_${PN} += "selinux-config"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -137,13 +139,37 @@ install_misc_files () {
 	oe_runmake 'DESTDIR=${D}' 'prefix=${D}${prefix}' install-headers
 }
 
+install_config () {
+	echo "\
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=${DEFAULT_ENFORCING}
+# SELINUXTYPE= can take one of these values:
+#     standard - Standard Security protection.
+#     mls - Multi Level Security protection.
+#     targeted - Targeted processes are protected.
+#     mcs - Multi Category Security protection.
+SELINUXTYPE=${POLICY_TYPE}
+" > ${WORKDIR}/config
+	install -d ${D}/${sysconfdir}/selinux
+	install -m 0644 ${WORKDIR}/config ${D}/${sysconfdir}/selinux/
+}
+
 do_install () {
 	prepare_policy_store
 	rebuild_policy
 	install_misc_files
+	install_config
 }
 
 do_install_append(){
 	# While building policies on target, Makefile will be searched from SELINUX_DEVEL_PATH
 	echo "SELINUX_DEVEL_PATH=${datadir}/selinux/${POLICY_NAME}/include" > ${D}${sysconfdir}/selinux/sepolgen.conf
+}
+
+sysroot_stage_all_append () {
+	sysroot_stage_dir ${D}${sysconfdir} ${SYSROOT_DESTDIR}${sysconfdir}
 }
