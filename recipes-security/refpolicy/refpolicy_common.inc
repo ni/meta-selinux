@@ -66,6 +66,16 @@ EXTRA_OEMAKE += "tc_usrbindir=${STAGING_BINDIR_NATIVE}"
 EXTRA_OEMAKE += "OUTPUT_POLICY=`${STAGING_BINDIR_NATIVE}/checkpolicy -V | cut -d' ' -f1`"
 EXTRA_OEMAKE += "CC='${BUILD_CC}' CFLAGS='${BUILD_CFLAGS}' PYTHON='${PYTHON}'"
 
+python __anonymous () {
+    import re
+
+    # make sure DEFAULT_ENFORCING is something sane
+    if not re.match('^(enforcing|permissive|disabled)$',
+                    d.getVar('DEFAULT_ENFORCING', True),
+                    flags=0):
+        d.setVar('DEFAULT_ENFORCING', 'permissive')
+}
+
 do_compile() {
 	oe_runmake conf
 	oe_runmake policy
