@@ -26,7 +26,6 @@ RDEPENDS_${PN} = " \
 	selinux-autorelabel \
 	selinux-init \
 	selinux-labeldev \
-	refpolicy-standard \
-	refpolicy-mls \
+	virtual/refpolicy \
 	coreutils \
 	"

@@ -1,4 +1,3 @@
-DEFAULT_POLICY ??= "mls"
 DEFAULT_ENFORCING ??= "enforcing"
 
 SUMMARY = "SELinux configuration"
@@ -30,7 +29,7 @@ SELINUX=${DEFAULT_ENFORCING}
 #     mls - Multi Level Security protection.
 #     targeted - Targeted processes are protected.
 #     mcs - Multi Category Security protection.
-SELINUXTYPE=${DEFAULT_POLICY}
+SELINUXTYPE=${@d.getVar("PREFERRED_PROVIDER_virtual/refpolicy", False)[len("refpolicy-"):]}
 " > ${WORKDIR}/config
 	install -d ${D}/${sysconfdir}/selinux
 	install -m 0644 ${WORKDIR}/config ${D}/${sysconfdir}/selinux/

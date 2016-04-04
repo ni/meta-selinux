@@ -3,6 +3,9 @@ LICENSE = "GPLv2"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
+PROVIDES += "virtual/refpolicy"
+RPROVIDES_${PN} += "virtual/refpolicy"
+
 # Specific config files for Poky
 SRC_URI += "file://customizable_types \
             file://setrans-mls.conf \
