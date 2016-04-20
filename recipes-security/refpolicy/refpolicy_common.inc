@@ -162,7 +162,7 @@ SELINUX=${DEFAULT_ENFORCING}
 #     mls - Multi Level Security protection.
 #     targeted - Targeted processes are protected.
 #     mcs - Multi Category Security protection.
-SELINUXTYPE=${POLICY_TYPE}
+SELINUXTYPE=${POLICY_NAME}
 " > ${WORKDIR}/config
 	install -d ${D}/${sysconfdir}/selinux
 	install -m 0644 ${WORKDIR}/config ${D}/${sysconfdir}/selinux/
