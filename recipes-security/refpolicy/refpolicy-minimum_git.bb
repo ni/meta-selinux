@@ -17,6 +17,8 @@ CORE_POLICY_MODULES = "unconfined \
 	application libraries miscfiles logging userdomain \
 	init mount modutils getty authlogin locallogin \
 	"
+#systemd dependent policy modules
+CORE_POLICY_MODULES += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'clock systemd udev', '', d)}"
 
 # nscd caches libc-issued requests to the name service.
 # Without nscd.pp, commands want to use these caches will be blocked.
