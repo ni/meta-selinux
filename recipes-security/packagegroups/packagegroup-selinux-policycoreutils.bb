@@ -33,5 +33,6 @@ RDEPENDS_${PN} = "\
 	policycoreutils-sestatus \
 	policycoreutils-setfiles \
 	policycoreutils-setsebool \
+	policycoreutils-hll \
 	system-config-selinux \
 "
