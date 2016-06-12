@@ -19,6 +19,8 @@ FILES_${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 
 DEPENDS += "python"
 
+inherit python-dir
+
 FILES_${PN} += "${libdir}/python${PYTHON_BASEVERSION}/site-packages \
 		/var/lib/sepolgen"
 
