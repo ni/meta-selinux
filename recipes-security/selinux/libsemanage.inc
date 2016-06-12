@@ -6,7 +6,7 @@ on binary policies such as customizing policy boolean settings."
 SECTION = "base"
 LICENSE = "LGPLv2.1+"
 
-inherit lib_package
+inherit lib_package python-dir
 
 DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native"
 DEPENDS_append_class-target += "audit"
