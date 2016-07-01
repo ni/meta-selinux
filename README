@@ -65,6 +65,8 @@ An "oe-selinux" distribution is also included as a convienence for people
 working with this layer, without the additional Poky meta data.  This
 approach may work, but is not generally tested by the maintainers.
 
+e.g. DISTRO="poky-selinux"
+
 
 Using different versions of linux-yocto
 ---------------------------------------
@@ -74,6 +76,7 @@ currently supported: v3.14, v3.19, v4.1(by default).
 
 * enable the preferred linux-yocto to local.conf or oe-selinux.conf
 e.g. PREFERRED_VERSION_linux-yocto_qemuarm = "3.19%"
+
 
 Using different versions of refpolicy
 -------------------------------------
@@ -86,8 +89,28 @@ By default refpolicy from git builds head commit of master branch, we can update
 SRCREV for refpolicy and refpolicy-contrib as appropriate at refpolicy_git.inc
 to check refpolicy as per required commits.
 
-* enable the preferred refpolicy-mls to local.conf or oe-selinux.conf
-e.g. REFERRED_VERSION_refpolicy-mls = "2.20140311"
+* enable the preferred refpolicy-minimum to local.conf or oe-selinux.conf
+e.g. PREFERRED_VERSION_refpolicy-minimum = "2.20151208"
+
+
+Using perticular refpolicy policy type
+--------------------------------------
+Provider "virtual/refpolicy" used to set perticular refpolicy type.
+
+* enabled refpolicy-minimum from refpolicy types at config level
+e.g. PREFERRED_PROVIDER_virtual/refpolicy ?= "refpolicy-minimum"
+
+
+Using different init manager
+----------------------------
+By default selinux enabled images coming up with "sysvinit" as init manager,
+we can use "systemd" as an init manager using below changes to local.conf
+
+* enable systemd as init manager changes to local.conf
+DISTRO_FEATURES_remove = " sysvinit"
+DISTRO_FEATURES_append = " systemd"
+VIRTUAL-RUNTIME_init_manager = "systemd"
+DISTRO_FEATURES_BACKFILL_CONSIDERED = ""
 
 
 License
