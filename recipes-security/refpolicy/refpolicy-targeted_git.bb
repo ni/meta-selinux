@@ -17,4 +17,5 @@ include refpolicy_${PV}.inc
 SRC_URI += " \
             file://refpolicy-fix-optional-issue-on-sysadm-module.patch \
             file://refpolicy-unconfined_u-default-user.patch \
+            ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'file://refpolicy-remove-duplicate-type_transition.patch', '', d)} \
            "
