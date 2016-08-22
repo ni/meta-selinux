@@ -18,7 +18,7 @@ index cc68df3..998b990 100644
  
  CONFIG_CLEAN_FILES = *.loT *.rej *.orig
  
--SUBDIRS = @pybind_dir@ @gobind_dir@ swig
+-SUBDIRS = python golang swig
 +SUBDIRS = swig
 +if HAVE_PYTHON
 +SUBDIRS += python
