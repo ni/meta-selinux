@@ -158,6 +158,7 @@ install_config () {
 #     disabled - No SELinux policy is loaded.
 SELINUX=${DEFAULT_ENFORCING}
 # SELINUXTYPE= can take one of these values:
+#     minimum - Minimum Security protection.
 #     standard - Standard Security protection.
 #     mls - Multi Level Security protection.
 #     targeted - Targeted processes are protected.
