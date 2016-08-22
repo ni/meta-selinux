@@ -14,7 +14,10 @@ ${PN}_RDEPENDS = " \
     policycoreutils-setfiles \
 "
 
-SRC_URI = "file://${BPN}.sh"
+SRC_URI = "file://${BPN}.sh \
+		file://${BPN}.service \
+	"
+
 INITSCRIPT_PARAMS = "start 01 S ."
 
 require selinux-initsh.inc
