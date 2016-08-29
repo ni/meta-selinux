@@ -75,4 +75,5 @@ SYSTEMD_REFPOLICY_PATCHES = " \
         file://0001-refpolicy-minimum-systemd-unconfined-lib-add-systemd.patch \
 	file://0002-refpolicy-minimum-audit-logging-getty-audit-related-.patch \
 	file://0003-refpolicy-minimum-systemd-mount-logging-authlogin-ad.patch \
+	file://0004-refpolicy-minimum-locallogin-add-allow-rules-for-typ.patch \
 	"
