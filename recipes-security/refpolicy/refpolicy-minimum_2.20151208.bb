@@ -78,4 +78,5 @@ SYSTEMD_REFPOLICY_PATCHES = " \
 	file://0004-refpolicy-minimum-locallogin-add-allow-rules-for-typ.patch \
 	file://0005-refpolicy-minimum-init-fix-reboot-with-systemd-as-in.patch \
 	file://0006-refpolicy-minimum-systemd-mount-enable-requiried-ref.patch \
+	file://0007-refpolicy-minimum-systemd-fix-for-login-journal-serv.patch \
 	"
