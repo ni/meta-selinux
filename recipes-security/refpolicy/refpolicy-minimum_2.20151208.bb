@@ -80,4 +80,5 @@ SYSTEMD_REFPOLICY_PATCHES = " \
 	file://0006-refpolicy-minimum-systemd-mount-enable-requiried-ref.patch \
 	file://0007-refpolicy-minimum-systemd-fix-for-login-journal-serv.patch \
 	file://0008-refpolicy-minimum-systemd-fix-for-systemd-tmp-files-.patch \
+	file://0009-refpolicy-minimum-systemd-fix-for-syslog.patch \
 	"
