@@ -74,4 +74,5 @@ SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', ' ${SYSTEMD_REFPO
 SYSTEMD_REFPOLICY_PATCHES = " \
         file://0001-refpolicy-minimum-systemd-unconfined-lib-add-systemd.patch \
 	file://0002-refpolicy-minimum-audit-logging-getty-audit-related-.patch \
+	file://0003-refpolicy-minimum-systemd-mount-logging-authlogin-ad.patch \
 	"
