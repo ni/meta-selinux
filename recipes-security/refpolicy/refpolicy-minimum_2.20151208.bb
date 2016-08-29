@@ -67,3 +67,10 @@ prepare_policy_store () {
 		cp ${MOD_FILE} ${MOD_DIR}/hll
 	done
 }
+
+SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', ' ${SYSTEMD_REFPOLICY_PATCHES}', '', d)}"
+
+
+SYSTEMD_REFPOLICY_PATCHES = " \
+        file://0001-refpolicy-minimum-systemd-unconfined-lib-add-systemd.patch \
+	"
