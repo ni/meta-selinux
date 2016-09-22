@@ -125,7 +125,7 @@ path = ${STAGING_DIR_NATIVE}${sbindir_native}/sefcontext_compile
 args = \$@
 [end]
 
-policy-version = 28
+policy-version = 30
 EOF
 
 	# Create policy store and build the policy
