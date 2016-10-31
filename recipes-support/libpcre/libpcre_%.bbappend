@@ -7,6 +7,7 @@ do_install_append () {
 		mv -f ${D}${libdir}/libpcre.so.* ${D}${base_libdir}/
 		relpath=${@os.path.relpath("${base_libdir}", "${libdir}")}
 		ln -sf ${relpath}/${realsofile} ${D}${libdir}/libpcre.so
+		ln -sf ${relpath}/${realsofile} ${D}${libdir}/libpcre.so.1
 	fi
 }
 
