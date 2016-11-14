@@ -44,7 +44,7 @@ do_install() {
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
 
     # Update "policy-version" for semanage.conf
-    sed -i 's/^#\s*\(policy-version\s*=\).*$/\1 28/' \
+    sed -i 's/^#\s*\(policy-version\s*=\).*$/\1 30/' \
 	${D}/etc/selinux/semanage.conf
 }
 

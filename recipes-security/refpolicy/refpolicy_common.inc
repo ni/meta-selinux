@@ -6,7 +6,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 PROVIDES += "virtual/refpolicy"
-RPROVIDES_${PN} += "virtual/refpolicy"
+RPROVIDES_${PN} += "refpolicy"
 
 # Specific config files for Poky
 SRC_URI += "file://customizable_types \
@@ -125,7 +125,7 @@ path = ${STAGING_DIR_NATIVE}${sbindir_native}/sefcontext_compile
 args = \$@
 [end]
 
-policy-version = 28
+policy-version = 30
 EOF
 
 	# Create policy store and build the policy
@@ -158,6 +158,7 @@ install_config () {
 #     disabled - No SELinux policy is loaded.
 SELINUX=${DEFAULT_ENFORCING}
 # SELINUXTYPE= can take one of these values:
+#     minimum - Minimum Security protection.
 #     standard - Standard Security protection.
 #     mls - Multi Level Security protection.
 #     targeted - Targeted processes are protected.

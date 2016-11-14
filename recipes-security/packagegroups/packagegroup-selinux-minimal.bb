@@ -22,5 +22,5 @@ RDEPENDS_${PN} = "\
 	policycoreutils-sestatus \
 	policycoreutils-setfiles \
 	selinux-labeldev \
-	virtual/refpolicy \
+	refpolicy \
 "
