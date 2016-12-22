@@ -12,9 +12,11 @@ DEPENDS += "libsepol libselinux bzip2 python bison-native flex-native swig-nativ
 DEPENDS_append_class-target += "audit"
 
 # For /usr/libexec/selinux/semanage_migrate_store
-RDEPENDS_${PN} += "python"
+RDEPENDS_${PN}-utils += "python"
 
 PACKAGES += "${PN}-python"
+PACKAGES_prepend = " ${PN}-utils "
+FILES_${PN}-utils = "${libexecdir}/*"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
 
