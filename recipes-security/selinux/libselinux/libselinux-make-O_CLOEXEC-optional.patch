@@ -17,37 +17,18 @@ produce curious AVC Denied messages.
 Uptream-Status: Inappropriate [O_CLOEXEC has been in Linux since 2007 and POSIX since 2008]
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
- src/label_file.c |    8 +++++++-
- src/procattr.c   |    8 +++++++-
- src/sestatus.c   |    8 +++++++-
- src/stringrep.c  |    8 +++++++-
- 4 files changed, 28 insertions(+), 4 deletions(-)
+ src/procattr.c  | 16 ++++++++++++++--
+ src/sestatus.c  |  8 +++++++-
+ src/stringrep.c |  8 +++++++-
+ 3 files changed, 28 insertions(+), 4 deletions(-)
 
-Index: libselinux-2.5/src/label_file.c
-===================================================================
---- libselinux-2.5.orig/src/label_file.c	2016-02-25 13:10:00.159980383 -0500
-+++ libselinux-2.5/src/label_file.c	2016-02-25 13:10:00.155980383 -0500
-@@ -124,7 +124,13 @@
- 			return -1;
- 	}
- 
--	mmapfd = open(mmap_path, O_RDONLY | O_CLOEXEC);
-+	mmapfd = open(mmap_path, O_RDONLY 
-+#ifdef O_CLOEXEC
-+                 | O_CLOEXEC
-+#else
-+#warning O_CLOEXEC undefined on this platform, this may leak file descriptors
-+#endif
-+                 );
- 	if (mmapfd < 0)
- 		return -1;
- 
-Index: libselinux-2.5/src/procattr.c
-===================================================================
---- libselinux-2.5.orig/src/procattr.c	2016-02-25 13:10:00.159980383 -0500
-+++ libselinux-2.5/src/procattr.c	2016-02-25 13:11:58.527980013 -0500
-@@ -76,7 +76,13 @@
+diff --git a/src/procattr.c b/src/procattr.c
+index 7efcd7e..3007876 100644
+--- a/src/procattr.c
++++ b/src/procattr.c
+@@ -79,7 +79,13 @@ static int openattr(pid_t pid, const char *attr, int flags)
  		rc = asprintf(&path, "/proc/thread-self/attr/%s", attr);
  		if (rc < 0)
  			return -1;
@@ -62,11 +43,26 @@ Index: libselinux-2.5/src/procattr.c
  		if (fd >= 0 || errno != ENOENT)
  			goto out;
  		free(path);
-Index: libselinux-2.5/src/sestatus.c
-===================================================================
---- libselinux-2.5.orig/src/sestatus.c	2016-02-25 13:10:00.159980383 -0500
-+++ libselinux-2.5/src/sestatus.c	2016-02-25 13:10:00.155980383 -0500
-@@ -268,7 +268,13 @@
+@@ -92,7 +98,13 @@ static int openattr(pid_t pid, const char *attr, int flags)
+ 	if (rc < 0)
+ 		return -1;
+ 
+-	fd = open(path, flags | O_CLOEXEC);
++	fd = open(path, flags
++#ifdef O_CLOEXEC
++		  | O_CLOEXEC
++#else
++#warning O_CLOEXEC undefined on this platform, this may leak file descriptors
++#endif
++		);
+ out:
+ 	free(path);
+ 	return fd;
+diff --git a/src/sestatus.c b/src/sestatus.c
+index ed29dc5..0cb15b6 100644
+--- a/src/sestatus.c
++++ b/src/sestatus.c
+@@ -268,7 +268,13 @@ int selinux_status_open(int fallback)
  		return -1;
  
  	snprintf(path, sizeof(path), "%s/status", selinux_mnt);
@@ -81,11 +77,11 @@ Index: libselinux-2.5/src/sestatus.c
  	if (fd < 0)
  		goto error;
  
-Index: libselinux-2.5/src/stringrep.c
-===================================================================
---- libselinux-2.5.orig/src/stringrep.c	2016-02-25 13:10:00.159980383 -0500
-+++ libselinux-2.5/src/stringrep.c	2016-02-25 13:10:00.155980383 -0500
-@@ -105,7 +105,13 @@
+diff --git a/src/stringrep.c b/src/stringrep.c
+index 2dbec2b..de2a70b 100644
+--- a/src/stringrep.c
++++ b/src/stringrep.c
+@@ -105,7 +105,13 @@ static struct discover_class_node * discover_class(const char *s)
  		struct stat m;
  
  		snprintf(path, sizeof path, "%s/class/%s/perms/%s", selinux_mnt,s,dentry->d_name);
@@ -100,3 +96,6 @@ Index: libselinux-2.5/src/stringrep.c
  		if (fd < 0)
  			goto err4;
  
+-- 
+2.7.4
+

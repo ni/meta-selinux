@@ -10,7 +10,7 @@ inherit lib_package pythonnative
 DEPENDS += "libsepol python libpcre swig-native"
 
 PACKAGES += "${PN}-python"
-FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/*"
+FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/.debug/*"
 
 def get_policyconfigarch(d):
@@ -27,17 +27,12 @@ do_compile_append() {
     oe_runmake pywrap -j1 \
             INCLUDEDIR='${STAGING_INCDIR}' \
             LIBDIR='${STAGING_LIBDIR}' \
-            PYLIBVER='python${PYTHON_BASEVERSION}' \
-            PYINC='-I${STAGING_INCDIR}/$(PYLIBVER)' \
-            PYLIB='-L${STAGING_LIBDIR}/$(PYLIBVER) -l$(PYLIBVER)' \
-            PYTHONLIBDIR='${PYLIB}'
+            PYINC='-I${STAGING_INCDIR}/python${PYTHON_BASEVERSION}'
 }
 
 do_install_append() {
     oe_runmake install-pywrap swigify \
-            DESTDIR=${D} \
-            PYLIBVER='python${PYTHON_BASEVERSION}' \
-            PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
+            PYSITEDIR=${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages
     rm -rf ${D}${base_sbindir}
 }
 
