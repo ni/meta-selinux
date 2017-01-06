@@ -21,11 +21,11 @@ Signed-off-by: Roy Li <rongqing.li@windriver.com>
  policy/modules/contrib/ftp.te |    2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/policy/modules/contrib/ftp.te b/policy/modules/contrib/ftp.te
-index 544c512..12a31dd 100644
 --- a/policy/modules/contrib/ftp.te
 +++ b/policy/modules/contrib/ftp.te
-@@ -144,6 +144,8 @@ role ftpdctl_roles types ftpdctl_t;
+@@ -148,10 +148,12 @@ init_system_domain(ftpdctl_t, ftpdctl_ex
+ role ftpdctl_roles types ftpdctl_t;
+ 
  type ftpdctl_tmp_t;
  files_tmp_file(ftpdctl_tmp_t)
  
@@ -34,6 +34,5 @@ index 544c512..12a31dd 100644
  type sftpd_t;
  domain_type(sftpd_t)
  role system_r types sftpd_t;
--- 
-1.7.10.4
-
+ 
+ type xferlog_t;

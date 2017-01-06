@@ -10,11 +10,9 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/contrib/nscd.fc |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/policy/modules/contrib/nscd.fc b/policy/modules/contrib/nscd.fc
-index ba64485..61a6f24 100644
 --- a/policy/modules/contrib/nscd.fc
 +++ b/policy/modules/contrib/nscd.fc
-@@ -1,6 +1,7 @@
+@@ -1,8 +1,9 @@
  /etc/rc\.d/init\.d/nscd	--	gen_context(system_u:object_r:nscd_initrc_exec_t,s0)
  
  /usr/sbin/nscd	--	gen_context(system_u:object_r:nscd_exec_t,s0)
@@ -22,6 +20,5 @@ index ba64485..61a6f24 100644
  
  /var/cache/nscd(/.*)?	gen_context(system_u:object_r:nscd_var_run_t,s0)
  
--- 
-1.7.9.5
-
+ /var/db/nscd(/.*)?	gen_context(system_u:object_r:nscd_var_run_t,s0)
+ 

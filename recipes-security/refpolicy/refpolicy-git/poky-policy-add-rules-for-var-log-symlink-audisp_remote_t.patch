@@ -9,14 +9,14 @@ Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 ---
- policy/modules/system/logging.te | 1 +
+ policy/modules/system/logging.te |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 8426a49..2ad9ea5 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -262,6 +262,7 @@ allow audisp_remote_t self:capability { setuid setpcap };
+@@ -276,10 +276,11 @@ optional_policy(`
+ 
+ allow audisp_remote_t self:capability { setuid setpcap };
  allow audisp_remote_t self:process { getcap setcap };
  allow audisp_remote_t self:tcp_socket create_socket_perms;
  allow audisp_remote_t var_log_t:dir search_dir_perms;
@@ -24,6 +24,5 @@ index 8426a49..2ad9ea5 100644
  
  manage_dirs_pattern(audisp_remote_t, audit_spool_t, audit_spool_t)
  manage_files_pattern(audisp_remote_t, audit_spool_t, audit_spool_t)
--- 
-1.7.11.7
-
+ files_spool_filetrans(audisp_remote_t, audit_spool_t, { dir file })
+ 

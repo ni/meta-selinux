@@ -8,15 +8,18 @@ Upstream-Status: Inappropriate [only for Poky]
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
- config/file_contexts.subs_dist |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ config/file_contexts.subs_dist |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/config/file_contexts.subs_dist
 +++ b/config/file_contexts.subs_dist
-@@ -19,3 +19,13 @@
- /usr/local/lib64 /usr/lib
- /usr/local/lib /usr/lib
- /var/run/lock /var/lock
+@@ -21,5 +21,16 @@
+ 
+ # backward compatibility
+ # not for refpolicy intern, but for /var/run using applications,
+ # like systemd tmpfiles or systemd socket configurations
+ /var/run /run
++
 +/var/volatile/log /var/log
 +/var/volatile/run /var/run
 +/var/volatile/cache /var/cache

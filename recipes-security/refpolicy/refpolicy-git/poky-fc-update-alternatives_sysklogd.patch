@@ -14,11 +14,10 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/system/logging.te |    1 +
  2 files changed, 5 insertions(+)
 
-diff --git a/policy/modules/system/logging.fc b/policy/modules/system/logging.fc
-index b50c5fe..c005f33 100644
 --- a/policy/modules/system/logging.fc
 +++ b/policy/modules/system/logging.fc
-@@ -2,19 +2,23 @@
+@@ -1,22 +1,26 @@
+ /dev/log		-s	gen_context(system_u:object_r:devlog_t,mls_systemhigh)
  
  /etc/rsyslog.conf		gen_context(system_u:object_r:syslog_conf_t,s0)
  /etc/syslog.conf		gen_context(system_u:object_r:syslog_conf_t,s0)
@@ -41,12 +40,14 @@ index b50c5fe..c005f33 100644
 +/sbin/syslogd\.sysklogd	--	gen_context(system_u:object_r:syslogd_exec_t,s0)
  /sbin/syslog-ng		--	gen_context(system_u:object_r:syslogd_exec_t,s0)
  
- /usr/sbin/klogd		--	gen_context(system_u:object_r:klogd_exec_t,s0)
-diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 87e3db2..2914b0b 100644
+ /usr/lib/systemd/system/auditd.* -- gen_context(system_u:object_r:auditd_unit_t,s0)
+ /usr/lib/systemd/system/[^/]*systemd-journal.* -- gen_context(system_u:object_r:syslogd_unit_t,s0)
+ /usr/lib/systemd/systemd-journald -- gen_context(system_u:object_r:syslogd_exec_t,s0)
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -371,6 +371,7 @@ allow syslogd_t self:udp_socket create_socket_perms;
+@@ -386,10 +386,11 @@ allow syslogd_t self:unix_dgram_socket s
+ allow syslogd_t self:fifo_file rw_fifo_file_perms;
+ allow syslogd_t self:udp_socket create_socket_perms;
  allow syslogd_t self:tcp_socket create_stream_socket_perms;
  
  allow syslogd_t syslog_conf_t:file read_file_perms;
@@ -54,6 +55,5 @@ index 87e3db2..2914b0b 100644
  
  # Create and bind to /dev/log or /var/run/log.
  allow syslogd_t devlog_t:sock_file manage_sock_file_perms;
--- 
-1.7.9.5
-
+ files_pid_filetrans(syslogd_t, devlog_t, sock_file)
+ 

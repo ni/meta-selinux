@@ -7,11 +7,11 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/admin/usermanage.fc |    6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/policy/modules/admin/usermanage.fc b/policy/modules/admin/usermanage.fc
-index f82f0ce..841ba9b 100644
 --- a/policy/modules/admin/usermanage.fc
 +++ b/policy/modules/admin/usermanage.fc
-@@ -4,11 +4,17 @@ ifdef(`distro_gentoo',`
+@@ -6,15 +6,21 @@ ifdef(`distro_debian',`
+ /etc/cron\.daily/cracklib-runtime -- gen_context(system_u:object_r:crack_exec_t,s0)
+ ')
  
  /usr/bin/chage		--	gen_context(system_u:object_r:passwd_exec_t,s0)
  /usr/bin/chfn		--	gen_context(system_u:object_r:chfn_exec_t,s0)
@@ -29,6 +29,5 @@ index f82f0ce..841ba9b 100644
  
  /usr/lib/cracklib_dict.* --	gen_context(system_u:object_r:crack_db_t,s0)
  
--- 
-1.7.9.5
-
+ /usr/sbin/crack_[a-z]*	--	gen_context(system_u:object_r:crack_exec_t,s0)
+ /usr/sbin/cracklib-[a-z]* --	gen_context(system_u:object_r:crack_exec_t,s0)

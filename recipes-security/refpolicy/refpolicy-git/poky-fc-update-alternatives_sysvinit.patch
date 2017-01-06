@@ -12,11 +12,11 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/system/init.fc         |    1 +
  3 files changed, 3 insertions(+)
 
-diff --git a/policy/modules/contrib/shutdown.fc b/policy/modules/contrib/shutdown.fc
-index a91f33b..90e51e0 100644
 --- a/policy/modules/contrib/shutdown.fc
 +++ b/policy/modules/contrib/shutdown.fc
-@@ -3,6 +3,7 @@
+@@ -1,10 +1,11 @@
+ /etc/nologin	--	gen_context(system_u:object_r:shutdown_etc_t,s0)
+ 
  /lib/upstart/shutdown	--	gen_context(system_u:object_r:shutdown_exec_t,s0)
  
  /sbin/shutdown	--	gen_context(system_u:object_r:shutdown_exec_t,s0)
@@ -24,11 +24,13 @@ index a91f33b..90e51e0 100644
  
  /usr/lib/upstart/shutdown	--	gen_context(system_u:object_r:shutdown_exec_t,s0)
  
-diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
-index bcfdba7..87502a3 100644
+ /usr/sbin/shutdown	--	gen_context(system_u:object_r:shutdown_exec_t,s0)
+ 
 --- a/policy/modules/kernel/corecommands.fc
 +++ b/policy/modules/kernel/corecommands.fc
-@@ -10,6 +10,7 @@
+@@ -8,10 +8,11 @@
+ /bin/bash2			--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /bin/fish			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /bin/ksh.*			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /bin/mksh			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /bin/mountpoint			--	gen_context(system_u:object_r:bin_t,s0)
@@ -36,11 +38,13 @@ index bcfdba7..87502a3 100644
  /bin/sash			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /bin/tcsh			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /bin/yash			--	gen_context(system_u:object_r:shell_exec_t,s0)
-diff --git a/policy/modules/system/init.fc b/policy/modules/system/init.fc
-index bc0ffc8..020b9fe 100644
+ /bin/zsh.*			--	gen_context(system_u:object_r:shell_exec_t,s0)
+ 
 --- a/policy/modules/system/init.fc
 +++ b/policy/modules/system/init.fc
-@@ -30,6 +30,7 @@ ifdef(`distro_gentoo', `
+@@ -30,10 +30,11 @@ ifdef(`distro_gentoo', `
+ 
+ #
  # /sbin
  #
  /sbin/init(ng)?		--	gen_context(system_u:object_r:init_exec_t,s0)
@@ -48,6 +52,5 @@ index bc0ffc8..020b9fe 100644
  # because nowadays, /sbin/init is often a symlink to /sbin/upstart
  /sbin/upstart		--	gen_context(system_u:object_r:init_exec_t,s0)
  
--- 
-1.7.9.5
-
+ ifdef(`distro_gentoo', `
+ /sbin/rc		--	gen_context(system_u:object_r:rc_exec_t,s0)

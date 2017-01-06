@@ -14,11 +14,11 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/system/logging.te |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 2914b0b..2ab0a49 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -450,6 +450,7 @@ fs_getattr_all_fs(syslogd_t)
+@@ -475,10 +475,11 @@ files_var_lib_filetrans(syslogd_t, syslo
+ 
+ fs_getattr_all_fs(syslogd_t)
  fs_search_auto_mountpoints(syslogd_t)
  
  mls_file_write_all_levels(syslogd_t) # Need to be able to write to /var/run/ and /var/log directories
@@ -26,6 +26,5 @@ index 2914b0b..2ab0a49 100644
  
  term_write_console(syslogd_t)
  # Allow syslog to a terminal
--- 
-1.7.9.5
-
+ term_write_unallocated_ttys(syslogd_t)
+ 

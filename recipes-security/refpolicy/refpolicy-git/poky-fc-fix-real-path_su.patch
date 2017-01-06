@@ -10,16 +10,13 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  policy/modules/admin/su.fc |    2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/policy/modules/admin/su.fc b/policy/modules/admin/su.fc
-index a563687..0f43827 100644
 --- a/policy/modules/admin/su.fc
 +++ b/policy/modules/admin/su.fc
-@@ -4,3 +4,5 @@
+@@ -3,5 +3,7 @@
+ /usr/bin/su		--	gen_context(system_u:object_r:su_exec_t,s0)
  
  /usr/(local/)?bin/ksu	--	gen_context(system_u:object_r:su_exec_t,s0)
  /usr/bin/kdesu		--	gen_context(system_u:object_r:su_exec_t,s0)
+ /usr/bin/su		--	gen_context(system_u:object_r:su_exec_t,s0)
 +
 +/bin/su.shadow		--	gen_context(system_u:object_r:su_exec_t,s0)
--- 
-1.7.9.5
-

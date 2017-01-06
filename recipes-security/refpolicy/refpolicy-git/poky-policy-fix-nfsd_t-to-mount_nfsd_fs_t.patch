@@ -16,7 +16,9 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/contrib/rpc.te
 +++ b/policy/modules/contrib/rpc.te
-@@ -263,6 +263,11 @@ tunable_policy(`nfs_export_all_ro',`
+@@ -275,10 +275,15 @@ tunable_policy(`nfs_export_all_ro',`
+ 	files_read_non_auth_files(nfsd_t)
+ ')
  
  optional_policy(`
  	mount_exec(nfsd_t)
@@ -28,9 +30,13 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
  ')
  
  ########################################
+ #
+ # GSSD local policy
 --- a/policy/modules/contrib/rpcbind.te
 +++ b/policy/modules/contrib/rpcbind.te
-@@ -70,6 +70,11 @@ logging_send_syslog_msg(rpcbind_t)
+@@ -71,8 +71,13 @@ auth_use_nsswitch(rpcbind_t)
+ 
+ logging_send_syslog_msg(rpcbind_t)
  
  miscfiles_read_localization(rpcbind_t)
  
@@ -44,18 +50,24 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
  ')
 --- a/policy/modules/kernel/filesystem.te
 +++ b/policy/modules/kernel/filesystem.te
-@@ -119,6 +119,7 @@ genfscon mvfs / gen_context(system_u:obj
+@@ -127,10 +127,11 @@ fs_noxattr_type(mvfs_t)
+ allow mvfs_t self:filesystem associate;
+ genfscon mvfs / gen_context(system_u:object_r:mvfs_t,s0)
  
  type nfsd_fs_t;
  fs_type(nfsd_fs_t)
 +files_mountpoint(nfsd_fs_t)
  genfscon nfsd / gen_context(system_u:object_r:nfsd_fs_t,s0)
  
- type oprofilefs_t;
+ type nsfs_t;
+ fs_type(nsfs_t)
+ genfscon nsfs / gen_context(system_u:object_r:nsfs_t,s0)
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -293,6 +293,8 @@ mls_process_read_up(kernel_t)
- mls_process_write_down(kernel_t)
+@@ -324,10 +324,12 @@ mcs_process_set_categories(kernel_t)
+ 
+ mls_process_read_all_levels(kernel_t)
+ mls_process_write_all_levels(kernel_t)
  mls_file_write_all_levels(kernel_t)
  mls_file_read_all_levels(kernel_t)
 +mls_socket_write_all_levels(kernel_t)
@@ -63,3 +75,5 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
  
  ifdef(`distro_redhat',`
  	# Bugzilla 222337
+ 	fs_rw_tmpfs_chr_files(kernel_t)
+ ')

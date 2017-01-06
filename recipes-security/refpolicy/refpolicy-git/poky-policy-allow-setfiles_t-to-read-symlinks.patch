@@ -11,11 +11,11 @@ Signed-off-by: Shrikant Bobade <Shrikant_Bobade@mentor.com>
  policy/modules/system/selinuxutil.te |    3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/policy/modules/system/selinuxutil.te b/policy/modules/system/selinuxutil.te
-index 9058dd8..f998491 100644
 --- a/policy/modules/system/selinuxutil.te
 +++ b/policy/modules/system/selinuxutil.te
-@@ -552,6 +552,9 @@ files_relabel_all_files(setfiles_t)
+@@ -553,10 +553,13 @@ files_read_etc_files(setfiles_t)
+ files_list_all(setfiles_t)
+ files_relabel_all_files(setfiles_t)
  files_read_usr_symlinks(setfiles_t)
  files_dontaudit_read_all_symlinks(setfiles_t)
  
@@ -25,6 +25,5 @@ index 9058dd8..f998491 100644
  fs_getattr_all_xattr_fs(setfiles_t)
  fs_list_all(setfiles_t)
  fs_search_auto_mountpoints(setfiles_t)
--- 
-1.7.9.5
-
+ fs_relabelfrom_noxattr_fs(setfiles_t)
+ 

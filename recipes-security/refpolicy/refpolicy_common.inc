@@ -29,6 +29,10 @@ FILES_${PN}-dev =+ " \
 
 DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
 
+RDEPENDS-${PN}-dev =+ " \
+        python \
+"
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit pythonnative

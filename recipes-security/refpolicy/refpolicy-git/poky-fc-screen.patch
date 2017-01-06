@@ -10,18 +10,16 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/contrib/screen.fc |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/policy/modules/contrib/screen.fc b/policy/modules/contrib/screen.fc
-index e7c2cf7..49ddca2 100644
 --- a/policy/modules/contrib/screen.fc
 +++ b/policy/modules/contrib/screen.fc
-@@ -3,6 +3,7 @@ HOME_DIR/\.screenrc	--	gen_context(system_u:object_r:screen_home_t,s0)
+@@ -1,9 +1,10 @@
+ HOME_DIR/\.screen(/.*)?	gen_context(system_u:object_r:screen_home_t,s0)
+ HOME_DIR/\.screenrc	--	gen_context(system_u:object_r:screen_home_t,s0)
  HOME_DIR/\.tmux\.conf	--	gen_context(system_u:object_r:screen_home_t,s0)
  
  /usr/bin/screen	--	gen_context(system_u:object_r:screen_exec_t,s0)
 +/usr/bin/screen-.*	--	gen_context(system_u:object_r:screen_exec_t,s0)
  /usr/bin/tmux	--	gen_context(system_u:object_r:screen_exec_t,s0)
  
- /var/run/screen(/.*)?	gen_context(system_u:object_r:screen_var_run_t,s0)
--- 
-1.7.9.5
-
+ /run/screen(/.*)?	gen_context(system_u:object_r:screen_var_run_t,s0)
+ /run/tmux(/.*)?	gen_context(system_u:object_r:screen_var_run_t,s0)

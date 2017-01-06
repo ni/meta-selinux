@@ -10,16 +10,13 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  policy/modules/contrib/rpm.fc |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/policy/modules/contrib/rpm.fc b/policy/modules/contrib/rpm.fc
-index ebe91fc..539063c 100644
 --- a/policy/modules/contrib/rpm.fc
 +++ b/policy/modules/contrib/rpm.fc
-@@ -58,4 +58,5 @@ ifdef(`distro_redhat',`
+@@ -61,6 +61,7 @@ ifdef(`distro_redhat',`
+ /run/yum.*	--	gen_context(system_u:object_r:rpm_var_run_t,s0)
+ /run/PackageKit(/.*)?	gen_context(system_u:object_r:rpm_var_run_t,s0)
  
  ifdef(`enable_mls',`
  /usr/sbin/cpio	--	gen_context(system_u:object_r:rpm_exec_t,s0)
 +/bin/cpio.cpio	--	gen_context(system_u:object_r:rpm_exec_t,s0)
  ')
--- 
-1.7.9.5
-

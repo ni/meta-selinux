@@ -17,16 +17,13 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-fix-real-path_shadow.patch \
             file://poky-fc-fix-bind.patch \
             file://poky-fc-clock.patch \
-            file://poky-fc-corecommands.patch \
             file://poky-fc-dmesg.patch \
             file://poky-fc-fstools.patch \
-            file://poky-fc-iptables.patch \
             file://poky-fc-mta.patch \
             file://poky-fc-netutils.patch \
             file://poky-fc-nscd.patch \
             file://poky-fc-screen.patch \
             file://poky-fc-ssh.patch \
-            file://poky-fc-su.patch \
             file://poky-fc-sysnetwork.patch \
             file://poky-fc-udevd.patch \
             file://poky-fc-rpm.patch \

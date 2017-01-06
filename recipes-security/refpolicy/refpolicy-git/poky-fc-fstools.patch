@@ -9,14 +9,12 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
 ---
- policy/modules/system/fstools.fc |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ policy/modules/system/fstools.fc |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/policy/modules/system/fstools.fc b/policy/modules/system/fstools.fc
-index d10368d..f22761a 100644
 --- a/policy/modules/system/fstools.fc
 +++ b/policy/modules/system/fstools.fc
-@@ -1,6 +1,8 @@
+@@ -1,19 +1,23 @@
  /sbin/badblocks		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/blkid		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 +/sbin/blkid/.util-linux		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -25,20 +23,24 @@ index d10368d..f22761a 100644
  /sbin/cfdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/dosfsck		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/dump		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -9,9 +11,12 @@
+ /sbin/dumpe2fs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /sbin/e2fsck		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/e4fsck		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/e2label		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/fdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 +/sbin/fdisk/.util-linux		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/findfs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-+/usr/sbin/findfs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/fsck.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/hdparm		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 +/sbin/hdparm/.util-linux		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/install-mbr	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/jfs_.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/losetup.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -24,6 +29,7 @@
+ /sbin/lsraid		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /sbin/make_reiser4	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+@@ -22,20 +26,22 @@
+ /sbin/mke4fs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /sbin/mkfs.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/mkraid		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/mkreiserfs	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/mkswap		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -46,18 +48,22 @@ index d10368d..f22761a 100644
  /sbin/parted		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/partprobe		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/partx		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -32,8 +38,10 @@
+ /sbin/raidautorun	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /sbin/raidstart		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/reiserfs(ck|tune)	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/resize.*fs	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/scsi_info		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-+/usr/sbin/sfdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/sfdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/swapoff		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 +/sbin/swapoff/.util-linux		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/swapon.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/tune2fs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /sbin/zdb		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -45,6 +53,7 @@
+ /sbin/zhack		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /sbin/zinject		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+@@ -43,10 +49,11 @@
+ /sbin/zstreamdump	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /sbin/ztest		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  
  /usr/bin/partition_uuid	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/bin/raw		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -65,6 +71,5 @@ index d10368d..f22761a 100644
  /usr/bin/scsi_unique_id	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/bin/syslinux	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  
--- 
-1.7.9.5
-
+ /usr/sbin/addpart		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+ /usr/sbin/badblocks		--	gen_context(system_u:object_r:fsadm_exec_t,s0)

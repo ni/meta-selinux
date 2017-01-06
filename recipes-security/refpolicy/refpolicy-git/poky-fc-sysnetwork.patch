@@ -8,14 +8,14 @@ Upstream-Status: Inappropriate [configuration]
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Shrikant Bobade <Shrikant_Bobade@mentor.com>
 ---
- policy/modules/system/sysnetwork.fc |    4 ++++
- 1 file changed, 4 insertions(+)
+ policy/modules/system/sysnetwork.fc |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/policy/modules/system/sysnetwork.fc b/policy/modules/system/sysnetwork.fc
-index fbb935c..a194622 100644
 --- a/policy/modules/system/sysnetwork.fc
 +++ b/policy/modules/system/sysnetwork.fc
-@@ -4,6 +4,7 @@
+@@ -2,10 +2,11 @@
+ #
+ # /bin
  #
  /bin/ifconfig		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /bin/ip			--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
@@ -23,17 +23,19 @@ index fbb935c..a194622 100644
  
  #
  # /dev
-@@ -43,7 +44,9 @@ ifdef(`distro_redhat',`
+ #
+ ifdef(`distro_debian',`
+@@ -43,17 +44,19 @@ ifdef(`distro_redhat',`
+ /sbin/dhclient.*	--	gen_context(system_u:object_r:dhcpc_exec_t,s0)
  /sbin/dhcdbd		--	gen_context(system_u:object_r:dhcpc_exec_t,s0)
  /sbin/dhcpcd		--	gen_context(system_u:object_r:dhcpc_exec_t,s0)
  /sbin/ethtool		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
-+/usr/sbin/ethtool  --  gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/ifconfig		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
 +/sbin/ifconfig\.net-tools  --  gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/ip		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/ipx_configure	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/ipx_interface	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
-@@ -51,6 +54,7 @@ ifdef(`distro_redhat',`
+ /sbin/ipx_internal_net	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/iw		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/iwconfig		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  /sbin/mii-tool		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
@@ -41,6 +43,5 @@ index fbb935c..a194622 100644
  /sbin/pump		--	gen_context(system_u:object_r:dhcpc_exec_t,s0)
  /sbin/tc		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  
--- 
-1.7.9.5
-
+ #
+ # /usr

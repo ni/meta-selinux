@@ -13,11 +13,11 @@ Signed-off-by: Roy Li <rongqing.li@windriver.com>
  policy/modules/roles/sysadm.te |    4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
-index 1767217..5502c6a 100644
 --- a/policy/modules/roles/sysadm.te
 +++ b/policy/modules/roles/sysadm.te
-@@ -413,6 +413,10 @@ optional_policy(`
+@@ -1169,10 +1169,14 @@ optional_policy(`
+ 	virt_admin(sysadm_t, sysadm_r)
+ 	virt_stream_connect(sysadm_t)
  ')
  
  optional_policy(`
@@ -28,6 +28,5 @@ index 1767217..5502c6a 100644
  	vmware_role(sysadm_r, sysadm_t)
  ')
  
--- 
-1.7.10.4
-
+ optional_policy(`
+ 	vnstatd_admin(sysadm_t, sysadm_r)

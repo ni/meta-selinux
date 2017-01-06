@@ -10,11 +10,11 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  policy/modules/contrib/mta.fc |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/policy/modules/contrib/mta.fc b/policy/modules/contrib/mta.fc
-index f42896c..0d4bcef 100644
 --- a/policy/modules/contrib/mta.fc
 +++ b/policy/modules/contrib/mta.fc
-@@ -22,6 +22,7 @@ HOME_DIR/\.maildir(/.*)?	gen_context(system_u:object_r:mail_home_rw_t,s0)
+@@ -20,10 +20,11 @@ HOME_DIR/\.maildir(/.*)?	gen_context(sys
+ /usr/lib/courier/bin/sendmail	--	gen_context(system_u:object_r:sendmail_exec_t,s0)
+ 
  /usr/sbin/rmail	--	gen_context(system_u:object_r:sendmail_exec_t,s0)
  /usr/sbin/sendmail\.postfix	--	gen_context(system_u:object_r:sendmail_exec_t,s0)
  /usr/sbin/sendmail(\.sendmail)?	--	gen_context(system_u:object_r:sendmail_exec_t,s0)
@@ -22,6 +22,5 @@ index f42896c..0d4bcef 100644
  /usr/sbin/ssmtp	--	gen_context(system_u:object_r:sendmail_exec_t,s0)
  
  /var/mail(/.*)?	gen_context(system_u:object_r:mail_spool_t,s0)
--- 
-1.7.9.5
-
+ 
+ /var/qmail/bin/sendmail	--	gen_context(system_u:object_r:sendmail_exec_t,s0)

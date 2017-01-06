@@ -9,13 +9,13 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 ---
  policy/modules/contrib/rpc.te   |    2 +-
  policy/modules/kernel/kernel.if |   18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 1 deletions(-)
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/policy/modules/contrib/rpc.te b/policy/modules/contrib/rpc.te
-index 9566932..5605205 100644
 --- a/policy/modules/contrib/rpc.te
 +++ b/policy/modules/contrib/rpc.te
-@@ -203,7 +203,7 @@ kernel_read_network_state(nfsd_t)
+@@ -222,11 +222,11 @@ allow nfsd_t { nfsd_rw_t nfsd_ro_t }:dir
+ 
+ kernel_read_network_state(nfsd_t)
  kernel_dontaudit_getattr_core_if(nfsd_t)
  kernel_setsched(nfsd_t)
  kernel_request_load_module(nfsd_t)
@@ -24,11 +24,13 @@ index 9566932..5605205 100644
  
  corenet_sendrecv_nfs_server_packets(nfsd_t)
  corenet_tcp_bind_nfs_port(nfsd_t)
-diff --git a/policy/modules/kernel/kernel.if b/policy/modules/kernel/kernel.if
-index 649e458..8a669c5 100644
+ corenet_udp_bind_nfs_port(nfsd_t)
+ 
 --- a/policy/modules/kernel/kernel.if
 +++ b/policy/modules/kernel/kernel.if
-@@ -804,6 +804,24 @@ interface(`kernel_unmount_proc',`
+@@ -844,10 +844,28 @@ interface(`kernel_unmount_proc',`
+ 	allow $1 proc_t:filesystem unmount;
+ ')
  
  ########################################
  ## <summary>
@@ -53,6 +55,5 @@ index 649e458..8a669c5 100644
  ##	Get the attributes of the proc filesystem.
  ## </summary>
  ## <param name="domain">
--- 
-1.7.5.4
-
+ ##	<summary>
+ ##	Domain allowed access.
