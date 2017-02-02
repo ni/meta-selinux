@@ -1,0 +1,61 @@
+From c7e55daa20f5659799aed47b819ad73e03d11e8f Mon Sep 17 00:00:00 2001
+From: Nicolas Iooss <nicolas.iooss@m4x.org>
+Date: Wed, 21 Dec 2016 19:21:04 +0100
+Subject: [PATCH 4/4] libsemanage: remove ustr library from Makefiles, README
+ and pkg-config
+
+This library is no longer used by libsemanage.
+
+Signed-off-by: Nicolas Iooss <nicolas.iooss@m4x.org>
+(cherry picked from commit 920ee9ee18024c7714f1121e91854f38fa1eef73)
+
+Tweaked due to conditional audit patch and no README.
+---
+ README                            | 2 +-
+ libsemanage/src/Makefile          | 2 +-
+ libsemanage/src/libsemanage.pc.in | 2 +-
+ libsemanage/tests/Makefile        | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/libsemanage/src/Makefile b/libsemanage/src/Makefile
+index 68aab72..83daf0f 100644
+--- a/libsemanage/src/Makefile
++++ b/libsemanage/src/Makefile
+@@ -91,7 +91,7 @@ $(LIBA): $(OBJS)
+ 	$(RANLIB) $@
+ 
+ $(LIBSO): $(LOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $@ $^ -lsepol $(LIBAUDIT) -lselinux -lbz2 -lustr -L$(LIBDIR) -Wl,-soname,$(LIBSO),--version-script=libsemanage.map,-z,defs
++	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $@ $^ -lsepol $(LIBAUDIT) -lselinux -lbz2 -L$(LIBDIR) -Wl,-soname,$(LIBSO),--version-script=libsemanage.map,-z,defs
+ 	ln -sf $@ $(TARGET)
+ 
+ $(LIBPC): $(LIBPC).in ../VERSION
+diff --git a/libsemanage/src/libsemanage.pc.in b/libsemanage/src/libsemanage.pc.in
+index 81e1805..d3eaa06 100644
+--- a/libsemanage/src/libsemanage.pc.in
++++ b/libsemanage/src/libsemanage.pc.in
+@@ -7,7 +7,7 @@ Name: libsemanage
+ Description: SELinux management library
+ Version: @VERSION@
+ URL: http://userspace.selinuxproject.org/
+-Requires.private: libselinux libsepol ustr
++Requires.private: libselinux libsepol
+ Libs: -L${libdir} -lsemanage
+ Libs.private: -lbz2
+ Cflags: -I${includedir}
+diff --git a/libsemanage/tests/Makefile b/libsemanage/tests/Makefile
+index 4b81fed..56285b3 100644
+--- a/libsemanage/tests/Makefile
++++ b/libsemanage/tests/Makefile
+@@ -12,7 +12,7 @@ LIBS = ../src/libsemanage.a ../../libselinux/src/libselinux.a ../../libsepol/src
+ 	LIBAUDIT = -laudit
+ endif
+
+-LDFLAGS += -lcunit -lustr -lbz2 $(LIBAUDIT)
++LDFLAGS += -lcunit -lbz2 $(LIBAUDIT)
+ OBJECTS = $(SOURCES:.c=.o) 
+ 
+ all: $(EXECUTABLE) 
+-- 
+2.10.2
+

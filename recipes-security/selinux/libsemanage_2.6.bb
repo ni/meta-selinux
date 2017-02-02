@@ -15,5 +15,9 @@ SRC_URI += "\
 	file://libsemanage-allow-to-disable-audit-support.patch \
 	file://libsemanage-disable-expand-check-on-policy-load.patch \
 	file://0001-src-Makefile-fix-includedir-in-libselinux.pc.patch \
+	file://0001-libsemanage-simplify-string-utilities-functions.patch;striplevel=2 \
+	file://0002-libsemanage-add-semanage_str_replace-utility-functio.patch;striplevel=2 \
+	file://0003-libsemanage-genhomedircon-drop-ustr-dependency.patch;striplevel=2 \
+	file://0004-libsemanage-remove-ustr-library-from-Makefiles-READM.patch;striplevel=2 \
 	"
 FILES_${PN} += "/usr/libexec"
