@@ -17,7 +17,7 @@ PAM_SRC_URI = "file://pam.d/newrole \
                file://pam.d/run_init \
 "
 
-DEPENDS += "libsepol libselinux libsemanage libcap"
+DEPENDS += "libsepol libselinux libsemanage libcap gettext-native"
 EXTRA_DEPENDS = "libcap-ng libcgroup setools"
 DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
