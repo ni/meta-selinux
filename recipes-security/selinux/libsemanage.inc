@@ -8,7 +8,7 @@ LICENSE = "LGPLv2.1+"
 
 inherit lib_package python-dir
 
-DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native"
+DEPENDS += "libsepol libselinux ustr bzip2 python bison-native flex-native swig-native"
 DEPENDS_append_class-target += "audit"
 
 # For /usr/libexec/selinux/semanage_migrate_store
