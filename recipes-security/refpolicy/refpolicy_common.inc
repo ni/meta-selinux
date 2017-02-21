@@ -27,7 +27,9 @@ FILES_${PN}-dev =+ " \
         ${sysconfdir}/selinux/sepolgen.conf \
 "
 
-DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
+EXTRANATIVEPATH += "bzip2-native"
+
+DEPENDS += "bzip2-replacement-native checkpolicy-native policycoreutils-native m4-native"
 
 RDEPENDS-${PN}-dev =+ " \
         python \
