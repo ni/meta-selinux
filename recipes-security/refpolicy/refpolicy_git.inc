@@ -20,13 +20,11 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-dmesg.patch \
             file://poky-fc-fstools.patch \
             file://poky-fc-mta.patch \
-            file://poky-fc-nscd.patch \
             file://poky-fc-screen.patch \
             file://poky-fc-ssh.patch \
             file://poky-fc-sysnetwork.patch \
             file://poky-fc-udevd.patch \
             file://poky-fc-rpm.patch \
-            file://poky-fc-ftpwho-dir.patch \
             file://poky-fc-fix-real-path_su.patch \
             file://refpolicy-update-for_systemd.patch \
            "

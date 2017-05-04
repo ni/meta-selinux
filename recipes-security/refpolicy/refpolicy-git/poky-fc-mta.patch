@@ -13,7 +13,7 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/contrib/mta.fc
 +++ b/policy/modules/contrib/mta.fc
-@@ -19,10 +19,11 @@ HOME_DIR/\.maildir(/.*)?	gen_context(sys
+@@ -23,10 +23,11 @@ HOME_DIR/\.maildir(/.*)?	gen_context(sys
  /usr/lib/courier/bin/sendmail	--	gen_context(system_u:object_r:sendmail_exec_t,s0)
  
  /usr/sbin/rmail	--	gen_context(system_u:object_r:sendmail_exec_t,s0)

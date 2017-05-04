@@ -18,7 +18,7 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/system/logging.fc
 +++ b/policy/modules/system/logging.fc
-@@ -39,10 +39,11 @@ ifdef(`distro_suse', `
+@@ -51,10 +51,11 @@ ifdef(`distro_suse', `
  
  /var/axfrdns/log/main(/.*)?	gen_context(system_u:object_r:var_log_t,s0)
  /var/dnscache/log/main(/.*)?	gen_context(system_u:object_r:var_log_t,s0)

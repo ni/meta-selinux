@@ -25,7 +25,7 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/system/init.if
 +++ b/policy/modules/system/init.if
-@@ -1268,16 +1268,16 @@ interface(`init_spec_domtrans_script',`
+@@ -1430,16 +1430,16 @@ interface(`init_spec_domtrans_script',`
  ##	</summary>
  ## </param>
  #

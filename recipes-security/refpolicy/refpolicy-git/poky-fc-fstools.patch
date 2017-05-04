@@ -14,8 +14,8 @@ Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
 
 --- a/policy/modules/system/fstools.fc
 +++ b/policy/modules/system/fstools.fc
-@@ -4,10 +4,11 @@
- /usr/bin/syslinux	--	gen_context(system_u:object_r:fsadm_exec_t,s0)
+@@ -55,10 +55,11 @@
+ /usr/bin/ztest			--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  
  /usr/sbin/addpart		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/badblocks		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -26,7 +26,7 @@ Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
  /usr/sbin/clubufflush		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/delpart		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/dosfsck		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -17,14 +18,16 @@
+@@ -68,14 +69,16 @@
  /usr/sbin/e4fsck		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/e2label		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/efibootmgr		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -43,7 +43,7 @@ Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
  /usr/sbin/losetup.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/lsraid		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/make_reiser4		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -33,21 +36,24 @@
+@@ -84,21 +87,24 @@
  /usr/sbin/mke4fs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/mkfs.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/mkraid		--	gen_context(system_u:object_r:fsadm_exec_t,s0)

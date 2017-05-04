@@ -30,21 +30,21 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 +
 --- a/policy/modules/roles/sysadm.te
 +++ b/policy/modules/roles/sysadm.te
-@@ -41,10 +41,11 @@ init_reload(sysadm_t)
- init_reboot_system(sysadm_t)
- init_shutdown_system(sysadm_t)
- init_start_generic_units(sysadm_t)
- init_stop_generic_units(sysadm_t)
- init_reload_generic_units(sysadm_t)
+@@ -37,10 +37,11 @@ ubac_process_exempt(sysadm_t)
+ ubac_file_exempt(sysadm_t)
+ ubac_fd_exempt(sysadm_t)
+ 
+ init_exec(sysadm_t)
+ init_admin(sysadm_t)
 +init_script_role_transition(sysadm_r)
+ 
+ selinux_read_policy(sysadm_t)
  
  # Add/remove user home directories
  userdom_manage_user_home_dirs(sysadm_t)
- userdom_home_filetrans_user_home_dir(sysadm_t)
- 
 --- a/policy/modules/system/init.if
 +++ b/policy/modules/system/init.if
-@@ -1232,30 +1232,31 @@ interface(`init_script_file_entry_type',
+@@ -1394,30 +1394,31 @@ interface(`init_script_file_entry_type',
  ##	</summary>
  ## </param>
  #
@@ -80,7 +80,7 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  
  ########################################
  ## <summary>
-@@ -1267,22 +1268,23 @@ interface(`init_spec_domtrans_script',`
+@@ -1429,22 +1430,23 @@ interface(`init_spec_domtrans_script',`
  ##	</summary>
  ## </param>
  #
@@ -108,11 +108,11 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  
  ########################################
  ## <summary>
-@@ -2502,5 +2504,34 @@ interface(`init_reload_all_units',`
- 		class service reload;
- 	')
- 
- 	allow $1 systemdunit:service reload;
+@@ -2972,5 +2974,34 @@ interface(`init_admin',`
+ 	init_stop_all_units($1)
+ 	init_stop_generic_units($1)
+ 	init_stop_system($1)
+ 	init_telinit($1)
  ')
 +
 +########################################

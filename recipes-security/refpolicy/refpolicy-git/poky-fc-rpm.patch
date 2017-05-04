@@ -13,7 +13,7 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/contrib/rpm.fc
 +++ b/policy/modules/contrib/rpm.fc
-@@ -57,6 +57,7 @@ ifdef(`distro_redhat',`
+@@ -67,6 +67,7 @@ ifdef(`distro_redhat',`
  /run/yum.*	--	gen_context(system_u:object_r:rpm_var_run_t,s0)
  /run/PackageKit(/.*)?	gen_context(system_u:object_r:rpm_var_run_t,s0)
  

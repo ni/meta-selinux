@@ -19,10 +19,10 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/system/init.te
 +++ b/policy/modules/system/init.te
-@@ -300,16 +300,18 @@ ifdef(`init_systemd',`
+@@ -344,17 +344,19 @@ ifdef(`init_systemd',`
  
  	optional_policy(`
- 		modutils_domtrans_insmod(init_t)
+ 		modutils_domtrans(init_t)
  	')
  ',`
 -	tunable_policy(`init_upstart',`
@@ -30,32 +30,25 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 -	',`
 -		# Run the shell in the sysadm role for single-user mode.
 -		# causes problems with upstart
--		sysadm_shell_domtrans(init_t)
+-		ifndef(`distro_debian',`
+-			sysadm_shell_domtrans(init_t)
 +	optional_policy(`
 +		tunable_policy(`init_upstart',`
 +			corecmd_shell_domtrans(init_t, initrc_t)
 +		',`
 +			# Run the shell in the sysadm role for single-user mode.
 +			# causes problems with upstart
-+			sysadm_shell_domtrans(init_t)
-+		')
++			ifndef(`distro_debian',`
++				sysadm_shell_domtrans(init_t)
++			')
+ 		')
  	')
  ')
  
  ifdef(`distro_debian',`
- 	fs_tmpfs_filetrans(init_t, initctl_t, fifo_file, "initctl")
-@@ -1109,6 +1111,6 @@ optional_policy(`
- ')
- 
- # systemd related allow rules
- allow kernel_t init_t:process dyntransition;
- allow devpts_t device_t:filesystem associate;
--allow init_t self:capability2 block_suspend;
-\ No newline at end of file
-+allow init_t self:capability2 block_suspend;
 --- a/policy/modules/system/locallogin.te
 +++ b/policy/modules/system/locallogin.te
-@@ -244,11 +244,13 @@ seutil_read_default_contexts(sulogin_t)
+@@ -260,11 +260,13 @@ seutil_read_default_contexts(sulogin_t)
  userdom_use_unpriv_users_fds(sulogin_t)
  
  userdom_search_user_home_dirs(sulogin_t)
@@ -66,7 +59,7 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 +	sysadm_shell_domtrans(sulogin_t)
 +')
  
- # suse and debian do not use pam with sulogin...
- ifdef(`distro_suse', `define(`sulogin_no_pam')')
- ifdef(`distro_debian', `define(`sulogin_no_pam')')
- 
+ # by default, sulogin does not use pam...
+ # sulogin_pam might need to be defined otherwise
+ ifdef(`sulogin_pam', `
+ 	selinux_get_fs_mount(sulogin_t)

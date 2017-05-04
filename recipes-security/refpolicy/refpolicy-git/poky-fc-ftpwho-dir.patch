@@ -12,7 +12,7 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 
 --- a/policy/modules/contrib/ftp.fc
 +++ b/policy/modules/contrib/ftp.fc
-@@ -10,11 +10,11 @@
+@@ -15,11 +15,11 @@
  /usr/kerberos/sbin/ftpd	--	gen_context(system_u:object_r:ftpd_exec_t,s0)
  
  /usr/lib/systemd/system/proftpd.*\.service -- gen_context(system_u:object_r:ftpd_unit_t,s0)
