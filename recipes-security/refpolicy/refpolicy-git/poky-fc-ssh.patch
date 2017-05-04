@@ -3,6 +3,7 @@ Subject: [PATCH] refpolicy: fix real path for ssh
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/services/ssh.fc |    1 +
  1 file changed, 1 insertion(+)

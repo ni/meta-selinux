@@ -6,6 +6,7 @@ Subject: [PATCH] refpolicy: fix real path for bind.
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/contrib/bind.fc |    2 ++
  1 file changed, 2 insertions(+)

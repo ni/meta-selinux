@@ -6,13 +6,14 @@ Subject: [PATCH 5/6] add rules for bsdpty_device_t to complete pty devices.
 Upstream-Status: Pending
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/kernel/terminal.if |   16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
 --- a/policy/modules/kernel/terminal.if
 +++ b/policy/modules/kernel/terminal.if
-@@ -585,13 +585,15 @@ interface(`term_getattr_generic_ptys',`
+@@ -603,13 +603,15 @@ interface(`term_getattr_generic_ptys',`
  ## </param>
  #
  interface(`term_dontaudit_getattr_generic_ptys',`
@@ -28,7 +29,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ## <summary>
  ##	ioctl of generic pty devices.
  ## </summary>
-@@ -603,15 +605,17 @@ interface(`term_dontaudit_getattr_generi
+@@ -621,15 +623,17 @@ interface(`term_dontaudit_getattr_generi
  #
  # cjp: added for ppp
  interface(`term_ioctl_generic_ptys',`
@@ -46,7 +47,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Allow setting the attributes of
-@@ -625,13 +629,15 @@ interface(`term_ioctl_generic_ptys',`
+@@ -643,13 +647,15 @@ interface(`term_ioctl_generic_ptys',`
  #
  # dwalsh: added for rhgb
  interface(`term_setattr_generic_ptys',`
@@ -62,7 +63,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Dontaudit setting the attributes of
-@@ -645,13 +651,15 @@ interface(`term_setattr_generic_ptys',`
+@@ -663,13 +669,15 @@ interface(`term_setattr_generic_ptys',`
  #
  # dwalsh: added for rhgb
  interface(`term_dontaudit_setattr_generic_ptys',`
@@ -78,7 +79,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Read and write the generic pty
-@@ -665,15 +673,17 @@ interface(`term_dontaudit_setattr_generi
+@@ -683,15 +691,17 @@ interface(`term_dontaudit_setattr_generi
  ## </param>
  #
  interface(`term_use_generic_ptys',`
@@ -96,7 +97,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Dot not audit attempts to read and
-@@ -687,13 +697,15 @@ interface(`term_use_generic_ptys',`
+@@ -705,13 +715,15 @@ interface(`term_use_generic_ptys',`
  ## </param>
  #
  interface(`term_dontaudit_use_generic_ptys',`
@@ -112,7 +113,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  #######################################
  ## <summary>
  ##	Set the attributes of the tty device
-@@ -705,14 +717,16 @@ interface(`term_dontaudit_use_generic_pt
+@@ -723,14 +735,16 @@ interface(`term_dontaudit_use_generic_pt
  ## </param>
  #
  interface(`term_setattr_controlling_term',`
@@ -129,7 +130,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Read and write the controlling
-@@ -725,14 +739,16 @@ interface(`term_setattr_controlling_term
+@@ -743,14 +757,16 @@ interface(`term_setattr_controlling_term
  ## </param>
  #
  interface(`term_use_controlling_term',`

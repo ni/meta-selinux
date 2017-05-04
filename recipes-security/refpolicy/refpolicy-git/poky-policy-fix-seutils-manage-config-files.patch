@@ -6,6 +6,7 @@ Subject: [PATCH 2/2] refpolicy: fix selinux utils to manage config files
 Upstream-Status: Pending
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/system/selinuxutil.if |    1 +
  policy/modules/system/userdomain.if  |    4 ++++
@@ -27,7 +28,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  #######################################
 --- a/policy/modules/system/userdomain.if
 +++ b/policy/modules/system/userdomain.if
-@@ -1327,10 +1327,14 @@ template(`userdom_security_admin_templat
+@@ -1361,10 +1361,14 @@ template(`userdom_security_admin_templat
  	logging_read_audit_log($1)
  	logging_read_generic_logs($1)
  	logging_read_audit_config($1)

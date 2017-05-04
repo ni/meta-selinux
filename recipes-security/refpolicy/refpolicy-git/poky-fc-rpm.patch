@@ -6,13 +6,14 @@ Subject: [PATCH] refpolicy: fix real path for cpio
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/contrib/rpm.fc |    1 +
  1 file changed, 1 insertion(+)
 
 --- a/policy/modules/contrib/rpm.fc
 +++ b/policy/modules/contrib/rpm.fc
-@@ -61,6 +61,7 @@ ifdef(`distro_redhat',`
+@@ -57,6 +57,7 @@ ifdef(`distro_redhat',`
  /run/yum.*	--	gen_context(system_u:object_r:rpm_var_run_t,s0)
  /run/PackageKit(/.*)?	gen_context(system_u:object_r:rpm_var_run_t,s0)
  

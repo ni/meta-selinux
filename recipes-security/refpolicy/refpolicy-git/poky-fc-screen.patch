@@ -6,20 +6,18 @@ Subject: [PATCH] refpolicy: fix real path for screen
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/contrib/screen.fc |    1 +
  1 file changed, 1 insertion(+)
 
 --- a/policy/modules/contrib/screen.fc
 +++ b/policy/modules/contrib/screen.fc
-@@ -1,9 +1,10 @@
- HOME_DIR/\.screen(/.*)?	gen_context(system_u:object_r:screen_home_t,s0)
- HOME_DIR/\.screenrc	--	gen_context(system_u:object_r:screen_home_t,s0)
- HOME_DIR/\.tmux\.conf	--	gen_context(system_u:object_r:screen_home_t,s0)
+@@ -4,6 +4,7 @@ HOME_DIR/\.tmux\.conf	--	gen_context(sys
  
- /usr/bin/screen	--	gen_context(system_u:object_r:screen_exec_t,s0)
+ /run/screen(/.*)?		gen_context(system_u:object_r:screen_runtime_t,s0)
+ /run/tmux(/.*)?			gen_context(system_u:object_r:screen_runtime_t,s0)
+ 
+ /usr/bin/screen		--	gen_context(system_u:object_r:screen_exec_t,s0)
 +/usr/bin/screen-.*	--	gen_context(system_u:object_r:screen_exec_t,s0)
- /usr/bin/tmux	--	gen_context(system_u:object_r:screen_exec_t,s0)
- 
- /run/screen(/.*)?	gen_context(system_u:object_r:screen_var_run_t,s0)
- /run/tmux(/.*)?	gen_context(system_u:object_r:screen_var_run_t,s0)
+ /usr/bin/tmux		--	gen_context(system_u:object_r:screen_exec_t,s0)

@@ -11,17 +11,18 @@ Upstream-Status: pending
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/system/init.te       | 14 ++++++++------
  policy/modules/system/locallogin.te |  4 +++-
  2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
-index c058f0c..d710fb0 100644
 --- a/policy/modules/system/init.te
 +++ b/policy/modules/system/init.te
-@@ -292,12 +292,14 @@ ifdef(`init_systemd',`
- 		modutils_domtrans_insmod(init_t)
+@@ -344,17 +344,19 @@ ifdef(`init_systemd',`
+ 
+ 	optional_policy(`
+ 		modutils_domtrans(init_t)
  	')
  ',`
 -	tunable_policy(`init_upstart',`
@@ -29,23 +30,27 @@ index c058f0c..d710fb0 100644
 -	',`
 -		# Run the shell in the sysadm role for single-user mode.
 -		# causes problems with upstart
--		sysadm_shell_domtrans(init_t)
+-		ifndef(`distro_debian',`
+-			sysadm_shell_domtrans(init_t)
 +	optional_policy(`
 +		tunable_policy(`init_upstart',`
 +			corecmd_shell_domtrans(init_t, initrc_t)
 +		',`
 +			# Run the shell in the sysadm role for single-user mode.
 +			# causes problems with upstart
-+			sysadm_shell_domtrans(init_t)
-+		')
++			ifndef(`distro_debian',`
++				sysadm_shell_domtrans(init_t)
++			')
+ 		')
  	')
  ')
  
-diff --git a/policy/modules/system/locallogin.te b/policy/modules/system/locallogin.te
-index 0781eae..ea2493a 100644
+ ifdef(`distro_debian',`
 --- a/policy/modules/system/locallogin.te
 +++ b/policy/modules/system/locallogin.te
-@@ -246,7 +246,9 @@ userdom_use_unpriv_users_fds(sulogin_t)
+@@ -260,11 +260,13 @@ seutil_read_default_contexts(sulogin_t)
+ userdom_use_unpriv_users_fds(sulogin_t)
+ 
  userdom_search_user_home_dirs(sulogin_t)
  userdom_use_user_ptys(sulogin_t)
  
@@ -54,8 +59,7 @@ index 0781eae..ea2493a 100644
 +	sysadm_shell_domtrans(sulogin_t)
 +')
  
- # suse and debian do not use pam with sulogin...
- ifdef(`distro_suse', `define(`sulogin_no_pam')')
--- 
-1.9.1
-
+ # by default, sulogin does not use pam...
+ # sulogin_pam might need to be defined otherwise
+ ifdef(`sulogin_pam', `
+ 	selinux_get_fs_mount(sulogin_t)

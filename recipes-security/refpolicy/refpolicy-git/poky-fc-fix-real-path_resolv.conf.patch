@@ -3,13 +3,14 @@ Subject: [PATCH] fix real path for resolv.conf
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/system/sysnetwork.fc |    1 +
  1 file changed, 1 insertion(+)
 
 --- a/policy/modules/system/sysnetwork.fc
 +++ b/policy/modules/system/sysnetwork.fc
-@@ -23,10 +23,11 @@ ifdef(`distro_debian',`
+@@ -17,10 +17,11 @@ ifdef(`distro_debian',`
  /etc/ethers		--	gen_context(system_u:object_r:net_conf_t,s0)
  /etc/hosts		--	gen_context(system_u:object_r:net_conf_t,s0)
  /etc/hosts\.deny.*	--	gen_context(system_u:object_r:net_conf_t,s0)

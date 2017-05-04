@@ -8,15 +8,16 @@ audisp_remote_t.
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/system/logging.te |    1 +
  1 file changed, 1 insertion(+)
 
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -276,10 +276,11 @@ optional_policy(`
+@@ -280,10 +280,11 @@ optional_policy(`
  
- allow audisp_remote_t self:capability { setuid setpcap };
+ allow audisp_remote_t self:capability { setpcap setuid };
  allow audisp_remote_t self:process { getcap setcap };
  allow audisp_remote_t self:tcp_socket create_socket_perms;
  allow audisp_remote_t var_log_t:dir search_dir_perms;

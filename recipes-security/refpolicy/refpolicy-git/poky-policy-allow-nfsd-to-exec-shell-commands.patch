@@ -6,6 +6,7 @@ Subject: [PATCH] allow nfsd to exec shell commands.
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/contrib/rpc.te   |    2 +-
  policy/modules/kernel/kernel.if |   18 ++++++++++++++++++
@@ -13,7 +14,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 
 --- a/policy/modules/contrib/rpc.te
 +++ b/policy/modules/contrib/rpc.te
-@@ -222,11 +222,11 @@ allow nfsd_t { nfsd_rw_t nfsd_ro_t }:dir
+@@ -224,11 +224,11 @@ allow nfsd_t { nfsd_rw_t nfsd_ro_t }:dir
  
  kernel_read_network_state(nfsd_t)
  kernel_dontaudit_getattr_core_if(nfsd_t)
@@ -28,32 +29,53 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  
 --- a/policy/modules/kernel/kernel.if
 +++ b/policy/modules/kernel/kernel.if
-@@ -844,10 +844,28 @@ interface(`kernel_unmount_proc',`
+@@ -880,43 +880,42 @@ interface(`kernel_unmount_proc',`
  	allow $1 proc_t:filesystem unmount;
  ')
  
  ########################################
  ## <summary>
+-##	Get the attributes of the proc filesystem.
 +##	Mounton a proc filesystem.
-+## </summary>
-+## <param name="domain">
-+##	<summary>
-+##	Domain allowed access.
-+##	</summary>
-+## </param>
-+#
-+interface(`kernel_mounton_proc',`
-+	gen_require(`
-+		type proc_t;
-+	')
-+
-+	allow $1 proc_t:dir mounton;
-+')
-+
-+########################################
-+## <summary>
- ##	Get the attributes of the proc filesystem.
  ## </summary>
  ## <param name="domain">
  ##	<summary>
  ##	Domain allowed access.
+ ##	</summary>
+ ## </param>
+ #
+-interface(`kernel_getattr_proc',`
++interface(`kernel_mounton_proc',`
+ 	gen_require(`
+ 		type proc_t;
+ 	')
+ 
+-	allow $1 proc_t:filesystem getattr;
++	allow $1 proc_t:dir mounton;
+ ')
+ 
+ ########################################
+ ## <summary>
+-##	Mount on proc directories.
++##	Get the attributes of the proc filesystem.
+ ## </summary>
+ ## <param name="domain">
+ ##	<summary>
+ ##	Domain allowed access.
+ ##	</summary>
+ ## </param>
+-## <rolecap/>
+ #
+-interface(`kernel_mounton_proc',`
++interface(`kernel_getattr_proc',`
+ 	gen_require(`
+ 		type proc_t;
+ 	')
+ 
+-	allow $1 proc_t:dir mounton;
++	allow $1 proc_t:filesystem getattr;
+ ')
+ 
+ ########################################
+ ## <summary>
+ ##	Do not audit attempts to set the

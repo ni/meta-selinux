@@ -3,13 +3,14 @@ Subject: [PATCH] fix real path for shadow commands.
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/admin/usermanage.fc |    6 ++++++
  1 file changed, 6 insertions(+)
 
 --- a/policy/modules/admin/usermanage.fc
 +++ b/policy/modules/admin/usermanage.fc
-@@ -6,15 +6,21 @@ ifdef(`distro_debian',`
+@@ -2,15 +2,21 @@ ifdef(`distro_debian',`
  /etc/cron\.daily/cracklib-runtime -- gen_context(system_u:object_r:crack_exec_t,s0)
  ')
  

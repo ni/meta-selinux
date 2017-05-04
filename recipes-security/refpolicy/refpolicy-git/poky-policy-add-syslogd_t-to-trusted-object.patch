@@ -10,13 +10,14 @@ Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Roy.Li <rongqing.li@windriver.com>
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/system/logging.te |    1 +
  1 file changed, 1 insertion(+)
 
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -475,10 +475,11 @@ files_var_lib_filetrans(syslogd_t, syslo
+@@ -484,10 +484,11 @@ files_var_lib_filetrans(syslogd_t, syslo
  
  fs_getattr_all_fs(syslogd_t)
  fs_search_auto_mountpoints(syslogd_t)

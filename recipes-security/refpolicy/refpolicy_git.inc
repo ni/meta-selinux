@@ -20,7 +20,6 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-dmesg.patch \
             file://poky-fc-fstools.patch \
             file://poky-fc-mta.patch \
-            file://poky-fc-netutils.patch \
             file://poky-fc-nscd.patch \
             file://poky-fc-screen.patch \
             file://poky-fc-ssh.patch \

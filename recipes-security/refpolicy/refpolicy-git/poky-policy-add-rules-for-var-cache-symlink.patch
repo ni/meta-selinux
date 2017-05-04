@@ -11,6 +11,7 @@ contents, so this is still a secure relax.
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/kernel/domain.te |    3 +++
  1 file changed, 3 insertions(+)

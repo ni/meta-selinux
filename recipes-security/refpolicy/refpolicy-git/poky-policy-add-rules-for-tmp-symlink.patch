@@ -9,6 +9,7 @@ lnk_file while doing search/list/delete/rw.. in /tmp/ directory.
 Upstream-Status: Inappropriate [only for Poky]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/kernel/files.fc |    1 +
  policy/modules/kernel/files.if |    8 ++++++++
@@ -16,7 +17,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 
 --- a/policy/modules/kernel/files.fc
 +++ b/policy/modules/kernel/files.fc
-@@ -191,10 +191,11 @@ ifdef(`distro_debian',`
+@@ -172,10 +172,11 @@ HOME_ROOT/lost\+found/.*	<<none>>
  
  #
  # /tmp
@@ -30,7 +31,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  /tmp/lost\+found/.*		<<none>>
 --- a/policy/modules/kernel/files.if
 +++ b/policy/modules/kernel/files.if
-@@ -4471,10 +4471,11 @@ interface(`files_search_tmp',`
+@@ -4579,10 +4579,11 @@ interface(`files_search_tmp',`
  	gen_require(`
  		type tmp_t;
  	')
@@ -42,7 +43,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Do not audit attempts to search the tmp directory (/tmp).
-@@ -4507,10 +4508,11 @@ interface(`files_list_tmp',`
+@@ -4615,10 +4616,11 @@ interface(`files_list_tmp',`
  	gen_require(`
  		type tmp_t;
  	')
@@ -54,7 +55,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Do not audit listing of the tmp directory (/tmp).
-@@ -4543,10 +4545,11 @@ interface(`files_delete_tmp_dir_entry',`
+@@ -4651,10 +4653,11 @@ interface(`files_delete_tmp_dir_entry',`
  	gen_require(`
  		type tmp_t;
  	')
@@ -66,7 +67,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Read files in the tmp directory (/tmp).
-@@ -4561,10 +4564,11 @@ interface(`files_read_generic_tmp_files'
+@@ -4669,10 +4672,11 @@ interface(`files_read_generic_tmp_files'
  	gen_require(`
  		type tmp_t;
  	')
@@ -78,7 +79,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Manage temporary directories in /tmp.
-@@ -4579,10 +4583,11 @@ interface(`files_manage_generic_tmp_dirs
+@@ -4687,10 +4691,11 @@ interface(`files_manage_generic_tmp_dirs
  	gen_require(`
  		type tmp_t;
  	')
@@ -90,7 +91,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Manage temporary files and directories in /tmp.
-@@ -4597,10 +4602,11 @@ interface(`files_manage_generic_tmp_file
+@@ -4705,10 +4710,11 @@ interface(`files_manage_generic_tmp_file
  	gen_require(`
  		type tmp_t;
  	')
@@ -102,7 +103,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Read symbolic links in the tmp directory (/tmp).
-@@ -4633,10 +4639,11 @@ interface(`files_rw_generic_tmp_sockets'
+@@ -4741,10 +4747,11 @@ interface(`files_rw_generic_tmp_sockets'
  	gen_require(`
  		type tmp_t;
  	')
@@ -114,7 +115,7 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  ########################################
  ## <summary>
  ##	Mount filesystems in the tmp directory (/tmp)
-@@ -4840,10 +4847,11 @@ interface(`files_tmp_filetrans',`
+@@ -4948,10 +4955,11 @@ interface(`files_tmp_filetrans',`
  	gen_require(`
  		type tmp_t;
  	')

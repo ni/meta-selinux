@@ -17,6 +17,7 @@ root@localhost:~# sesearch --allow -s ftpd_t -t var_run_t|grep dir|grep add_name
 root@localhost:~#
 
 Signed-off-by: Roy Li <rongqing.li@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 ---
  policy/modules/contrib/ftp.te |    2 ++
  1 file changed, 2 insertions(+)
