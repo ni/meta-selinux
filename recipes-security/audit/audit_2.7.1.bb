@@ -24,7 +24,8 @@ UPDATERCPN = "auditd"
 INITSCRIPT_NAME = "auditd"
 INITSCRIPT_PARAMS = "defaults"
 
-SYSTEMD_SERVICE_${PN} = "auditd.service"
+SYSTEMD_PACKAGES = "auditd"
+SYSTEMD_SERVICE_auditd = "auditd.service"
 
 DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30) swig-native"
 
