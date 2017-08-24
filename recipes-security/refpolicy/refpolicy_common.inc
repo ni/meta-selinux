@@ -31,7 +31,7 @@ EXTRANATIVEPATH += "bzip2-native"
 
 DEPENDS += "bzip2-replacement-native checkpolicy-native policycoreutils-native m4-native"
 
-RDEPENDS-${PN}-dev =+ " \
+RDEPENDS_${PN}-dev =+ " \
         python \
 "
 
