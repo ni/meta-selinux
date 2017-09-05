@@ -40,6 +40,8 @@ do_install() {
 
     oe_runmake install-pywrap swigify \
             DESTDIR=${D} \
+            PYCEXT='.so' \
+            PYSITEDIR='${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
             PYLIBVER='python${PYTHON_BASEVERSION}' \
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
 

@@ -1,4 +1,4 @@
-SRCREV = "edc2e99687b050d5be21a78a66d038aa1fc068d9"
+SRCREV = "1bac758bf6cf884c112b80545d5fc5b668fc7d71"
 
 SRC_URI = "git://github.com/SELinuxProject/selinux.git;protocol=http"
 
