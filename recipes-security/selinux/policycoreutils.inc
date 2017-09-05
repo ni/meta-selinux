@@ -23,19 +23,6 @@ inherit selinux pythonnative
 
 DEPENDS += "${@target_selinux(d, 'libpam audit')}"
 
-RDEPENDS_${BPN}-audit2allow = "\
-	python-textutils \
-	libselinux-python \
-	sepolgen \
-"
-RDEPENDS_${BPN}-chcat = "\
-	python-codecs \
-	python-shell \
-	python-stringold \
-	python-unixadmin \
-	${BPN}-python \
-	libselinux-python \
-"
 RDEPENDS_${BPN}-fixfiles += "\
 	${BPN}-setfiles \
 "
@@ -51,27 +38,8 @@ RDEPENDS_${BPN}-newrole += "\
 	libcap-ng \
 	libselinux \
 "
-RDEPENDS_${BPN}-python += "\
-	python-codecs \
-	python-io \
-	python-ipy \
-	python-re \
-	python-stringold \
-	python-syslog \
-	python-unixadmin \
-	libselinux-python \
-	libsemanage-python \
-"
 RDEPENDS_${BPN}-runinit += "libselinux"
 RDEPENDS_${BPN}-secon += "libselinux"
-RDEPENDS_${BPN}-semanage = "\
-	python-core \
-	python-ipy \
-	python-compression \
-	python-xml \
-	${BPN}-python \
-	libselinux-python \
-"
 RDEPENDS_${BPN}-semodule += "\
 	libsepol \
 	libselinux \
@@ -82,16 +50,6 @@ DEPENDS_${BPN}-semodule-deps += "libsepol"
 RDEPENDS_${BPN}-semodule-expand += "libsepol libselinux"
 RDEPENDS_${BPN}-semodule-link += "libsepol libselinux"
 RDEPENDS_${BPN}-semodule-package += "libsepol libselinux"
-RDEPENDS_${BPN}-sepolicy += "\
-	python-argparse \
-	python-codecs \
-	python-core \
-	python-syslog \
-	${BPN}-python \
-"
-# static link to libsepol
-DEPENDS_${BPN}-sepolgen-ifgen += "libsepol"
-RDEPENDS_${BPN}-sepolgen-ifgen += "python libselinux-python"
 RDEPENDS_${BPN}-sestatus += "libselinux"
 RDEPENDS_${BPN}-setfiles += "\
 	libselinux \
@@ -102,42 +60,29 @@ RDEPENDS_${BPN}-setsebool += "\
 	libselinux \
 	libsemanage \
 "
-RDEPENDS_${BPN} += "setools setools-libs ${BPN}-python"
+RDEPENDS_${BPN} += "setools setools-libs selinux-python"
 
 WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
 ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"
 
 
 PACKAGES =+ "\
-	${PN}-audit2allow \
-	${PN}-chcat \
 	${PN}-fixfiles \
 	${PN}-genhomedircon \
 	${PN}-hll \
 	${PN}-loadpolicy \
 	${PN}-newrole \
-	${PN}-python \
 	${PN}-runinit \
 	${PN}-secon \
-	${PN}-semanage \
 	${PN}-semodule \
 	${PN}-semodule-deps \
 	${PN}-semodule-expand \
 	${PN}-semodule-link \
 	${PN}-semodule-package \
-	${PN}-sepolgen-ifgen \
-	${PN}-sepolicy \
 	${PN}-sestatus \
 	${PN}-setfiles \
 	${PN}-setsebool \
 	system-config-selinux \
-"
-FILES_${PN}-audit2allow = "\
-	${bindir}/audit2allow \
-	${bindir}/audit2why \
-"
-FILES_${PN}-chcat = "\
-	${bindir}/chcat \
 "
 FILES_${PN}-fixfiles += "${base_sbindir}/fixfiles"
 FILES_${PN}-genhomedircon += "${sbindir}/genhomedircon"
@@ -149,22 +94,13 @@ FILES_${PN}-newrole += "\
 	${bindir}/newrole \
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/newrole', '', d)} \
 "
-FILES_${PN}-python = "\
-	${libdir}/python${PYTHON_BASEVERSION}/site-packages/seobject.py* \
-	${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy*.egg-info \
-	${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/* \
-"
 FILES_${PN}-runinit += "\
 	${sbindir}/run_init \
 	${sbindir}/open_init_pty \
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
 "
-FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/.debug/* ${prefix}/libexec/selinux/hll/.debug"
+FILES_${PN}-dbg += "${prefix}/libexec/selinux/hll/.debug"
 FILES_${PN}-secon += "${bindir}/secon"
-FILES_${PN}-semanage = "\
-	${sbindir}/semanage \
-	${datadir}/bash-completion/completions/semanage \
-"
 FILES_${PN}-semodule += "${sbindir}/semodule"
 FILES_${PN}-semodule-deps += "${bindir}/semodule_deps"
 FILES_${PN}-semodule-expand += "${bindir}/semodule_expand"
@@ -174,17 +110,6 @@ FILES_${PN}-semodule-package += "\
 	${bindir}/semodule_unpackage \
 "
 FILES_${PN}-hll += "${prefix}/libexec/selinux/hll/*"
-
-FILES_${PN}-sepolicy += "\
-	${bindir}/sepolicy \
-	${datadir}/bash-completion/completions/sepolicy \
-	${datadir}/dbus-1/system-services/org.selinux.service \
-	${datadir}/polkit-1/actions/org.selinux.policy \
-"
-FILES_${PN}-sepolgen-ifgen += "\
-	${bindir}/sepolgen-ifgen \
-	${bindir}/sepolgen-ifgen-attr-helper \
-"
 FILES_${PN}-sestatus += "\
 	${sbindir}/sestatus \
 	${sysconfdir}/sestatus.conf \
@@ -199,7 +124,6 @@ FILES_${PN}-setsebool += "\
 "
 
 FILES_system-config-selinux = " \
-    ${bindir}/sepolgen \
     ${datadir}/system-config-selinux/* \
     ${datadir}/icons/hicolor/ \
     ${datadir}/polkit-1/actions/org.selinux.config.policy \
