@@ -16,7 +16,7 @@ PAM_SRC_URI = "file://pam.d/newrole \
 "
 
 DEPENDS += "libsepol libselinux libsemanage libcap gettext-native"
-EXTRA_DEPENDS = "libcap-ng libcgroup setools"
+EXTRA_DEPENDS = "libcap-ng libcgroup"
 DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
 inherit selinux pythonnative
@@ -60,7 +60,7 @@ RDEPENDS_${BPN}-setsebool += "\
 	libselinux \
 	libsemanage \
 "
-RDEPENDS_${BPN} += "setools setools-libs selinux-python"
+RDEPENDS_${BPN} += "selinux-python"
 
 WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
 ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"

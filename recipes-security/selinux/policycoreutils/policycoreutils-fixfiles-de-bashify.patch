@@ -13,12 +13,13 @@ so we'll try that instead.
 Upstream-Status: Pending
 
 Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
- scripts/fixfiles | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ scripts/fixfiles | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/scripts/fixfiles b/scripts/fixfiles
-index 5c29eb9..10a5078 100755
+index 1aa330f..a10837d 100755
 --- a/scripts/fixfiles
 +++ b/scripts/fixfiles
 @@ -1,4 +1,4 @@
@@ -27,29 +28,39 @@ index 5c29eb9..10a5078 100755
  # fixfiles
  #
  # Script to restore labels on a SELinux box
-@@ -25,7 +25,7 @@
+@@ -27,7 +27,7 @@ set -o nounset
  # number if the current kernel version is greater than 2.6.30, a negative
  # number if the current is less than 2.6.30 and 0 if they are the same.
  #
 -function useseclabel {
-+useseclabel() {
++useseclabel {
  	VER=`uname -r`
  	SUP=2.6.30
  	expr '(' "$VER" : '\([^.]*\)' ')' '-' '(' "$SUP" : '\([^.]*\)' ')' '|' \
-@@ -91,9 +91,9 @@ exclude_dirs_from_relabelling() {
+@@ -93,9 +93,10 @@ exclude_dirs_from_relabelling() {
  	  # skip not absolute path
  	  # skip not directory
  	  [ -z "${i}" ] && continue
--	  [[ "${i}" =~ "^[[:blank:]]*#" ]] && continue
+-	  [[ "${i}" =~ ^[[:blank:]]*# ]] && continue
 -	  [[ ! "${i}" =~ ^/.* ]] && continue
 -	  [[ ! -d "${i}" ]] && continue
 +	  echo "${i}" | egrep -q '^[[:space:]]*#' && continue
 +	  echo "${i}" | egrep -v '^/.*' && continue
 +	  [ ! -d "${i}" ] && continue
++
  	  exclude_from_relabelling="$exclude_from_relabelling -e $i"
- 	  logit "skipping the directory $i"
  	done < /etc/selinux/fixfiles_exclude_dirs
-@@ -205,8 +205,12 @@ fi
+     fi
+@@ -138,7 +139,7 @@ fi
+ # Log directories excluded from relabelling by configuration file
+ #
+ LogExcluded() {
+-for i in ${EXCLUDEDIRS//-e / }; do
++for i in `echo ${EXCLUDEDIRS} | sed -e 's/-e / /g'`; do
+     echo "skipping the directory $i"
+ done
+ }
+@@ -201,8 +202,12 @@ fi
  }
  
  rpmlist() {
@@ -64,29 +75,15 @@ index 5c29eb9..10a5078 100755
  }
  
  #
-@@ -233,10 +237,10 @@ if [ -n "${exclude_dirs}" ]
- then
- 	TEMPFCFILE=`mktemp ${FC}.XXXXXXXXXX`
- 	test -z "$TEMPFCFILE" && exit
--	/bin/cp -p ${FC} ${TEMPFCFILE} &>/dev/null || exit
--	tmpdirs=${tempdirs//-e/}
--	for p in ${tmpdirs}
-+	/bin/cp -p ${FC} ${TEMPFCFILE} >/dev/null 2>&1 || exit
-+	for p in ${tempdirs}
- 	do
-+		[ ${p} = "-e" ] && continue
- 		p="${p%/}"
- 		p1="${p}(/.*)? -- <<none>>"
- 		echo "${p1}" >> $TEMPFCFILE
-@@ -288,7 +292,7 @@ relabel() {
- 	restore Relabel
+@@ -276,7 +281,7 @@ relabel() {
+ 	exit 1
      fi
  
 -    if [ $fullFlag == 1  ]; then
-+    if [ $fullFlag = 1 ]; then
++    if [ $fullFlag = 1  ]; then
  	fullrelabel
+ 	return
      fi
- 
 -- 
-1.9.1
+2.13.0
 
