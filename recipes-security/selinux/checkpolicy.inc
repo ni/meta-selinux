@@ -11,10 +11,9 @@ LICENSE = "GPLv2+"
 
 DEPENDS += "libsepol bison-native flex-native"
 
-SRC_URI += "file://checkpolicy-Do-not-link-against-libfl.patch"
-
 EXTRA_OEMAKE += "PREFIX=${D}" 
 EXTRA_OEMAKE += "LEX='flex'"
+EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
 do_install_append() {
 	install test/dismod ${D}/${bindir}/sedismod
