@@ -1,5 +1,4 @@
-PR = "r99"
-PV = "2.2+git${SRCPV}"
+PV = "2.7+git${SRCPV}"
 
 include selinux_git.inc
 include ${BPN}.inc
