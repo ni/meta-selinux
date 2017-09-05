@@ -9,7 +9,6 @@ LICENSE = "GPLv2+"
 
 SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
             file://policycoreutils-fixfiles-de-bashify.patch \
-            file://policycoreutils-sandbox-de-bashify.patch \
            "
 
 PAM_SRC_URI = "file://pam.d/newrole \
@@ -64,15 +63,6 @@ RDEPENDS_${BPN}-python += "\
 	libsemanage-python \
 "
 RDEPENDS_${BPN}-runinit += "libselinux"
-RDEPENDS_${BPN}-sandbox += "\
-	python-math \
-	python-shell \
-	python-subprocess \
-	python-textutils \
-	python-unixadmin \
-	libselinux-python \
-	${BPN}-python \
-"
 RDEPENDS_${BPN}-secon += "libselinux"
 RDEPENDS_${BPN}-semanage = "\
 	python-core \
@@ -128,7 +118,6 @@ PACKAGES =+ "\
 	${PN}-newrole \
 	${PN}-python \
 	${PN}-runinit \
-	${PN}-sandbox \
 	${PN}-secon \
 	${PN}-semanage \
 	${PN}-semodule \
@@ -171,12 +160,6 @@ FILES_${PN}-runinit += "\
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
 "
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/.debug/* ${prefix}/libexec/selinux/hll/.debug"
-FILES_${PN}-sandbox += "\
-	${datadir}/sandbox/* \
-	${bindir}/sandbox \
-	${sbindir}/seunshare \
-	${sysconfdir}/sysconfig/sandbox \
-"
 FILES_${PN}-secon += "${bindir}/secon"
 FILES_${PN}-semanage = "\
 	${sbindir}/semanage \
