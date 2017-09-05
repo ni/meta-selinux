@@ -5,14 +5,15 @@ Upstream-Status: Inappropriate [embedded specific]
 replace daemon with start-stop-daemon, due to not daemon functions
 
 Signed-off-by: Roy Li <rongqing.li@windriver.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
- mcstrans/src/mcstrans.init | 2 +-
+ src/mcstrans.init | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mcstrans/src/mcstrans.init b/mcstrans/src/mcstrans.init
+diff --git a/src/mcstrans.init b/src/mcstrans.init
 index 2804ec0..c660290 100644
---- a/mcstrans/src/mcstrans.init
-+++ b/mcstrans/src/mcstrans.init
+--- a/src/mcstrans.init
++++ b/src/mcstrans.init
 @@ -51,7 +51,7 @@ start(){
  	fi
  

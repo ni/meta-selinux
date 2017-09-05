@@ -11,6 +11,4 @@ SRC_URI += "\
 	file://policycoreutils-loadpolicy-symlink.patch \
 	file://policycoreutils-process-ValueError-for-sepolicy-seobject.patch \
 	file://policycoreutils-fix-TypeError-for-seobject.py.patch \
-	file://0001-mcstrans-fix-the-init-script.patch \
-	file://enable-mcstrans.patch \
 	"

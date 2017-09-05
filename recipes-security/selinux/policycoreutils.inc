@@ -10,7 +10,6 @@ LICENSE = "GPLv2+"
 SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
             file://policycoreutils-fixfiles-de-bashify.patch \
             file://policycoreutils-sandbox-de-bashify.patch \
-            file://mcstrans-de-bashify.patch \
            "
 
 PAM_SRC_URI = "file://pam.d/newrole \
@@ -21,9 +20,7 @@ DEPENDS += "libsepol libselinux libsemanage libcap gettext-native"
 EXTRA_DEPENDS = "libcap-ng libcgroup setools"
 DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
-inherit selinux systemd pythonnative update-rc.d
-
-PROVIDES += "mcstrans"
+inherit selinux pythonnative
 
 DEPENDS += "${@target_selinux(d, 'libpam audit')}"
 
@@ -144,31 +141,8 @@ PACKAGES =+ "\
 	${PN}-sestatus \
 	${PN}-setfiles \
 	${PN}-setsebool \
-	mcstrans \
-	mcstrans-doc \
 	system-config-selinux \
 "
-PKGV_mcstrans = "0.3.2"
-PKGV_mcstrans-doc = "0.3.2"
-SUMMARY_mcstrans = "Daemon to translate SELinux MCS/MLS sensitivity labels"
-DESCRIPTION_mcstrans = "\
-        Security-enhanced Linux is a feature of the Linux kernel and a number \
-        of utilities with enhanced security functionality designed to add \
-        mandatory access controls to Linux.  The Security-enhanced Linux \
-        kernel contains new architectural components originally developed to \
-        improve the security of the Flask operating system. These \
-        architectural components provide general support for the enforcement \
-        of many kinds of mandatory access control policies, including those \
-        based on the concepts of Type Enforcement®, Role-based Access \
-        Control, and Multi-level Security. \
-         \
-        mcstrans provides an translation daemon to translate SELinux categories \
-        from internal representations to user defined representation. \
-        "
-SUMMARY_mcstrans-doc = "${SUMMARY_mcstrans} man pages and examples"
-DESCRIPTION_mcstrans-doc = "${DESCRIPTION_mcstrans} \
-        This package contains man pages and examples. \
-        "
 FILES_${PN}-audit2allow = "\
 	${bindir}/audit2allow \
 	${bindir}/audit2why \
@@ -240,22 +214,6 @@ FILES_${PN}-setsebool += "\
 	${sbindir}/setsebool \
 	${datadir}/bash-completion/completions/setsebool \
 "
-FILES_mcstrans = "\
-	${base_sbindir}/mcstransd \
-	${sbindir}/untranscon \
-	${sbindir}/transcon \
-	${sysconfdir}/init.d/mcstrans \
-	${systemd_unitdir}/system/mcstrans.service \
-	${sysconfdir}/default/volatiles/volatiles.80_mcstrans \
-	${sysconfdir}/tmpfiles.d/setrans.conf \
-"
-
-FILES_mcstrans-doc = "\
-    /usr/share/man/man8/mcstransd.8 \
-    /usr/share/man/man8/mcs.8 \
-    /usr/share/man/man8/setrans.conf.8 \
-    ${datadir}/mcstrans \
-"
 
 FILES_system-config-selinux = " \
     ${bindir}/sepolgen \
@@ -304,23 +262,6 @@ do_install_prepend() {
 	export SEMODULE_PATH=${sbindir} SYSTEMDDIR=${D}/${systemd_unitdir}
 }
 
-do_install_append_class-target() {
-	install -m 755 mcstrans/utils/untranscon ${D}${sbindir}/
-	install -m 755 mcstrans/utils/transcon ${D}${sbindir}/
-
-	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
-		install -d ${D}${sysconfdir}/tmpfiles.d
-		echo "d ${localstatedir}/run/setrans - - - -" \
-		    > ${D}${sysconfdir}/tmpfiles.d/setrans.conf
-	else
-		install -d ${D}${sysconfdir}/default/volatiles
-		echo "d root root 0755 /var/run/setrans none" \
-			>${D}${sysconfdir}/default/volatiles/volatiles.80_mcstrans
-	fi
-	install -d ${D}${datadir}/mcstrans
-	cp -r mcstrans/share/* ${D}${datadir}/mcstrans/.
-}
-
 do_install_virtclass-native() {
 	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
 	     oe_runmake -C $PCU_CMD install \
@@ -341,19 +282,4 @@ do_install_append_class-target() {
 	# and it's required for running command:
 	#   $ semanage permissive [OPTS]
 	install -d ${D}${localstatedir}/lib/selinux
-}
-
-SYSTEMD_SERVICE_mcstrans = "mcstrans.service"
-INITSCRIPT_PACKAGES = "mcstrans"
-INITSCRIPT_NAME_mcstrans = "mcstrans"
-INITSCRIPT_PARAMS_mcstrans = "defaults"
-
-pkg_postinst_mcstrans () {
-    if [ -z "$D" ]; then
-        if command -v systemd-tmpfiles >/dev/null; then
-            systemd-tmpfiles --create ${sysconfdir}/tmpfiles.d/setrans.conf
-        elif [ -e ${sysconfdir}/init.d/populate-volatile.sh ]; then
-            ${sysconfdir}/init.d/populate-volatile.sh update
-        fi
-    fi
 }
