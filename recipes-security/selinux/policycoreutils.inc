@@ -78,7 +78,6 @@ PACKAGES =+ "\
 	${PN}-sestatus \
 	${PN}-setfiles \
 	${PN}-setsebool \
-	system-config-selinux \
 "
 FILES_${PN}-fixfiles += "${base_sbindir}/fixfiles"
 FILES_${PN}-genhomedircon += "${sbindir}/genhomedircon"
@@ -110,12 +109,6 @@ FILES_${PN}-setfiles += "\
 FILES_${PN}-setsebool += "\
 	${sbindir}/setsebool \
 	${datadir}/bash-completion/completions/setsebool \
-"
-
-FILES_system-config-selinux = " \
-    ${datadir}/system-config-selinux/* \
-    ${datadir}/icons/hicolor/ \
-    ${datadir}/polkit-1/actions/org.selinux.config.policy \
 "
 
 export STAGING_INCDIR
