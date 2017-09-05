@@ -75,10 +75,6 @@ PACKAGES =+ "\
 	${PN}-runinit \
 	${PN}-secon \
 	${PN}-semodule \
-	${PN}-semodule-deps \
-	${PN}-semodule-expand \
-	${PN}-semodule-link \
-	${PN}-semodule-package \
 	${PN}-sestatus \
 	${PN}-setfiles \
 	${PN}-setsebool \
@@ -102,13 +98,6 @@ FILES_${PN}-runinit += "\
 FILES_${PN}-dbg += "${prefix}/libexec/selinux/hll/.debug"
 FILES_${PN}-secon += "${bindir}/secon"
 FILES_${PN}-semodule += "${sbindir}/semodule"
-FILES_${PN}-semodule-deps += "${bindir}/semodule_deps"
-FILES_${PN}-semodule-expand += "${bindir}/semodule_expand"
-FILES_${PN}-semodule-link += "${bindir}/semodule_link"
-FILES_${PN}-semodule-package += "\
-	${bindir}/semodule_package \
-	${bindir}/semodule_unpackage \
-"
 FILES_${PN}-hll += "${prefix}/libexec/selinux/hll/*"
 FILES_${PN}-sestatus += "\
 	${sbindir}/sestatus \
@@ -142,7 +131,7 @@ EXTRA_OEMAKE += "INITDIR=${D}/etc/init.d"
 
 BBCLASSEXTEND = "native"
 
-PCU_NATIVE_CMDS = "setfiles semodule_package semodule semodule_link semodule_expand semodule_deps hll"
+PCU_NATIVE_CMDS = "setfiles semodule hll"
 
 do_compile_virtclass-native() {
 	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
