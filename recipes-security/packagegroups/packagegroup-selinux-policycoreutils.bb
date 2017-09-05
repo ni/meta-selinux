@@ -12,27 +12,28 @@ PACKAGES = "\
 ALLOW_EMPTY_${PN} = "1"
 
 RDEPENDS_${PN} = "\
-	policycoreutils-audit2allow \
-	policycoreutils-chcat \
 	policycoreutils-fixfiles \
 	policycoreutils-genhomedircon \
 	policycoreutils-loadpolicy \
 	policycoreutils-newrole \
-	policycoreutils-python \
 	policycoreutils-runinit \
-	policycoreutils-sandbox \
 	policycoreutils-secon \
-	policycoreutils-semanage \
 	policycoreutils-semodule \
-	policycoreutils-semodule-deps \
-	policycoreutils-semodule-expand \
-	policycoreutils-semodule-link \
-	policycoreutils-semodule-package \
-	policycoreutils-sepolgen-ifgen \
-	policycoreutils-sepolicy \
 	policycoreutils-sestatus \
 	policycoreutils-setfiles \
 	policycoreutils-setsebool \
 	policycoreutils-hll \
-	system-config-selinux \
+	semodule-utils-semodule-deps \
+	semodule-utils-semodule-expand \
+	semodule-utils-semodule-link \
+	semodule-utils-semodule-package \
+	selinux-python-audit2allow \
+	selinux-python-sepolgen-ifgen \
+	selinux-python-semanage \
+	selinux-python-sepolicy \
+	selinux-python-chcat \
+	selinux-python \
+	selinux-sandbox \
+	selinux-dbus \
+	selinux-gui \
 "

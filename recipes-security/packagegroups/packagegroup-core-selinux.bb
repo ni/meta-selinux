@@ -17,7 +17,7 @@ RDEPENDS_${PN} = " \
 	libselinux-bin \
 	libsemanage \
 	checkpolicy \
-	sepolgen \
+	selinux-python-sepolgen \
 	packagegroup-selinux-policycoreutils \
 	setools \
 	setools-console \
