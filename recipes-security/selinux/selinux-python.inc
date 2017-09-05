@@ -37,6 +37,7 @@ RDEPENDS_${BPN} += "\
         python-unixadmin \
         libselinux-python \
         libsemanage-python \
+        setools \
 "
 RDEPENDS_${BPN}-semanage += "\
         python-core \
