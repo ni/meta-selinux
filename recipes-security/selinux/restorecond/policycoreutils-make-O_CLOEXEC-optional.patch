@@ -16,13 +16,13 @@ Uptream-Status: Inappropriate [O_CLOEXEC has been in Linux since 2007 and POSIX 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
 ---
- restorecond/user.c |    8 +++++++-
+ user.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/restorecond/user.c b/restorecond/user.c
+diff --git a/user.c b/user.c
 index 2c28676..6235772 100644
---- a/restorecond/user.c
-+++ b/restorecond/user.c
+--- a/user.c
++++ b/user.c
 @@ -202,7 +202,13 @@ static int local_server() {
  			perror("asprintf");
  		return -1;

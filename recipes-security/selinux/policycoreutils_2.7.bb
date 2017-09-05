@@ -8,7 +8,6 @@ SRC_URI[sha256sum] = "0a1b8a4a323b854981c6755ff025fe98a0f1cff307f109abb260f0490f
 
 SRC_URI += "\
 	file://policycoreutils-fix-sepolicy-install-path.patch \
-	file://policycoreutils-make-O_CLOEXEC-optional.patch \
 	file://policycoreutils-loadpolicy-symlink.patch \
 	file://policycoreutils-process-ValueError-for-sepolicy-seobject.patch \
 	file://policycoreutils-fix-TypeError-for-seobject.py.patch \
