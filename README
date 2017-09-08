@@ -1,10 +1,10 @@
 meta-selinux
 ============
 
-This layer's purpose is enabling SE Linux support when used with Poky.
+This layer's purpose is enabling SE Linux support.
 
 The majority of this layers work is accomplished in bbappend files, used to
-enable SE Linux support in existing Poky packages.
+enable SE Linux support in existing recipes.
 
 A new recipes-security was added.  The purpose of this category is to add
 software specific to system security.
@@ -12,27 +12,11 @@ software specific to system security.
 Please see the MAINTAINERS file for information on contacting the maintainers
 of this layer, as well as instructions for submitting patches.
 
-status
-------
-Sep 17, 2013 - Updated to match oe-core/poky master for what will be the
-	1.5 release
-  * Misc bug fixes
-  * Update distro config
-  * Uprev various packages
-
-Jan 31, 2012 - Initial version of the layer available.  Basic functionality:
-  * new recipes-security -- includes all SE Linux core components
-  * enable kernel configuration of SE Linux components
-  * enable a few basic recipes to be used as examples for others
-
 
 Dependencies
 ------------
 
-This layer depends on the Poky metadata.  For more information on Poky see
-the Yocto Project website:
-
-http://www.yoctoproject.org
+This layer depends on the openembedded-core metadata.
 
 This layer also optionally depends on the following layers:
 
@@ -57,25 +41,22 @@ of this layer, as well as instructions for submitting patches.
 Building the meta-selinux layer
 -------------------------------
 In order to add selinux support to the poky build this layer should be added
-to the bblayers.conf file.  In addition you should modify your local.conf
-to specify the "poky-selinux" distribution.
+to your projects bblayers.conf file.
 
+By default the selinux components are disabled.  This conforms to the
+Yocto Project compatible guideline that indicate that simply including a
+layer should not change the system behavior.
 
-An "oe-selinux" distribution is also included as a convienence for people
-working with this layer, without the additional Poky meta data.  This
-approach may work, but is not generally tested by the maintainers.
+In order to use the components in this layer you must add the 'selinux' to the
+DISTRO_FEATURES.  In addition to selinux, you should be sure that acl, xattr and
+pam are also present.
+e.g. DISTRO_FEATURES_append = " acl xattr pam selinux"
 
-e.g. DISTRO="poky-selinux"
-
-
-Using different versions of linux-yocto
----------------------------------------
-To prepare selinux enabled images using different ver. of linux-yocto,
-we can choose supported versions of linux-yocto,
-currently supported: v3.14, v3.19, v4.1(by default).
-
-* enable the preferred linux-yocto to local.conf or oe-selinux.conf
-e.g. PREFERRED_VERSION_linux-yocto_qemuarm = "3.19%"
+You must also specify a preferred provider for the virtual/refpolicy.  The
+included policies with this layer are simply reference policies and will need
+to be tailored for your environment.  
+* Enable the refpolicy-mls:
+e.g. PREFERRED_PROVIDER_virtual/refpolicy ?= "refpolicy-mls"
 
 
 Using different versions of refpolicy
@@ -89,16 +70,8 @@ By default refpolicy from git builds head commit of master branch, we can update
 SRCREV for refpolicy and refpolicy-contrib as appropriate at refpolicy_git.inc
 to check refpolicy as per required commits.
 
-* enable the preferred refpolicy-minimum to local.conf or oe-selinux.conf
+* enable the preferred refpolicy-minimum:
 e.g. PREFERRED_VERSION_refpolicy-minimum = "2.20151208"
-
-
-Using perticular refpolicy policy type
---------------------------------------
-Provider "virtual/refpolicy" used to set perticular refpolicy type.
-
-* enabled refpolicy-minimum from refpolicy types at config level
-e.g. PREFERRED_PROVIDER_virtual/refpolicy ?= "refpolicy-minimum"
 
 
 Using different init manager
