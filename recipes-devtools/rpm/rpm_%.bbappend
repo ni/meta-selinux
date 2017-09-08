@@ -1,4 +1,1 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-
-inherit with-selinux
-PACKAGECONFIG[selinux] = "${WITH_SELINUX},${WITHOUT_SELINUX},libsemanage,"
+require ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '${BPN}_selinux.inc', '', d)}

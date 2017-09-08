@@ -1,5 +1,1 @@
-inherit selinux
-
-DEPENDS += "${LIBSELINUX}"
-
-EXTRA_OEMAKE += "${@target_selinux(d, 'WITH_SELINUX=\"yes\"')}"
+require ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '${BPN}_selinux.inc', '', d)}

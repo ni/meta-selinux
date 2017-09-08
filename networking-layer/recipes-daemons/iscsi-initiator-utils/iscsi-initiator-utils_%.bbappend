@@ -1,1 +1,1 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+require ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '${BPN}_selinux.inc', '', d)}

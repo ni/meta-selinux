@@ -1,3 +1,1 @@
-inherit selinux
-# If selinux enabled, disable handlers to rw command history file
-FILESEXTRAPATHS_prepend := "${@target_selinux(d, '${THISDIR}/${PN}:')}"
+require ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '${BPN}_selinux.inc', '', d)}

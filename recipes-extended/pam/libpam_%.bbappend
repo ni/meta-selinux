@@ -1,3 +1,1 @@
-inherit enable-selinux
-
-RDEPENDS_${PN}-runtime += "${@target_selinux(d, 'pam-plugin-selinux')}"
+require ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '${BPN}_selinux.inc', '', d)}

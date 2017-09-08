@@ -1,5 +1,1 @@
-inherit selinux
-
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
-
-SRC_URI += "${@target_selinux(d, 'file://fix-ptest-failures-when-selinux-enabled.patch')}"
+require ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', '${BPN}_selinux.inc', '', d)}
