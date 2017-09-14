@@ -25,6 +25,8 @@ DEPENDS += "${@target_selinux(d, 'libpam audit')}"
 
 RDEPENDS_${BPN}-fixfiles += "\
 	${BPN}-setfiles \
+	grep \
+	findutils \
 "
 RDEPENDS_${BPN}-genhomedircon += "\
 	${BPN}-genhomedircon \

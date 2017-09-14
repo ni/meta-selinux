@@ -33,7 +33,7 @@ index 1aa330f..a10837d 100755
  # number if the current is less than 2.6.30 and 0 if they are the same.
  #
 -function useseclabel {
-+useseclabel {
++useseclabel () {
  	VER=`uname -r`
  	SUP=2.6.30
  	expr '(' "$VER" : '\([^.]*\)' ')' '-' '(' "$SUP" : '\([^.]*\)' ')' '|' \
