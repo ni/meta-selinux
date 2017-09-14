@@ -86,6 +86,36 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED = ""
 
 
+Starting up the system
+----------------------
+Most likely the reference policy selected will not just work "out of the box".
+
+As always, if you update the reference policy to better work with OpenEmbedded
+or Poky configurations, please submit the changes back to the project.
+
+When using 'core-image-selinux', the system will boot and automatically setup
+the policy by running the "fixfiles -f -F relabel" for you.  This is
+implemented via the 'selinux-autorelabel' recipe.
+
+The 'core-image-selinux-minimal' does not automatically relabel the system.
+So you must boot using the parameters "selinux=1 enforcing=0", and then
+manually perform the setup.  Running 'fixfiles -f -F relabel' is available
+in this configuration.
+
+After logging in you can verify selinux is present using:
+
+$ sestatus
+
+Output should include:
+SELinux status:                 enabled
+...
+Current mode:                   enforcing
+...
+
+The above indicates that selinux is currently running, and if you are running
+in an enforcing mode or not.
+
+
 License
 -------
 
