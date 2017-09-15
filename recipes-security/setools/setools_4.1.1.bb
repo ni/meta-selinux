@@ -11,6 +11,7 @@ LICENSE = "GPLv2 & LGPLv2.1"
 SRC_URI = "https://github.com/TresysTechnology/setools/archive/${PV}.tar.gz;downloadfilename=setools-${PV}.tar.gz \
            file://setools4-fixes-for-cross-compiling.patch \
            file://setools4-fix-cross-compiling-errors-for-powerpc-mips.patch \
+           file://Fix-build-failure-with-GCC-7-due-to-possible-truncat.patch \
 "
 
 SRC_URI[md5sum] = "54cf5c0ca2aa4ef7c6ac153981af34cd"
