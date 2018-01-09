@@ -35,13 +35,10 @@ diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
 index d710fb0..f9d7114 100644
 --- a/policy/modules/system/init.te
 +++ b/policy/modules/system/init.te
-@@ -1100,4 +1100,8 @@ optional_policy(`
- # systemd related allow rules
+@@ -1114,3 +1114,7 @@ optional_policy(`
  allow kernel_t init_t:process dyntransition;
  allow devpts_t device_t:filesystem associate;
--allow init_t self:capability2 block_suspend;
-\ No newline at end of file
-+allow init_t self:capability2 block_suspend;
+ allow init_t self:capability2 block_suspend;
 +allow init_t self:capability2 audit_read;
 +
 +allow initrc_t init_t:system { start status };
