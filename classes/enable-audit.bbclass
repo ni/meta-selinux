@@ -2,4 +2,3 @@
 inherit selinux
 
 PACKAGECONFIG_append = " ${@target_selinux(d, 'audit')}"
-PACKAGECONFIG[audit] = "--enable-audit,--disable-audit,audit,"
