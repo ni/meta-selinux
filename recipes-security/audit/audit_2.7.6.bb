@@ -45,6 +45,7 @@ EXTRA_OEMAKE += "PYLIBVER='python${PYTHON_BASEVERSION}' \
 	PYINC='${STAGING_INCDIR}/$(PYLIBVER)' \
 	pyexecdir=${libdir}/python${PYTHON_BASEVERSION}/site-packages \
 	STDINC='${STAGING_INCDIR}' \
+	pkgconfigdir=${libdir}/pkgconfig \
 	"
 
 SUMMARY_audispd-plugins = "Plugins for the audit event dispatcher"
@@ -64,7 +65,6 @@ FILES_audispd-plugins += "${sysconfdir}/audisp/audisp-remote.conf \
 	"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
-FILES_${PN}-dev += "${base_libdir}/*.so ${base_libdir}/*.la ${base_libdir}/pkgconfig/*"
 
 CONFFILES_auditd += "${sysconfdir}/audit/audit.rules"
 RDEPENDS_auditd += "bash"
