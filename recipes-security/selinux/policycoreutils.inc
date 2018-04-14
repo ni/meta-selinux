@@ -64,8 +64,8 @@ RDEPENDS_${BPN}-setsebool += "\
 "
 RDEPENDS_${BPN} += "selinux-python"
 
-WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
-ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"
+WARN_QA_remove = " unsafe-references-in-scripts"
+ERROR_QA_remove = " unsafe-references-in-scripts"
 
 
 PACKAGES =+ "\
