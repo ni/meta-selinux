@@ -11,11 +11,9 @@ inherit lib_package python-dir
 DEPENDS += "libsepol libselinux bzip2 python bison-native flex-native swig-native"
 DEPENDS_append_class-target += "audit"
 
-# For /usr/libexec/selinux/semanage_migrate_store
-RDEPENDS_${PN} += "python"
-
-PACKAGES += "${PN}-python"
-FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
+PACKAGES =+ "${PN}-python"
+FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/* \
+                      ${libexecdir}/selinux/semanage_migrate_store"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
 
 EXTRA_OEMAKE_class-native += "DISABLE_AUDIT=y"
