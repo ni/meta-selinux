@@ -1,4 +1,4 @@
-From 7d23189c4541124469aad24fe1719f2a24b4ca48 Mon Sep 17 00:00:00 2001
+From 8981b979e36afe2d8384b63c3f48fa8854d1983a Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Mon, 20 Jan 2014 03:53:48 -0500
 Subject: [PATCH] libsemanage: allow to disable audit support
@@ -6,6 +6,7 @@ Subject: [PATCH] libsemanage: allow to disable audit support
 Upstream-Status: Pending
 
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+
 ---
  src/Makefile        | 10 +++++++++-
  src/seusers_local.c | 13 +++++++++++++
@@ -13,7 +14,7 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  3 files changed, 31 insertions(+), 2 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index fdb178f..43e1266 100644
+index d457208..e8831ab 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -29,6 +29,14 @@ ifeq ($(DEBUG),1)
@@ -121,6 +122,3 @@ index 2ef8d30..50d582a 100644
  
  OBJECTS = $(SOURCES:.c=.o) 
  
--- 
-2.13.0
-
