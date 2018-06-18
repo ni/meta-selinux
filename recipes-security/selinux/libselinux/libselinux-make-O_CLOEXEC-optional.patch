@@ -1,7 +1,7 @@
-From 0a8c1c5f3d866d3a3c0f95653416f5f72587ce3a Mon Sep 17 00:00:00 2001
+From 802d224953294463fa9bc793e46f664ecfea057a Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe.macdonald@windriver.com>
 Date: Fri, 11 Oct 2013 09:56:25 -0400
-Subject: [PATCH 2/2] libselinux: make O_CLOEXEC optional
+Subject: [PATCH] libselinux: make O_CLOEXEC optional
 
 Various commits in the selinux tree in the current release added O_CLOEXEC
 to open() calls in an attempt to address file descriptor leaks as
@@ -18,6 +18,7 @@ Uptream-Status: Inappropriate [O_CLOEXEC has been in Linux since 2007 and POSIX 
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+
 ---
  src/procattr.c  | 16 ++++++++++++++--
  src/sestatus.c  |  8 +++++++-
@@ -25,7 +26,7 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  3 files changed, 28 insertions(+), 4 deletions(-)
 
 diff --git a/src/procattr.c b/src/procattr.c
-index 7efcd7e..3007876 100644
+index 48dd8af..8bf8432 100644
 --- a/src/procattr.c
 +++ b/src/procattr.c
 @@ -79,7 +79,13 @@ static int openattr(pid_t pid, const char *attr, int flags)
@@ -78,7 +79,7 @@ index ed29dc5..0cb15b6 100644
  		goto error;
  
 diff --git a/src/stringrep.c b/src/stringrep.c
-index 2dbec2b..de2a70b 100644
+index 2d83f96..17e9232 100644
 --- a/src/stringrep.c
 +++ b/src/stringrep.c
 @@ -105,7 +105,13 @@ static struct discover_class_node * discover_class(const char *s)
@@ -96,6 +97,3 @@ index 2dbec2b..de2a70b 100644
  		if (fd < 0)
  			goto err4;
  
--- 
-2.7.4
-
