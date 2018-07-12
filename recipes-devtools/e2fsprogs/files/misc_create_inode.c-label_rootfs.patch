@@ -8,15 +8,17 @@ When copying a file system using the -d option the xattrs from the root
 directory need to be copied before the populate_fs recusion starts.
 
 Signed-off-by: Philip Tricca <flihp@twobit.us>
+Signed-off-by: Jeremy Puhlman <jpuhlman@mvista.com>
+
 ---
- misc/create_inode.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ misc/create_inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/misc/create_inode.c b/misc/create_inode.c
-index 0de5719..ee21186 100644
+index a7b6d348..cfd15922 100644
 --- a/misc/create_inode.c
 +++ b/misc/create_inode.c
-@@ -890,8 +890,15 @@ errcode_t populate_fs(ext2_filsys fs, ext2_ino_t parent_ino,
+@@ -979,6 +979,13 @@ errcode_t populate_fs2(ext2_filsys fs, ext2_ino_t parent_ino,
  		return retval;
  	}
  
@@ -26,12 +28,18 @@ index 0de5719..ee21186 100644
 +			_("while setting xattrs for \"%s\""), source_dir);
 +		goto out;
 +	}
- 	retval = __populate_fs(fs, parent_ino, source_dir, root, &hdlinks);
++
+ 	file_info.path_len = 0;
+ 	file_info.path_max_len = 255;
+ 	file_info.path = calloc(file_info.path_max_len, 1);
+@@ -987,6 +994,7 @@ errcode_t populate_fs2(ext2_filsys fs, ext2_ino_t parent_ino,
+ 			       &file_info, fs_callbacks);
  
+ 	free(file_info.path);
 +out:
  	free(hdlinks.hdl);
  	return retval;
  }
 -- 
-2.1.4
+2.11.1
 
