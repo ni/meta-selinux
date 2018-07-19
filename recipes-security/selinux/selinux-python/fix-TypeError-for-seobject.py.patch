@@ -1,4 +1,4 @@
-From a66c50c0e8cd3799fc2819835b872ab62419f684 Mon Sep 17 00:00:00 2001
+From 98c2944ffa3e35095187e1df9ff33498bbd0fa54 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Tue, 1 Apr 2014 02:53:36 -0400
 Subject: [PATCH] policycoreutils: fix TypeError for seobject.py
@@ -7,18 +7,19 @@ File "/usr/lib64/python2.7/site-packages/seobject.py", line 109, in log
   message += " sename=" + sename
 TypeError: cannot concatenate 'str' and 'NoneType' objects
 
-Uptream-Status: pending
+Uptream-Status: Pending
 
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+
 ---
- semanage/seobject.py |    2 +-
+ semanage/seobject.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Index: policycoreutils-2.5/semanage/seobject.py
-===================================================================
---- policycoreutils-2.5.orig/semanage/seobject.py	2016-02-25 13:41:38.035974459 -0500
-+++ policycoreutils-2.5/semanage/seobject.py	2016-02-25 13:43:42.075974072 -0500
-@@ -121,7 +121,7 @@
+diff --git a/semanage/seobject.py b/semanage/seobject.py
+index 70fd192..23ab77e 100644
+--- a/semanage/seobject.py
++++ b/semanage/seobject.py
+@@ -146,7 +146,7 @@ except:
  
          def log(self, msg, name="", sename="", serole="", serange="", oldsename="", oldserole="", oldserange=""):
              message = " %s name=%s" % (msg, name)
