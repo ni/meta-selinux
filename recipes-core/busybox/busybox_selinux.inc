@@ -8,6 +8,7 @@ python create_sh_wrapper_reset_alternative_vars () {
 
     dvar = d.getVar('D', True)
     pn = d.getVar('PN', True)
+    base_bindir = d.getVar('base_bindir', True)
 
     def create_sh_alternative_vars(links, target, mode):
         import shutil
@@ -46,10 +47,10 @@ python create_sh_wrapper_reset_alternative_vars () {
         return
 
     if os.path.exists('%s/etc/busybox.links' % (dvar)):
-        create_sh_alternative_vars("/etc/busybox.links", "/bin/busybox", 0o0755)
+        create_sh_alternative_vars("/etc/busybox.links", "%s/busybox" % base_bindir, 0o0755)
     else:
-        create_sh_alternative_vars("/etc/busybox.links.nosuid", "/bin/busybox.nosuid", 0o0755)
-        create_sh_alternative_vars("/etc/busybox.links.suid", "/bin/busybox.suid", 0o4755)
+        create_sh_alternative_vars("/etc/busybox.links.nosuid", "%s/busybox.nosuid" % base_bindir, 0o0755)
+        create_sh_alternative_vars("/etc/busybox.links.suid", "%s/busybox.suid" % base_bindir, 0o4755)
 }
 
 # Add to PACKAGEBUILDPKGD so it could override the alternatives, which are set in
