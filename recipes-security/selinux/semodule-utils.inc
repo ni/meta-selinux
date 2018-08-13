@@ -7,6 +7,7 @@ SECTION = "base"
 LICENSE = "GPLv2+"
 
 DEPENDS += "libsepol"
+RDEPENDS_${PN}-dev = ""
 
 EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
