@@ -14,6 +14,10 @@ DEPENDS_append_class-target += "audit"
 PACKAGES =+ "${PN}-python"
 PACKAGES_prepend = " ${PN}-utils "
 FILES_${PN}-utils = "${libexecdir}/*"
+
+# For /usr/libexec/selinux/semanage_migrate_store
+RDEPENDS_${PN}-python += "python"
+
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/* \
                       ${libexecdir}/selinux/semanage_migrate_store"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
