@@ -128,7 +128,7 @@ BBCLASSEXTEND = "native"
 
 PCU_NATIVE_CMDS = "setfiles semodule hll"
 
-do_compile_virtclass-native() {
+do_compile_class-native() {
 	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
 		oe_runmake -C $PCU_CMD \
 			INCLUDEDIR='${STAGING_INCDIR}' \
@@ -136,7 +136,7 @@ do_compile_virtclass-native() {
 	done
 }
 
-sysroot_stage_dirs_append_virtclass-native() {
+sysroot_stage_dirs_append_class-native() {
 	cp -R $from/${prefix}/libexec $to/${prefix}/libexec
 }
 
@@ -153,7 +153,7 @@ do_install_prepend() {
 	export SEMODULE_PATH=${sbindir} SYSTEMDDIR=${D}/${systemd_unitdir}
 }
 
-do_install_virtclass-native() {
+do_install_class-native() {
 	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
 	     oe_runmake -C $PCU_CMD install \
 			DESTDIR="${D}" \
