@@ -1,4 +1,4 @@
-EXTRA_OECONF_virtclass-native = "--enable-pam=no"
+EXTRA_OECONF_append_class-native = " --enable-pam=no"
 
 do_install_append() {
 	test ! -f ${D}${base_libdir}/security/pam_cgroup.so.0.0.0 || {
