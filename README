@@ -71,7 +71,8 @@ SRCREV for refpolicy and refpolicy-contrib as appropriate at refpolicy_git.inc
 to check refpolicy as per required commits.
 
 * enable the preferred refpolicy-minimum:
-e.g. PREFERRED_VERSION_refpolicy-minimum = "2.20151208"
+PREFERRED_VERSION_refpolicy-minimum = "2.20151208"
+PREFERRED_VERSION_refpolicy = "2.20151208"
 
 
 Using different init manager
