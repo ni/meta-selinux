@@ -21,8 +21,6 @@ DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
 inherit selinux pythonnative
 
-DEPENDS += "${@target_selinux(d, 'libpam audit')}"
-
 RDEPENDS_${BPN}-fixfiles += "\
 	${BPN}-setfiles \
 	grep \
@@ -118,11 +116,20 @@ export STAGING_LIBDIR
 export BUILD_SYS
 export HOST_SYS
 
-AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
-PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
-EXTRA_OEMAKE += "${@target_selinux(d, 'PAMH=${PAMH} AUDITH=${AUDITH}', 'PAMH= AUDITH= ')} INOTIFYH=n"
-EXTRA_OEMAKE += "PREFIX=${D}"
-EXTRA_OEMAKE += "INITDIR=${D}/etc/init.d"
+PACKAGECONFIG_class-target ?= "\
+        ${@bb.utils.contains('DISTRO_FEATURES', 'pam', 'libpam', '', d)} \
+        audit \
+"
+
+PACKAGECONFIG[libpam] = ",,libpam,"
+PACKAGECONFIG[audit] = ",,audit,"
+
+EXTRA_OEMAKE += "\
+        ${@bb.utils.contains('PACKAGECONFIG', 'libpam', 'PAMH=y', 'PAMH=', d)} \
+        ${@bb.utils.contains('PACKAGECONFIG', 'audit', 'AUDITH=y', 'AUDITH=', d)} \
+        INOTIFYH=n \
+        PREFIX=${D} \
+"
 
 BBCLASSEXTEND = "native"
 
