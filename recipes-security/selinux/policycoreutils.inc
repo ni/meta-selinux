@@ -158,6 +158,7 @@ do_compile_prepend() {
 do_install_prepend() {
 	export PYTHON=python
 	export SEMODULE_PATH=${sbindir} SYSTEMDDIR=${D}/${systemd_unitdir}
+	export SBINDIR="${D}/${base_sbindir}"
 }
 
 do_install_class-native() {
