@@ -34,7 +34,9 @@ do_compile_append() {
 do_install_append() {
     oe_runmake install-pywrap swigify \
             PYSITEDIR=${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages
-    rm -rf ${D}${base_sbindir}
+    if ! ${@bb.utils.contains('DISTRO_FEATURES','usrmerge','true','false',d)}; then
+        rm -rf ${D}${base_sbindir}
+    fi
 }
 
 BBCLASSEXTEND = "native"
