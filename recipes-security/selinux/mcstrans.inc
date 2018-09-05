@@ -14,7 +14,6 @@ inherit systemd update-rc.d
 
 DEPENDS += "libsepol libselinux libcap"
 
-EXTRA_OEMAKE += "SYSTEMDDIR=${D}${systemd_unitdir} SBINDIR=${D}/${base_sbindir}"
 do_install_append() {
     install -d ${D}${sbindir}
     install -m 755 utils/untranscon ${D}${sbindir}/
