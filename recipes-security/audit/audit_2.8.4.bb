@@ -15,8 +15,8 @@ SRC_URI = "http://people.redhat.com/sgrubb/${BPN}/${BPN}-${PV}.tar.gz \
            file://auditd.service \
            file://audit-volatile.conf \
 "
-SRC_URI[md5sum] = "55a81bbed973b58a90590c949e71dc3e"
-SRC_URI[sha256sum] = "fa65289cffdc95a25bfbdba541f43ee1b12c707090a38fd027dcf9354b9014e7"
+SRC_URI[md5sum] = "ec9510312564c3d9483bccf8dbda4779"
+SRC_URI[sha256sum] = "a410694d09fc5708d980a61a5abcb9633a591364f1ecc7e97ad5daef9c898c38"
 
 inherit autotools pythonnative update-rc.d systemd
 
@@ -30,16 +30,17 @@ SYSTEMD_SERVICE_auditd = "auditd.service"
 DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30) swig-native"
 
 EXTRA_OECONF += "--without-prelude \
-	--with-libwrap \
-	--enable-gssapi-krb5=no \
-	--with-libcap-ng=yes \
-	--with-python=yes \
-	--libdir=${base_libdir} \
-	--sbindir=${base_sbindir} \
+        --with-libwrap \
+        --enable-gssapi-krb5=no \
+        --with-libcap-ng=yes \
+        --with-python=yes \
+        --libdir=${base_libdir} \
+        --sbindir=${base_sbindir} \
         --without-python3 \
         --disable-zos-remote \
-	"
+        "
 EXTRA_OECONF_append_arm = " --with-arm=yes"
+EXTRA_OECONF_append_aarch64 = " --with-aarch64=yes"
 
 EXTRA_OEMAKE += "PYLIBVER='python${PYTHON_BASEVERSION}' \
 	PYINC='${STAGING_INCDIR}/$(PYLIBVER)' \
