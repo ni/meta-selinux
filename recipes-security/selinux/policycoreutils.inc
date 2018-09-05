@@ -9,6 +9,8 @@ LICENSE = "GPLv2+"
 
 SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
             file://policycoreutils-fixfiles-de-bashify.patch \
+            file://policycoreutils-fix-fixfiles-install-path.patch \
+            file://policycoreutils-fix-load_policy-install-path.patch \
            "
 
 PAM_SRC_URI = "file://pam.d/newrole \
@@ -46,7 +48,6 @@ RDEPENDS_${BPN}-semodule += "\
 	libsemanage \
 "
 # static link to libsepol
-DEPENDS_${BPN}-semodule-deps += "libsepol"
 RDEPENDS_${BPN}-semodule-expand += "libsepol libselinux"
 RDEPENDS_${BPN}-semodule-link += "libsepol libselinux"
 RDEPENDS_${BPN}-semodule-package += "libsepol libselinux"
@@ -157,7 +158,6 @@ do_compile_prepend() {
 
 do_install_prepend() {
 	export PYTHON=python
-	export SEMODULE_PATH=${sbindir} SYSTEMDDIR=${D}/${systemd_unitdir}
 	export SBINDIR="${D}/${base_sbindir}"
 }
 
@@ -165,8 +165,8 @@ do_install_class-native() {
 	for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
 	     oe_runmake -C $PCU_CMD install \
 			DESTDIR="${D}" \
-			PREFIX="${D}/${prefix}" \
-			SBINDIR="${D}/${base_sbindir}"
+			PREFIX="${prefix}" \
+			SBINDIR="${base_sbindir}"
 	done
 }
 
