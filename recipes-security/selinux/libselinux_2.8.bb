@@ -1,10 +1,10 @@
-include selinux_20170804.inc
+include selinux_20180524.inc
 include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84b4d2c6ef954a2d4081e775a270d0d0"
 
-SRC_URI[md5sum] = "1d48ee4e9fadd76794d70c806b69ba7d"
-SRC_URI[sha256sum] = "d0fec0769b3ad60aa7baf9b9a4b7a056827769dc2dadda0dc0eb59b3d1c18c57"
+SRC_URI[md5sum] = "56057e60192b21122c1aede8ff723ca2"
+SRC_URI[sha256sum] = "31db96ec7643ce10912b3c3f98506a08a9116dcfe151855fd349c3fda96187e1"
 
 SRC_URI += "\
         file://libselinux-drop-Wno-unused-but-set-variable.patch \

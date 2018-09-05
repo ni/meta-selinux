@@ -33,7 +33,7 @@ do_compile_append() {
 
 do_install_append() {
     oe_runmake install-pywrap swigify \
-            PYSITEDIR=${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages
+            PYTHONLIBDIR=${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages
     if ! ${@bb.utils.contains('DISTRO_FEATURES','usrmerge','true','false',d)}; then
         rm -rf ${D}${base_sbindir}
     fi
