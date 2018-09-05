@@ -9,8 +9,9 @@ do_compile() {
 do_install() {
     oe_runmake install \
             DESTDIR="${D}" \
-            PREFIX="${D}/${prefix}" \
-            INCLUDEDIR="${D}/${includedir}" \
-            LIBDIR="${D}/${libdir}" \
-            SHLIBDIR="${D}/${base_libdir}"
+            PREFIX="${prefix}" \
+            INCLUDEDIR="${includedir}" \
+            LIBDIR="${libdir}" \
+            SHLIBDIR="${base_libdir}" \
+            SYSTEMDDIR="${systemd_unitdir}"
 }
