@@ -102,7 +102,7 @@ FILES_${PN} += "\
 EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 do_install() {
         oe_runmake DESTDIR=${D} \
-                LIBDIR="${D}${libdir}" \
+                LIBDIR="${libdir}" \
                 PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
                 install
 }
