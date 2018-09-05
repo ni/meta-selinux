@@ -1,10 +1,10 @@
-include selinux_20170804.inc
+include selinux_20180524.inc
 include ${BPN}.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
 
-SRC_URI[md5sum] = "a6b5c451fbe45ff9e3e0e65f2db0ae1d"
-SRC_URI[sha256sum] = "07e9477714ce6a4557a1fe924ea4cb06501b62d0fa0e3c0dc32a2cf47cb8d476"
+SRC_URI[md5sum] = "62ed7bb2ede677a735f2750751677a4f"
+SRC_URI[sha256sum] = "1c0de8d2c51e5460926c21e371105c84a39087dfd8f8e9f0cc1d017e4cbea8e2"
 
 SRC_URI += "\
 	file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \

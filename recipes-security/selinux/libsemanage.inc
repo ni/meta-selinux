@@ -34,18 +34,10 @@ do_compile_append() {
             PYTHONLIBDIR='${PYLIB}'
 }
 
-do_install() {
-    oe_runmake install \
-            DESTDIR="${D}" \
-            PREFIX="${D}/${prefix}" \
-            INCLUDEDIR="${D}/${includedir}" \
-            LIBDIR="${D}/${libdir}" \
-            SHLIBDIR="${D}/${libdir}"
-
+do_install_append() {
     oe_runmake install-pywrap swigify \
-            DESTDIR=${D} \
             PYCEXT='.so' \
-            PYSITEDIR='${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
+            PYTHONLIBDIR='${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
             PYLIBVER='python${PYTHON_BASEVERSION}' \
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
 
