@@ -11,7 +11,6 @@ LICENSE = "GPLv2+"
 
 DEPENDS += "libsepol bison-native flex-native"
 
-EXTRA_OEMAKE += "PREFIX=${D}" 
 EXTRA_OEMAKE += "LEX='flex'"
 EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
