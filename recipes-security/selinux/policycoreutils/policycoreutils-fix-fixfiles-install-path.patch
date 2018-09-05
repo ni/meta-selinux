@@ -1,0 +1,29 @@
+From 0546ad883d98799972034f8e0fdc6ca2a7319b07 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 4 Sep 2018 14:14:45 +0800
+Subject: [PATCH] policycoreutils: fix fixfiles install path
+
+Change path from /usr/sbin to /sbin for backward compatibility
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ scripts/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile b/scripts/Makefile
+index afe5dc4..f7a9e34 100644
+--- a/scripts/Makefile
++++ b/scripts/Makefile
+@@ -1,6 +1,6 @@
+ # Installation directories.
+ PREFIX ?= /usr
+-SBINDIR ?= $(PREFIX)/sbin
++SBINDIR ?= /sbin
+ MANDIR ?= $(PREFIX)/share/man
+ 
+ .PHONY: all
+-- 
+2.7.4
+
