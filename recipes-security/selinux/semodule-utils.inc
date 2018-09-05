@@ -12,12 +12,10 @@ RDEPENDS_${PN}-dev = ""
 EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
 PACKAGES =+ "\
-        ${PN}-semodule-deps \
         ${PN}-semodule-expand \
         ${PN}-semodule-link \
         ${PN}-semodule-package \
 "
-FILES_${PN}-semodule-deps += "${bindir}/semodule_deps"
 FILES_${PN}-semodule-expand += "${bindir}/semodule_expand"
 FILES_${PN}-semodule-link += "${bindir}/semodule_link"
 FILES_${PN}-semodule-package += "\
