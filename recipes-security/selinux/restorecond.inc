@@ -18,10 +18,6 @@ DEPENDS += "libsepol libselinux libpcre dbus-glib glib-2.0 pkgconfig-native"
 FILES_${PN} += "${datadir}/dbus-1/services/org.selinux.Restorecond.service \
 "
 
-do_install_prepend() {
-        export SYSTEMDDIR=${D}/${systemd_unitdir}
-}
-
 SYSTEMD_SERVICE_restorecond = "restorecond.service"
 INITSCRIPT_PACKAGES = "restorecond"
 INITSCRIPT_NAME_restorecond = "restorecond"
