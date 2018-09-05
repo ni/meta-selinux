@@ -20,7 +20,6 @@ RDEPENDS_${PN} = "\
 	policycoreutils-setfiles \
 	policycoreutils-setsebool \
 	policycoreutils-hll \
-	semodule-utils-semodule-deps \
 	semodule-utils-semodule-expand \
 	semodule-utils-semodule-link \
 	semodule-utils-semodule-package \
