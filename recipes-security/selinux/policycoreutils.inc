@@ -9,8 +9,6 @@ LICENSE = "GPLv2+"
 
 SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${PAM_SRC_URI}', '', d)} \
             file://policycoreutils-fixfiles-de-bashify.patch \
-            file://policycoreutils-fix-fixfiles-install-path.patch \
-            file://policycoreutils-fix-load_policy-install-path.patch \
            "
 
 PAM_SRC_URI = "file://pam.d/newrole \
@@ -130,6 +128,7 @@ EXTRA_OEMAKE += "\
         ${@bb.utils.contains('PACKAGECONFIG', 'audit', 'AUDITH=y', 'AUDITH=', d)} \
         INOTIFYH=n \
         PREFIX=${D} \
+        SBINDIR=${base_sbindir} \
 "
 
 BBCLASSEXTEND = "native"
