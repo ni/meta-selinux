@@ -79,26 +79,25 @@ PACKAGES =+ "\
 	${PN}-setsebool \
 "
 FILES_${PN}-fixfiles += "${base_sbindir}/fixfiles"
-FILES_${PN}-genhomedircon += "${sbindir}/genhomedircon"
+FILES_${PN}-genhomedircon += "${base_sbindir}/genhomedircon"
 FILES_${PN}-loadpolicy += "\
 	${base_sbindir}/load_policy \
-	${sbindir}/load_policy \
 "
 FILES_${PN}-newrole += "\
 	${bindir}/newrole \
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/newrole', '', d)} \
 "
 FILES_${PN}-runinit += "\
-	${sbindir}/run_init \
-	${sbindir}/open_init_pty \
+	${base_sbindir}/run_init \
+	${base_sbindir}/open_init_pty \
 	${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
 "
 FILES_${PN}-dbg += "${prefix}/libexec/selinux/hll/.debug"
 FILES_${PN}-secon += "${bindir}/secon"
-FILES_${PN}-semodule += "${sbindir}/semodule"
+FILES_${PN}-semodule += "${base_sbindir}/semodule"
 FILES_${PN}-hll += "${prefix}/libexec/selinux/hll/*"
 FILES_${PN}-sestatus += "\
-	${sbindir}/sestatus \
+	${base_sbindir}/sestatus \
 	${sysconfdir}/sestatus.conf \
 "
 FILES_${PN}-setfiles += "\
@@ -106,7 +105,7 @@ FILES_${PN}-setfiles += "\
 	${base_sbindir}/setfiles \
 "
 FILES_${PN}-setsebool += "\
-	${sbindir}/setsebool \
+	${base_sbindir}/setsebool \
 	${datadir}/bash-completion/completions/setsebool \
 "
 
