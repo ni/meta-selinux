@@ -8,6 +8,7 @@ LICENSE = "PD"
 inherit lib_package pythonnative
 
 DEPENDS += "libsepol python libpcre swig-native"
+DEPENDS_append_libc-musl = " fts"
 RDEPENDS_${PN}-python += "python-core python"
 
 PACKAGES += "${PN}-python"
@@ -23,6 +24,7 @@ def get_policyconfigarch(d):
 EXTRA_OEMAKE += "${@get_policyconfigarch(d)}"
 
 EXTRA_OEMAKE += "LDFLAGS='${LDFLAGS} -lpcre' LIBSEPOLA='${STAGING_LIBDIR}/libsepol.a'"
+EXTRA_OEMAKE_append_libc-musl = " FTS_LDLIBS=-lfts"
 
 do_compile_append() {
     oe_runmake pywrap -j1 \
