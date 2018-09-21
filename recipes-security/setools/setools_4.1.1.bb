@@ -23,7 +23,8 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=83a5eb6974c11f30785e90d0eeccf40c \
 
 DEPENDS += "bison-native flex-native swig-native python libsepol"
 
-RDEPENDS_${PN} += "python-networkx python-enum34 python-decorator python-setuptools"
+RDEPENDS_${PN} += "python-networkx python-enum34 python-decorator python-setuptools \
+                   python-logging python-json python-argparse libselinux-python"
 
 RPROVIDES_${PN} += "${PN}-console"
 
