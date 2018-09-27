@@ -1,5 +1,5 @@
 do_install_append () {
-	if [ ! ${D}${libdir} -ef ${D}${base_libdir} ]; then
+	if [ ! ${D}${libdir} -ef ${D}${base_libdir} -a -e ${D}${libdir}/libpcre.so ]; then
 		realsofile=`readlink ${D}${libdir}/libpcre.so`
 		mkdir -p ${D}/${base_libdir}/
 		mv -f ${D}${libdir}/libpcre.so.* ${D}${base_libdir}/
