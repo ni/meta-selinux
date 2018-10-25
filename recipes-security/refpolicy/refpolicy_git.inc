@@ -12,7 +12,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-git:"
 # Fix file contexts for Poky
 SRC_URI += "file://poky-fc-subs_dist.patch \
             file://poky-fc-update-alternatives_sysvinit.patch \
-            file://poky-fc-update-alternatives_sysklogd.patch \
             file://poky-fc-update-alternatives_hostname.patch \
             file://poky-fc-update-alternatives_bash.patch \
             file://poky-fc-fix-real-path_resolv.conf.patch \
@@ -35,7 +34,6 @@ SRC_URI += "file://poky-fc-subs_dist.patch \
 # Specific policy for Poky
 SRC_URI += "file://poky-policy-add-syslogd_t-to-trusted-object.patch \
             file://poky-policy-add-rules-for-var-log-symlink.patch \
-            file://poky-policy-add-rules-for-var-log-symlink-apache.patch \
             file://poky-policy-add-rules-for-var-log-symlink-audisp_remote_t.patch \
             file://poky-policy-add-rules-for-syslogd_t-symlink.patch \
             file://poky-policy-add-rules-for-var-cache-symlink.patch \
