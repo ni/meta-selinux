@@ -9,6 +9,6 @@ IMAGE_INSTALL = "\
 	util-linux-agetty \
 	packagegroup-core-full-cmdline \
 	packagegroup-core-selinux \
-"   
+"
 
 inherit selinux-image
