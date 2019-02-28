@@ -11,6 +11,8 @@ SRC_URI = "http://people.redhat.com/sgrubb/${BPN}/${BPN}-${PV}.tar.gz \
            file://audit-python-configure.patch \
            file://audit-python.patch \
            file://fix-swig-host-contamination.patch \
+           file://0001-Remove-strdupa-as-suggested-in-pull-request-25.patch \
+           file://0002-Add-substitue-functions-for-strndupa-rawmemchr.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
