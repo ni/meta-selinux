@@ -9,7 +9,7 @@ inherit lib_package pythonnative
 
 DEPENDS += "libsepol python libpcre swig-native"
 DEPENDS_append_libc-musl = " fts"
-RDEPENDS_${PN}-python += "python-core"
+RDEPENDS_${PN}-python += "python-core python-shell"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
