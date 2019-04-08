@@ -1,0 +1,28 @@
+From afaee985ce8cb915905b9cbef141db5d4b7f228c Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Thu, 28 Mar 2019 21:59:18 -0400
+Subject: [PATCH 09/34] fc/hwclock: add hwclock alternatives
+
+Upstream-Status: Pending
+
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/clock.fc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/clock.fc b/policy/modules/system/clock.fc
+index 30196589..e0dc4b6f 100644
+--- a/policy/modules/system/clock.fc
++++ b/policy/modules/system/clock.fc
+@@ -2,4 +2,7 @@
+ 
+ /usr/bin/hwclock	--	gen_context(system_u:object_r:hwclock_exec_t,s0)
+ 
+-/usr/sbin/hwclock	--	gen_context(system_u:object_r:hwclock_exec_t,s0)
++/usr/sbin/hwclock\.util-linux	--	gen_context(system_u:object_r:hwclock_exec_t,s0)
++/usr/sbin/hwclock             	--	gen_context(system_u:object_r:hwclock_exec_t,s0)
++/usr/lib/busybox/sbin/hwclock	--	gen_context(system_u:object_r:hwclock_exec_t,s0)
++/sbin/hwclock             	--	gen_context(system_u:object_r:hwclock_exec_t,s0)
+-- 
+2.19.1
+

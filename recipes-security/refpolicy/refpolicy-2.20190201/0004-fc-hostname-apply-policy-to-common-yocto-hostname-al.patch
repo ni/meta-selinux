@@ -1,0 +1,27 @@
+From 85f5825111d4c6d6b276ed07fec2292804b97a39 Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Thu, 22 Aug 2013 13:37:23 +0800
+Subject: [PATCH 04/34] fc/hostname: apply policy to common yocto hostname
+ alternatives
+
+Upstream-Status: Inappropriate [only for Yocto]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/hostname.fc | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/policy/modules/system/hostname.fc b/policy/modules/system/hostname.fc
+index 83ddeb57..653e038d 100644
+--- a/policy/modules/system/hostname.fc
++++ b/policy/modules/system/hostname.fc
+@@ -1 +1,5 @@
++/usr/bin/hostname\.net-tools	--	gen_context(system_u:object_r:hostname_exec_t,s0)
++/usr/bin/hostname\.coreutils	--	gen_context(system_u:object_r:hostname_exec_t,s0)
++/usr/lib/busybox/bin/hostname -- gen_context(system_u:object_r:hostname_exec_t,s0)
++
+ /usr/bin/hostname	--	gen_context(system_u:object_r:hostname_exec_t,s0)
+-- 
+2.19.1
+

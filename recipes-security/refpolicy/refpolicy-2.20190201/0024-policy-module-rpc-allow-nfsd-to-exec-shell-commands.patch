@@ -1,0 +1,29 @@
+From 85d5fc695ae69956715b502a8f1d95e9070dfbcc Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Thu, 22 Aug 2013 13:37:23 +0800
+Subject: [PATCH 24/34] policy/module/rpc: allow nfsd to exec shell commands.
+
+Upstream-Status: Inappropriate [only for Poky]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/services/rpc.te | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/policy/modules/services/rpc.te b/policy/modules/services/rpc.te
+index 47fa2fd0..d4209231 100644
+--- a/policy/modules/services/rpc.te
++++ b/policy/modules/services/rpc.te
+@@ -227,7 +227,7 @@ kernel_read_network_state(nfsd_t)
+ kernel_dontaudit_getattr_core_if(nfsd_t)
+ kernel_setsched(nfsd_t)
+ kernel_request_load_module(nfsd_t)
+-# kernel_mounton_proc(nfsd_t)
++kernel_mounton_proc(nfsd_t)
+ 
+ corenet_sendrecv_nfs_server_packets(nfsd_t)
+ corenet_tcp_bind_nfs_port(nfsd_t)
+-- 
+2.19.1
+

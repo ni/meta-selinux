@@ -1,0 +1,126 @@
+From 00d81a825519cac67d88e513d75e82ab3269124c Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Fri, 29 Mar 2019 11:16:37 -0400
+Subject: [PATCH 26/34] policy/module/sysfs: fix for new SELINUXMNT in /sys
+
+SELINUXMNT is now from /selinux to /sys/fs/selinux, so we should
+add rules to access sysfs.
+
+Upstream-Status: Inappropriate [only for Poky]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/kernel/selinux.if | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/policy/modules/kernel/selinux.if b/policy/modules/kernel/selinux.if
+index 6790e5d0..2c95db81 100644
+--- a/policy/modules/kernel/selinux.if
++++ b/policy/modules/kernel/selinux.if
+@@ -117,6 +117,9 @@ interface(`selinux_mount_fs',`
+ 		type security_t;
+ 	')
+ 
++	dev_getattr_sysfs($1)
++	dev_search_sysfs($1)
++
+ 	allow $1 security_t:filesystem mount;
+ ')
+ 
+@@ -136,6 +139,9 @@ interface(`selinux_remount_fs',`
+ 		type security_t;
+ 	')
+ 
++	dev_getattr_sysfs($1)
++	dev_search_sysfs($1)
++
+ 	allow $1 security_t:filesystem remount;
+ ')
+ 
+@@ -155,6 +161,9 @@ interface(`selinux_unmount_fs',`
+ 	')
+ 
+ 	allow $1 security_t:filesystem unmount;
++
++	dev_getattr_sysfs($1)
++	dev_search_sysfs($1)
+ ')
+ 
+ ########################################
+@@ -217,6 +226,8 @@ interface(`selinux_dontaudit_getattr_dir',`
+ 	')
+ 
+ 	dontaudit $1 security_t:dir getattr;
++	dev_dontaudit_getattr_sysfs($1)
++	dev_dontaudit_search_sysfs($1)
+ ')
+ 
+ ########################################
+@@ -253,6 +264,7 @@ interface(`selinux_dontaudit_search_fs',`
+ 		type security_t;
+ 	')
+ 
++	dev_dontaudit_search_sysfs($1)
+ 	dontaudit $1 security_t:dir search_dir_perms;
+ ')
+ 
+@@ -272,6 +284,7 @@ interface(`selinux_dontaudit_read_fs',`
+ 		type security_t;
+ 	')
+ 
++	dev_dontaudit_getattr_sysfs($1)
+ 	dontaudit $1 security_t:dir search_dir_perms;
+ 	dontaudit $1 security_t:file read_file_perms;
+ ')
+@@ -361,6 +374,7 @@ interface(`selinux_read_policy',`
+ 		type security_t;
+ 	')
+ 
++	dev_getattr_sysfs($1)
+ 	dev_search_sysfs($1)
+ 	allow $1 security_t:dir list_dir_perms;
+ 	allow $1 security_t:file read_file_perms;
+@@ -394,6 +408,7 @@ interface(`selinux_set_generic_booleans',`
+ 		type security_t;
+ 	')
+ 
++	dev_getattr_sysfs($1)
+ 	dev_search_sysfs($1)
+ 
+ 	allow $1 security_t:dir list_dir_perms;
+@@ -431,6 +446,7 @@ interface(`selinux_set_all_booleans',`
+ 		bool secure_mode_policyload;
+ 	')
+ 
++	dev_getattr_sysfs($1)
+ 	dev_search_sysfs($1)
+ 
+ 	allow $1 security_t:dir list_dir_perms;
+@@ -512,6 +528,7 @@ interface(`selinux_dontaudit_validate_context',`
+ 		type security_t;
+ 	')
+ 
++	dev_dontaudit_search_sysfs($1)
+ 	dontaudit $1 security_t:dir list_dir_perms;
+ 	dontaudit $1 security_t:file rw_file_perms;
+ 	dontaudit $1 security_t:security check_context;
+@@ -533,6 +550,7 @@ interface(`selinux_compute_access_vector',`
+ 		type security_t;
+ 	')
+ 
++	dev_getattr_sysfs($1)
+ 	dev_search_sysfs($1)
+ 	allow $1 self:netlink_selinux_socket create_socket_perms;
+ 	allow $1 security_t:dir list_dir_perms;
+@@ -629,6 +647,7 @@ interface(`selinux_compute_user_contexts',`
+ 		type security_t;
+ 	')
+ 
++	dev_getattr_sysfs($1)
+ 	dev_search_sysfs($1)
+ 	allow $1 security_t:dir list_dir_perms;
+ 	allow $1 security_t:file rw_file_perms;
+-- 
+2.19.1
+

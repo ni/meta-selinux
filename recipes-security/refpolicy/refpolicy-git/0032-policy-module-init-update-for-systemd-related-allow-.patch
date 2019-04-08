@@ -1,0 +1,32 @@
+From ddb7393018483be0ce1cfc4734043b413e3b8a04 Mon Sep 17 00:00:00 2001
+From: Shrikant Bobade <shrikant_bobade@mentor.com>
+Date: Fri, 12 Jun 2015 19:37:52 +0530
+Subject: [PATCH 32/34] policy/module/init: update for systemd related allow
+ rules
+
+It provide, the systemd support related allow rules
+
+Upstream-Status: Pending
+
+Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/init.te | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
+index f7635d6f..2e6b57a6 100644
+--- a/policy/modules/system/init.te
++++ b/policy/modules/system/init.te
+@@ -1418,3 +1418,8 @@ optional_policy(`
+ 	userdom_dontaudit_rw_all_users_stream_sockets(systemprocess)
+ 	userdom_dontaudit_write_user_tmp_files(systemprocess)
+ ')
++
++# systemd related allow rules
++allow kernel_t init_t:process dyntransition;
++allow devpts_t device_t:filesystem associate;
++allow init_t self:capability2 block_suspend;
+-- 
+2.19.1
+

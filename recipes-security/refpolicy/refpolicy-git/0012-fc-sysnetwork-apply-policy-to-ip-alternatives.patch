@@ -1,0 +1,48 @@
+From 881a9f637b6eec90d1fa20bf4c102bb595225aaf Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Tue, 9 Jun 2015 21:22:52 +0530
+Subject: [PATCH 12/34] fc/sysnetwork: apply policy to ip alternatives
+
+Upstream-Status: Pending
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Shrikant Bobade <Shrikant_Bobade@mentor.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/sysnetwork.fc | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/policy/modules/system/sysnetwork.fc b/policy/modules/system/sysnetwork.fc
+index ac7c2dd1..4e441503 100644
+--- a/policy/modules/system/sysnetwork.fc
++++ b/policy/modules/system/sysnetwork.fc
+@@ -60,6 +60,8 @@ ifdef(`distro_redhat',`
+ /usr/sbin/dhcpcd		--	gen_context(system_u:object_r:dhcpc_exec_t,s0)
+ /usr/sbin/ethtool		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/ifconfig		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
++/usr/sbin/ifconfig\.net-tools	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
++/usr/sbin/ip\.iproute2		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/ip			--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/ipx_configure		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/ipx_interface		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+@@ -67,9 +69,17 @@ ifdef(`distro_redhat',`
+ /usr/sbin/iw			--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/iwconfig		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/mii-tool		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
++/usr/sbin/mii-tool\.net-tools	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ /usr/sbin/pump			--	gen_context(system_u:object_r:dhcpc_exec_t,s0)
+ /usr/sbin/tc			--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
+ 
++#
++# /usr/lib/busybox
++#
++/usr/lib/busybox/bin/ifconfig	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
++/usr/lib/busybox/bin/ip		--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
++/usr/lib/busybox/sbin/mii-tool	--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
++
+ #
+ # /var
+ #
+-- 
+2.19.1
+

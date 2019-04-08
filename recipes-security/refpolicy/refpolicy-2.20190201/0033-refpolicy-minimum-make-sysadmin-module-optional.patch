@@ -1,0 +1,67 @@
+From 937924e34c516c4a18d183084958b2612439ba52 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Fri, 5 Apr 2019 11:53:28 -0400
+Subject: [PATCH 33/34] refpolicy/minimum: make sysadmin module optional
+
+init and locallogin modules have a depend for sysadm module because
+they have called sysadm interfaces(sysadm_shell_domtrans). Since
+sysadm is not a core module, we could make the sysadm_shell_domtrans
+calls optionally by optional_policy.
+
+So, we could make the minimum policy without sysadm module.
+
+Upstream-Status: pending
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/init.te       | 16 +++++++++-------
+ policy/modules/system/locallogin.te |  4 +++-
+ 2 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
+index 5da25cd6..8352428a 100644
+--- a/policy/modules/system/init.te
++++ b/policy/modules/system/init.te
+@@ -446,13 +446,15 @@ ifdef(`init_systemd',`
+ 		modutils_domtrans(init_t)
+ 	')
+ ',`
+-	tunable_policy(`init_upstart',`
+-		corecmd_shell_domtrans(init_t, initrc_t)
+-	',`
+-		# Run the shell in the sysadm role for single-user mode.
+-		# causes problems with upstart
+-		ifndef(`distro_debian',`
+-			sysadm_shell_domtrans(init_t)
++	optional_policy(`
++		tunable_policy(`init_upstart',`
++			corecmd_shell_domtrans(init_t, initrc_t)
++		',`
++			# Run the shell in the sysadm role for single-user mode.
++			# causes problems with upstart
++			ifndef(`distro_debian',`
++				sysadm_shell_domtrans(init_t)
++			')
+ 		')
+ 	')
+ ')
+diff --git a/policy/modules/system/locallogin.te b/policy/modules/system/locallogin.te
+index a56f3d1f..4c679ff3 100644
+--- a/policy/modules/system/locallogin.te
++++ b/policy/modules/system/locallogin.te
+@@ -266,7 +266,9 @@ userdom_use_unpriv_users_fds(sulogin_t)
+ userdom_search_user_home_dirs(sulogin_t)
+ userdom_use_user_ptys(sulogin_t)
+ 
+-sysadm_shell_domtrans(sulogin_t)
++optional_policy(`
++	sysadm_shell_domtrans(sulogin_t)
++')
+ 
+ # by default, sulogin does not use pam...
+ # sulogin_pam might need to be defined otherwise
+-- 
+2.19.1
+

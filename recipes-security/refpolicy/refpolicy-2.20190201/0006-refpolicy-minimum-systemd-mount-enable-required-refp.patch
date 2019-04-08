@@ -1,0 +1,92 @@
+From 853b6611e50369b386a77d5bd8a28eeb9ef4cb9b Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Wed, 3 Apr 2019 14:51:29 -0400
+Subject: [PATCH 6/9] refpolicy-minimum: systemd: mount: enable required
+ refpolicy booleans
+
+enable required refpolicy booleans for these modules
+
+i. mount:  allow_mount_anyfile
+without enabling this boolean we are getting below avc denial
+
+audit(): avc:  denied  { mounton } for  pid=462 comm="mount" path="/run/media
+/mmcblk2p1" dev="tmpfs" ino=11523 scontext=system_u:system_r:mount_t:s0
+tcontext=system_u:object_r:initrc_var_run_t:s0 tclass=dir permissive=0
+
+This avc can be allowed using the boolean 'allow_mount_anyfile'
+allow mount_t initrc_var_run_t:dir mounton;
+
+ii. systemd : systemd_tmpfiles_manage_all
+without enabling this boolean we are not getting access to mount systemd
+essential tmpfs during bootup, also not getting access to create audit.log
+
+audit(): avc:  denied  { search } for  pid=168 comm="systemd-tmpfile" name=
+"sys" dev="proc" ino=4026531855 scontext=system_u:system_r:systemd_tmpfiles
+_t:s0 tcontext=system_u:object_r:sysctl_t:s0 tclass=dir permissive=0
+
+ ls  /var/log
+ /var/log -> volatile/log
+:~#
+
+The old refpolicy included a pre-generated booleans.conf that could be
+patched.  That's no longer the case so we're left with a few options,
+tweak the default directly or create a template booleans.conf file which
+will be updated during build time.  Since this is intended to be applied
+only for specific configuraitons it seems like the same either way and
+this avoids us playing games to work around .gitignore.
+
+Upstream-Status: Pending
+
+Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/booleans.conf             | 9 +++++++++
+ policy/modules/system/mount.te   | 2 +-
+ policy/modules/system/systemd.te | 2 +-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
+ create mode 100644 policy/booleans.conf
+
+diff --git a/policy/booleans.conf b/policy/booleans.conf
+new file mode 100644
+index 00000000..850f56ed
+--- /dev/null
++++ b/policy/booleans.conf
+@@ -0,0 +1,9 @@
++#
++# Allow the mount command to mount any directory or file.
++#
++allow_mount_anyfile = true
++
++#
++# Enable support for systemd-tmpfiles to manage all non-security files.
++#
++systemd_tmpfiles_manage_all = true
+diff --git a/policy/modules/system/mount.te b/policy/modules/system/mount.te
+index a87d0e82..868052b7 100644
+--- a/policy/modules/system/mount.te
++++ b/policy/modules/system/mount.te
+@@ -10,7 +10,7 @@ policy_module(mount, 1.20.0)
+ ## Allow the mount command to mount any directory or file.
+ ## </p>
+ ## </desc>
+-gen_tunable(allow_mount_anyfile, false)
++gen_tunable(allow_mount_anyfile, true)
+ 
+ attribute_role mount_roles;
+ roleattribute system_r mount_roles;
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 68b80de3..a1ef6990 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -10,7 +10,7 @@ policy_module(systemd, 1.7.0)
+ ## Enable support for systemd-tmpfiles to manage all non-security files.
+ ## </p>
+ ## </desc>
+-gen_tunable(systemd_tmpfiles_manage_all, false)
++gen_tunable(systemd_tmpfiles_manage_all, true)
+ 
+ ## <desc>
+ ## <p>
+-- 
+2.19.1
+

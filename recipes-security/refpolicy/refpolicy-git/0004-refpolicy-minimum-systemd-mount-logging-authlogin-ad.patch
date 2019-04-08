@@ -1,0 +1,96 @@
+From 0918b156dcf4d126fd0e36de5a6c61f114448c8a Mon Sep 17 00:00:00 2001
+From: Shrikant Bobade <shrikant_bobade@mentor.com>
+Date: Fri, 26 Aug 2016 17:53:37 +0530
+Subject: [PATCH 4/9] refpolicy-minimum: systemd: mount: logging: authlogin:
+ add allow rules
+
+add allow rules for avc denails for systemd, mount, logging & authlogin
+modules.
+
+without this change we are getting avc denial like these:
+
+type=AVC msg=audit(): avc:  denied  { sendto } for pid=893 comm="systemd-
+tmpfile" path="/run/systemd/journal/socket" scontext=system_u:system_r:
+systemd_tmpfiles_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=
+unix_dgram_socket permissive=0
+
+type=AVC msg=audit(): avc:  denied  { open } for  pid=703 comm="systemd-
+tmpfile" path="/proc/1/environ" dev="proc" ino=8841 scontext=system_u:
+system_r:systemd_tmpfiles_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=
+file permissive=0
+
+type=AVC msg=audit(): avc:  denied  { read write } for  pid=486 comm="mount"
+path="socket:[9717]" dev="sockfs" ino=9717 scontext=system_u:system_r:
+mount_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=udp_socket
+
+type=AVC msg=audit(): avc:  denied  { unix_read unix_write } for  pid=292
+comm="syslogd" key=1095648583  scontext=system_u:system_r:syslogd_t:s0
+tcontext=system_u:system_r:syslogd_t:s0 tclass=shm permissive=1
+
+Upstream-Status: Pending
+
+Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/authlogin.te | 2 ++
+ policy/modules/system/logging.te   | 7 ++++++-
+ policy/modules/system/mount.te     | 3 +++
+ policy/modules/system/systemd.te   | 5 +++++
+ 4 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/authlogin.te b/policy/modules/system/authlogin.te
+index 28f74bac..dfa46612 100644
+--- a/policy/modules/system/authlogin.te
++++ b/policy/modules/system/authlogin.te
+@@ -479,3 +479,5 @@ optional_policy(`
+ 	samba_read_var_files(nsswitch_domain)
+ 	samba_dontaudit_write_var_files(nsswitch_domain)
+ ')
++
++allow chkpwd_t proc_t:filesystem getattr;
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index 4cc73327..98c2bd19 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -627,4 +627,9 @@ allow auditd_t tmpfs_t:file { getattr setattr create open read append };
+ allow auditd_t tmpfs_t:dir { open read search add_name write getattr search };
+ allow auditd_t initrc_t:unix_dgram_socket sendto;
+ 
+-allow klogd_t initrc_t:unix_dgram_socket sendto;
+\ No newline at end of file
++allow klogd_t initrc_t:unix_dgram_socket sendto;
++
++allow syslogd_t self:shm create;
++allow syslogd_t self:sem { create read unix_write write };
++allow syslogd_t self:shm { read unix_read unix_write write };
++allow syslogd_t tmpfs_t:file { read write };
+diff --git a/policy/modules/system/mount.te b/policy/modules/system/mount.te
+index 3dcb8493..a87d0e82 100644
+--- a/policy/modules/system/mount.te
++++ b/policy/modules/system/mount.te
+@@ -231,3 +231,6 @@ optional_policy(`
+ 	files_etc_filetrans_etc_runtime(unconfined_mount_t, file)
+ 	unconfined_domain(unconfined_mount_t)
+ ')
++
++allow mount_t proc_t:filesystem getattr;
++allow mount_t initrc_t:udp_socket { read write };
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index f6455f6f..b13337b9 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -1011,6 +1011,11 @@ allow systemd_tmpfiles_t systemd_journal_t:file { relabelfrom relabelto };
+ allow systemd_tmpfiles_t systemd_tmpfiles_conf_t:dir list_dir_perms;
+ allow systemd_tmpfiles_t systemd_tmpfiles_conf_type:file read_file_perms;
+ 
++allow systemd_tmpfiles_t init_t:dir search;
++allow systemd_tmpfiles_t proc_t:filesystem getattr;
++allow systemd_tmpfiles_t init_t:file read;
++allow systemd_tmpfiles_t initrc_t:unix_dgram_socket sendto;
++
+ kernel_getattr_proc(systemd_tmpfiles_t)
+ kernel_read_kernel_sysctls(systemd_tmpfiles_t)
+ kernel_read_network_state(systemd_tmpfiles_t)
+-- 
+2.19.1
+

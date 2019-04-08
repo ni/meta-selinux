@@ -1,0 +1,33 @@
+From 51e282aa2730e4c6e038d42a84a561c080f41187 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Fri, 29 Mar 2019 10:33:18 -0400
+Subject: [PATCH 19/34] policy/module/logging: add rules for syslogd symlink of
+ /var/log
+
+We have added rules for the symlink of /var/log in logging.if, while
+syslogd_t uses /var/log but does not use the interfaces in logging.if. So
+still need add a individual rule for syslogd_t.
+
+Upstream-Status: Inappropriate [only for Poky]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/logging.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index fa5664b0..63e92a8e 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -417,6 +417,7 @@ files_search_spool(syslogd_t)
+ 
+ # Allow access for syslog-ng
+ allow syslogd_t var_log_t:dir { create setattr };
++allow syslogd_t var_log_t:lnk_file read_lnk_file_perms;
+ 
+ # for systemd but can not be conditional
+ files_pid_filetrans(syslogd_t, syslogd_tmp_t, dir, "log")
+-- 
+2.19.1
+

@@ -1,0 +1,33 @@
+From 628281e2e192269468cbe2c2818b6cab40975532 Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Thu, 22 Aug 2013 13:37:23 +0800
+Subject: [PATCH 17/34] policy/module/logging: Add the syslogd_t to trusted
+ object
+
+We add the syslogd_t to trusted object, because other process need
+to have the right to connectto/sendto /dev/log.
+
+Upstream-Status: Inappropriate [only for Poky]
+
+Signed-off-by: Roy.Li <rongqing.li@windriver.com>
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/logging.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index 07ed546d..a7b69932 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -501,6 +501,7 @@ fs_getattr_all_fs(syslogd_t)
+ fs_search_auto_mountpoints(syslogd_t)
+ 
+ mls_file_write_all_levels(syslogd_t) # Need to be able to write to /var/run/ and /var/log directories
++mls_trusted_object(syslogd_t) # Other process need to have the right to connectto/sendto /dev/log
+ 
+ term_write_console(syslogd_t)
+ # Allow syslog to a terminal
+-- 
+2.19.1
+

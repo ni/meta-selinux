@@ -1,0 +1,27 @@
+From 3323cd185bd27a010fb4353d16cb6c3a8608fd20 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Thu, 28 Mar 2019 21:43:53 -0400
+Subject: [PATCH 07/34] fc/login: apply login context to login.shadow
+
+Upstream-Status: Inappropriate [only for Poky]
+
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/authlogin.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/authlogin.fc b/policy/modules/system/authlogin.fc
+index e22945cd..a42bc0da 100644
+--- a/policy/modules/system/authlogin.fc
++++ b/policy/modules/system/authlogin.fc
+@@ -5,6 +5,7 @@
+ /etc/shadow.*		--	gen_context(system_u:object_r:shadow_t,s0)
+ 
+ /usr/bin/login		--	gen_context(system_u:object_r:login_exec_t,s0)
++/usr/bin/login\.shadow	--	gen_context(system_u:object_r:login_exec_t,s0)
+ /usr/bin/pam_console_apply	--	gen_context(system_u:object_r:pam_console_exec_t,s0)
+ /usr/bin/pam_timestamp_check	--	gen_context(system_u:object_r:pam_exec_t,s0)
+ /usr/bin/unix_chkpwd		--	gen_context(system_u:object_r:chkpwd_exec_t,s0)
+-- 
+2.19.1
+

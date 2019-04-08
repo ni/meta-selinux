@@ -1,0 +1,33 @@
+From d97aef0ecdb2ff964b1ed3d0b18ce83c2ab42f14 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Fri, 29 Mar 2019 11:30:27 -0400
+Subject: [PATCH 29/34] policy/module/selinuxutil: fix setfiles statvfs to get
+ file count
+
+New setfiles will read /proc/mounts and use statvfs in
+file_system_count() to get file count of filesystems.
+
+Upstream-Status: Pending
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Shrikant Bobade <Shrikant_Bobade@mentor.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+---
+ policy/modules/system/selinuxutil.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/selinuxutil.te b/policy/modules/system/selinuxutil.te
+index 8a1688cc..a9930e9e 100644
+--- a/policy/modules/system/selinuxutil.te
++++ b/policy/modules/system/selinuxutil.te
+@@ -607,6 +607,7 @@ files_relabel_all_files(setfiles_t)
+ files_read_usr_symlinks(setfiles_t)
+ files_dontaudit_read_all_symlinks(setfiles_t)
+ 
++fs_getattr_all_fs(setfiles_t)
+ fs_getattr_all_xattr_fs(setfiles_t)
+ fs_getattr_cgroup(setfiles_t)
+ fs_getattr_nfs(setfiles_t)
+-- 
+2.19.1
+
