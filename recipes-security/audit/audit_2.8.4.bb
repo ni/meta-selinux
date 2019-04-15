@@ -82,7 +82,7 @@ do_install_append() {
 	rmdir ${D}/etc/sysconfig/
 
 	# replace init.d
-	install -D -m 0755 ${S}/../auditd ${D}/etc/init.d/auditd
+	install -D -m 0755 ${WORKDIR}/auditd ${D}/etc/init.d/auditd
 	rm -rf ${D}/etc/rc.d
 
 	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
