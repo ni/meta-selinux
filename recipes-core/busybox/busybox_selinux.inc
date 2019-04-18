@@ -1,3 +1,5 @@
+PTEST_BINDIR = "0"
+
 FILES_${PN} += "${libdir}/${PN}"
 
 # We should use sh wrappers instead of links so the commands could get correct
