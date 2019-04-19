@@ -1,6 +1,6 @@
 SRC_URI = "https://github.com/SELinuxProject/refpolicy/releases/download/RELEASE_2_20190201/refpolicy-${PV}.tar.bz2"
-SRC_URI[md5sum] = "76a7a455289c9216ee0fbb8de71c9799"
-SRC_URI[sha256sum] = "5e4daee61d89dfdc8c7bf369f81c99845931e337916dc6401e301c5de57ea336"
+SRC_URI[md5sum] = "babb0d5ca2ae333631d25392b2b3ce8d"
+SRC_URI[sha256sum] = "ed620dc91c4e09eee6271b373f7c61a364a82ea57bd2dc86ca1f7075304e2843"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-2.20190201:"
 
