@@ -8,14 +8,14 @@ SETools."
 SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
 
-SRC_URI = "https://github.com/TresysTechnology/setools/archive/${PV}.tar.gz;downloadfilename=setools-${PV}.tar.gz \
+S = "${WORKDIR}/git"
+SRC_URI = "git://github.com/TresysTechnology/${BPN}.git;branch=4.1 \
            file://setools4-fixes-for-cross-compiling.patch \
            file://setools4-fix-cross-compiling-errors-for-powerpc-mips.patch \
            file://Fix-build-failure-with-GCC-7-due-to-possible-truncat.patch \
 "
 
-SRC_URI[md5sum] = "54cf5c0ca2aa4ef7c6ac153981af34cd"
-SRC_URI[sha256sum] = "46a927ea2b163cbe1d35cc35da43e45853e13720c7e02d4cf75a498783c19610"
+SRCREV = "e03617eb7ab5a035633bff66500b95d25232e331"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=83a5eb6974c11f30785e90d0eeccf40c \
                     file://${S}/COPYING.GPL;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
