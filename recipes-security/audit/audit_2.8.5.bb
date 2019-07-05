@@ -11,14 +11,13 @@ SRC_URI = "http://people.redhat.com/sgrubb/${BPN}/${BPN}-${PV}.tar.gz \
            file://audit-python-configure.patch \
            file://audit-python.patch \
            file://fix-swig-host-contamination.patch \
-           file://0001-Remove-strdupa-as-suggested-in-pull-request-25.patch \
-           file://0002-Add-substitue-functions-for-strndupa-rawmemchr.patch \
+           file://Add-substitue-functions-for-strndupa-rawmemchr.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
 "
-SRC_URI[md5sum] = "ec9510312564c3d9483bccf8dbda4779"
-SRC_URI[sha256sum] = "a410694d09fc5708d980a61a5abcb9633a591364f1ecc7e97ad5daef9c898c38"
+SRC_URI[md5sum] = "9455e5773670afdbccaeb92681b2e97d"
+SRC_URI[sha256sum] = "0e5d4103646e00f8d1981e1cd2faea7a2ae28e854c31a803e907a383c5e2ecb7"
 
 inherit autotools pythonnative update-rc.d systemd
 
