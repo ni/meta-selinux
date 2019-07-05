@@ -1,12 +1,11 @@
-From 5346b6af0ca67a2965ca5846ae150f3021a2aa17 Mon Sep 17 00:00:00 2001
+From bdcdc3dff4469aac88e718bd15958d5ed4b9392a Mon Sep 17 00:00:00 2001
 From: Steve Grubb <sgrubb@redhat.com>
 Date: Tue, 26 Feb 2019 18:33:33 -0500
 Subject: [PATCH] Add substitue functions for strndupa & rawmemchr
 
+Upstream-Status: Backport
+[https://github.com/linux-audit/audit-userspace/commit/d579a08bb1cde71f939c13ac6b2261052ae9f77e]
 ---
-Origin: https://github.com/linux-audit/audit-userspace/commit/d579a08bb1cde71f939c13ac6b2261052ae9f77e
-Applied-Upstream: yes
-
  auparse/auparse.c   | 12 +++++++++++-
  auparse/interpret.c |  9 ++++++++-
  configure.ac        | 14 +++++++++++++-
@@ -14,7 +13,7 @@ Applied-Upstream: yes
  4 files changed, 43 insertions(+), 4 deletions(-)
 
 diff --git a/auparse/auparse.c b/auparse/auparse.c
-index f84712e..3764046 100644
+index 650db02..2e1c737 100644
 --- a/auparse/auparse.c
 +++ b/auparse/auparse.c
 @@ -1,5 +1,5 @@
@@ -24,7 +23,7 @@ index f84712e..3764046 100644
   * All Rights Reserved.
   *
   * This library is free software; you can redistribute it and/or
-@@ -1100,6 +1100,16 @@ static int str2event(char *s, au_event_t *e)
+@@ -1118,6 +1118,16 @@ static int str2event(char *s, au_event_t *e)
  	return 0;
  }
  
@@ -42,7 +41,7 @@ index f84712e..3764046 100644
  static int extract_timestamp(const char *b, au_event_t *e)
  {
 diff --git a/auparse/interpret.c b/auparse/interpret.c
-index 1846f9d..8540bd1 100644
+index 51c4a5e..67b7b77 100644
 --- a/auparse/interpret.c
 +++ b/auparse/interpret.c
 @@ -853,6 +853,13 @@ err_out:
@@ -69,7 +68,7 @@ index 1846f9d..8540bd1 100644
  				break;
  			*ptr = ' ';
 diff --git a/configure.ac b/configure.ac
-index ede7109..97b547f 100644
+index 54bdbf1..aef07fb 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1,7 +1,7 @@
@@ -101,7 +100,7 @@ index ede7109..97b547f 100644
  ALLWARNS=""
  ALLDEBUG="-g"
 diff --git a/src/ausearch-lol.c b/src/ausearch-lol.c
-index 4fbfbae..5eecefe 100644
+index 5d17a72..758c33e 100644
 --- a/src/ausearch-lol.c
 +++ b/src/ausearch-lol.c
 @@ -1,6 +1,6 @@
@@ -112,8 +111,8 @@ index 4fbfbae..5eecefe 100644
  * All Rights Reserved. 
  *
  * This software may be freely redistributed and/or modified under the
-@@ -131,6 +131,16 @@ static int inline events_are_equal(event *e1, event *e2)
- 	return 1;
+@@ -152,6 +152,16 @@ static int compare_event_time(event *e1, event *e2)
+ 	return 0;
  }
  
 +#ifndef HAVE_STRNDUPA
@@ -130,5 +129,5 @@ index 4fbfbae..5eecefe 100644
   * This function will look at the line and pick out pieces of it.
   */
 -- 
-2.20.1
+2.7.4
 

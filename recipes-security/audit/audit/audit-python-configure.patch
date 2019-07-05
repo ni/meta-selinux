@@ -1,9 +1,9 @@
-From be689ee1748c6aa531dbca982e0218d077ac901c Mon Sep 17 00:00:00 2001
+From 6a2710db094061e1956fac3ed81114d0e958ea21 Mon Sep 17 00:00:00 2001
 From: Li xin <lixin.fnst@cn.fujitsu.com>
 Date: Sun, 19 Jul 2015 00:49:13 +0900
 Subject: [PATCH] audit: python cross-compile
 
-Upstream-Status: pending
+Upstream-Status: Inappropriate [embedded specific]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Li Xin <lixin.fnst@cn.fujitsu.com>
@@ -14,10 +14,10 @@ Signed-off-by: T.O. Radzy Radzykewycz <radzy@windriver.com>
  1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 1f48cb4..cdb5219 100644
+index 6e345f1..54bdbf1 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -94,21 +94,8 @@ if test x$use_python = xno ; then
+@@ -99,21 +99,8 @@ if test "x$use_python" = xno ; then
  else
  AC_MSG_RESULT(testing)
  AM_PATH_PYTHON
@@ -42,5 +42,5 @@ index 1f48cb4..cdb5219 100644
  AM_CONDITIONAL(HAVE_PYTHON, test ${python_found} = "yes")
  
 -- 
-1.9.1
+2.7.4
 

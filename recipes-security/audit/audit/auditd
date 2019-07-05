@@ -30,7 +30,7 @@ SCRIPTNAME=/etc/init.d/"$NAME"
 
 . /etc/default/rcS
 
-. /etc/init.d/functions                                                
+. /etc/init.d/functions
 
 #
 # Function that starts the daemon/service
