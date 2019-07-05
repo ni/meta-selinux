@@ -7,7 +7,7 @@ SECTION = "base"
 LICENSE = "GPLv2+ & LGPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
-SRC_URI = "http://people.redhat.com/sgrubb/${BPN}/${BPN}-${PV}.tar.gz \
+SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=2.8_maintenance \
            file://audit-python-configure.patch \
            file://audit-python.patch \
            file://fix-swig-host-contamination.patch \
@@ -16,8 +16,9 @@ SRC_URI = "http://people.redhat.com/sgrubb/${BPN}/${BPN}-${PV}.tar.gz \
            file://auditd.service \
            file://audit-volatile.conf \
 "
-SRC_URI[md5sum] = "9455e5773670afdbccaeb92681b2e97d"
-SRC_URI[sha256sum] = "0e5d4103646e00f8d1981e1cd2faea7a2ae28e854c31a803e907a383c5e2ecb7"
+
+S = "${WORKDIR}/git"
+SRCREV = "5fae55c1ad15b3cefe6890eba7311af163e9133c"
 
 inherit autotools pythonnative update-rc.d systemd
 
