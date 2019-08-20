@@ -14,6 +14,9 @@ inherit systemd update-rc.d
 
 DEPENDS += "libsepol libselinux libcap"
 
+# We do not need "${D}/" as a prefix anymore.
+EXTRA_OEMAKE += "SBINDIR=${base_sbindir}"
+
 do_install_append() {
     install -d ${D}${sbindir}
     install -m 755 utils/untranscon ${D}${sbindir}/
