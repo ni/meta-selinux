@@ -15,11 +15,13 @@ inherit python-dir
 
 DEPENDS += "python-native libsepol"
 RDEPENDS_${BPN}-audit2allow += "\
+        python-core \
         python-textutils \
         libselinux-python \
         ${BPN}-sepolgen \
 "
 RDEPENDS_${BPN}-chcat += "\
+        python-core \
         python-codecs \
         python-shell \
         python-stringold \
@@ -28,6 +30,7 @@ RDEPENDS_${BPN}-chcat += "\
         ${BPN} \
 "
 RDEPENDS_${BPN} += "\
+        python-core \
         python-codecs \
         python-io \
         python-ipy \
