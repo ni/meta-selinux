@@ -33,18 +33,6 @@ check_rootfs()
 	/sbin/shutdown -f -h now
 }
 
-# If first booting, the security context type of init would be
-# "kernel_t", and the whole file system should be relabeled.
-if [ "`${SECON} -t --pid 1`" = "kernel_t" ]; then
-	echo "Checking SELinux security contexts:"
-	check_rootfs
-	echo " * First booting, filesystem will be relabeled..."
-	test -x /etc/init.d/auditd && /etc/init.d/auditd start
-	${SETENFORCE} 0
-	${RESTORECON} -RF /
-	${RESTORECON} -F /
-	echo " * Relabel done, rebooting the system."
-	/sbin/reboot
-fi
+# sysvinit firstboot relabel placeholder HERE
 
 exit 0
