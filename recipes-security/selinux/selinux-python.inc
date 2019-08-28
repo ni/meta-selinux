@@ -47,6 +47,7 @@ RDEPENDS_${BPN}-semanage += "\
         python-ipy \
         python-compression \
         python-xml \
+        python-misc \
         libselinux-python \
         ${BPN} \
 "
