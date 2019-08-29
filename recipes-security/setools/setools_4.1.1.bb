@@ -9,7 +9,7 @@ SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
 
 S = "${WORKDIR}/git"
-SRC_URI = "git://github.com/TresysTechnology/${BPN}.git;branch=4.1 \
+SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.1 \
            file://setools4-fixes-for-cross-compiling.patch \
            file://setools4-fix-cross-compiling-errors-for-powerpc-mips.patch \
            file://Fix-build-failure-with-GCC-7-due-to-possible-truncat.patch \
