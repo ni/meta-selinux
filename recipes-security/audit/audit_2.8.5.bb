@@ -39,6 +39,7 @@ EXTRA_OECONF += "--without-prelude \
         --libdir=${base_libdir} \
         --sbindir=${base_sbindir} \
         --without-python3 \
+        --without-golang \
         --disable-zos-remote \
         "
 EXTRA_OECONF_append_arm = " --with-arm=yes"
