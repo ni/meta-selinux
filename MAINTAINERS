@@ -30,6 +30,6 @@ F:	classes
 F:	recipes-*
 
 COMMON
-M:	Mark Hatle <mark.hatle@windriver.com>
+M:	Mark Hatle <mark.hatle@kernel.crashing.org>
 F:	conf
 F:	recipes-*
