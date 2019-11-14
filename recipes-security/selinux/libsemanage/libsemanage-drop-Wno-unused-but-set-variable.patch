@@ -1,21 +1,20 @@
-From 3f65789f172003c499f24f00d73a42867fccd277 Mon Sep 17 00:00:00 2001
+From 90a2459d1683e53f4a896b977e6b396db562c903 Mon Sep 17 00:00:00 2001
 From: Randy MacLeod <Randy.MacLeod@windriver.com>
 Date: Tue, 30 Apr 2013 23:15:57 -0400
 Subject: [PATCH] libselinux: drop flag: -Wno-unused-but-set-variable
 
-Upstream status: inappropriate (older compilers only).
+Upstream-Status: Inappropriate (older compilers only).
 
 Signed-off-by: Randy MacLeod <Randy.MacLeod@windriver.com>
-
 ---
  src/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index fdb178f..d457208 100644
+index e029f09..8240c3a 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -58,7 +58,7 @@ OBJS= $(patsubst %.c,%.o,$(SRCS)) conf-scan.o conf-parse.o
+@@ -55,7 +55,7 @@ OBJS= $(patsubst %.c,%.o,$(SRCS)) conf-scan.o conf-parse.o
  LOBJS= $(patsubst %.c,%.lo,$(SRCS)) conf-scan.lo conf-parse.lo
  CFLAGS ?= -Werror -Wall -W -Wundef -Wshadow -Wmissing-noreturn -Wmissing-format-attribute
  
@@ -24,3 +23,6 @@ index fdb178f..d457208 100644
  		-Wno-unused-parameter
  
  override CFLAGS += -I../include -D_GNU_SOURCE
+-- 
+2.7.4
+

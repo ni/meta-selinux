@@ -9,7 +9,7 @@ LICENSE = "LGPLv2.1+"
 inherit lib_package python-dir
 
 DEPENDS += "libsepol libselinux bzip2 python bison-native flex-native swig-native"
-DEPENDS_append_class-target += "audit"
+DEPENDS_append_class-target = " audit"
 
 PACKAGES =+ "${PN}-python"
 PACKAGES_prepend = " ${PN}-utils "
@@ -42,7 +42,7 @@ do_install_append() {
             PYLIBDIR='${D}/${libdir}/$(PYLIBVER)'
 
     # Update "policy-version" for semanage.conf
-    sed -i 's/^#\s*\(policy-version\s*=\).*$/\1 30/' \
+    sed -i 's/^#\s*\(policy-version\s*=\).*$/\1 31/' \
 	${D}/etc/selinux/semanage.conf
 }
 
