@@ -13,12 +13,10 @@ SRC_URI += "file://sandbox-de-bashify.patch \
 DEPENDS += "libcap-ng libselinux"
 
 RDEPENDS_${PN} += "\
-        python-core \
-        python-math \
-        python-shell \
-        python-subprocess \
-        python-textutils \
-        python-unixadmin \
+        python3-core \
+        python3-math \
+        python3-shell \
+        python3-unixadmin \
         libselinux-python \
         selinux-python \
 "

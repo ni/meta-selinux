@@ -1,4 +1,4 @@
-From d3e778e0062ca441c80e2a3ef2b508f5566e1f70 Mon Sep 17 00:00:00 2001
+From b92c39f0be5552c19923f75aef4487348a08b7dc Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 20 Feb 2015 21:07:47 -0500
 Subject: [PATCH] sandbox: de-bashify
@@ -10,9 +10,10 @@ Upstream-Status: Pending
 
 Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
- sandbox/sandbox.init | 2 +-
- sandbox/sandboxX.sh  | 2 +-
+ sandbox.init | 2 +-
+ sandboxX.sh  | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sandbox.init b/sandbox.init
@@ -36,5 +37,5 @@ index eaa500d..8755d75 100644
  context=`id -Z | secon -t -l -P`
  export TITLE="Sandbox $context -- `grep ^#TITLE: ~/.sandboxrc | /usr/bin/cut -b8-80`"
 -- 
-1.9.1
+2.7.4
 
