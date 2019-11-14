@@ -6,10 +6,7 @@ SELinux utilities audit2allow, chcat, semanage ..."
 SECTION = "base"
 LICENSE = "GPLv2+"
 
-SRC_URI += "file://fix-sepolicy-install-path.patch \
-            file://fix-TypeError-for-seobject.py.patch \
-            file://process-ValueError-for-sepolicy-seobject.patch \
-"
+SRC_URI += "file://fix-sepolicy-install-path.patch"
 
 inherit python-dir
 
