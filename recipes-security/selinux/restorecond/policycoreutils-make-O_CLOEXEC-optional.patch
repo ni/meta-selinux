@@ -1,29 +1,34 @@
+From 4adc1c02e4da42f64249c05534875e732f043693 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Wed, 6 Nov 2019 23:17:50 +0800
 Subject: [PATCH] policycoreutils: make O_CLOEXEC optional
 
-Various commits in the selinux tree in the current release added O_CLOEXEC
-to open() calls in an attempt to address file descriptor leaks as
-described:
+Various commits in the selinux tree in the current release added
+O_CLOEXEC to open() calls in an attempt to address file descriptor leaks
+as described:
 
-   http://danwalsh.livejournal.com/53603.html
+  http://danwalsh.livejournal.com/53603.html
 
 However O_CLOEXEC isn't available on all platforms, so make it a
-compile-time option and generate a warning when it is not available.  The
-actual impact of leaking these file descriptors is minimal, though it does
-produce curious AVC Denied messages.
+compile-time option and generate a warning when it is not available.
+The actual impact of leaking these file descriptors is minimal, though
+it does produce curious AVC Denied messages.
 
-Uptream-Status: Inappropriate [O_CLOEXEC has been in Linux since 2007 and POSIX since 2008]
+Uptream-Status: Inappropriate
+[O_CLOEXEC has been in Linux since 2007 and POSIX since 2008]
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
- user.c |    8 +++++++-
+ user.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/user.c b/user.c
-index 2c28676..6235772 100644
+index 714aae7..bbf018e 100644
 --- a/user.c
 +++ b/user.c
-@@ -202,7 +202,13 @@ static int local_server() {
+@@ -202,7 +202,13 @@ static int local_server(void) {
  			perror("asprintf");
  		return -1;
  	}
@@ -39,5 +44,5 @@ index 2c28676..6235772 100644
  		g_warning ("Lock file: %s", ptr);
  
 -- 
-1.7.9.5
+2.7.4
 
