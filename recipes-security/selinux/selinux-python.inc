@@ -6,60 +6,54 @@ SELinux utilities audit2allow, chcat, semanage ..."
 SECTION = "base"
 LICENSE = "GPLv2+"
 
-SRC_URI += "file://fix-sepolicy-install-path.patch \
-            file://fix-TypeError-for-seobject.py.patch \
-            file://process-ValueError-for-sepolicy-seobject.patch \
-"
+SRC_URI += "file://fix-sepolicy-install-path.patch"
 
-inherit python-dir
+inherit python3-dir
 
-DEPENDS += "python-native libsepol"
+DEPENDS += "python3 libsepol"
 RDEPENDS_${BPN}-audit2allow += "\
-        python-core \
-        python-textutils \
+        python3-core \
         libselinux-python \
         ${BPN}-sepolgen \
 "
 RDEPENDS_${BPN}-chcat += "\
-        python-core \
-        python-codecs \
-        python-shell \
-        python-stringold \
-        python-unixadmin \
+        python3-core \
+        python3-codecs \
+        python3-shell \
+        python3-stringold \
+        python3-unixadmin \
         libselinux-python \
         ${BPN} \
 "
 RDEPENDS_${BPN} += "\
-        python-core \
-        python-codecs \
-        python-io \
-        python-ipy \
-        python-re \
-        python-stringold \
-        python-syslog \
-        python-unixadmin \
+        python3-core \
+        python3-codecs \
+        python3-io \
+        python3-ipy \
+        python3-stringold \
+        python3-syslog \
+        python3-unixadmin \
         libselinux-python \
         libsemanage-python \
         setools \
 "
 RDEPENDS_${BPN}-semanage += "\
-        python-core \
-        python-ipy \
-        python-compression \
-        python-xml \
-        python-misc \
+        python3-core \
+        python3-ipy \
+        python3-compression \
+        python3-xml \
+        python3-misc \
         libselinux-python \
         ${BPN} \
 "
 RDEPENDS_${BPN}-sepolicy += "\
-        python-argparse \
-        python-codecs \
-        python-core \
-        python-syslog \
+        python3-core \
+        python3-codecs \
+        python3-syslog \
         ${BPN} \
 "
 RDEPENDS_${BPN}-sepolgen-ifgen += "\
-        python \
+        python3-core \
         libselinux-python \
 "
 
@@ -96,7 +90,7 @@ FILES_${PN}-sepolgen += "\
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolgen* \
         ${localstatedir}/lib/sepolgen/perm_map \
 "
-# Map to policycoreutils-python in 2.6
+
 FILES_${PN} += "\
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/seobject.py* \
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy*.egg-info \
@@ -104,9 +98,11 @@ FILES_${PN} += "\
 "
 
 EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
+
 do_install() {
-        oe_runmake DESTDIR=${D} \
+        oe_runmake DESTDIR="${D}" \
                 LIBDIR="${libdir}" \
+                PYLIBVER='python${PYTHON_BASEVERSION}' \
                 PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
                 install
 }
