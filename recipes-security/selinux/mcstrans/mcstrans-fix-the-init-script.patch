@@ -1,17 +1,21 @@
-[PATCH] mcstrans: fix the init script
-
-Upstream-Status: Inappropriate [embedded specific]
+From 4d918a9679d2902ca2d41fe769a4d76f07a67b5f Mon Sep 17 00:00:00 2001
+From: Roy Li <rongqing.li@windriver.com>
+Date: Wed, 6 Nov 2019 22:13:33 +0800
+Subject: [PATCH] mcstrans: fix the init script
 
 replace daemon with start-stop-daemon, due to not daemon functions
 
+Upstream-Status: Inappropriate [embedded specific]
+
 Signed-off-by: Roy Li <rongqing.li@windriver.com>
 Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
  src/mcstrans.init | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/mcstrans.init b/src/mcstrans.init
-index 2804ec0..c660290 100644
+index 8b4737d..86c89ea 100644
 --- a/src/mcstrans.init
 +++ b/src/mcstrans.init
 @@ -51,7 +51,7 @@ start(){
@@ -24,5 +28,5 @@ index 2804ec0..c660290 100644
  	echo
  	if test $RETVAL = 0 ; then
 -- 
-1.9.1
+2.7.4
 
