@@ -1,4 +1,4 @@
-From 0e97e4d19627f78bf04445cd51902ccf4f7cf239 Mon Sep 17 00:00:00 2001
+From 81f2e8b62ad2298a197c4b16e7182a133c1e116f Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe.macdonald@windriver.com>
 Date: Tue, 15 Oct 2013 10:17:38 -0400
 Subject: [PATCH] libsemanage: define FD_CLOEXEC as necessary
@@ -10,15 +10,14 @@ asm-generic/fcntl.h on more modern platforms.
 Uptream-Status: Inappropriate
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
-
 ---
- libsemanage/src/semanage_store.c | 5 +++++
+ src/semanage_store.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/libsemanage/src/semanage_store.c b/libsemanage/src/semanage_store.c
-index 1923f0f..f7a8760 100644
---- a/libsemanage/src/semanage_store.c
-+++ b/libsemanage/src/semanage_store.c
+diff --git a/src/semanage_store.c b/src/semanage_store.c
+index 1a94545..b586a8f 100644
+--- a/src/semanage_store.c
++++ b/src/semanage_store.c
 @@ -66,6 +66,11 @@ typedef struct dbase_policydb dbase_t;
  
  #define TRUE 1
@@ -31,3 +30,6 @@ index 1923f0f..f7a8760 100644
  enum semanage_file_defs {
  	SEMANAGE_ROOT,
  	SEMANAGE_TRANS_LOCK,
+-- 
+2.7.4
+
