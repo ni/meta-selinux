@@ -1,9 +1,7 @@
 HOMEPAGE = "https://github.com/SELinuxProject"
 
 do_compile() {
-    oe_runmake all \
-            INCLUDEDIR='${STAGING_INCDIR}' \
-            LIBDIR='${STAGING_LIBDIR}'
+    oe_runmake all
 }
 
 do_install() {
