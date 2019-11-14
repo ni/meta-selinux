@@ -7,7 +7,7 @@ SECTION = "base"
 LICENSE = "GPLv2+"
 
 SRC_URI += "file://mcstrans-de-bashify.patch \
-            file://0001-mcstrans-fix-the-init-script.patch \
+            file://mcstrans-fix-the-init-script.patch \
 "
 
 inherit systemd update-rc.d
@@ -29,7 +29,7 @@ do_install_append() {
     else
         install -d ${D}${sysconfdir}/default/volatiles
         echo "d root root 0755 /var/run/setrans none" \
-            >${D}${sysconfdir}/default/volatiles/volatiles.80_mcstrans
+            >${D}${sysconfdir}/default/volatiles/80_mcstrans
     fi
     install -d ${D}${datadir}/mcstrans
     cp -r share/* ${D}${datadir}/mcstrans/.
