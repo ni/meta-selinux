@@ -8,9 +8,6 @@ LICENSE = "GPLv2+ & LGPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=2.8_maintenance \
-           file://audit-python-configure.patch \
-           file://audit-python.patch \
-           file://fix-swig-host-contamination.patch \
            file://Add-substitue-functions-for-strndupa-rawmemchr.patch \
            file://auditd \
            file://auditd.service \
@@ -20,7 +17,7 @@ SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=2.8_maintena
 S = "${WORKDIR}/git"
 SRCREV = "5fae55c1ad15b3cefe6890eba7311af163e9133c"
 
-inherit autotools pythonnative update-rc.d systemd
+inherit autotools python3native update-rc.d systemd
 
 UPDATERCPN = "auditd"
 INITSCRIPT_NAME = "auditd"
@@ -29,16 +26,16 @@ INITSCRIPT_PARAMS = "defaults"
 SYSTEMD_PACKAGES = "auditd"
 SYSTEMD_SERVICE_auditd = "auditd.service"
 
-DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30) swig-native"
+DEPENDS += "python3 tcp-wrappers libcap-ng linux-libc-headers swig-native"
 
 EXTRA_OECONF += "--without-prelude \
         --with-libwrap \
         --enable-gssapi-krb5=no \
         --with-libcap-ng=yes \
-        --with-python=yes \
+        --with-python3=yes \
         --libdir=${base_libdir} \
         --sbindir=${base_sbindir} \
-        --without-python3 \
+        --without-python \
         --without-golang \
         --disable-zos-remote \
         "
