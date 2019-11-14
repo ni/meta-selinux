@@ -19,7 +19,7 @@ DEPENDS += "libsepol libselinux libsemanage libcap gettext-native"
 EXTRA_DEPENDS = "libcap-ng libcgroup"
 DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 
-inherit selinux pythonnative
+inherit selinux python3native
 
 RDEPENDS_${BPN}-fixfiles += "\
 	${BPN}-setfiles \
@@ -27,7 +27,6 @@ RDEPENDS_${BPN}-fixfiles += "\
 	findutils \
 "
 RDEPENDS_${BPN}-genhomedircon += "\
-	${BPN}-genhomedircon \
 	${BPN}-semodule \
 "
 RDEPENDS_${BPN}-loadpolicy += "\
@@ -45,10 +44,6 @@ RDEPENDS_${BPN}-semodule += "\
 	libselinux \
 	libsemanage \
 "
-# static link to libsepol
-RDEPENDS_${BPN}-semodule-expand += "libsepol libselinux"
-RDEPENDS_${BPN}-semodule-link += "libsepol libselinux"
-RDEPENDS_${BPN}-semodule-package += "libsepol libselinux"
 RDEPENDS_${BPN}-sestatus += "libselinux"
 RDEPENDS_${BPN}-setfiles += "\
 	libselinux \
@@ -60,10 +55,6 @@ RDEPENDS_${BPN}-setsebool += "\
 	libsemanage \
 "
 RDEPENDS_${BPN} += "selinux-python"
-
-WARN_QA_remove = " unsafe-references-in-scripts"
-ERROR_QA_remove = " unsafe-references-in-scripts"
-
 
 PACKAGES =+ "\
 	${PN}-fixfiles \
@@ -102,6 +93,7 @@ FILES_${PN}-sestatus += "\
 "
 FILES_${PN}-setfiles += "\
 	${base_sbindir}/restorecon \
+	${base_sbindir}/restorecon_xattr \
 	${base_sbindir}/setfiles \
 "
 FILES_${PN}-setsebool += "\
@@ -147,7 +139,7 @@ sysroot_stage_dirs_append_class-native() {
 }
 
 do_compile_prepend() {
-	export PYTHON=python
+	export PYTHON=python3
 	export PYLIBVER='python${PYTHON_BASEVERSION}'
 	export PYTHON_CPPFLAGS="-I${STAGING_INCDIR}/${PYLIBVER}"
 	export PYTHON_LDFLAGS="${STAGING_LIBDIR}/lib${PYLIBVER}.so"
@@ -155,7 +147,7 @@ do_compile_prepend() {
 }
 
 do_install_prepend() {
-	export PYTHON=python
+	export PYTHON=python3
 	export SBINDIR="${D}/${base_sbindir}"
 }
 
