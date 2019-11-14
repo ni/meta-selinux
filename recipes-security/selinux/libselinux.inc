@@ -5,15 +5,10 @@ decisions.  Required for any applications that use the SELinux API."
 SECTION = "base"
 LICENSE = "PD"
 
-inherit lib_package pythonnative
+inherit lib_package python3native
 
-DEPENDS += "libsepol python libpcre swig-native"
+DEPENDS += "libsepol libpcre"
 DEPENDS_append_libc-musl = " fts"
-RDEPENDS_${PN}-python += "python-core python-shell"
-
-PACKAGES += "${PN}-python"
-FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
-FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/.debug/*"
 
 def get_policyconfigarch(d):
     import re
@@ -25,20 +20,5 @@ EXTRA_OEMAKE += "${@get_policyconfigarch(d)}"
 
 EXTRA_OEMAKE += "LDFLAGS='${LDFLAGS} -lpcre' LIBSEPOLA='${STAGING_LIBDIR}/libsepol.a'"
 EXTRA_OEMAKE_append_libc-musl = " FTS_LDLIBS=-lfts"
-
-do_compile_append() {
-    oe_runmake pywrap -j1 \
-            INCLUDEDIR='${STAGING_INCDIR}' \
-            LIBDIR='${STAGING_LIBDIR}' \
-            PYINC='-I${STAGING_INCDIR}/python${PYTHON_BASEVERSION}'
-}
-
-do_install_append() {
-    oe_runmake install-pywrap swigify \
-            PYTHONLIBDIR=${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages
-    if ! ${@bb.utils.contains('DISTRO_FEATURES','usrmerge','true','false',d)}; then
-        rm -rf ${D}${base_sbindir}
-    fi
-}
 
 BBCLASSEXTEND = "native"
