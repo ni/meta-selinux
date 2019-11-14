@@ -6,7 +6,7 @@ Policy Generation Tool (selinux-polgengui)"
 SECTION = "base"
 LICENSE = "GPLv2+"
 
-RDEPENDS_${PN} += "python"
+RDEPENDS_${PN} += "python3-core"
 
 FILES_${PN} += " \
         ${datadir}/system-config-selinux/* \
