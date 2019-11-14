@@ -27,7 +27,6 @@ RDEPENDS_${BPN}-fixfiles += "\
 	findutils \
 "
 RDEPENDS_${BPN}-genhomedircon += "\
-	${BPN}-genhomedircon \
 	${BPN}-semodule \
 "
 RDEPENDS_${BPN}-loadpolicy += "\
@@ -45,10 +44,6 @@ RDEPENDS_${BPN}-semodule += "\
 	libselinux \
 	libsemanage \
 "
-# static link to libsepol
-RDEPENDS_${BPN}-semodule-expand += "libsepol libselinux"
-RDEPENDS_${BPN}-semodule-link += "libsepol libselinux"
-RDEPENDS_${BPN}-semodule-package += "libsepol libselinux"
 RDEPENDS_${BPN}-sestatus += "libselinux"
 RDEPENDS_${BPN}-setfiles += "\
 	libselinux \
@@ -60,10 +55,6 @@ RDEPENDS_${BPN}-setsebool += "\
 	libsemanage \
 "
 RDEPENDS_${BPN} += "selinux-python"
-
-WARN_QA_remove = " unsafe-references-in-scripts"
-ERROR_QA_remove = " unsafe-references-in-scripts"
-
 
 PACKAGES =+ "\
 	${PN}-fixfiles \
@@ -102,6 +93,7 @@ FILES_${PN}-sestatus += "\
 "
 FILES_${PN}-setfiles += "\
 	${base_sbindir}/restorecon \
+	${base_sbindir}/restorecon_xattr \
 	${base_sbindir}/setfiles \
 "
 FILES_${PN}-setsebool += "\
