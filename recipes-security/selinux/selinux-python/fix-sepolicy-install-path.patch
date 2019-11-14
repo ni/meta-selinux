@@ -1,4 +1,4 @@
-From c1aae6cc131371729f098e4b0aa02142a85b5890 Mon Sep 17 00:00:00 2001
+From e57022e3577770188ad3570005b7107a09cf3bb9 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Mon, 23 Sep 2013 21:17:59 +0800
 Subject: [PATCH] policycoreutils: fix install path for new pymodule sepolicy
@@ -13,10 +13,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/sepolicy/Makefile b/sepolicy/Makefile
-index fb8a132..a6ee749 100644
+index 69f29fa..a18d1c3 100644
 --- a/sepolicy/Makefile
 +++ b/sepolicy/Makefile
-@@ -8,6 +8,8 @@ BASHCOMPLETIONDIR ?= $(PREFIX)/share/bash-completion/completions
+@@ -9,6 +9,8 @@ BASHCOMPLETIONDIR ?= $(PREFIX)/share/bash-completion/completions
  CFLAGS ?= -Wall -Werror -Wextra -W
  override CFLAGS += -DPACKAGE="policycoreutils" -DSHARED -shared
  
@@ -25,7 +25,7 @@ index fb8a132..a6ee749 100644
  BASHCOMPLETIONS=sepolicy-bash-completion.sh
  
  all: python-build
-@@ -26,7 +28,7 @@ test:
+@@ -27,7 +29,7 @@ test:
  	@$(PYTHON) test_sepolicy.py -v
  
  install:
