@@ -44,6 +44,16 @@ EXTRA_POLICY_MODULES += "mta"
 # hostname_t, ping_t, netutils_t) from modules:
 EXTRA_POLICY_MODULES += "modutils consoletype hostname netutils"
 
+# Add specific policy modules here that should be purged from the system
+# policy.  Purged modules will not be built and will not be installed on the
+# target.  To use them at some later time you must specifically build and load
+# the modules by hand on the target.
+#
+# USE WITH CARE!  With this feature it is easy to break your policy by purging
+# core modules (eg.  userdomain)
+# 
+# PURGE_POLICY_MODULES += "xdg xen"
+
 POLICY_MODULES_MIN = "${CORE_POLICY_MODULES} ${EXTRA_POLICY_MODULES}"
 
 # re-write the same func from refpolicy_common.inc

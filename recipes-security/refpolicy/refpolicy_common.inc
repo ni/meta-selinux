@@ -122,8 +122,18 @@ python __anonymous () {
         d.setVar('DEFAULT_ENFORCING', 'permissive')
 }
 
+disable_policy_modules () {
+	for module in ${PURGE_POLICY_MODULES} ; do
+		sed -i "s/^\(\<${module}\>\) *= *.*$/\1 = off/" ${S}/policy/modules.conf
+	done
+}
+
 do_compile() {
+	if [ -f "${WORKDIR}/modules.conf" ] ; then
+		cp -f ${WORKDIR}/modules.conf ${S}/policy/modules.conf
+	fi
 	oe_runmake conf
+	disable_policy_modules
 	oe_runmake policy
 }
 
