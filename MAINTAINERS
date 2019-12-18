@@ -30,6 +30,6 @@ F:	classes
 F:	recipes-*
 
 COMMON
-M:	Mark Hatle <mark.hatle@kernel.crashing.org>
+M:	Yi Zhao <yi.zhao@windriver.com>
 F:	conf
 F:	recipes-*
