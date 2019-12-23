@@ -33,7 +33,7 @@ do_compile() {
 }
 
 do_install() {
-    oe_runmake install-pywrap swigify \
+    oe_runmake install-pywrap \
             PYCEXT='.so' \
             PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \
             PYTHONLIBDIR='${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages'
