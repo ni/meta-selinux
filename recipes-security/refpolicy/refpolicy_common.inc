@@ -72,12 +72,12 @@ EXTRANATIVEPATH += "bzip2-native"
 DEPENDS += "bzip2-replacement-native checkpolicy-native policycoreutils-native semodule-utils-native m4-native"
 
 RDEPENDS_${PN}-dev =+ " \
-        python \
+        python3-core \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit pythonnative
+inherit python3native
 
 PARALLEL_MAKE = ""
 
@@ -181,7 +181,7 @@ path = ${STAGING_DIR_NATIVE}${sbindir_native}/sefcontext_compile
 args = \$@
 [end]
 
-policy-version = 30
+policy-version = 31
 EOF
 
 	# Create policy store and build the policy
