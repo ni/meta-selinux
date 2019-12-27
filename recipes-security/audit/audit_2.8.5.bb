@@ -9,6 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=2.8_maintenance \
            file://Add-substitue-functions-for-strndupa-rawmemchr.patch \
+           file://Fixed-swig-host-contamination-issue.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
