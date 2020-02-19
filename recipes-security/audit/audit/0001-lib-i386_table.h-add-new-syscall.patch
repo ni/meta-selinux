@@ -1,0 +1,42 @@
+From df878b92e01f4d1c3de7f7d8229cea6a431509eb Mon Sep 17 00:00:00 2001
+From: Mingli Yu <mingli.yu@windriver.com>
+Date: Wed, 19 Feb 2020 15:23:40 +0800
+Subject: [PATCH] lib/i386_table.h: add new syscall
+
+On 32bit system,
+After upgrade glibc to 2.31
+ # strace -o /tmp/test.log date -s 09:16:45
+ # tail -f /tmp/test.log
+ close(3)                                = 0
+ stat64("/etc/localtime", {st_mode=S_IFREG|0644, st_size=114, ...}) = 0
+ clock_settime64(CLOCK_REALTIME, {tv_sec=1582103805, tv_nsec=0}) = 0
+ fstat64(1, {st_mode=S_IFCHR|0600, st_rdev=makedev(0x4, 0x40), ...}) = 0
+ ioctl(1, TCGETS, {B115200 opost isig icanon echo ...}) = 0
+ write(1, "Wed Feb 19 09:16:45 UTC 2020\n", 29) = 29
+ close(1)                                = 0
+ close(2)                                = 0
+ exit_group(0)                           = ?
+ +++ exited with 0 +++
+
+It means the clock_settime64 syscall is used, so
+add the syscall.
+
+Upstream-Status: Submitted [https://github.com/linux-audit/audit-userspace/pull/116]
+
+Signed-off-by: Mingli Yu <mingli.yu@windriver.com>
+---
+ lib/i386_table.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/i386_table.h b/lib/i386_table.h
+index 1a64c88..65fd4d9 100644
+--- a/lib/i386_table.h
++++ b/lib/i386_table.h
+@@ -405,3 +405,4 @@ _S(383, "statx")
+ _S(384, "arch_prctl")
+ _S(385, "io_pgetevents")
+ _S(386, "rseq")
++_S(404, "clock_settime64")
+-- 
+2.7.4
+
