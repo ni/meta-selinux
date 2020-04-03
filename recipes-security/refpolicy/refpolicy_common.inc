@@ -117,7 +117,7 @@ python __anonymous () {
 
     # make sure DEFAULT_ENFORCING is something sane
     if not re.match('^(enforcing|permissive|disabled)$',
-                    d.getVar('DEFAULT_ENFORCING', True),
+                    d.getVar('DEFAULT_ENFORCING'),
                     flags=0):
         d.setVar('DEFAULT_ENFORCING', 'permissive')
 }

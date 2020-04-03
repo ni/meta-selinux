@@ -8,9 +8,9 @@ python create_sh_wrapper_reset_alternative_vars () {
     # We need to load the full set of busybox provides from the /etc/busybox.links
     # Use this to see the update-alternatives with the right information
 
-    dvar = d.getVar('D', True)
-    pn = d.getVar('PN', True)
-    base_bindir = d.getVar('base_bindir', True)
+    dvar = d.getVar('D')
+    pn = d.getVar('PN')
+    base_bindir = d.getVar('base_bindir')
 
     def create_sh_alternative_vars(links, target, mode):
         import shutil
@@ -20,7 +20,7 @@ python create_sh_wrapper_reset_alternative_vars () {
         os.fchmod(fwp.fileno(), mode)
         fwp.close()
         # Install the sh wrappers and alternatives reset to link to them
-        wpdir = os.path.join(d.getVar('libdir', True), pn)
+        wpdir = os.path.join(d.getVar('libdir'), pn)
         wpdir_dest = '%s%s' % (dvar, wpdir)
         if not os.path.exists(wpdir_dest):
             os.makedirs(wpdir_dest)

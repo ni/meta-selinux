@@ -12,7 +12,7 @@ DEPENDS_append_libc-musl = " fts"
 
 def get_policyconfigarch(d):
     import re
-    target = d.getVar('TARGET_ARCH', True)
+    target = d.getVar('TARGET_ARCH')
     p = re.compile('i.86')
     target = p.sub('i386',target)
     return "ARCH=%s" % (target)
