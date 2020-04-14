@@ -7,7 +7,7 @@ In truly old systems, even FD_CLOEXEC may not be defined.  Produce a
 warning and duplicate the #define for FD_CLOEXEC found in
 asm-generic/fcntl.h on more modern platforms.
 
-Uptream-Status: Inappropriate
+Upstream-Status: Inappropriate
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
 
