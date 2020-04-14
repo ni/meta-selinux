@@ -14,7 +14,7 @@ compile-time option and generate a warning when it is not available.
 The actual impact of leaking these file descriptors is minimal, though
 it does produce curious AVC Denied messages.
 
-Uptream-Status: Inappropriate
+Upstream-Status: Inappropriate
 [O_CLOEXEC has been in Linux since 2007 and POSIX since 2008]
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
