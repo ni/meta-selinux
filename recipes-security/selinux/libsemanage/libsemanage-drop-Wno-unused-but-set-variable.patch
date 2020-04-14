@@ -3,7 +3,7 @@ From: Randy MacLeod <Randy.MacLeod@windriver.com>
 Date: Tue, 30 Apr 2013 23:15:57 -0400
 Subject: [PATCH] libselinux: drop flag: -Wno-unused-but-set-variable
 
-Upstream-Status: Inappropriate (older compilers only).
+Upstream-Status: Inappropriate [older compilers only]
 
 Signed-off-by: Randy MacLeod <Randy.MacLeod@windriver.com>
 ---
