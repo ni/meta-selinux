@@ -9,7 +9,7 @@ SOCK_CLOEXEC suffers the same problem as O_CLOEXEC on some older
 platforms, we need to ensure we protect the references it it in the same
 way.
 
-Uptream-Status: Inappropriate
+Upstream-Status: Inappropriate
 
 Signed-off-by: Joe MacDonald <joe.macdonald@windriver.com>
 
