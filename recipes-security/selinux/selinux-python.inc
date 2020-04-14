@@ -8,7 +8,7 @@ LICENSE = "GPLv2+"
 
 SRC_URI += "file://fix-sepolicy-install-path.patch"
 
-inherit python3-dir
+inherit python3native
 
 DEPENDS += "python3 libsepol"
 RDEPENDS_${BPN}-audit2allow += "\
@@ -101,7 +101,6 @@ EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
 do_install() {
         oe_runmake DESTDIR="${D}" \
-                LIBDIR="${libdir}" \
                 PYLIBVER='python${PYTHON_BASEVERSION}' \
                 PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
                 install
