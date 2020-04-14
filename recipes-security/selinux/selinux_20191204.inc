@@ -1,4 +1,4 @@
-SELINUX_RELEASE = "20190315"
+SELINUX_RELEASE = "20191204"
 
 SRC_URI = "https://github.com/SELinuxProject/selinux/releases/download/${SELINUX_RELEASE}/${BPN}-${PV}.tar.gz"
 
