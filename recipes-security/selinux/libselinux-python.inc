@@ -9,7 +9,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/libselinux:"
 
 inherit python-dir
 
-DEPENDS += "python-native swig-native"
+DEPENDS += "python-native swig-native libpcre libsepol"
 RDEPENDS_${PN} += "libselinux python-core python-shell"
 
 def get_policyconfigarch(d):
@@ -24,6 +24,7 @@ EXTRA_OEMAKE += "LDFLAGS='${LDFLAGS} -lpcre' LIBSEPOLA='${STAGING_LIBDIR}/libsep
 EXTRA_OEMAKE_append_libc-musl = " FTS_LDLIBS=-lfts"
 
 FILES_${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
+INSANE_SKIP_${PN} = "dev-so"
 
 do_compile() {
     oe_runmake pywrap -j1 \
