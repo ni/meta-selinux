@@ -16,5 +16,6 @@ SRC_URI += "\
         file://libselinux-define-FD_CLOEXEC-as-necessary.patch \
         file://0001-Fix-building-against-musl-and-uClibc-libc-libraries.patch \
         file://0001-Makefile-fix-python-modules-install-path-for-multili.patch \
+        file://0001-Do-not-use-PYCEXT-and-rely-on-the-installed-file-nam.patch \
         "
 S = "${WORKDIR}/libselinux-${PV}"
