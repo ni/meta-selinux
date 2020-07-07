@@ -1,0 +1,36 @@
+From 7789f70ee3506f11b6bc1954469915214bcb9c58 Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Sat, 15 Feb 2014 04:22:47 -0500
+Subject: [PATCH] policy/modules/system/mount: make mount_t domain MLS trusted
+ for writing to processes up to its clearance
+
+Fixes:
+avc:  denied  { setsched } for  pid=148 comm="mount"
+scontext=system_u:system_r:mount_t:s0-s15:c0.c1023
+tcontext=system_u:system_r:kernel_t:s15:c0.c1023 tclass=process
+permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signen-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/mount.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/mount.te b/policy/modules/system/mount.te
+index 282eb3ada..5bb4fe631 100644
+--- a/policy/modules/system/mount.te
++++ b/policy/modules/system/mount.te
+@@ -116,6 +116,8 @@ fs_dontaudit_write_tmpfs_dirs(mount_t)
+ mls_file_read_all_levels(mount_t)
+ mls_file_write_all_levels(mount_t)
+ 
++mls_process_write_to_clearance(mount_t)
++
+ selinux_get_enforce_mode(mount_t)
+ 
+ storage_raw_read_fixed_disk(mount_t)
+-- 
+2.17.1
+

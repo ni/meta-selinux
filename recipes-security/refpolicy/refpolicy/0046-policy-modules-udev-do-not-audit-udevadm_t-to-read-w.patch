@@ -1,0 +1,37 @@
+From 8b5eb5b2e01a7686c43ba7b53cc76f465f9e8f56 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 30 Jun 2020 09:27:45 +0800
+Subject: [PATCH] policy/modules/udev: do not audit udevadm_t to read/write
+ /dev/console
+
+Fixes:
+avc:  denied  { read write } for  pid=162 comm="udevadm"
+path="/dev/console" dev="devtmpfs" ino=10034
+scontext=system_u:system_r:udevadm_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:console_device_t:s0 tclass=chr_file
+permissive=0
+avc:  denied  { use } for  pid=162 comm="udevadm" path="/dev/console"
+dev="devtmpfs" ino=10034
+scontext=system_u:system_r:udevadm_t:s0-s15:c0.c1023
+tcontext=system_u:system_r:init_t:s0-s15:c0.c1023 tclass=fd permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/udev.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/udev.te b/policy/modules/system/udev.te
+index 3a4d7362c..e483d63d3 100644
+--- a/policy/modules/system/udev.te
++++ b/policy/modules/system/udev.te
+@@ -425,3 +425,5 @@ kernel_read_system_state(udevadm_t)
+ 
+ seutil_read_file_contexts(udevadm_t)
+ 
++init_dontaudit_use_fds(udevadm_t)
++term_dontaudit_use_console(udevadm_t)
+-- 
+2.17.1
+

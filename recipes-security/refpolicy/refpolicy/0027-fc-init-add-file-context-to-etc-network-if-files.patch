@@ -1,0 +1,33 @@
+From 1d6f9b62082188992bfb681632dff15d5ad608c9 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 19 Nov 2019 14:33:28 +0800
+Subject: [PATCH] fc/init: add file context to /etc/network/if-* files
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/init.fc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/init.fc b/policy/modules/system/init.fc
+index fe72df22a..a9d8f343a 100644
+--- a/policy/modules/system/init.fc
++++ b/policy/modules/system/init.fc
+@@ -70,11 +70,12 @@ ifdef(`distro_redhat',`
+ ifdef(`distro_debian',`
+ /run/hotkey-setup	--	gen_context(system_u:object_r:initrc_runtime_t,s0)
+ /run/kdm/.*		--	gen_context(system_u:object_r:initrc_runtime_t,s0)
++')
++
+ /etc/network/if-pre-up\.d/.* --	gen_context(system_u:object_r:initrc_exec_t,s0)
+ /etc/network/if-up\.d/.* --	gen_context(system_u:object_r:initrc_exec_t,s0)
+ /etc/network/if-down\.d/.* --	gen_context(system_u:object_r:initrc_exec_t,s0)
+ /etc/network/if-post-down\.d/.* -- gen_context(system_u:object_r:initrc_exec_t,s0)
+-')
+ 
+ ifdef(`distro_gentoo', `
+ /var/lib/init\.d(/.*)?		gen_context(system_u:object_r:initrc_state_t,s0)
+-- 
+2.17.1
+

@@ -11,6 +11,10 @@ Pretty much everything runs as initrc_t or unconfined_t so all of the \
 domains are unconfined. \
 "
 
+SRC_URI += " \
+        file://0001-refpolicy-minimum-make-sysadmin-module-optional.patch \
+        "
+
 POLICY_NAME = "minimum"
 
 CORE_POLICY_MODULES = "unconfined \
@@ -30,7 +34,7 @@ CORE_POLICY_MODULES = "unconfined \
 	locallogin \
 	"
 #systemd dependent policy modules
-CORE_POLICY_MODULES += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'clock systemd udev fstools', '', d)}"
+CORE_POLICY_MODULES += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'clock systemd udev fstools dbus', '', d)}"
 
 # nscd caches libc-issued requests to the name service.
 # Without nscd.pp, commands want to use these caches will be blocked.

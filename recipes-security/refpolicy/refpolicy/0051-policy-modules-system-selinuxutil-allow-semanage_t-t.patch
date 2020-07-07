@@ -1,0 +1,33 @@
+From 2c8464254adf0b2635e5abf4ccc4473c96fa0006 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Mon, 29 Jun 2020 14:30:58 +0800
+Subject: [PATCH] policy/modules/system/selinuxutil: allow semanage_t to read
+ /var/lib
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/selinuxutil.te | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/policy/modules/system/selinuxutil.te b/policy/modules/system/selinuxutil.te
+index fad28f179..09fef149b 100644
+--- a/policy/modules/system/selinuxutil.te
++++ b/policy/modules/system/selinuxutil.te
+@@ -544,10 +544,8 @@ userdom_map_user_home_content_files(semanage_t)
+ userdom_read_user_tmp_files(semanage_t)
+ userdom_map_user_tmp_files(semanage_t)
+ 
+-ifdef(`distro_debian',`
+-	files_read_var_lib_files(semanage_t)
+-	files_read_var_lib_symlinks(semanage_t)
+-')
++files_read_var_lib_files(semanage_t)
++files_read_var_lib_symlinks(semanage_t)
+ 
+ ifdef(`distro_ubuntu',`
+ 	optional_policy(`
+-- 
+2.17.1
+

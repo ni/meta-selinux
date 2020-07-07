@@ -1,0 +1,34 @@
+From 0e3199f243a47853452a877ebad5360bc8c1f2f1 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Thu, 21 Nov 2019 13:58:28 +0800
+Subject: [PATCH] policy/modules/system/authlogin: allow chkpwd_t to map
+ shadow_t
+
+Fixes:
+avc:  denied  { map } for  pid=244 comm="unix_chkpwd" path="/etc/shadow"
+dev="vda" ino=443 scontext=system_u:system_r:chkpwd_t
+tcontext=system_u:object_r:shadow_t tclass=file permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/authlogin.te | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/authlogin.te b/policy/modules/system/authlogin.te
+index 0fc5951e9..e999fa798 100644
+--- a/policy/modules/system/authlogin.te
++++ b/policy/modules/system/authlogin.te
+@@ -100,7 +100,7 @@ allow chkpwd_t self:capability { dac_override setuid };
+ dontaudit chkpwd_t self:capability sys_tty_config;
+ allow chkpwd_t self:process { getattr signal };
+ 
+-allow chkpwd_t shadow_t:file read_file_perms;
++allow chkpwd_t shadow_t:file { read_file_perms map };
+ files_list_etc(chkpwd_t)
+ 
+ kernel_read_crypto_sysctls(chkpwd_t)
+-- 
+2.17.1
+

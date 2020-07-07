@@ -1,0 +1,33 @@
+From 7dc492abc2918e770b36099cf079ca9be10598c8 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Thu, 28 Mar 2019 16:14:09 -0400
+Subject: [PATCH] fc/subs/volatile: alias common /var/volatile paths
+
+Ensure /var/volatile paths get the appropriate base file context.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ config/file_contexts.subs_dist | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/config/file_contexts.subs_dist b/config/file_contexts.subs_dist
+index 346d920e3..aeb25a5bb 100644
+--- a/config/file_contexts.subs_dist
++++ b/config/file_contexts.subs_dist
+@@ -31,3 +31,9 @@
+ # not for refpolicy intern, but for /var/run using applications,
+ # like systemd tmpfiles or systemd socket configurations
+ /var/run /run
++
++# volatile aliases
++# ensure the policy applied to the base filesystem objects are reflected in the
++# volatile hierarchy.
++/var/volatile/log /var/log
++/var/volatile/tmp /var/tmp
+-- 
+2.17.1
+

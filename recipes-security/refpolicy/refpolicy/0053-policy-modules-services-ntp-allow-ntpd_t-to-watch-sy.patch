@@ -1,0 +1,55 @@
+From f23bb02c92bcbf7afa0c6b445719df6b06df15ea Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Mon, 6 Jul 2020 09:06:08 +0800
+Subject: [PATCH] policy/modules/services/ntp: allow ntpd_t to watch system bus
+ runtime directories and named sockets
+
+Fixes:
+avc:  denied  { read } for  pid=197 comm="systemd-timesyn" name="dbus"
+dev="tmpfs" ino=14064 scontext=system_u:system_r:ntpd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:system_dbusd_runtime_t:s0 tclass=dir
+permissive=0
+
+avc:  denied  { watch } for  pid=197 comm="systemd-timesyn"
+path="/run/dbus" dev="tmpfs" ino=14064
+scontext=system_u:system_r:ntpd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:system_dbusd_runtime_t:s0 tclass=dir
+permissive=0
+
+avc:  denied  { read } for  pid=197 comm="systemd-timesyn"
+name="system_bus_socket" dev="tmpfs" ino=14067
+scontext=system_u:system_r:ntpd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:system_dbusd_runtime_t:s0 tclass=sock_file
+permissive=0
+
+avc:  denied  { watch } for  pid=197 comm="systemd-timesyn"
+path="/run/dbus/system_bus_socket" dev="tmpfs" ino=14067
+scontext=system_u:system_r:ntpd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:system_dbusd_runtime_t:s0 tclass=sock_file
+permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/ntp.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/policy/modules/services/ntp.te b/policy/modules/services/ntp.te
+index 81f8c76bb..75603e16b 100644
+--- a/policy/modules/services/ntp.te
++++ b/policy/modules/services/ntp.te
+@@ -141,6 +141,10 @@ userdom_list_user_home_dirs(ntpd_t)
+ ifdef(`init_systemd',`
+ 	allow ntpd_t ntpd_unit_t:file read_file_perms;
+ 
++	dbus_watch_system_bus_runtime_dirs(ntpd_t)
++	allow ntpd_t system_dbusd_runtime_t:dir read;
++	dbus_watch_system_bus_runtime_named_sockets(ntpd_t)
++	allow ntpd_t system_dbusd_runtime_t:sock_file read;
+ 	dbus_system_bus_client(ntpd_t)
+ 	dbus_connect_system_bus(ntpd_t)
+ 	init_dbus_chat(ntpd_t)
+-- 
+2.17.1
+

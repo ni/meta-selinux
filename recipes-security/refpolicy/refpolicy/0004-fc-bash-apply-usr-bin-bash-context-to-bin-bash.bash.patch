@@ -1,0 +1,31 @@
+From fda1e656c46b360f1023834636c460c5510acf68 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Thu, 28 Mar 2019 21:37:32 -0400
+Subject: [PATCH] fc/bash: apply /usr/bin/bash context to /bin/bash.bash
+
+We include /bin/bash.bash as a valid alias for /bin/bash, so ensure we apply
+the proper context to the target for our policy.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/kernel/corecommands.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
+index b473850d4..7e199b7b0 100644
+--- a/policy/modules/kernel/corecommands.fc
++++ b/policy/modules/kernel/corecommands.fc
+@@ -142,6 +142,7 @@ ifdef(`distro_gentoo',`
+ /usr/bin(/.*)?				gen_context(system_u:object_r:bin_t,s0)
+ /usr/bin/d?ash			--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/bin/bash			--	gen_context(system_u:object_r:shell_exec_t,s0)
++/usr/bin/bash\.bash		--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/bin/bash2			--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/bin/fish			--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/bin/git-shell		--	gen_context(system_u:object_r:shell_exec_t,s0)
+-- 
+2.17.1
+

@@ -1,0 +1,35 @@
+From 0607a935759fe3143f473d4a444f92e01aaa2a45 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 23 Jun 2020 14:52:43 +0800
+Subject: [PATCH] policy/modules/system/systemd: systemd-gpt-auto-generator: do
+ not audit attempts to read or write unallocated ttys
+
+Fixes:
+avc:  denied  { read write } for  pid=87 comm="systemd-getty-g"
+name="ttyS0" dev="devtmpfs" ino=10128
+scontext=system_u:system_r:systemd_generator_t
+tcontext=system_u:object_r:tty_device_t tclass=chr_file permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index f82031a09..fb8d4960f 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -400,6 +400,8 @@ storage_raw_read_fixed_disk(systemd_generator_t)
+ 
+ systemd_log_parse_environment(systemd_generator_t)
+ 
++term_dontaudit_use_unallocated_ttys(systemd_generator_t)
++
+ optional_policy(`
+ 	fstools_exec(systemd_generator_t)
+ ')
+-- 
+2.17.1
+

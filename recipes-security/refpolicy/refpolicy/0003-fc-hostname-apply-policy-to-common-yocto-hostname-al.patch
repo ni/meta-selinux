@@ -1,0 +1,26 @@
+From 9f73ec53a4a5d5bb9b7fa453f3089c55f777c2ce Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Thu, 22 Aug 2013 13:37:23 +0800
+Subject: [PATCH] fc/hostname: apply policy to common yocto hostname
+ alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/hostname.fc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/hostname.fc b/policy/modules/system/hostname.fc
+index 83ddeb573..cf523bc4c 100644
+--- a/policy/modules/system/hostname.fc
++++ b/policy/modules/system/hostname.fc
+@@ -1 +1,3 @@
+ /usr/bin/hostname	--	gen_context(system_u:object_r:hostname_exec_t,s0)
++/usr/bin/hostname\.net-tools	--	gen_context(system_u:object_r:hostname_exec_t,s0)
++/usr/bin/hostname\.coreutils	--	gen_context(system_u:object_r:hostname_exec_t,s0)
+-- 
+2.17.1
+

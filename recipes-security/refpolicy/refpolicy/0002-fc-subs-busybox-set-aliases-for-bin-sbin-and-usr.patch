@@ -1,0 +1,33 @@
+From 2a68b7539104bec76aaf2a18b399770f59d0cb28 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Thu, 28 Mar 2019 20:48:10 -0400
+Subject: [PATCH] fc/subs/busybox: set aliases for bin, sbin and usr
+
+The objects in /usr/lib/busybox/* should have the same policy applied as
+the corresponding objects in the / hierarchy.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ config/file_contexts.subs_dist | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/config/file_contexts.subs_dist b/config/file_contexts.subs_dist
+index aeb25a5bb..c249c5207 100644
+--- a/config/file_contexts.subs_dist
++++ b/config/file_contexts.subs_dist
+@@ -37,3 +37,9 @@
+ # volatile hierarchy.
+ /var/volatile/log /var/log
+ /var/volatile/tmp /var/tmp
++
++# busybox aliases
++# quickly match up the busybox built-in tree to the base filesystem tree
++/usr/lib/busybox/bin /usr/bin
++/usr/lib/busybox/sbin /usr/sbin
++/usr/lib/busybox/usr /usr
+-- 
+2.17.1
+

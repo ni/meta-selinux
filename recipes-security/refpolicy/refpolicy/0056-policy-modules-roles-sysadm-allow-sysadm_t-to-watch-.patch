@@ -1,0 +1,36 @@
+From 7fd830d6b2c60dcf5b8ee0b2ff94436de63d5b8c Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Mon, 29 Jun 2020 10:32:25 +0800
+Subject: [PATCH] policy/modules/roles/sysadm: allow sysadm_t to watch runtime
+ dirs
+
+Fixes:
+Failed to add a watch for /run/systemd/ask-password: Permission denied
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/roles/sysadm.te | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
+index fc0945fe4..07b9faf30 100644
+--- a/policy/modules/roles/sysadm.te
++++ b/policy/modules/roles/sysadm.te
+@@ -83,6 +83,12 @@ ifdef(`init_systemd',`
+ 	# Allow sysadm to resolve the username of dynamic users by calling
+ 	# LookupDynamicUserByUID on org.freedesktop.systemd1.
+ 	init_dbus_chat(sysadm_t)
++
++	fs_watch_cgroup_files(sysadm_t)
++	files_watch_etc_symlinks(sysadm_t)
++	mount_watch_runtime_dirs(sysadm_t)
++	systemd_filetrans_passwd_runtime_dirs(sysadm_t)
++	allow sysadm_t systemd_passwd_runtime_t:dir watch;
+ ')
+ 
+ tunable_policy(`allow_ptrace',`
+-- 
+2.17.1
+

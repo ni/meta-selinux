@@ -1,0 +1,40 @@
+From fac0583bea8eb74c43cd715cf5029d3243e38f95 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Thu, 18 Jun 2020 09:47:25 +0800
+Subject: [PATCH] policy/modules/system/systemd: systemd-resolved: make
+ systemd_resolved_t MLS trusted for reading from files up to its clearance
+
+Fixes:
+avc:  denied  { search } for  pid=220 comm="systemd-resolve"
+name="journal" dev="tmpfs" ino=10956
+scontext=system_u:system_r:systemd_resolved_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+avc:  denied  { search } for  pid=220 comm="systemd-resolve" name="/"
+dev="tmpfs" ino=15102
+scontext=system_u:system_r:systemd_resolved_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:tmpfs_t:s0 tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index cfbd9196a..806468109 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -1096,6 +1096,8 @@ init_dgram_send(systemd_resolved_t)
+ 
+ seutil_read_file_contexts(systemd_resolved_t)
+ 
++mls_file_read_to_clearance(systemd_resolved_t)
++
+ systemd_log_parse_environment(systemd_resolved_t)
+ systemd_read_networkd_runtime(systemd_resolved_t)
+ 
+-- 
+2.17.1
+

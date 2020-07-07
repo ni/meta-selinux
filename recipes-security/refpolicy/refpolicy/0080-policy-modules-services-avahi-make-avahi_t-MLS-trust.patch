@@ -1,0 +1,29 @@
+From 0a2e2a58a645bd99242ac5ec60f17fab26a80bf9 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 23 Jun 2020 08:19:16 +0800
+Subject: [PATCH] policy/modules/services/avahi: make avahi_t MLS trusted for
+ reading from files up to its clearance
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/avahi.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/services/avahi.te b/policy/modules/services/avahi.te
+index 5643349e3..5994ff3d5 100644
+--- a/policy/modules/services/avahi.te
++++ b/policy/modules/services/avahi.te
+@@ -95,6 +95,8 @@ sysnet_etc_filetrans_config(avahi_t)
+ userdom_dontaudit_use_unpriv_user_fds(avahi_t)
+ userdom_dontaudit_search_user_home_dirs(avahi_t)
+ 
++mls_file_read_to_clearance(avahi_t)
++
+ optional_policy(`
+ 	dbus_system_domain(avahi_t, avahi_exec_t)
+ 
+-- 
+2.17.1
+

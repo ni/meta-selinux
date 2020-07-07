@@ -1,0 +1,34 @@
+From 4316f85adb1ab6e0278fb8e8ff68b358f36a933e Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 23 Jun 2020 08:19:16 +0800
+Subject: [PATCH] policy/modules/services/avahi: allow avahi_t to watch /etc
+ directory
+
+Fixes:
+type=AVC msg=audit(1592813140.176:24): avc:  denied  { watch } for
+pid=360 comm="avahi-daemon" path="/services" dev="vda" ino=173
+scontext=system_u:system_r:avahi_t tcontext=system_u:object_r:etc_t
+tclass=dir permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/avahi.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/services/avahi.te b/policy/modules/services/avahi.te
+index f77e5546d..5643349e3 100644
+--- a/policy/modules/services/avahi.te
++++ b/policy/modules/services/avahi.te
+@@ -76,6 +76,7 @@ domain_use_interactive_fds(avahi_t)
+ 
+ files_read_etc_runtime_files(avahi_t)
+ files_read_usr_files(avahi_t)
++files_watch_etc_dirs(avahi_t)
+ 
+ auth_use_nsswitch(avahi_t)
+ 
+-- 
+2.17.1
+

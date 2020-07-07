@@ -1,0 +1,33 @@
+From 878f3eb8e0716764ea4d42b996f58ea9072204fc Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Sun, 28 Jun 2020 16:14:45 +0800
+Subject: [PATCH] policy/modules/services/ssh: make respective init scripts
+ create pid dirs with proper contexts
+
+Fix sshd starup failure.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/ssh.te | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/policy/modules/services/ssh.te b/policy/modules/services/ssh.te
+index fefca0c20..db62eaa18 100644
+--- a/policy/modules/services/ssh.te
++++ b/policy/modules/services/ssh.te
+@@ -80,9 +80,7 @@ userdom_user_home_content(ssh_home_t)
+ type sshd_keytab_t;
+ files_type(sshd_keytab_t)
+ 
+-ifdef(`distro_debian',`
+-	init_daemon_runtime_file(sshd_runtime_t, dir, "sshd")
+-')
++init_daemon_runtime_file(sshd_runtime_t, dir, "sshd")
+ 
+ ##############################
+ #
+-- 
+2.17.1
+

@@ -1,0 +1,42 @@
+From 212156df805a24852a4762737f7040f1c7bb9b9a Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Mon, 23 Jan 2017 08:42:44 +0000
+Subject: [PATCH] policy/modules/system/systemd: make systemd-logind domain MLS
+ trusted for reading from files up to its clearance.
+
+Fixes:
+avc:  denied  { search } for  pid=184 comm="systemd-logind"
+name="journal" dev="tmpfs" ino=10949
+scontext=system_u:system_r:systemd_logind_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=1
+
+avc:  denied  { watch } for  pid=184 comm="systemd-logind"
+path="/run/utmp" dev="tmpfs" ino=12725
+scontext=system_u:system_r:systemd_logind_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:initrc_runtime_t:s0 tclass=file permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 57f4dc40d..1449d2808 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -621,6 +621,8 @@ userdom_relabelto_user_runtime_dirs(systemd_logind_t)
+ userdom_setattr_user_ttys(systemd_logind_t)
+ userdom_use_user_ttys(systemd_logind_t)
+ 
++mls_file_read_to_clearance(systemd_logind_t)
++
+ # Needed to work around patch not yet merged into the systemd-logind supported on RHEL 7.x
+ # The change in systemd by Nicolas Iooss on 02-Feb-2016 with hash 4b51966cf6c06250036e428608da92f8640beb96
+ # should fix the problem where user directories in /run/user/$UID/ are not getting the proper context
+-- 
+2.17.1
+

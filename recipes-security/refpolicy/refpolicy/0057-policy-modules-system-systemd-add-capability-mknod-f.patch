@@ -1,0 +1,35 @@
+From 4782b27839064438f103b77c31e5db75189025a8 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Thu, 18 Jun 2020 16:14:45 +0800
+Subject: [PATCH] policy/modules/system/systemd: add capability mknod for
+ systemd_user_runtime_dir_t
+
+Fixes:
+avc:  denied  { mknod } for  pid=266 comm="systemd-user-ru" capability=27
+scontext=system_u:system_r:systemd_user_runtime_dir_t:s0-s15:c0.c1023
+tcontext=system_u:system_r:systemd_user_runtime_dir_t:s0-s15:c0.c1023
+tclass=capability permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index c7fe51b62..f82031a09 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -1372,7 +1372,7 @@ seutil_libselinux_linked(systemd_user_session_type)
+ # systemd-user-runtime-dir local policy
+ #
+ 
+-allow systemd_user_runtime_dir_t self:capability { fowner chown sys_admin dac_read_search dac_override };
++allow systemd_user_runtime_dir_t self:capability { fowner chown sys_admin dac_read_search dac_override mknod };
+ allow systemd_user_runtime_dir_t self:process setfscreate;
+ 
+ domain_obj_id_change_exemption(systemd_user_runtime_dir_t)
+-- 
+2.17.1
+

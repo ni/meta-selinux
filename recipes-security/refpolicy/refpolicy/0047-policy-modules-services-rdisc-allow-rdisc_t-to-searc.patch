@@ -1,0 +1,34 @@
+From 6bcf62e310931e8be943520a7e1a5686f54a8e34 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 23 Jun 2020 15:44:43 +0800
+Subject: [PATCH] policy/modules/services/rdisc: allow rdisc_t to search sbin
+ dir
+
+Fixes:
+avc:  denied  { search } for  pid=225 comm="rdisc" name="sbin" dev="vda"
+ino=1478 scontext=system_u:system_r:rdisc_t
+tcontext=system_u:object_r:bin_t tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/rdisc.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/services/rdisc.te b/policy/modules/services/rdisc.te
+index 82d54dbb7..1dd458f8e 100644
+--- a/policy/modules/services/rdisc.te
++++ b/policy/modules/services/rdisc.te
+@@ -47,6 +47,8 @@ sysnet_read_config(rdisc_t)
+ 
+ userdom_dontaudit_use_unpriv_user_fds(rdisc_t)
+ 
++corecmd_search_bin(rdisc_t)
++
+ optional_policy(`
+ 	seutil_sigchld_newrole(rdisc_t)
+ ')
+-- 
+2.17.1
+

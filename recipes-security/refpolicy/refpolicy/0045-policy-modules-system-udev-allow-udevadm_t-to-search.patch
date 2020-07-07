@@ -1,0 +1,34 @@
+From bd03c34ab3c193d6c21a6c0b951e89dd4e24eee6 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 19 Jun 2020 15:21:26 +0800
+Subject: [PATCH] policy/modules/system/udev: allow udevadm_t to search bin dir
+
+Fixes:
+audit: type=1400 audit(1592894099.930:6): avc:  denied  { search } for
+pid=153 comm="udevadm" name="bin" dev="vda" ino=13
+scontext=system_u:system_r:udevadm_t tcontext=system_u:object_r:bin_t
+tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/udev.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/udev.te b/policy/modules/system/udev.te
+index 52da11acd..3a4d7362c 100644
+--- a/policy/modules/system/udev.te
++++ b/policy/modules/system/udev.te
+@@ -415,6 +415,8 @@ dev_read_urand(udevadm_t)
+ files_read_etc_files(udevadm_t)
+ files_read_usr_files(udevadm_t)
+ 
++corecmd_search_bin(udevadm_t)
++
+ init_list_runtime(udevadm_t)
+ init_read_state(udevadm_t)
+ 
+-- 
+2.17.1
+

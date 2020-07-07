@@ -1,0 +1,65 @@
+From dfc3e78dfee0709bcbfc2d1959e5b7c27922b1b7 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 23 Jun 2020 08:54:20 +0800
+Subject: [PATCH] policy/modules/services/bluetooth: allow bluetooth_t to
+ create and use bluetooth_socket
+
+Fixes:
+type=AVC msg=audit(1592813138.485:17): avc:  denied  { create } for
+pid=324 comm="bluetoothd" scontext=system_u:system_r:bluetooth_t
+tcontext=system_u:system_r:bluetooth_t tclass=bluetooth_socket
+permissive=1
+type=AVC msg=audit(1592813138.485:18): avc:  denied  { bind } for
+pid=324 comm="bluetoothd" scontext=system_u:system_r:bluetooth_t
+tcontext=system_u:system_r:bluetooth_t tclass=bluetooth_socket
+permissive=1
+type=AVC msg=audit(1592813138.485:19): avc:  denied  { write } for
+pid=324 comm="bluetoothd" scontext=system_u:system_r:bluetooth_t
+tcontext=system_u:system_r:bluetooth_t tclass=bluetooth_socket
+permissive=1
+type=AVC msg=audit(1592813138.488:20): avc:  denied  { getattr } for
+pid=324 comm="bluetoothd" path="socket:[11771]" dev="sockfs" ino=11771
+scontext=system_u:system_r:bluetooth_t
+tcontext=system_u:system_r:bluetooth_t tclass=bluetooth_socket
+permissive=1
+type=AVC msg=audit(1592813138.488:21): avc:  denied  { listen } for
+pid=324 comm="bluetoothd" scontext=system_u:system_r:bluetooth_t
+tcontext=system_u:system_r:bluetooth_t tclass=bluetooth_socket
+permissive=1
+type=AVC msg=audit(1592813138.498:22): avc:  denied  { read } for
+pid=324 comm="bluetoothd" path="socket:[11771]" dev="sockfs" ino=11771
+scontext=system_u:system_r:bluetooth_t
+tcontext=system_u:system_r:bluetooth_t tclass=bluetooth_socket
+permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/bluetooth.te | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/policy/modules/services/bluetooth.te b/policy/modules/services/bluetooth.te
+index 025eff444..63e50aeda 100644
+--- a/policy/modules/services/bluetooth.te
++++ b/policy/modules/services/bluetooth.te
+@@ -60,6 +60,7 @@ allow bluetooth_t self:socket create_stream_socket_perms;
+ allow bluetooth_t self:unix_stream_socket { accept connectto listen };
+ allow bluetooth_t self:tcp_socket { accept listen };
+ allow bluetooth_t self:netlink_kobject_uevent_socket create_socket_perms;
++allow bluetooth_t self:bluetooth_socket create_stream_socket_perms;
+ 
+ read_files_pattern(bluetooth_t, bluetooth_conf_t, bluetooth_conf_t)
+ 
+@@ -127,6 +128,8 @@ userdom_dontaudit_use_unpriv_user_fds(bluetooth_t)
+ userdom_dontaudit_use_user_terminals(bluetooth_t)
+ userdom_dontaudit_search_user_home_dirs(bluetooth_t)
+ 
++init_dbus_send_script(bluetooth_t)
++
+ optional_policy(`
+ 	dbus_system_bus_client(bluetooth_t)
+ 	dbus_connect_system_bus(bluetooth_t)
+-- 
+2.17.1
+
