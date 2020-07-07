@@ -86,7 +86,7 @@ do_reload() {
 
 if [ ! -e /var/log/audit ]; then
 	mkdir -p /var/log/audit
-	[ -x /sbin/restorecon ] && /sbin/restorecon -F /var/log/audit
+	[ -x /sbin/restorecon ] && /sbin/restorecon -F $(readlink -f /var/log/audit)
 fi
 
 case "$1" in
