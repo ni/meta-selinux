@@ -108,8 +108,8 @@ case "$1" in
   start)
     log_begin_msg "Starting system log daemon..."
     create_xconsole
+    test ! -x /sbin/restorecon || /sbin/restorecon -F /var/log
     start-stop-daemon --start --quiet --pidfile $pidfile_syslogd --name syslogd --startas $binpath_syslogd -- $SYSLOGD
-    test ! -x /sbin/restorecon || /sbin/restorecon -RF /dev/log /var/log/
     log_end_msg $?
     ;;
   stop)
