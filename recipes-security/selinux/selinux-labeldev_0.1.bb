@@ -4,7 +4,7 @@ DESCRIPTION = "Set SELinux labels for /dev."
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
-${PN}_RDEPENDS = " \
+RDEPENDS_${PN} = " \
     coreutils \
     libselinux-bin \
     policycoreutils-setfiles \
