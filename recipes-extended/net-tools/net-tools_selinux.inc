@@ -1,7 +1,3 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-
-SRC_URI += "file://netstat-selinux-support.patch"
-
 inherit selinux
 
 DEPENDS += "${LIBSELINUX}"
