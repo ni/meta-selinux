@@ -9,4 +9,4 @@ Type=oneshot
 ExecStart=/usr/bin/selinux-init.sh
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sysinit.target
