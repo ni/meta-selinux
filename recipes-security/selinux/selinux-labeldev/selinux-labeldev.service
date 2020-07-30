@@ -8,4 +8,4 @@ Type=oneshot
 ExecStart=/usr/bin/selinux-labeldev.sh
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sysinit.target
