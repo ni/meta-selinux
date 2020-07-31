@@ -8,6 +8,8 @@ SETools."
 SECTION = "base"
 LICENSE = "GPLv2 & LGPLv2.1"
 
+BBCLASSEXTEND = "native nativesdk "
+
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.3 \
            file://setools4-fixes-for-cross-compiling.patch \
@@ -21,8 +23,12 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=83a5eb6974c11f30785e90d0eeccf40c \
 
 DEPENDS += "bison-native flex-native swig-native python3 python3-cython-native libsepol libselinux"
 
+DEPENDS_class-native += "libselinux python3-setuptools python3-cython python3-networkx"
+
 RDEPENDS_${PN} += "python3-networkx python3-decorator python3-setuptools \
                    python3-logging python3-json libselinux-python"
+
+RDEPENDS_${PN}_class-native = ""
 
 RPROVIDES_${PN} += "${PN}-console"
 
