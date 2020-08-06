@@ -98,6 +98,7 @@ SRC_URI += " \
         file://0078-policy-modules-system-systemd-systemd-gpt-auto-gener.patch \
         file://0079-policy-modules-services-ntp-make-nptd_t-MLS-trusted-.patch \
         file://0080-policy-modules-services-avahi-make-avahi_t-MLS-trust.patch \
+        file://0081-fc-sysnetwork-update-file-context-for-ifconfig.patch \
         "
 
 S = "${WORKDIR}/refpolicy"
