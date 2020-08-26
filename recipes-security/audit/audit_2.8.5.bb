@@ -13,6 +13,7 @@ SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=2.8_maintena
            file://fix-swig-host-contamination.patch \
            file://Add-substitue-functions-for-strndupa-rawmemchr.patch \
            file://0001-lib-i386_table.h-add-new-syscall.patch \
+           file://0001-Header-definitions-need-to-be-external-when-building.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
