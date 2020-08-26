@@ -11,6 +11,7 @@ SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=2.8_maintena
            file://Add-substitue-functions-for-strndupa-rawmemchr.patch \
            file://Fixed-swig-host-contamination-issue.patch \
            file://0001-lib-i386_table.h-add-new-syscall.patch \
+           file://0001-Header-definitions-need-to-be-external-when-building.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
