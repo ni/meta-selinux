@@ -30,6 +30,8 @@ RDEPENDS_${PN} += "python3-networkx python3-decorator python3-setuptools \
 
 RDEPENDS_${PN}_class-native = ""
 
+CFLAGS_append = " -Wno-deprecated-declarations"
+
 RPROVIDES_${PN} += "${PN}-console"
 
 inherit setuptools3
