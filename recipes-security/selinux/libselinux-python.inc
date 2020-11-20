@@ -7,7 +7,7 @@ LICENSE = "PD"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/libselinux:"
 
-inherit python3native
+inherit python3native python3targetconfig
 
 DEPENDS += "python3 swig-native libpcre libsepol"
 RDEPENDS_${PN} += "libselinux python3-core python3-shell"
