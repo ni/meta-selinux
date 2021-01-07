@@ -1,0 +1,47 @@
+From 5f6f4a095bc82b29c3871d4d8a15d9c16cef39ef Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Wed, 6 Jan 2021 10:42:11 +0800
+Subject: [PATCH] libselinux: do not define gettid() for musl
+
+The musl has implemented gettid() function:
+http://git.musl-libc.org/cgit/musl/commit/?id=d49cf07541bb54a5ac7aec1feec8514db33db8ea
+
+Fixes:
+procattr.c:38:14: error: static declaration of 'gettid' follows non-static declaration
+   38 | static pid_t gettid(void)
+      |              ^~~~~~
+In file included from procattr.c:2:
+/build/tmp/work/core2-32-poky-linux-musl/libselinux/3.1-r0/recipe-sysroot/usr/include/unistd.h:194:7:
+note: previous declaration of 'gettid' was here
+   194 | pid_t gettid(void);
+       |       ^~~~~~
+
+Upstream-Status: Pending
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ src/procattr.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/src/procattr.c b/src/procattr.c
+index 926ee54..519e515 100644
+--- a/src/procattr.c
++++ b/src/procattr.c
+@@ -24,13 +24,7 @@ static __thread char destructor_initialized;
+ 
+ /* Bionic and glibc >= 2.30 declare gettid() system call wrapper in unistd.h and
+  * has a definition for it */
+-#ifdef __BIONIC__
+-  #define OVERRIDE_GETTID 0
+-#elif !defined(__GLIBC_PREREQ)
+-  #define OVERRIDE_GETTID 1
+-#elif !__GLIBC_PREREQ(2,30)
+-  #define OVERRIDE_GETTID 1
+-#else
++#if !defined(__GLIBC_)
+   #define OVERRIDE_GETTID 0
+ #endif
+ 
+-- 
+2.17.1
+
