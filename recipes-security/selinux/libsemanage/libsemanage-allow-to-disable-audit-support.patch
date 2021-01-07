@@ -1,4 +1,4 @@
-From 1633f72579e3b79d055759256b71e4169627889b Mon Sep 17 00:00:00 2001
+From e76867515be3bc296174aeb26c7996a0939a2a8c Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Mon, 20 Jan 2014 03:53:48 -0500
 Subject: [PATCH] libsemanage: allow to disable audit support
@@ -13,11 +13,11 @@ Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
  3 files changed, 31 insertions(+), 2 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 3bd1e20..483e818 100644
+index a0eb374..afc4437 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -26,6 +26,14 @@ ifeq ($(DEBUG),1)
- 	export LDFLAGS = -g
+ 	export LDFLAGS ?= -g
  endif
  
 +DISABLE_AUDIT ?= n
@@ -31,7 +31,7 @@ index 3bd1e20..483e818 100644
  LEX = flex
  LFLAGS = -s
  YACC = bison
-@@ -88,7 +96,7 @@ $(LIBA): $(OBJS)
+@@ -89,7 +97,7 @@ $(LIBA): $(OBJS)
  	$(RANLIB) $@
  
  $(LIBSO): $(LOBJS)
@@ -41,7 +41,7 @@ index 3bd1e20..483e818 100644
  
  $(LIBPC): $(LIBPC).in ../VERSION
 diff --git a/src/seusers_local.c b/src/seusers_local.c
-index 3e2761c..8bc6b83 100644
+index 6508ec0..1b26956 100644
 --- a/src/seusers_local.c
 +++ b/src/seusers_local.c
 @@ -8,7 +8,11 @@ typedef struct semanage_seuser record_t;
@@ -122,5 +122,5 @@ index 69f49a3..f914492 100644
  OBJECTS = $(SOURCES:.c=.o)
  POLICIES = $(CILS:.cil=.policy)
 -- 
-2.7.4
+2.17.1
 
