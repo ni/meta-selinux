@@ -1,4 +1,4 @@
-From a07271f1cce82122610b622bcea4a8a37528f321 Mon Sep 17 00:00:00 2001
+From 3d13f92c1bb293523670ba01aea7e655b00a6709 Mon Sep 17 00:00:00 2001
 From: Li xin <lixin.fnst@cn.fujitsu.com>
 Date: Sun, 19 Jul 2015 02:42:58 +0900
 Subject: [PATCH] audit: Fixed swig host contamination issue
@@ -19,7 +19,7 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/bindings/swig/python3/Makefile.am b/bindings/swig/python3/Makefile.am
-index 9938418..fa46aac 100644
+index dd9d934..61b486d 100644
 --- a/bindings/swig/python3/Makefile.am
 +++ b/bindings/swig/python3/Makefile.am
 @@ -22,6 +22,7 @@
@@ -30,7 +30,7 @@ index 9938418..fa46aac 100644
  LIBS = $(top_builddir)/lib/libaudit.la
  SWIG_FLAGS = -python -py3 -modern
  SWIG_INCLUDES = -I. -I$(top_builddir) -I${top_srcdir}/lib $(PYTHON3_INCLUDES)
-@@ -37,7 +38,7 @@ _audit_la_DEPENDENCIES =${top_srcdir}/lib/libaudit.h ${top_builddir}/lib/libaudi
+@@ -36,7 +37,7 @@ _audit_la_DEPENDENCIES =${top_srcdir}/lib/libaudit.h ${top_builddir}/lib/libaudi
  _audit_la_LIBADD = ${top_builddir}/lib/libaudit.la
  nodist__audit_la_SOURCES  = audit_wrap.c
  audit.py audit_wrap.c: ${srcdir}/../src/auditswig.i 
@@ -40,7 +40,7 @@ index 9938418..fa46aac 100644
  CLEANFILES = audit.py* audit_wrap.c *~
  
 diff --git a/bindings/swig/src/auditswig.i b/bindings/swig/src/auditswig.i
-index 7ebb373..424fb68 100644
+index 21aafca..dd0f62c 100644
 --- a/bindings/swig/src/auditswig.i
 +++ b/bindings/swig/src/auditswig.i
 @@ -39,7 +39,7 @@ signed
@@ -50,8 +50,8 @@ index 7ebb373..424fb68 100644
 -%include "/usr/include/linux/audit.h"
 +%include "linux/audit.h"
  #define __extension__ /*nothing*/
- #include <stdint.h>
+ %include <stdint.i>
  %include "../lib/libaudit.h"
 -- 
-2.7.4
+2.17.1
 
