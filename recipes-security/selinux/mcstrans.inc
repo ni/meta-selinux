@@ -14,8 +14,10 @@ inherit systemd update-rc.d
 
 DEPENDS += "libsepol libselinux libcap"
 
-# We do not need "${D}/" as a prefix anymore.
-EXTRA_OEMAKE += "SBINDIR=${base_sbindir} INITDIR=${sysconfdir}/init.d"
+EXTRA_OEMAKE += "SBINDIR=${base_sbindir} \
+                 INITDIR=${sysconfdir}/init.d \
+                 SYSTEMDDIR=${systemd_unitdir} \
+                "
 
 do_install_append() {
     install -d ${D}${sbindir}
