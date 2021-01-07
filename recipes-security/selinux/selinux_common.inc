@@ -10,6 +10,5 @@ do_install() {
             PREFIX="${prefix}" \
             INCLUDEDIR="${includedir}" \
             LIBDIR="${libdir}" \
-            SHLIBDIR="${base_libdir}" \
-            SYSTEMDDIR="${systemd_unitdir}"
+            SHLIBDIR="${base_libdir}"
 }
