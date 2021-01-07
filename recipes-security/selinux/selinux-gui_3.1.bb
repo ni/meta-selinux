@@ -1,0 +1,7 @@
+require selinux_20200710.inc
+require ${BPN}.inc
+
+LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
+
+SRC_URI[md5sum] = "1e0ea65dfb2b5408969bbe55f6f9d04e"
+SRC_URI[sha256sum] = "40775eaef965259ca2f8ad49c23b03ff2c8f70808a9e0587b1075970b2509c3d"
