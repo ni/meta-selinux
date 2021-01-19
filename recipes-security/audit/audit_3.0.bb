@@ -9,6 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=master \
            file://Fixed-swig-host-contamination-issue.patch \
+           file://0001-lib-arm_table.h-update-arm-syscall-table.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
