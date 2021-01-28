@@ -118,7 +118,7 @@ EXTRA_OEMAKE += "\
         ${@bb.utils.contains('PACKAGECONFIG', 'libpam', 'PAMH=y', 'PAMH=', d)} \
         ${@bb.utils.contains('PACKAGECONFIG', 'audit', 'AUDITH=y', 'AUDITH=', d)} \
         INOTIFYH=n \
-        PREFIX=${D} \
+        PREFIX=${prefix} \
         SBINDIR=${base_sbindir} \
 "
 
