@@ -9,14 +9,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 SRC_URI = "git://github.com/linux-audit/${BPN}-userspace.git;branch=master \
            file://Fixed-swig-host-contamination-issue.patch \
-           file://0001-lib-arm_table.h-update-arm-syscall-table.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
 "
 
 S = "${WORKDIR}/git"
-SRCREV = "ea8dbab9e0fb3fb2507ac5b8dc792ef32a97c87e"
+SRCREV = "46cb7d92443c9ec7b3af15fb0baa65f65f6415d3"
 
 inherit autotools python3native update-rc.d systemd
 
