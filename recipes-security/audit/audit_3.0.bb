@@ -59,10 +59,13 @@ PACKAGES =+ "audispd-plugins"
 PACKAGES += "auditd ${PN}-python"
 
 FILES_${PN} = "${sysconfdir}/libaudit.conf ${base_libdir}/libaudit.so.1* ${base_libdir}/libauparse.so.*"
-FILES_auditd += "${bindir}/* ${base_sbindir}/* ${sysconfdir}/* ${datadir}/audit/*"
-FILES_audispd-plugins += "${sysconfdir}/audisp/audisp-remote.conf \
-	${sysconfdir}/audisp/plugins.d/au-remote.conf \
-	${sbindir}/audisp-remote ${localstatedir}/spool/audit \
+FILES_auditd = "${bindir}/* ${base_sbindir}/* ${sysconfdir}/* ${datadir}/audit/*"
+FILES_audispd-plugins = "${sysconfdir}/audit/audisp-remote.conf \
+	${sysconfdir}/audit/plugins.d/au-remote.conf \
+	${sysconfdir}/audit/plugins.d/syslog.conf \
+	${base_sbindir}/audisp-remote \
+	${base_sbindir}/audisp-syslog \
+	${localstatedir}/spool/audit \
 	"
 FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/*/.debug"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}"
@@ -101,4 +104,7 @@ do_install_append() {
 
 	# Based on the audit.spec "Copy default rules into place on new installation"
 	cp ${D}/etc/audit/rules.d/audit.rules ${D}/etc/audit/audit.rules
+
+	# Create /var/spool/audit directory for audisp-remote
+	install -m 0700 -d ${D}${localstatedir}/spool/audit
 }
