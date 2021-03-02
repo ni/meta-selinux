@@ -24,4 +24,5 @@ RDEPENDS_${PN} = " \
 	selinux-labeldev \
 	refpolicy \
 	coreutils \
+	auditd \
 	"
