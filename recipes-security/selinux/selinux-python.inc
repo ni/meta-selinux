@@ -10,7 +10,7 @@ SRC_URI += "file://fix-sepolicy-install-path.patch"
 
 inherit python3native
 
-DEPENDS += "python3 libsepol"
+DEPENDS += "python3 libsepol libselinux"
 RDEPENDS_${BPN}-audit2allow += "\
         python3-core \
         libselinux-python \
