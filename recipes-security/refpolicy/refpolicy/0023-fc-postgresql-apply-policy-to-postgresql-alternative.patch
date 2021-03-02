@@ -1,4 +1,4 @@
-From 926401518bca5a1e63b7f2c2cbae4a3bc42bf342 Mon Sep 17 00:00:00 2001
+From 184f1dfe4cbff9c5ff2cbe865d4e7427f100ff59 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 11:13:16 +0800
 Subject: [PATCH] fc/postgresql: apply policy to postgresql alternatives

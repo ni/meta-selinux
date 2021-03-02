@@ -1,4 +1,4 @@
-From 117884178c9ba63334f732da6f30e67e22aa898e Mon Sep 17 00:00:00 2001
+From 79e58207060c25d5f2484ed164ab74413d00792a Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 09:54:07 -0400
 Subject: [PATCH] fc/rpm: apply rpm_exec policy to cpio binaries
@@ -12,7 +12,7 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/admin/rpm.fc b/policy/modules/admin/rpm.fc
-index 6194a4833..ace922ac1 100644
+index aaf530c2b..618b18cec 100644
 --- a/policy/modules/admin/rpm.fc
 +++ b/policy/modules/admin/rpm.fc
 @@ -66,4 +66,6 @@ ifdef(`distro_redhat',`

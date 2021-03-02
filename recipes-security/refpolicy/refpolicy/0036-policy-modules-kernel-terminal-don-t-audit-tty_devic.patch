@@ -1,4 +1,4 @@
-From a9aebca531f52818fe77b9b21f0cad425da78e43 Mon Sep 17 00:00:00 2001
+From 15773d54215587284f937b9a37b08c682949e7ab Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/kernel/terminal: don't audit tty_device_t in
@@ -17,7 +17,7 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 3 insertions(+)
 
 diff --git a/policy/modules/kernel/terminal.if b/policy/modules/kernel/terminal.if
-index f70e51525..8f9578dbc 100644
+index 55c18dffb..e8c0735eb 100644
 --- a/policy/modules/kernel/terminal.if
 +++ b/policy/modules/kernel/terminal.if
 @@ -335,9 +335,12 @@ interface(`term_use_console',`

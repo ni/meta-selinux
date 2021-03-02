@@ -1,4 +1,4 @@
-From 8613549f3aad37ce3bec8513057f0f893d4cc9bd Mon Sep 17 00:00:00 2001
+From 7ff6cf3766a672c4f2b7bd0dc5efa296bd6aba51 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Mon, 20 Apr 2020 11:50:03 +0800
 Subject: [PATCH] refpolicy-targeted: make unconfined_u the default selinux
@@ -43,7 +43,7 @@ index ce614b41b..c0903d98b 100644
 +root:unconfined_u:s0-mcs_systemhigh
 +__default__:unconfined_u:s0
 diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
-index ac5239d83..310a4fad2 100644
+index ce7d77d31..1aff2c31a 100644
 --- a/policy/modules/roles/sysadm.te
 +++ b/policy/modules/roles/sysadm.te
 @@ -53,6 +53,7 @@ ubac_fd_exempt(sysadm_t)
@@ -52,13 +52,13 @@ index ac5239d83..310a4fad2 100644
  init_admin(sysadm_t)
 +init_script_role_transition(sysadm_r)
  
- selinux_read_policy(sysadm_t)
- 
+ # Add/remove user home directories
+ userdom_manage_user_home_dirs(sysadm_t)
 diff --git a/policy/modules/system/init.if b/policy/modules/system/init.if
-index ab24b5d9b..ed441ddef 100644
+index 98e94283f..eb6d5b32d 100644
 --- a/policy/modules/system/init.if
 +++ b/policy/modules/system/init.if
-@@ -1798,11 +1798,12 @@ interface(`init_script_file_entry_type',`
+@@ -1821,11 +1821,12 @@ interface(`init_script_file_entry_type',`
  #
  interface(`init_spec_domtrans_script',`
  	gen_require(`
@@ -73,7 +73,7 @@ index ab24b5d9b..ed441ddef 100644
  
  	ifdef(`distro_gentoo',`
  		gen_require(`
-@@ -1813,11 +1814,11 @@ interface(`init_spec_domtrans_script',`
+@@ -1836,11 +1837,11 @@ interface(`init_spec_domtrans_script',`
  	')
  
  	ifdef(`enable_mcs',`
@@ -87,7 +87,7 @@ index ab24b5d9b..ed441ddef 100644
  	')
  ')
  
-@@ -1834,17 +1835,18 @@ interface(`init_spec_domtrans_script',`
+@@ -1857,17 +1858,18 @@ interface(`init_spec_domtrans_script',`
  interface(`init_domtrans_script',`
  	gen_require(`
  		type initrc_t, initrc_exec_t;
@@ -108,7 +108,7 @@ index ab24b5d9b..ed441ddef 100644
  	')
  ')
  
-@@ -3599,3 +3601,31 @@ interface(`init_getrlimit',`
+@@ -3532,3 +3534,31 @@ interface(`init_getrlimit',`
  
  	allow $1 init_t:process getrlimit;
  ')
@@ -141,7 +141,7 @@ index ab24b5d9b..ed441ddef 100644
 +	role_transition $1 init_script_file_type system_r;
 +')
 diff --git a/policy/modules/system/unconfined.te b/policy/modules/system/unconfined.te
-index 3d75855b6..5aa4c0b69 100644
+index 385c88695..87adb7e9d 100644
 --- a/policy/modules/system/unconfined.te
 +++ b/policy/modules/system/unconfined.te
 @@ -20,6 +20,11 @@ type unconfined_execmem_t alias ada_t;

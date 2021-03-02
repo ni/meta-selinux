@@ -1,4 +1,4 @@
-From a580b0154da9dd07369b172ed459046197e388c7 Mon Sep 17 00:00:00 2001
+From 1130a43390bf41adb7747d0cc62c85c4320806cb Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 11:06:13 +0800
 Subject: [PATCH] fc/ldap: apply policy to ldap alternatives

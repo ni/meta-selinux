@@ -1,4 +1,4 @@
-From f3f6f0cb4857954afd8a025a1cd3f14b8a11b64d Mon Sep 17 00:00:00 2001
+From e114e09928232dd9eed568a4717dca2094f6e4ad Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 11:15:33 +0800
 Subject: [PATCH] fc/screen: apply policy to screen alternatives
@@ -11,10 +11,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/policy/modules/apps/screen.fc b/policy/modules/apps/screen.fc
-index 7196c598e..cada9944e 100644
+index e51e01d97..238dc263e 100644
 --- a/policy/modules/apps/screen.fc
 +++ b/policy/modules/apps/screen.fc
-@@ -6,4 +6,5 @@ HOME_DIR/\.tmux\.conf	--	gen_context(system_u:object_r:screen_home_t,s0)
+@@ -7,4 +7,5 @@ HOME_DIR/\.tmux\.conf	--	gen_context(system_u:object_r:screen_home_t,s0)
  /run/tmux(/.*)?			gen_context(system_u:object_r:screen_runtime_t,s0)
  
  /usr/bin/screen		--	gen_context(system_u:object_r:screen_exec_t,s0)

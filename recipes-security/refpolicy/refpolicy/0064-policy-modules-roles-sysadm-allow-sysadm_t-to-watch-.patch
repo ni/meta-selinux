@@ -1,0 +1,33 @@
+From 291d3329c280b6b8b70fcc3092ac4d3399936825 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Mon, 29 Jun 2020 10:32:25 +0800
+Subject: [PATCH] policy/modules/roles/sysadm: allow sysadm_t to watch runtime
+ dirs
+
+Fixes:
+Failed to add a watch for /run/systemd/ask-password: Permission denied
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/roles/sysadm.te | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
+index 129e94229..a4abaefe4 100644
+--- a/policy/modules/roles/sysadm.te
++++ b/policy/modules/roles/sysadm.te
+@@ -83,6 +83,9 @@ ifdef(`init_systemd',`
+ 	init_dbus_chat(sysadm_t)
+ 
+ 	systemd_sysadm_user(sysadm_t)
++
++	systemd_filetrans_passwd_runtime_dirs(sysadm_t)
++	allow sysadm_t systemd_passwd_runtime_t:dir watch;
+ ')
+ 
+ tunable_policy(`allow_ptrace',`
+-- 
+2.17.1
+

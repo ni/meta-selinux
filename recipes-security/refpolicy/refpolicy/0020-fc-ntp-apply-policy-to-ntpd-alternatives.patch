@@ -1,4 +1,4 @@
-From b30d9ad872f613d2b1c3aad45eac65593de37b9b Mon Sep 17 00:00:00 2001
+From 5308969204d535391cb766ba5aa4b5479f64248c Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 10:45:23 +0800
 Subject: [PATCH] fc/ntp: apply policy to ntpd alternatives

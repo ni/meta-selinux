@@ -1,0 +1,162 @@
+From 05ec2d78b44e57ecf188472b903fe66eeb568951 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Thu, 18 Jun 2020 09:59:58 +0800
+Subject: [PATCH] policy/modules/system/systemd: systemd-*: make systemd_*_t
+ MLS trusted for writing/reading from files up to its clearance
+
+Fixes:
+avc:  denied  { search } for  pid=219 comm="systemd-network"
+name="journal" dev="tmpfs" ino=10956
+scontext=system_u:system_r:systemd_networkd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+avc:  denied  { search } for  pid=220 comm="systemd-resolve"
+name="journal" dev="tmpfs" ino=10956
+scontext=system_u:system_r:systemd_resolved_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+avc:  denied  { search } for  pid=220 comm="systemd-resolve" name="/"
+dev="tmpfs" ino=15102
+scontext=system_u:system_r:systemd_resolved_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:tmpfs_t:s0 tclass=dir permissive=0
+
+avc:  denied  { search } for  pid=142 comm="systemd-modules"
+name="journal" dev="tmpfs" ino=10990
+scontext=system_u:system_r:systemd_modules_load_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+audit: type=1400 audit(1592892455.376:3): avc:  denied  { write } for
+pid=120 comm="systemd-gpt-aut" name="kmsg" dev="devtmpfs" ino=10032
+scontext=system_u:system_r:systemd_generator_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:kmsg_device_t:s15:c0.c1023 tclass=chr_file
+permissive=0
+
+audit: type=1400 audit(1592892455.381:4): avc:  denied  { write } for
+pid=119 comm="systemd-getty-g" name="kmsg" dev="devtmpfs" ino=10032
+scontext=system_u:system_r:systemd_generator_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:kmsg_device_t:s15:c0.c1023 tclass=chr_file
+permissive=0
+
+avc:  denied  { read } for  pid=125 comm="systemd-gpt-aut" name="sdb"
+dev="devtmpfs" ino=42
+scontext=system_u:system_r:systemd_generator_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:fixed_disk_device_t:s15:c0.c1023
+tclass=blk_file permissive=0
+
+avc:  denied  { search } for  pid=302 comm="systemd-hostnam"
+name="journal" dev="tmpfs" ino=14165
+scontext=system_u:system_r:systemd_hostnamed_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+avc:  denied  { search } for  pid=302 comm="systemd-hostnam" name="/"
+dev="tmpfs" ino=17310
+scontext=system_u:system_r:systemd_hostnamed_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:tmpfs_t:s0 tclass=dir permissive=0
+
+avc:  denied  { search } for  pid=233 comm="systemd-rfkill"
+name="journal" dev="tmpfs" ino=14165
+scontext=system_u:system_r:systemd_rfkill_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+avc:  denied  { write } for  pid=233 comm="systemd-rfkill" name="kmsg"
+dev="devtmpfs" ino=2060
+scontext=system_u:system_r:systemd_rfkill_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:kmsg_device_t:s15:c0.c1023 tclass=chr_file
+permissive=0
+
+avc:  denied  { search } for  pid=354 comm="systemd-backlig"
+name="journal" dev="tmpfs" ino=1183
+scontext=system_u:system_r:systemd_backlight_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+avc:  denied  { write } for  pid=354 comm="systemd-backlig" name="kmsg"
+dev="devtmpfs" ino=3081
+scontext=system_u:system_r:systemd_backlight_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:kmsg_device_t:s15:c0.c1023 tclass=chr_file
+permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index f0b0e8b92..7b2d359b7 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -326,6 +326,9 @@ files_search_var_lib(systemd_backlight_t)
+ 
+ kernel_read_kernel_sysctls(systemd_backlight_t)
+ 
++mls_file_write_to_clearance(systemd_backlight_t)
++mls_file_read_to_clearance(systemd_backlight_t)
++
+ #######################################
+ #
+ # Binfmt local policy
+@@ -460,6 +463,9 @@ systemd_log_parse_environment(systemd_generator_t)
+ 
+ term_use_unallocated_ttys(systemd_generator_t)
+ 
++mls_file_write_to_clearance(systemd_generator_t)
++mls_file_read_to_clearance(systemd_generator_t)
++
+ ifdef(`distro_gentoo',`
+ 	corecmd_shell_entry_type(systemd_generator_t)
+ ')
+@@ -497,6 +503,8 @@ sysnet_manage_config(systemd_hostnamed_t)
+ 
+ systemd_log_parse_environment(systemd_hostnamed_t)
+ 
++mls_file_read_to_clearance(systemd_hostnamed_t)
++
+ optional_policy(`
+ 	dbus_connect_system_bus(systemd_hostnamed_t)
+ 	dbus_system_bus_client(systemd_hostnamed_t)
+@@ -818,6 +826,8 @@ modutils_read_module_deps(systemd_modules_load_t)
+ 
+ systemd_log_parse_environment(systemd_modules_load_t)
+ 
++mls_file_read_to_clearance(systemd_modules_load_t)
++
+ ########################################
+ #
+ # networkd local policy
+@@ -876,6 +886,8 @@ sysnet_read_config(systemd_networkd_t)
+ 
+ systemd_log_parse_environment(systemd_networkd_t)
+ 
++mls_file_read_to_clearance(systemd_networkd_t)
++
+ optional_policy(`
+ 	dbus_system_bus_client(systemd_networkd_t)
+ 	dbus_connect_system_bus(systemd_networkd_t)
+@@ -1159,6 +1171,9 @@ udev_read_runtime_files(systemd_rfkill_t)
+ 
+ systemd_log_parse_environment(systemd_rfkill_t)
+ 
++mls_file_write_to_clearance(systemd_rfkill_t)
++mls_file_read_to_clearance(systemd_rfkill_t)
++
+ #########################################
+ #
+ # Resolved local policy
+@@ -1202,6 +1217,8 @@ init_dgram_send(systemd_resolved_t)
+ 
+ seutil_read_file_contexts(systemd_resolved_t)
+ 
++mls_file_read_to_clearance(systemd_resolved_t)
++
+ systemd_log_parse_environment(systemd_resolved_t)
+ systemd_read_networkd_runtime(systemd_resolved_t)
+ 
+-- 
+2.17.1
+

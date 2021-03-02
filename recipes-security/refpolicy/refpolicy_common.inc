@@ -5,8 +5,8 @@ LICENSE = "GPLv2"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
-PROVIDES += "virtual/refpolicy"
-RPROVIDES_${PN} += "refpolicy"
+PROVIDES = "virtual/refpolicy"
+RPROVIDES_${PN} = "refpolicy"
 
 # Specific config files for Poky
 SRC_URI += "file://customizable_types  \
@@ -47,58 +47,67 @@ SRC_URI += " \
         file://0027-fc-init-add-file-context-to-etc-network-if-files.patch \
         file://0028-fc-vlock-apply-policy-to-vlock-alternatives.patch \
         file://0029-fc-cron-apply-policy-to-etc-init.d-crond.patch \
-        file://0030-file_contexts.subs_dist-set-aliase-for-root-director.patch \
-        file://0031-policy-modules-system-logging-add-rules-for-the-syml.patch \
-        file://0032-policy-modules-system-logging-add-rules-for-syslogd-.patch \
-        file://0033-policy-modules-system-logging-add-domain-rules-for-t.patch \
+        file://0030-fc-sysnetwork-update-file-context-for-ifconfig.patch \
+        file://0031-file_contexts.subs_dist-set-aliase-for-root-director.patch \
+        file://0032-policy-modules-system-logging-add-rules-for-the-syml.patch \
+        file://0033-policy-modules-system-logging-add-rules-for-syslogd-.patch \
         file://0034-policy-modules-kernel-files-add-rules-for-the-symlin.patch \
-        file://0035-policy-modules-kernel-terminal-add-rules-for-bsdpty_.patch \
+        file://0035-policy-modules-system-logging-fix-auditd-startup-fai.patch \
         file://0036-policy-modules-kernel-terminal-don-t-audit-tty_devic.patch \
-        file://0037-policy-modules-services-avahi-allow-avahi_t-to-watch.patch \
-        file://0038-policy-modules-system-getty-allow-getty_t-watch-gett.patch \
-        file://0039-policy-modules-services-bluetooth-allow-bluetooth_t-.patch \
-        file://0040-policy-modules-roles-sysadm-allow-sysadm-to-run-rpci.patch \
-        file://0041-policy-modules-services-rpc-add-capability-dac_read_.patch \
-        file://0042-policy-modules-services-rpcbind-allow-rpcbind_t-to-c.patch \
-        file://0043-policy-modules-services-rngd-fix-security-context-fo.patch \
-        file://0044-policy-modules-system-authlogin-allow-chkpwd_t-to-ma.patch \
-        file://0045-policy-modules-system-udev-allow-udevadm_t-to-search.patch \
-        file://0046-policy-modules-udev-do-not-audit-udevadm_t-to-read-w.patch \
-        file://0047-policy-modules-services-rdisc-allow-rdisc_t-to-searc.patch \
-        file://0048-policy-modules-system-logging-fix-auditd-startup-fai.patch \
-        file://0049-policy-modules-services-ssh-make-respective-init-scr.patch \
-        file://0050-policy-modules-kernel-terminal-allow-loging-to-reset.patch \
-        file://0051-policy-modules-system-selinuxutil-allow-semanage_t-t.patch \
-        file://0052-policy-modules-system-sysnetwork-allow-ifconfig_t-to.patch \
-        file://0053-policy-modules-services-ntp-allow-ntpd_t-to-watch-sy.patch \
-        file://0054-policy-modules-system-systemd-enable-support-for-sys.patch \
-        file://0055-policy-modules-system-logging-fix-systemd-journald-s.patch \
-        file://0056-policy-modules-roles-sysadm-allow-sysadm_t-to-watch-.patch \
-        file://0057-policy-modules-system-systemd-add-capability-mknod-f.patch \
-        file://0058-policy-modules-system-systemd-systemd-gpt-auto-gener.patch \
-        file://0059-policy-modules-services-rpc-fix-policy-for-nfsserver.patch \
-        file://0060-policy-modules-services-rpc-make-rpcd_t-MLS-trusted-.patch \
-        file://0061-policy-modules-roles-sysadm-MLS-sysadm-rw-to-clearan.patch \
-        file://0062-policy-modules-system-mount-make-mount_t-domain-MLS-.patch \
-        file://0063-policy-modules-system-setrans-allow-setrans-to-acces.patch \
-        file://0064-policy-modules-admin-dmesg-make-dmesg_t-MLS-trusted-.patch \
-        file://0065-policy-modules-kernel-kernel-make-kernel_t-MLS-trust.patch \
-        file://0066-policy-modules-system-init-make-init_t-MLS-trusted-f.patch \
-        file://0067-policy-modules-system-systemd-make-systemd-tmpfiles_.patch \
-        file://0068-policy-modules-system-logging-add-the-syslogd_t-to-t.patch \
-        file://0069-policy-modules-system-init-make-init_t-MLS-trusted-f.patch \
-        file://0070-policy-modules-system-init-all-init_t-to-read-any-le.patch \
-        file://0071-policy-modules-system-logging-allow-auditd_t-to-writ.patch \
-        file://0072-policy-modules-kernel-kernel-make-kernel_t-MLS-trust.patch \
-        file://0073-policy-modules-system-systemd-make-systemd-logind-do.patch \
-        file://0074-policy-modules-system-systemd-systemd-user-sessions-.patch \
-        file://0075-policy-modules-system-systemd-systemd-networkd-make-.patch \
-        file://0076-policy-modules-system-systemd-systemd-resolved-make-.patch \
-        file://0077-policy-modules-system-systemd-make-systemd-modules_t.patch \
-        file://0078-policy-modules-system-systemd-systemd-gpt-auto-gener.patch \
-        file://0079-policy-modules-services-ntp-make-nptd_t-MLS-trusted-.patch \
-        file://0080-policy-modules-services-avahi-make-avahi_t-MLS-trust.patch \
-        file://0081-fc-sysnetwork-update-file-context-for-ifconfig.patch \
+        file://0037-policy-modules-system-modutils-allow-mod_t-to-access.patch \
+        file://0038-policy-modules-services-avahi-allow-avahi_t-to-watch.patch \
+        file://0039-policy-modules-system-getty-allow-getty_t-to-search-.patch \
+        file://0040-policy-modules-services-bluetooth-fix-bluetoothd-sta.patch \
+        file://0041-policy-modules-roles-sysadm-allow-sysadm-to-run-rpci.patch \
+        file://0042-policy-modules-services-rpc-add-capability-dac_read_.patch \
+        file://0043-policy-modules-services-rpcbind-allow-rpcbind_t-to-c.patch \
+        file://0044-policy-modules-services-rngd-fix-security-context-fo.patch \
+        file://0045-policy-modules-services-ssh-allow-ssh_keygen_t-to-re.patch \
+        file://0046-policy-modules-services-ssh-make-respective-init-scr.patch \
+        file://0047-policy-modules-kernel-terminal-allow-loging-to-reset.patch \
+        file://0048-policy-modules-system-selinuxutil-allow-semanage_t-t.patch \
+        file://0049-policy-modules-system-systemd-enable-support-for-sys.patch \
+        file://0050-policy-modules-system-systemd-fix-systemd-resolved-s.patch \
+        file://0051-policy-modules-system-init-add-capability2-bpf-and-p.patch \
+        file://0052-policy-modules-system-systemd-allow-systemd_logind_t.patch \
+        file://0053-policy-modules-system-logging-set-label-devlog_t-to-.patch \
+        file://0054-policy-modules-system-systemd-support-systemd-user.patch \
+        file://0055-policy-modules-system-systemd-allow-systemd-generato.patch \
+        file://0056-policy-modules-system-systemd-allow-systemd_backligh.patch \
+        file://0057-policy-modules-system-logging-fix-systemd-journald-s.patch \
+        file://0058-policy-modules-services-cron-allow-crond_t-to-search.patch \
+        file://0059-policy-modules-services-crontab-allow-sysadm_r-to-ru.patch \
+        file://0060-policy-modules-system-sysnetwork-support-priviledge-.patch \
+        file://0061-policy-modules-services-acpi-allow-acpid-to-watch-th.patch \
+        file://0062-policy-modules-system-setrans-allow-setrans-to-acces.patch \
+        file://0063-policy-modules-system-modutils-allow-kmod_t-to-write.patch \
+        file://0064-policy-modules-roles-sysadm-allow-sysadm_t-to-watch-.patch \
+        file://0065-policy-modules-system-selinux-allow-setfiles_t-to-re.patch \
+        file://0066-policy-modules-system-mount-make-mount_t-domain-MLS-.patch \
+        file://0067-policy-modules-roles-sysadm-MLS-sysadm-rw-to-clearan.patch \
+        file://0068-policy-modules-services-rpc-make-nfsd_t-domain-MLS-t.patch \
+        file://0069-policy-modules-admin-dmesg-make-dmesg_t-MLS-trusted-.patch \
+        file://0070-policy-modules-kernel-kernel-make-kernel_t-MLS-trust.patch \
+        file://0071-policy-modules-system-init-make-init_t-MLS-trusted-f.patch \
+        file://0072-policy-modules-system-systemd-make-systemd-tmpfiles_.patch \
+        file://0073-policy-modules-system-logging-add-the-syslogd_t-to-t.patch \
+        file://0074-policy-modules-system-init-make-init_t-MLS-trusted-f.patch \
+        file://0075-policy-modules-system-init-all-init_t-to-read-any-le.patch \
+        file://0076-policy-modules-system-logging-allow-auditd_t-to-writ.patch \
+        file://0077-policy-modules-kernel-kernel-make-kernel_t-MLS-trust.patch \
+        file://0078-policy-modules-system-systemd-make-systemd-logind-do.patch \
+        file://0079-policy-modules-system-systemd-systemd-user-sessions-.patch \
+        file://0080-policy-modules-system-systemd-systemd-make-systemd_-.patch \
+        file://0081-policy-modules-services-ntp-make-nptd_t-MLS-trusted-.patch \
+        file://0082-policy-modules-system-setrans-allow-setrans_t-use-fd.patch \
+        file://0083-policy-modules-services-acpi-make-acpid_t-domain-MLS.patch \
+        file://0084-policy-modules-services-avahi-make-avahi_t-MLS-trust.patch \
+        file://0085-policy-modules-services-bluetooth-make-bluetooth_t-d.patch \
+        file://0086-policy-modules-system-sysnetwork-make-dhcpc_t-domain.patch \
+        file://0087-policy-modules-services-inetd-make-inetd_t-domain-ML.patch \
+        file://0088-policy-modules-services-bind-make-named_t-domain-MLS.patch \
+        file://0089-policy-modules-services-rpc-make-rpcd_t-MLS-trusted-.patch \
+        file://0090-policy-modules-system-systemd-make-_systemd_t-MLS-tr.patch \
         "
 
 S = "${WORKDIR}/refpolicy"

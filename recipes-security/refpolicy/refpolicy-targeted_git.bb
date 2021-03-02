@@ -6,8 +6,6 @@ domain, so they have the same access to the system as if SELinux was not \
 enabled. \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/refpolicy-${PV}:"
-
 POLICY_NAME = "targeted"
 POLICY_TYPE = "mcs"
 POLICY_MLS_SENS = "0"

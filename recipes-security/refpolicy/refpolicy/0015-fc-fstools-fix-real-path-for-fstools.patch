@@ -1,4 +1,4 @@
-From c4b0ffd60873ecca2cf0b1aa898185f5f3928828 Mon Sep 17 00:00:00 2001
+From 02f6557320c60d895397650a59c39708c8e63d27 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Mon, 27 Jan 2014 03:54:01 -0500
 Subject: [PATCH] fc/fstools: fix real path for fstools

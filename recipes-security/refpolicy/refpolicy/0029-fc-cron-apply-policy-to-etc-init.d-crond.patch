@@ -1,4 +1,4 @@
-From 25701662f7149743556bb2d5edb5c69e6de2744f Mon Sep 17 00:00:00 2001
+From a14d7d6fc54e7cf82d977c4b5c2df961c5eb1fe0 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Tue, 30 Jun 2020 10:45:57 +0800
 Subject: [PATCH] fc/cron: apply policy to /etc/init.d/crond

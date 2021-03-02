@@ -1,4 +1,4 @@
-From 261892950c5b2a40b7c3bb050ede148cbd1c7a84 Mon Sep 17 00:00:00 2001
+From e2d9462c5f26dc02f7d547548d8a94bfd79ea88f Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 09:20:58 -0400
 Subject: [PATCH] fc/ssh: apply policy to ssh alternatives

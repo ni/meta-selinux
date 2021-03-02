@@ -1,0 +1,35 @@
+From 15c99854aa21564a6eb1121f58f55a9626ba6297 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 10 Jul 2020 09:07:00 +0800
+Subject: [PATCH] policy/modules/services/acpi: make acpid_t domain MLS trusted
+ for reading from files up to its clearance
+
+Fixes:
+avc:  denied  { search } for  pid=265 comm="acpid" name="journal"
+dev="tmpfs" ino=14165 scontext=system_u:system_r:acpid_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/acpi.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/services/acpi.te b/policy/modules/services/acpi.te
+index 5c22adecd..bd442ff8a 100644
+--- a/policy/modules/services/acpi.te
++++ b/policy/modules/services/acpi.te
+@@ -157,6 +157,8 @@ userdom_dontaudit_use_unpriv_user_fds(acpid_t)
+ userdom_dontaudit_search_user_home_dirs(acpid_t)
+ userdom_dontaudit_search_user_home_content(acpid_t)
+ 
++mls_file_read_to_clearance(acpid_t)
++
+ optional_policy(`
+ 	automount_domtrans(acpid_t)
+ ')
+-- 
+2.17.1
+

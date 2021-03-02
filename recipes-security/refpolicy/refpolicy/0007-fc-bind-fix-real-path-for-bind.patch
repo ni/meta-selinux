@@ -1,4 +1,4 @@
-From fcf91092015155c4a10a1d7c4dd352ead0b5698b Mon Sep 17 00:00:00 2001
+From 7e61e5d715451bafd785ec7db01e24e726e31c35 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Thu, 28 Mar 2019 21:58:53 -0400
 Subject: [PATCH] fc/bind: fix real path for bind
@@ -13,7 +13,7 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/services/bind.fc b/policy/modules/services/bind.fc
-index 7c1df4895..9f87a21a6 100644
+index ce68a0af9..585103eb9 100644
 --- a/policy/modules/services/bind.fc
 +++ b/policy/modules/services/bind.fc
 @@ -1,8 +1,10 @@
