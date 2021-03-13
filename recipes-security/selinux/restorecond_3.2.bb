@@ -4,12 +4,11 @@ The restorecond daemon uses inotify to watch files listed in the \
 /etc/selinux/restorecond.conf, when they are created, this daemon \
 will make sure they have the correct file context associated with \
 the policy."
-
 SECTION = "base"
 LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
-SRC_URI += "file://policycoreutils-make-O_CLOEXEC-optional.patch \
-"
+require selinux_common.inc
 
 inherit systemd update-rc.d
 
@@ -18,6 +17,8 @@ DEPENDS += "libsepol libselinux libpcre dbus-glib glib-2.0 pkgconfig-native"
 EXTRA_OEMAKE += "SYSTEMDSYSTEMUNITDIR=${systemd_system_unitdir} \
                  SYSTEMDUSERUNITDIR=${systemd_user_unitdir} \
                 "
+
+S = "${WORKDIR}/git/restorecond"
 
 FILES_${PN} += "${datadir}/dbus-1/services/org.selinux.Restorecond.service \
                 ${systemd_user_unitdir}/* \
