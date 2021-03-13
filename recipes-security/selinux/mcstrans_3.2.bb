@@ -1,16 +1,19 @@
+
 SUMMARY = "Daemon to translate SELinux MCS/MLS sensitivity labels"
 DESCRIPTION = "\
 mcstrans provides an translation daemon to translate SELinux categories \
 from internal representations to user defined representation."
-
 SECTION = "base"
 LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
+
+require selinux_common.inc
+
+inherit systemd update-rc.d
 
 SRC_URI += "file://mcstrans-de-bashify.patch \
             file://mcstrans-fix-the-init-script.patch \
-"
-
-inherit systemd update-rc.d
+           "
 
 DEPENDS += "libsepol libselinux libcap"
 
@@ -18,6 +21,8 @@ EXTRA_OEMAKE += "SBINDIR=${base_sbindir} \
                  INITDIR=${sysconfdir}/init.d \
                  SYSTEMDDIR=${systemd_unitdir} \
                 "
+
+S = "${WORKDIR}/git/mcstrans"
 
 do_install_append() {
     install -d ${D}${sbindir}
