@@ -3,12 +3,15 @@ DESCRIPTION = "\
 Run application within a tightly confined SELinux domain. The default \
 sandbox domain only allows applications the ability to read and write \
 stdin, stdout and any other file descriptors handed to it."
-
 SECTION = "base"
 LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
-SRC_URI += "file://sandbox-de-bashify.patch \
-"
+require selinux_common.inc
+
+SRC_URI += "file://sandbox-de-bashify.patch"
+
+S = "${WORKDIR}/git/sandbox"
 
 DEPENDS += "libcap-ng libselinux"
 
