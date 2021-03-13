@@ -11,11 +11,11 @@ LICENSE = "GPLv2 & LGPLv2.1"
 BBCLASSEXTEND = "native nativesdk "
 
 S = "${WORKDIR}/git"
-SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.3 \
+SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.4 \
            file://setools4-fixes-for-cross-compiling.patch \
 "
 
-SRCREV = "a57ad3cdb669a39f785c4e85d63416a469c8d445"
+SRCREV = "4758cdf803d93274f49cb6445cb2bab527d6549f"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=83a5eb6974c11f30785e90d0eeccf40c \
                     file://${S}/COPYING.GPL;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
@@ -29,8 +29,6 @@ RDEPENDS_${PN} += "python3-networkx python3-decorator python3-setuptools \
                    python3-logging python3-json libselinux-python"
 
 RDEPENDS_${PN}_class-native = ""
-
-CFLAGS_append = " -Wno-deprecated-declarations"
 
 RPROVIDES_${PN} += "${PN}-console"
 
