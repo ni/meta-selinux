@@ -2,13 +2,19 @@ SUMMARY = "Python modules and various SELinux utilities."
 DESCRIPTION = "\
 This package contains Python modules sepolgen, sepolicy; And the \
 SELinux utilities audit2allow, chcat, semanage ..."
-
 SECTION = "base"
 LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
+
+require selinux_common.inc
+
+inherit python3native
 
 SRC_URI += "file://fix-sepolicy-install-path.patch"
 
-inherit python3native
+S = "${WORKDIR}/git/python"
+
+EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
 DEPENDS += "python3 libsepol libselinux"
 RDEPENDS_${BPN}-audit2allow += "\
@@ -97,11 +103,9 @@ FILES_${PN} += "\
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/* \
 "
 
-EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
-
 do_install() {
-        oe_runmake DESTDIR="${D}" \
-                PYLIBVER='python${PYTHON_BASEVERSION}' \
-                PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
-                install
+    oe_runmake DESTDIR="${D}" \
+        PYLIBVER='python${PYTHON_BASEVERSION}' \
+        PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
+        install
 }
