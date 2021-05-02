@@ -24,11 +24,6 @@ F:	conf
 F:	classes
 F:	recipes-*
 
-M:	Philip Tricca <flihp@twobit.us>
-F:	conf
-F:	classes
-F:	recipes-*
-
 COMMON
 M:	Yi Zhao <yi.zhao@windriver.com>
 F:	conf
