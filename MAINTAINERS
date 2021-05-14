@@ -1,7 +1,14 @@
 This file contains a list of maintainers for the meta-selinux layer.
 
 Please submit any patches against meta-selinux to the Yocto Project mailing
-list (yocto@yoctoproject.org).
+list (yocto@lists.yoctoproject.org).
+
+git send-email -1 --to yocto@lists.yoctoproject.org --subject-prefix=meta-selinux][PATCH
+
+These values can be set as defaults for this repository:
+
+$ git config sendemail.to yocto@lists.yoctoproject.org
+$ git config format.subjectPrefix meta-selinux][PATCH
 
 You may also contact the maintainers directly.
 
