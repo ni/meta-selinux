@@ -108,6 +108,7 @@ SRC_URI += " \
         file://0088-policy-modules-services-bind-make-named_t-domain-MLS.patch \
         file://0089-policy-modules-services-rpc-make-rpcd_t-MLS-trusted-.patch \
         file://0090-policy-modules-system-systemd-make-_systemd_t-MLS-tr.patch \
+        file://0091-fc-usermanage-update-file-context-for-chfn-chsh.patch \
         "
 
 S = "${WORKDIR}/refpolicy"
