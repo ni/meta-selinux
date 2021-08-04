@@ -2,7 +2,7 @@ inherit selinux
 
 DEPENDS += "${LIBSELINUX}"
 
-do_configure_prepend () {
+do_configure:prepend () {
 	export LINUX_HASSELINUX="${@target_selinux(d, 'Y', 'N')}"
 	export LSOF_CFGF="${CFLAGS}"
 	export LSOF_CFGL="${LDFLAGS}"

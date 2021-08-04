@@ -1,4 +1,4 @@
-do_install_append () {
+do_install:append () {
 	# This code creates libpcre for both the dev machine (SDK native)
 	# and for cross-compiling (machine arch). For Linux (SDK Linux native
 	# + all machine arch), symlinks to the .so files have to be created,
@@ -15,4 +15,4 @@ do_install_append () {
 	fi
 }
 
-FILES_${PN} += "${base_libdir}/libpcre.so.*"
+FILES:${PN} += "${base_libdir}/libpcre.so.*"

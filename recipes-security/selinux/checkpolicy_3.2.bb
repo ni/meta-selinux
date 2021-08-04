@@ -18,7 +18,7 @@ EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
 S = "${WORKDIR}/git/checkpolicy"
 
-do_install_append() {
+do_install:append() {
     install test/dismod ${D}/${bindir}/sedismod
     install test/dispol ${D}/${bindir}/sedispol
 }

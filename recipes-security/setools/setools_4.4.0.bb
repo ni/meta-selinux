@@ -23,18 +23,18 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=83a5eb6974c11f30785e90d0eeccf40c \
 
 DEPENDS += "bison-native flex-native swig-native python3 python3-cython-native libsepol libselinux"
 
-DEPENDS_class-native += "libselinux python3-setuptools python3-cython python3-networkx"
+DEPENDS:class-native += "libselinux python3-setuptools python3-cython python3-networkx"
 
-RDEPENDS_${PN} += "python3-networkx python3-decorator python3-setuptools \
+RDEPENDS:${PN} += "python3-networkx python3-decorator python3-setuptools \
                    python3-logging python3-json libselinux-python"
 
-RDEPENDS_${PN}_class-native = ""
+RDEPENDS:${PN}:class-native = ""
 
-RPROVIDES_${PN} += "${PN}-console"
+RPROVIDES:${PN} += "${PN}-console"
 
 inherit setuptools3
 
-do_install_append() {
+do_install:append() {
 	# Need PyQt5 support, disable gui tools
 	rm -f ${D}${bindir}/apol
 	rm -rf ${D}${libdir}/${PYTHON_DIR}/site-packages/setoolsgui

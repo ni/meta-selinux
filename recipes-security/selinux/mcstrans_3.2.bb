@@ -24,7 +24,7 @@ EXTRA_OEMAKE += "SBINDIR=${base_sbindir} \
 
 S = "${WORKDIR}/git/mcstrans"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${sbindir}
     install -m 755 utils/untranscon ${D}${sbindir}/
     install -m 755 utils/transcon ${D}${sbindir}/
@@ -42,12 +42,12 @@ do_install_append() {
     cp -r share/* ${D}${datadir}/mcstrans/.
 }
 
-SYSTEMD_SERVICE_mcstrans = "mcstrans.service"
+SYSTEMD_SERVICE:mcstrans = "mcstrans.service"
 INITSCRIPT_PACKAGES = "mcstrans"
-INITSCRIPT_NAME_mcstrans = "mcstrans"
-INITSCRIPT_PARAMS_mcstrans = "defaults"
+INITSCRIPT_NAME:mcstrans = "mcstrans"
+INITSCRIPT_PARAMS:mcstrans = "defaults"
 
-pkg_postinst_mcstrans () {
+pkg_postinst:mcstrans () {
     if [ -z "$D" ]; then
         if command -v systemd-tmpfiles >/dev/null; then
             systemd-tmpfiles --create ${sysconfdir}/tmpfiles.d/setrans.conf

@@ -17,30 +17,30 @@ SRC_URI += "file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \
            "
 
 DEPENDS += "libsepol libselinux bzip2 python3 bison-native flex-native swig-native"
-DEPENDS_append_class-target = " audit"
+DEPENDS:append:class-target = " audit"
 
 S = "${WORKDIR}/git/libsemanage"
 
 PACKAGES =+ "${PN}-python"
 
 # For /usr/libexec/selinux/semanage_migrate_store
-RDEPENDS_${PN}-python += "python3-core"
+RDEPENDS:${PN}-python += "python3-core"
 
-FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/* \
+FILES:${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/* \
                       ${libexecdir}/selinux/semanage_migrate_store"
-FILES_${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
-FILES_${PN} += "${libexecdir}"
+FILES:${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
+FILES:${PN} += "${libexecdir}"
 
-EXTRA_OEMAKE_class-native += "DISABLE_AUDIT=y"
+EXTRA_OEMAKE:class-native += "DISABLE_AUDIT=y"
 
-do_compile_append() {
+do_compile:append() {
     oe_runmake pywrap \
         PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \
         PYINC='-I${STAGING_INCDIR}/${PYLIBVER}' \
         PYLIBS='-L${STAGING_LIBDIR}/${PYLIBVER} -l${PYLIBVER}'
 }
 
-do_install_append() {
+do_install:append() {
     oe_runmake install-pywrap \
         PYCEXT='.so' \
         PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \

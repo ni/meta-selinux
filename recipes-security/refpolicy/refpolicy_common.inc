@@ -6,7 +6,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 PROVIDES = "virtual/refpolicy"
-RPROVIDES_${PN} = "refpolicy"
+RPROVIDES:${PN} = "refpolicy"
 
 # Specific config files for Poky
 SRC_URI += "file://customizable_types  \
@@ -113,13 +113,13 @@ SRC_URI += " \
 
 S = "${WORKDIR}/refpolicy"
 
-CONFFILES_${PN} += "${sysconfdir}/selinux/config"
-FILES_${PN} += " \
+CONFFILES:${PN} += "${sysconfdir}/selinux/config"
+FILES:${PN} += " \
 	${sysconfdir}/selinux/${POLICY_NAME}/ \
 	${datadir}/selinux/${POLICY_NAME}/*.pp \
 	${localstatedir}/lib/selinux/${POLICY_NAME}/ \
 	"
-FILES_${PN}-dev =+ " \
+FILES:${PN}-dev =+ " \
         ${datadir}/selinux/${POLICY_NAME}/include/ \
         ${sysconfdir}/selinux/sepolgen.conf \
 "
@@ -128,7 +128,7 @@ EXTRANATIVEPATH += "bzip2-native"
 
 DEPENDS += "bzip2-replacement-native checkpolicy-native policycoreutils-native semodule-utils-native m4-native"
 
-RDEPENDS_${PN}-dev =+ " \
+RDEPENDS:${PN}-dev =+ " \
         python3-core \
 "
 
@@ -289,11 +289,11 @@ do_install () {
 	install_config
 }
 
-do_install_append(){
+do_install:append(){
 	# While building policies on target, Makefile will be searched from SELINUX_DEVEL_PATH
 	echo "SELINUX_DEVEL_PATH=${datadir}/selinux/${POLICY_NAME}/include" > ${D}${sysconfdir}/selinux/sepolgen.conf
 }
 
-sysroot_stage_all_append () {
+sysroot_stage_all:append () {
 	sysroot_stage_dir ${D}${sysconfdir} ${SYSROOT_DESTDIR}${sysconfdir}
 }

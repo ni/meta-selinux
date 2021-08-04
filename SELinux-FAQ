@@ -67,7 +67,7 @@ After init Poky build environment, please follow these steps:
 
    1. Add meta-selinux path to BUILDDIR/conf/bblayers.conf file.
 
-   2. Set DISTRO="poky-selinux" or add DISTRO_FEATURES_append=" pam selinux"
+   2. Set DISTRO="poky-selinux" or add DISTRO_FEATURES:append=" pam selinux"
       in BUILDDIR/conf/local.conf file.
 
    3. Build the default selinux image.
@@ -81,7 +81,7 @@ the following steps:
 
    1. Add meta-selinux path to BUILDDIR/conf/bblayers.conf file
 
-   2. Add DISTRO_FEATURES_append=" pam selinux" in BUILDDIR/conf/local.conf 
+   2. Add DISTRO_FEATURES:append=" pam selinux" in BUILDDIR/conf/local.conf
       file.
 
    3. Add packagegroup-core-selinux to your custom image.

@@ -1,6 +1,6 @@
 PTEST_BINDIR = "0"
 
-FILES_${PN} += "${libdir}/${PN}"
+FILES:${PN} += "${libdir}/${PN}"
 
 # We should use sh wrappers instead of links so the commands could get correct
 # security labels
@@ -39,7 +39,7 @@ python create_sh_wrapper_reset_alternative_vars () {
             # Match coreutils
             if alt_name == '[':
                 alt_name = 'lbracket'
-            d.appendVar('ALTERNATIVE_%s' % (pn), ' ' + alt_name)
+            d.appendVar('ALTERNATIVE:%s' % (pn), ' ' + alt_name)
             d.setVarFlag('ALTERNATIVE_LINK_NAME', alt_name, alt_link_name)
             if os.path.exists(alt_wppath_dest):
                 d.setVarFlag('ALTERNATIVE_TARGET', alt_name, alt_wppath)
@@ -56,11 +56,11 @@ python create_sh_wrapper_reset_alternative_vars () {
 }
 
 # Add to PACKAGEBUILDPKGD so it could override the alternatives, which are set in
-# do_package_prepend() section of busybox_*.bb.
-PACKAGEBUILDPKGD_prepend = "create_sh_wrapper_reset_alternative_vars "
+# do_package:prepend() section of busybox_*.bb.
+PACKAGEBUILDPKGD:prepend = "create_sh_wrapper_reset_alternative_vars "
 
 # Use sh wrappers instead of links
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
 	# This part of code is dedicated to the on target upgrade problem.
 	# It's known that if we don't make appropriate symlinks before update-alternatives calls,
 	# there will be errors indicating missing commands such as 'sed'.

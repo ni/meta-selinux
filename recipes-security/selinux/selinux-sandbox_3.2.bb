@@ -15,7 +15,7 @@ S = "${WORKDIR}/git/sandbox"
 
 DEPENDS += "libcap-ng libselinux"
 
-RDEPENDS_${PN} += "\
+RDEPENDS:${PN} += "\
         python3-core \
         python3-math \
         python3-shell \
@@ -24,7 +24,7 @@ RDEPENDS_${PN} += "\
         selinux-python \
 "
 
-FILES_${PN} += "\
+FILES:${PN} += "\
         ${datadir}/sandbox/sandboxX.sh \
         ${datadir}/sandbox/start \
 "

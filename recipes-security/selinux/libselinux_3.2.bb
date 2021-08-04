@@ -11,7 +11,7 @@ require selinux_common.inc
 inherit lib_package python3native
 
 DEPENDS += "libsepol libpcre"
-DEPENDS_append_libc-musl = " fts"
+DEPENDS:append:libc-musl = " fts"
 
 S = "${WORKDIR}/git/libselinux"
 
@@ -24,6 +24,6 @@ def get_policyconfigarch(d):
 
 EXTRA_OEMAKE += "${@get_policyconfigarch(d)}"
 EXTRA_OEMAKE += "LDFLAGS='${LDFLAGS} -lpcre' LIBSEPOLA='${STAGING_LIBDIR}/libsepol.a'"
-EXTRA_OEMAKE_append_libc-musl = " FTS_LDLIBS=-lfts"
+EXTRA_OEMAKE:append:libc-musl = " FTS_LDLIBS=-lfts"
 
 BBCLASSEXTEND = "native"

@@ -10,9 +10,9 @@ require selinux_common.inc
 
 S = "${WORKDIR}/git/gui"
 
-RDEPENDS_${PN} += "python3-core"
+RDEPENDS:${PN} += "python3-core"
 
-FILES_${PN} += " \
+FILES:${PN} += " \
         ${datadir}/system-config-selinux/* \
         ${datadir}/icons/hicolor/* \
         ${datadir}/polkit-1/actions/org.selinux.config.policy \

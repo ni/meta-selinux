@@ -10,6 +10,6 @@ selinux_set_labels () {
 
 DEPENDS += "policycoreutils-native"
 
-IMAGE_PREPROCESS_COMMAND_append = " selinux_set_labels ;"
+IMAGE_PREPROCESS_COMMAND:append = " selinux_set_labels ;"
 
 inherit core-image

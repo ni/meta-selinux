@@ -17,12 +17,12 @@ S = "${WORKDIR}/git/python"
 EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
 
 DEPENDS += "python3 libsepol libselinux"
-RDEPENDS_${BPN}-audit2allow += "\
+RDEPENDS:${BPN}-audit2allow += "\
         python3-core \
         libselinux-python \
         ${BPN}-sepolgen \
 "
-RDEPENDS_${BPN}-chcat += "\
+RDEPENDS:${BPN}-chcat += "\
         python3-core \
         python3-codecs \
         python3-shell \
@@ -31,7 +31,7 @@ RDEPENDS_${BPN}-chcat += "\
         libselinux-python \
         ${BPN} \
 "
-RDEPENDS_${BPN} += "\
+RDEPENDS:${BPN} += "\
         python3-core \
         python3-codecs \
         python3-io \
@@ -43,7 +43,7 @@ RDEPENDS_${BPN} += "\
         libsemanage-python \
         setools \
 "
-RDEPENDS_${BPN}-semanage += "\
+RDEPENDS:${BPN}-semanage += "\
         python3-core \
         python3-ipy \
         python3-compression \
@@ -52,13 +52,13 @@ RDEPENDS_${BPN}-semanage += "\
         libselinux-python \
         ${BPN} \
 "
-RDEPENDS_${BPN}-sepolicy += "\
+RDEPENDS:${BPN}-sepolicy += "\
         python3-core \
         python3-codecs \
         python3-syslog \
         ${BPN} \
 "
-RDEPENDS_${BPN}-sepolgen-ifgen += "\
+RDEPENDS:${BPN}-sepolgen-ifgen += "\
         python3-core \
         libselinux-python \
 "
@@ -71,33 +71,33 @@ PACKAGES =+ "\
         ${PN}-sepolgen \
         ${PN}-sepolicy \
 "
-FILES_${PN}-audit2allow = "\
+FILES:${PN}-audit2allow = "\
         ${bindir}/audit2allow \
         ${bindir}/audit2why \
 "
-FILES_${PN}-chcat = "\
+FILES:${PN}-chcat = "\
         ${bindir}/chcat \
 "
-FILES_${PN}-semanage = "\
+FILES:${PN}-semanage = "\
         ${sbindir}/semanage \
         ${datadir}/bash-completion/completions/semanage \
 "
 # The ${bindir}/sepolgen is a symlink to ${bindir}/sepolicy
-FILES_${PN}-sepolicy += "\
+FILES:${PN}-sepolicy += "\
         ${bindir}/sepolgen \
         ${bindir}/sepolicy \
         ${datadir}/bash-completion/completions/sepolicy \
 "
-FILES_${PN}-sepolgen-ifgen += "\
+FILES:${PN}-sepolgen-ifgen += "\
         ${bindir}/sepolgen-ifgen \
         ${bindir}/sepolgen-ifgen-attr-helper \
 "
-FILES_${PN}-sepolgen += "\
+FILES:${PN}-sepolgen += "\
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolgen* \
         ${localstatedir}/lib/sepolgen/perm_map \
 "
 
-FILES_${PN} += "\
+FILES:${PN} += "\
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/seobject.py* \
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy*.egg-info \
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/* \

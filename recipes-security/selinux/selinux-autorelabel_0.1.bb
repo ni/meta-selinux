@@ -7,7 +7,7 @@ file is present.\
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     policycoreutils-setfiles \
 "
 
@@ -19,7 +19,7 @@ INITSCRIPT_PARAMS = "start 01 S ."
 
 require selinux-initsh.inc
 
-do_install_append() {
+do_install:append() {
 	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
 		echo "# first boot relabelling" > ${D}/.autorelabel
 	fi

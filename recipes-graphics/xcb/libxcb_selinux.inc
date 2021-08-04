@@ -3,4 +3,4 @@ inherit enable-selinux
 PACKAGECONFIG[selinux] = "--enable-selinux,--disable-selinux,,"
 
 PACKAGES += "${PN}-xselinux"
-FILES_${PN}-xselinux += "${libdir}/libxcb-xselinux.so.*"
+FILES:${PN}-xselinux += "${libdir}/libxcb-xselinux.so.*"

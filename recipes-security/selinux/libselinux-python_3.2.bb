@@ -10,7 +10,7 @@ require selinux_common.inc
 
 inherit python3native python3targetconfig
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/libselinux:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/libselinux:"
 SRC_URI += "\
         file://0001-Makefile-fix-python-modules-install-path-for-multili.patch \
         file://0001-Do-not-use-PYCEXT-and-rely-on-the-installed-file-nam.patch \
@@ -19,7 +19,7 @@ SRC_URI += "\
 S = "${WORKDIR}/git/libselinux"
 
 DEPENDS += "python3 swig-native libpcre libsepol"
-RDEPENDS_${PN} += "libselinux python3-core python3-shell"
+RDEPENDS:${PN} += "libselinux python3-core python3-shell"
 
 def get_policyconfigarch(d):
     import re
@@ -30,10 +30,10 @@ def get_policyconfigarch(d):
 
 EXTRA_OEMAKE += "${@get_policyconfigarch(d)}"
 EXTRA_OEMAKE += "LDFLAGS='${LDFLAGS} -lpcre' LIBSEPOLA='${STAGING_LIBDIR}/libsepol.a'"
-EXTRA_OEMAKE_append_libc-musl = " FTS_LDLIBS=-lfts"
+EXTRA_OEMAKE:append:libc-musl = " FTS_LDLIBS=-lfts"
 
-FILES_${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
-INSANE_SKIP_${PN} = "dev-so"
+FILES:${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
+INSANE_SKIP:${PN} = "dev-so"
 
 do_compile() {
     oe_runmake pywrap -j1 \

@@ -20,16 +20,16 @@ EXTRA_OEMAKE += "SYSTEMDSYSTEMUNITDIR=${systemd_system_unitdir} \
 
 S = "${WORKDIR}/git/restorecond"
 
-FILES_${PN} += "${datadir}/dbus-1/services/org.selinux.Restorecond.service \
+FILES:${PN} += "${datadir}/dbus-1/services/org.selinux.Restorecond.service \
                 ${systemd_user_unitdir}/* \
                "
 
-SYSTEMD_SERVICE_restorecond = "restorecond.service"
+SYSTEMD_SERVICE:restorecond = "restorecond.service"
 INITSCRIPT_PACKAGES = "restorecond"
-INITSCRIPT_NAME_restorecond = "restorecond"
-INITSCRIPT_PARAMS_restorecond = "defaults"
+INITSCRIPT_NAME:restorecond = "restorecond"
+INITSCRIPT_PARAMS:restorecond = "defaults"
 
-do_install_append() {
+do_install:append() {
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'false', 'true', d)}; then
         # remove /usr/lib/systemd/user
         rm -rf ${D}${nonarch_libdir}

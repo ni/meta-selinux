@@ -38,7 +38,7 @@ layer should not change the system behavior.
 In order to use the components in this layer you must add the 'selinux' to the
 DISTRO_FEATURES.  In addition to selinux, you should be sure that acl, xattr and
 pam are also present.
-e.g. DISTRO_FEATURES_append = " acl xattr pam selinux"
+e.g. DISTRO_FEATURES:append = " acl xattr pam selinux"
 
 You must also specify a preferred provider for the virtual/refpolicy.  The
 included policies with this layer are simply reference policies and will need
@@ -69,8 +69,8 @@ By default selinux enabled images coming up with "sysvinit" as init manager,
 we can use "systemd" as an init manager using below changes to local.conf
 
 * enable systemd as init manager changes to local.conf
-DISTRO_FEATURES_remove = " sysvinit"
-DISTRO_FEATURES_append = " systemd"
+DISTRO_FEATURES:remove = " sysvinit"
+DISTRO_FEATURES:append = " systemd"
 VIRTUAL-RUNTIME_init_manager = "systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED = ""
 

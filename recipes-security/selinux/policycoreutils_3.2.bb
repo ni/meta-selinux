@@ -26,40 +26,40 @@ S = "${WORKDIR}/git/policycoreutils"
 
 inherit selinux python3native
 
-RDEPENDS_${BPN}-fixfiles += "\
+RDEPENDS:${BPN}-fixfiles += "\
     ${BPN}-setfiles \
     grep \
     findutils \
 "
-RDEPENDS_${BPN}-genhomedircon += "\
+RDEPENDS:${BPN}-genhomedircon += "\
     ${BPN}-semodule \
 "
-RDEPENDS_${BPN}-loadpolicy += "\
+RDEPENDS:${BPN}-loadpolicy += "\
     libselinux \
     libsepol \
 "
-RDEPENDS_${BPN}-newrole += "\
+RDEPENDS:${BPN}-newrole += "\
     libcap-ng \
     libselinux \
 "
-RDEPENDS_${BPN}-runinit += "libselinux"
-RDEPENDS_${BPN}-secon += "libselinux"
-RDEPENDS_${BPN}-semodule += "\
+RDEPENDS:${BPN}-runinit += "libselinux"
+RDEPENDS:${BPN}-secon += "libselinux"
+RDEPENDS:${BPN}-semodule += "\
     libsepol \
     libselinux \
     libsemanage \
 "
-RDEPENDS_${BPN}-sestatus += "libselinux"
-RDEPENDS_${BPN}-setfiles += "\
+RDEPENDS:${BPN}-sestatus += "libselinux"
+RDEPENDS:${BPN}-setfiles += "\
     libselinux \
     libsepol \
 "
-RDEPENDS_${BPN}-setsebool += "\
+RDEPENDS:${BPN}-setsebool += "\
     libsepol \
     libselinux \
     libsemanage \
 "
-RDEPENDS_${BPN} += "selinux-python"
+RDEPENDS:${BPN} += "selinux-python"
 
 PACKAGES =+ "\
     ${PN}-fixfiles \
@@ -74,34 +74,34 @@ PACKAGES =+ "\
     ${PN}-setfiles \
     ${PN}-setsebool \
 "
-FILES_${PN}-fixfiles += "${base_sbindir}/fixfiles"
-FILES_${PN}-genhomedircon += "${base_sbindir}/genhomedircon"
-FILES_${PN}-loadpolicy += "\
+FILES:${PN}-fixfiles += "${base_sbindir}/fixfiles"
+FILES:${PN}-genhomedircon += "${base_sbindir}/genhomedircon"
+FILES:${PN}-loadpolicy += "\
     ${base_sbindir}/load_policy \
 "
-FILES_${PN}-newrole += "\
+FILES:${PN}-newrole += "\
     ${bindir}/newrole \
     ${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/newrole', '', d)} \
 "
-FILES_${PN}-runinit += "\
+FILES:${PN}-runinit += "\
     ${base_sbindir}/run_init \
     ${base_sbindir}/open_init_pty \
     ${@bb.utils.contains('DISTRO_FEATURES', 'pam', '${sysconfdir}/pam.d/run_init', '', d)} \
 "
-FILES_${PN}-dbg += "${prefix}/libexec/selinux/hll/.debug"
-FILES_${PN}-secon += "${bindir}/secon"
-FILES_${PN}-semodule += "${base_sbindir}/semodule"
-FILES_${PN}-hll += "${prefix}/libexec/selinux/hll/*"
-FILES_${PN}-sestatus += "\
+FILES:${PN}-dbg += "${prefix}/libexec/selinux/hll/.debug"
+FILES:${PN}-secon += "${bindir}/secon"
+FILES:${PN}-semodule += "${base_sbindir}/semodule"
+FILES:${PN}-hll += "${prefix}/libexec/selinux/hll/*"
+FILES:${PN}-sestatus += "\
     ${base_sbindir}/sestatus \
     ${sysconfdir}/sestatus.conf \
 "
-FILES_${PN}-setfiles += "\
+FILES:${PN}-setfiles += "\
     ${base_sbindir}/restorecon \
     ${base_sbindir}/restorecon_xattr \
     ${base_sbindir}/setfiles \
 "
-FILES_${PN}-setsebool += "\
+FILES:${PN}-setsebool += "\
     ${base_sbindir}/setsebool \
     ${datadir}/bash-completion/completions/setsebool \
 "
@@ -111,7 +111,7 @@ export STAGING_LIBDIR
 export BUILD_SYS
 export HOST_SYS
 
-PACKAGECONFIG_class-target ?= "\
+PACKAGECONFIG:class-target ?= "\
         ${@bb.utils.contains('DISTRO_FEATURES', 'pam', 'libpam', '', d)} \
         audit \
 "
@@ -131,7 +131,7 @@ BBCLASSEXTEND = "native"
 
 PCU_NATIVE_CMDS = "setfiles semodule hll"
 
-do_compile_class-native() {
+do_compile:class-native() {
     for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
         oe_runmake -C $PCU_CMD \
             INCLUDEDIR='${STAGING_INCDIR}' \
@@ -139,11 +139,11 @@ do_compile_class-native() {
     done
 }
 
-sysroot_stage_dirs_append_class-native() {
+sysroot_stage_dirs:append:class-native() {
     cp -R $from/${prefix}/libexec $to/${prefix}/libexec
 }
 
-do_compile_prepend() {
+do_compile:prepend() {
     export PYTHON=python3
     export PYLIBVER='python${PYTHON_BASEVERSION}'
     export PYTHON_CPPFLAGS="-I${STAGING_INCDIR}/${PYLIBVER}"
@@ -151,12 +151,12 @@ do_compile_prepend() {
     export PYTHON_SITE_PKG="${libdir}/${PYLIBVER}/site-packages"
 }
 
-do_install_prepend() {
+do_install:prepend() {
     export PYTHON=python3
     export SBINDIR="${D}/${base_sbindir}"
 }
 
-do_install_class-native() {
+do_install:class-native() {
     for PCU_CMD in ${PCU_NATIVE_CMDS} ; do
         oe_runmake -C $PCU_CMD install \
             DESTDIR="${D}" \
@@ -165,7 +165,7 @@ do_install_class-native() {
     done
 }
 
-do_install_append_class-target() {
+do_install:append:class-target() {
     if [ -e ${WORKDIR}/pam.d ]; then
         install -d ${D}${sysconfdir}/pam.d/
         install -m 0644 ${WORKDIR}/pam.d/* ${D}${sysconfdir}/pam.d/
