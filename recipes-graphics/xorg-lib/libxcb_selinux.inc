@@ -1,4 +1,5 @@
 inherit enable-selinux
-
 PACKAGECONFIG[selinux] = "--enable-selinux,--disable-selinux,libselinux"
-RDEPENDS:${PN}-runtime += "${@target_selinux(d, 'pam-plugin-selinux')}"
+
+PACKAGES += "${PN}-xselinux"
+FILES:${PN}-xselinux += "${libdir}/libxcb-xselinux.so.*"

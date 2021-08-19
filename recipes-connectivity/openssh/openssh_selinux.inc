@@ -1,9 +1,6 @@
-inherit with-selinux
+inherit enable-selinux enable-audit
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-# There is no distro feature just for audit.
-PACKAGECONFIG:append = " audit"
-
-PACKAGECONFIG[audit] = "--with-audit=linux,--without-audit,audit,"
-
+PACKAGECONFIG[selinux] = "--with-selinux,--without-selinux,libselinux"
+PACKAGECONFIG[audit] = "--with-audit=linux,--without-audit,audit"

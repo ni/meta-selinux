@@ -1,3 +1,3 @@
-inherit with-selinux
+inherit enable-selinux
 
-PACKAGECONFIG:append = "${@bb.utils.contains('DISTRO_FEATURES', 'acl', ' acl', '', d)}"
+PACKAGECONFIG[selinux] = "--with-selinux,--without-selinux,libselinux"

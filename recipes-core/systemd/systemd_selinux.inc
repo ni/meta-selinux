@@ -1,4 +1,4 @@
-inherit ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', 'enable-audit', '', d)}
+inherit enable-selinux enable-audit
 
 do_install:append() {
 	if ${@bb.utils.contains('PACKAGECONFIG', 'backlight', 'true', 'false', d)}; then

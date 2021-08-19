@@ -1,2 +1,2 @@
-inherit with-selinux
-PACKAGECONFIG[selinux] = "${WITH_SELINUX},${WITHOUT_SELINUX},libsemanage,"
+inherit enable-selinux
+PACKAGECONFIG[selinux] = "--with-selinux,--without-selinux,libselinux"
