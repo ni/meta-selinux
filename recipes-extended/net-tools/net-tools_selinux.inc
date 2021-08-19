@@ -1,5 +1,10 @@
-inherit selinux
+inherit enable-selinux
 
-DEPENDS += "${LIBSELINUX}"
+PACKAGECONFIG[selinux] = ",,libselinux"
 
-EXTRA_OEMAKE += "${@target_selinux(d, 'HAVE_SELINUX=1', 'HAVE_SELINUX=0')}"
+do_configure:append() {
+    if ${@bb.utils.contains('PACKAGECONFIG', 'selinux', 'true', 'false', d)} ; then
+        echo "#define HAVE_SELINUX 1" >> ${S}/config.h
+        echo "HAVE_SELINUX=1" >> ${S}/config.make
+    fi
+}
