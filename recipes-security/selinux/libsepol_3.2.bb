@@ -9,7 +9,8 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
 
 require selinux_common.inc
 
-SRC_URI += "file://CVE-2021-36084.patch"
+SRC_URI += "file://CVE-2021-36084.patch \
+            file://CVE-2021-36085.patch "
 
 inherit lib_package
 
