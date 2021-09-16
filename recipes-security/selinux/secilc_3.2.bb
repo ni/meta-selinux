@@ -8,6 +8,8 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=c7e802b9a3b0c2c852669864c08b9138"
 
 require selinux_common.inc
 
+SRC_URI += "file://CVE-2021-36087.patch"
+
 DEPENDS += "libsepol xmlto-native"
 
 S = "${WORKDIR}/git/secilc"
