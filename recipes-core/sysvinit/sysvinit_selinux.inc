@@ -1,7 +1,3 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-
-B = "${S}"
-
 inherit selinux
 
 DEPENDS += "${LIBSELINUX}"
