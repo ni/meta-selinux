@@ -1,7 +1,7 @@
 HOMEPAGE = "https://github.com/SELinuxProject"
 
 SRC_URI = "git://github.com/SELinuxProject/selinux.git;branch=master;protocol=https"
-SRCREV = "cf853c1a0c2328ad6c62fb2b2cc55d4926301d6b"
+SRCREV = "7f600c40bc18d8180993edcd54daf45124736776"
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>\d+(\.\d+)+)"
 
