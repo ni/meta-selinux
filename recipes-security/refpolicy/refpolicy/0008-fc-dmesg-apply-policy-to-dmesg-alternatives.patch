@@ -1,0 +1,23 @@
+From 504e8429500ab0984adfd52bb09a3e993b87f2f1 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Fri, 29 Mar 2019 08:26:55 -0400
+Subject: [PATCH] fc/dmesg: apply policy to dmesg alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/admin/dmesg.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/admin/dmesg.fc b/policy/modules/admin/dmesg.fc
+index e52fdfcf8..526b92ed2 100644
+--- a/policy/modules/admin/dmesg.fc
++++ b/policy/modules/admin/dmesg.fc
+@@ -1 +1,2 @@
+ /usr/bin/dmesg		--		gen_context(system_u:object_r:dmesg_exec_t,s0)
++/usr/bin/dmesg\.util-linux		--		gen_context(system_u:object_r:dmesg_exec_t,s0)
+-- 
+2.17.1
+

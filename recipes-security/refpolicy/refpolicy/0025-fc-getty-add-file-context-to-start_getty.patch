@@ -1,0 +1,27 @@
+From dbd399143d6fbda828cfc9f2546bc730e0da584c Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 16:07:30 +0800
+Subject: [PATCH] fc/getty: add file context to start_getty
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/getty.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/getty.fc b/policy/modules/system/getty.fc
+index 116ea6421..53ff6137b 100644
+--- a/policy/modules/system/getty.fc
++++ b/policy/modules/system/getty.fc
+@@ -4,6 +4,7 @@
+ /run/agetty\.reload	--	gen_context(system_u:object_r:getty_runtime_t,s0)
+ 
+ /usr/bin/.*getty	--	gen_context(system_u:object_r:getty_exec_t,s0)
++/usr/bin/start_getty	--	gen_context(system_u:object_r:bin_t,s0)
+ 
+ /usr/sbin/.*getty	--	gen_context(system_u:object_r:getty_exec_t,s0)
+ 
+-- 
+2.17.1
+

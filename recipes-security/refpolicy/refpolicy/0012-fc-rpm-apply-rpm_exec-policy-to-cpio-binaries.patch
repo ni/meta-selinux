@@ -1,0 +1,27 @@
+From faf757c732c9a022499b584cea64ce1fcc78e118 Mon Sep 17 00:00:00 2001
+From: Joe MacDonald <joe_macdonald@mentor.com>
+Date: Fri, 29 Mar 2019 09:54:07 -0400
+Subject: [PATCH] fc/rpm: apply rpm_exec policy to cpio binaries
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/admin/rpm.fc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/admin/rpm.fc b/policy/modules/admin/rpm.fc
+index aaf530c2b..618b18cec 100644
+--- a/policy/modules/admin/rpm.fc
++++ b/policy/modules/admin/rpm.fc
+@@ -66,4 +66,6 @@ ifdef(`distro_redhat',`
+ 
+ ifdef(`enable_mls',`
+ /usr/sbin/cpio	--	gen_context(system_u:object_r:rpm_exec_t,s0)
++/usr/bin/cpio	--	gen_context(system_u:object_r:rpm_exec_t,s0)
++/usr/bin/cpio\.cpio	--	gen_context(system_u:object_r:rpm_exec_t,s0)
+ ')
+-- 
+2.17.1
+

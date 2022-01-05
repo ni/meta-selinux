@@ -1,0 +1,39 @@
+From 96437ba860d352304246fbe3381030da0665f239 Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Thu, 25 Feb 2016 04:25:08 -0500
+Subject: [PATCH] policy/modules/system/logging: allow auditd_t to write socket
+ at any level
+
+Allow auditd_t to write init_t:unix_stream_socket at any level.
+
+Fixes:
+  avc: denied { write } for pid=748 comm="auditd" \
+  path="socket:[17371]" dev="sockfs" ino=17371 \
+  scontext=system_u:system_r:auditd_t:s15:c0.c1023 \
+  tcontext=system_u:system_r:init_t:s0-s15:c0.c1023 \
+  tclass=unix_stream_socket permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index e67c25a9e..f8d8b73f0 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -215,6 +215,8 @@ miscfiles_read_localization(auditd_t)
+ 
+ mls_file_read_all_levels(auditd_t)
+ mls_file_write_all_levels(auditd_t) # Need to be able to write to /var/run/ directory
++mls_fd_use_all_levels(auditd_t)
++mls_socket_write_all_levels(auditd_t)
+ 
+ seutil_dontaudit_read_config(auditd_t)
+ 
+-- 
+2.17.1
+

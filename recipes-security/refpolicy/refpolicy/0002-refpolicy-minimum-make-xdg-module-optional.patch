@@ -1,0 +1,40 @@
+From 1ff0e212ce737bba59d90977a58a15250bc84ea9 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Wed, 29 Sep 2021 11:08:49 +0800
+Subject: [PATCH] refpolicy-minimum: make xdg module optional
+
+The systemd module invokes xdg_config_content and xdg_data_content
+interfaces which are from xdg module. Since xdg is not a core module, we
+could make it optional in minimum policy.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 8cea6baa1..218834495 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -276,10 +276,14 @@ files_type(systemd_update_run_t)
+ 
+ type systemd_conf_home_t;
+ init_unit_file(systemd_conf_home_t)
+-xdg_config_content(systemd_conf_home_t)
++optional_policy(`
++	xdg_config_content(systemd_conf_home_t)
++')
+ 
+ type systemd_data_home_t;
+-xdg_data_content(systemd_data_home_t)
++optional_policy(`
++	xdg_data_content(systemd_data_home_t)
++')
+ 
+ type systemd_user_runtime_notify_t;
+ userdom_user_runtime_content(systemd_user_runtime_notify_t)
+-- 
+2.17.1
+

@@ -1,0 +1,64 @@
+From 93d4f198bd469a8728f5ce0cc51ff18f8a58b23b Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Thu, 4 Feb 2016 06:03:19 -0500
+Subject: [PATCH] policy/modules/system/systemd: enable support for
+ systemd-tmpfiles to manage all non-security files
+
+Fixes:
+systemd-tmpfiles[137]: Failed to create directory or subvolume "/var/volatile/log": Permission denied
+systemd-tmpfiles[137]: Failed to create directory or subvolume "/var/volatile/tmp": Permission denied
+systemd-tmpfiles[137]: Failed to create directory or subvolume "/var/log/audit": Permission denied
+
+avc:  denied  { write } for  pid=137 comm="systemd-tmpfile" name="/"
+dev="tmpfs" ino=12400 scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=system_u:object_r:tmpfs_t tclass=dir permissive=0
+
+avc:  denied  { read } for  pid=137 comm="systemd-tmpfile" name="dbus"
+dev="vda" ino=12363 scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=system_u:object_r:system_dbusd_var_lib_t tclass=dir
+permissive=0
+
+avc:  denied  { relabelfrom } for  pid=137 comm="systemd-tmpfile"
+name="log" dev="vda" ino=14129
+scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=system_u:object_r:var_log_t tclass=lnk_file permissive=0
+
+avc:  denied  { create } for  pid=137 comm="systemd-tmpfile"
+name="audit" scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=system_u:object_r:auditd_log_t tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 3d9198342..31d28a0e3 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -10,7 +10,7 @@ policy_module(systemd, 1.12.6)
+ ## Enable support for systemd-tmpfiles to manage all non-security files.
+ ## </p>
+ ## </desc>
+-gen_tunable(systemd_tmpfiles_manage_all, false)
++gen_tunable(systemd_tmpfiles_manage_all, true)
+ 
+ ## <desc>
+ ## <p>
+@@ -1396,6 +1396,10 @@ files_relabelfrom_home(systemd_tmpfiles_t)
+ files_relabelto_home(systemd_tmpfiles_t)
+ files_relabelto_etc_dirs(systemd_tmpfiles_t)
+ files_setattr_lock_dirs(systemd_tmpfiles_t)
++
++files_manage_non_auth_files(systemd_tmpfiles_t)
++files_relabel_non_auth_files(systemd_tmpfiles_t)
++
+ # for /etc/mtab
+ files_manage_etc_symlinks(systemd_tmpfiles_t)
+ 
+-- 
+2.17.1
+

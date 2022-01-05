@@ -1,4 +1,4 @@
-From 8d2c24bc1e2ef8ddf3cf7a08297cfab8a8a92b0d Mon Sep 17 00:00:00 2001
+From bbc8b58fe5fe709dfadbffc86e17ebd2d76a257c Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Thu, 28 Mar 2019 21:37:32 -0400
 Subject: [PATCH] fc/bash: apply /usr/bin/bash context to /bin/bash.bash

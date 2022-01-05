@@ -1,4 +1,4 @@
-From 85a77289d193bb3335c78f6d51b4ae2b81249952 Mon Sep 17 00:00:00 2001
+From 3cccdec2aaa273ca09100ca957f4968a25f4f3a3 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Thu, 4 Apr 2019 10:45:03 -0400
 Subject: [PATCH] fc/resolv.conf: label resolv.conf in var/run/ properly

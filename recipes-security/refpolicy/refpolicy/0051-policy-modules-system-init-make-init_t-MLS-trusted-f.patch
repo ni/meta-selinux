@@ -1,0 +1,46 @@
+From 7bcc117ea39532427df297299c10ca1d2948a70c Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Fri, 15 Jan 2016 03:47:05 -0500
+Subject: [PATCH] policy/modules/system/init: make init_t MLS trusted for
+ lowering/raising the leve of files
+
+Fix security_validate_transition issues:
+
+  op=security_validate_transition seresult=denied \
+  oldcontext=system_u:object_r:device_t:s15:c0.c1023 \
+  newcontext=system_u:object_r:device_t:s0 \
+  taskcontext=system_u:system_r:init_t:s0-s15:c0.c1023 \
+  tclass=dir
+
+  op=security_validate_transition seresult=denied \
+  oldcontext=system_u:object_r:var_run_t:s0 \
+  newcontext=system_u:object_r:var_log_t:s0-s15:c0.c1023 \
+  taskcontext=system_u:system_r:init_t:s0-s15:c0.c1023 \
+  tclass=dir
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/init.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
+index 932d1f7b3..36becaa6e 100644
+--- a/policy/modules/system/init.te
++++ b/policy/modules/system/init.te
+@@ -219,6 +219,10 @@ mls_process_write_all_levels(init_t)
+ mls_fd_use_all_levels(init_t)
+ mls_process_set_level(init_t)
+ 
++# MLS trusted for lowering/raising the level of files
++mls_file_downgrade(init_t)
++mls_file_upgrade(init_t)
++
+ # the following one is needed for libselinux:is_selinux_enabled()
+ # otherwise the call fails and sysvinit tries to load the policy
+ # again when using the initramfs
+-- 
+2.17.1
+

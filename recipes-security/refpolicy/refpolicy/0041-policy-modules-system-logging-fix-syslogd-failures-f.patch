@@ -1,0 +1,55 @@
+From dc2c9c91219311f6c4d985169dff6c5931a465d7 Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Thu, 4 Feb 2016 02:10:15 -0500
+Subject: [PATCH] policy/modules/system/logging: fix syslogd failures for
+ systemd
+
+Fixes:
+syslogd[243]: Error opening log file: /var/log/auth.log: Permission denied
+syslogd[243]: Error opening log file: /var/log/syslog: Permission denied
+syslogd[243]: Error opening log file: /var/log/kern.log: Permission denied
+syslogd[243]: Error opening log file: /var/log/mail.log: Permission denied
+syslogd[243]: Error opening log file: /var/log/mail.err: Permission denied
+syslogd[243]: Error opening log file: /var/log/messages: Permission denied
+
+avc:  denied  { search } for  pid=243 comm="syslogd" name="/"
+dev="tmpfs" ino=1 scontext=system_u:system_r:syslogd_t
+tcontext=system_u:object_r:tmpfs_t tclass=dir permissive=0
+
+avc:  denied  { write } for  pid=162 comm="systemd-journal"
+name="syslog" dev="tmpfs" ino=515 scontext=system_u:system_r:syslogd_t
+tcontext=system_u:object_r:syslogd_runtime_t tclass=sock_file
+permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index cc530a2be..5b4b5ec5d 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -431,7 +431,7 @@ files_search_var_lib(syslogd_t)
+ 
+ # manage runtime files
+ allow syslogd_t syslogd_runtime_t:dir create_dir_perms;
+-allow syslogd_t syslogd_runtime_t:sock_file { create setattr unlink };
++allow syslogd_t syslogd_runtime_t:sock_file { create setattr unlink write };
+ allow syslogd_t syslogd_runtime_t:file map;
+ manage_files_pattern(syslogd_t, syslogd_runtime_t, syslogd_runtime_t)
+ files_runtime_filetrans(syslogd_t, syslogd_runtime_t, file)
+@@ -495,6 +495,7 @@ files_var_lib_filetrans(syslogd_t, syslogd_var_lib_t, { file dir })
+ 
+ fs_getattr_all_fs(syslogd_t)
+ fs_search_auto_mountpoints(syslogd_t)
++fs_search_tmpfs(syslogd_t)
+ 
+ mls_file_write_all_levels(syslogd_t) # Need to be able to write to /var/run/ and /var/log directories
+ 
+-- 
+2.17.1
+

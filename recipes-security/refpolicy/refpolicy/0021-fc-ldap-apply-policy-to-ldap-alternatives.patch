@@ -1,0 +1,40 @@
+From 6b43af067ec45bce1b7059fc549e246f53311d3a Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 11:06:13 +0800
+Subject: [PATCH] fc/ldap: apply policy to ldap alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/ldap.fc | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/policy/modules/services/ldap.fc b/policy/modules/services/ldap.fc
+index 0a1d08d0f..65b202962 100644
+--- a/policy/modules/services/ldap.fc
++++ b/policy/modules/services/ldap.fc
+@@ -1,8 +1,10 @@
+ /etc/ldap/slapd\.conf	--	gen_context(system_u:object_r:slapd_etc_t,s0)
+ /etc/openldap/certs(/.*)?	gen_context(system_u:object_r:slapd_cert_t,s0)
+ /etc/openldap/slapd\.d(/.*)?	gen_context(system_u:object_r:slapd_db_t,s0)
++/etc/openldap/slapd\.conf	--	gen_context(system_u:object_r:slapd_etc_t,s0)
+ 
+ /etc/rc\.d/init\.d/ldap	--	gen_context(system_u:object_r:slapd_initrc_exec_t,s0)
++/etc/rc\.d/init\.d/openldap	--	gen_context(system_u:object_r:slapd_initrc_exec_t,s0)
+ 
+ /usr/bin/slapd	--	gen_context(system_u:object_r:slapd_exec_t,s0)
+ 
+@@ -25,6 +27,9 @@
+ /var/log/ldap.*	gen_context(system_u:object_r:slapd_log_t,s0)
+ /var/log/slapd.*	gen_context(system_u:object_r:slapd_log_t,s0)
+ 
++/var/openldap(/.*)?	gen_context(system_u:object_r:slapd_db_t,s0)
++/var/openldap/replog(/.*)?	gen_context(system_u:object_r:slapd_replog_t,s0)
++
+ /run/ldapi	-s	gen_context(system_u:object_r:slapd_runtime_t,s0)
+ /run/openldap(/.*)?	gen_context(system_u:object_r:slapd_runtime_t,s0)
+ /run/slapd.*	-s	gen_context(system_u:object_r:slapd_runtime_t,s0)
+-- 
+2.17.1
+

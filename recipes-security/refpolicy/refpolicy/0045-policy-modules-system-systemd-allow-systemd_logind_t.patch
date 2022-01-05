@@ -1,0 +1,43 @@
+From 4e2df7ca542b6c94e74345daaecb33efc82d749a Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Sat, 18 Dec 2021 09:26:43 +0800
+Subject: [PATCH] policy/modules/system/systemd: allow systemd_logind_t to read
+ the process state of all domains
+
+We encountered the following su runtime error:
+$ useradd user1
+$ passwd user1
+New password:
+Retype new password:
+passwd: password updated successfully
+$ su - user1
+Session terminated, terminating shell...Hangup
+
+Fixes:
+avc:  denied  { use } for  pid=344 comm="su"
+path="/run/systemd/sessions/c4.ref" dev="tmpfs" ino=661
+scontext=root:sysadm_r:sysadm_su_t
+tcontext=system_u:system_r:systemd_logind_t tclass=fd permissive=0
+
+Upstream-Status: Pending
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 847895e63..1a83148c1 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -721,6 +721,7 @@ userdom_relabelfrom_user_runtime_dirs(systemd_logind_t)
+ userdom_relabelto_user_runtime_dirs(systemd_logind_t)
+ userdom_setattr_user_ttys(systemd_logind_t)
+ userdom_use_user_ttys(systemd_logind_t)
++domain_read_all_domains_state(systemd_logind_t)
+ 
+ # Needed to work around patch not yet merged into the systemd-logind supported on RHEL 7.x
+ # The change in systemd by Nicolas Iooss on 02-Feb-2016 with hash 4b51966cf6c06250036e428608da92f8640beb96
+-- 
+2.17.1
+

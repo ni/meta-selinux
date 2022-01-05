@@ -1,0 +1,64 @@
+From 7f8b07b7af0c3cd8bbec49082b42011ac433df45 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 30 Jun 2020 10:45:57 +0800
+Subject: [PATCH] fc: add fcontext for init scripts and systemd service files
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/cron.fc  | 1 +
+ policy/modules/services/rngd.fc  | 1 +
+ policy/modules/services/rpc.fc   | 2 ++
+ policy/modules/system/logging.fc | 1 +
+ 4 files changed, 5 insertions(+)
+
+diff --git a/policy/modules/services/cron.fc b/policy/modules/services/cron.fc
+index 827363d88..e8412396d 100644
+--- a/policy/modules/services/cron.fc
++++ b/policy/modules/services/cron.fc
+@@ -1,4 +1,5 @@
+ /etc/rc\.d/init\.d/(anacron|atd)	--	gen_context(system_u:object_r:crond_initrc_exec_t,s0)
++/etc/rc\.d/init\.d/crond	--	gen_context(system_u:object_r:crond_initrc_exec_t,s0)
+ 
+ /etc/cron\.d(/.*)?	gen_context(system_u:object_r:system_cron_spool_t,s0)
+ /etc/crontab	--	gen_context(system_u:object_r:system_cron_spool_t,s0)
+diff --git a/policy/modules/services/rngd.fc b/policy/modules/services/rngd.fc
+index 382c067f9..0ecc5acc4 100644
+--- a/policy/modules/services/rngd.fc
++++ b/policy/modules/services/rngd.fc
+@@ -1,4 +1,5 @@
+ /etc/rc\.d/init\.d/rngd	--	gen_context(system_u:object_r:rngd_initrc_exec_t,s0)
++/etc/rc\.d/init\.d/rng-tools	--	gen_context(system_u:object_r:rngd_initrc_exec_t,s0)
+ 
+ /usr/bin/rngd	--	gen_context(system_u:object_r:rngd_exec_t,s0)
+ 
+diff --git a/policy/modules/services/rpc.fc b/policy/modules/services/rpc.fc
+index 88d2acaf0..d9c0a4aa7 100644
+--- a/policy/modules/services/rpc.fc
++++ b/policy/modules/services/rpc.fc
+@@ -1,7 +1,9 @@
+ /etc/exports	--	gen_context(system_u:object_r:exports_t,s0)
+ 
+ /etc/rc\.d/init\.d/nfs	--	gen_context(system_u:object_r:nfsd_initrc_exec_t,s0)
++/etc/rc\.d/init\.d/nfsserver	--	gen_context(system_u:object_r:nfsd_initrc_exec_t,s0)
+ /etc/rc\.d/init\.d/nfslock	--	gen_context(system_u:object_r:rpcd_initrc_exec_t,s0)
++/etc/rc\.d/init\.d/nfscommon	--	gen_context(system_u:object_r:rpcd_initrc_exec_t,s0)
+ /etc/rc\.d/init\.d/rpcidmapd	--	gen_context(system_u:object_r:rpcd_initrc_exec_t,s0)
+ 
+ /usr/bin/rpc\..*	--	gen_context(system_u:object_r:rpcd_exec_t,s0)
+diff --git a/policy/modules/system/logging.fc b/policy/modules/system/logging.fc
+index 5681acb51..4ff5f990a 100644
+--- a/policy/modules/system/logging.fc
++++ b/policy/modules/system/logging.fc
+@@ -24,6 +24,7 @@
+ /usr/lib/systemd/system/auditd.* -- gen_context(system_u:object_r:auditd_unit_t,s0)
+ /usr/lib/systemd/system/[^/]*systemd-journal.* -- gen_context(system_u:object_r:syslogd_unit_t,s0)
+ /usr/lib/systemd/system/rsyslog.*\.service -- gen_context(system_u:object_r:syslogd_unit_t,s0)
++/usr/lib/systemd/system/syslog.*\.service -- gen_context(system_u:object_r:syslogd_unit_t,s0)
+ /usr/lib/systemd/systemd-journald -- gen_context(system_u:object_r:syslogd_exec_t,s0)
+ /usr/lib/systemd/systemd-kmsg-syslogd	--	gen_context(system_u:object_r:syslogd_exec_t,s0)
+ 
+-- 
+2.17.1
+

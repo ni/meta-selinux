@@ -1,0 +1,40 @@
+From a59dae035b7d5063e0f25c4cf40b5b180ad69022 Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Wed, 3 Feb 2016 04:16:06 -0500
+Subject: [PATCH] policy/modules/system/init: all init_t to read any level
+ sockets
+
+Fixes:
+  avc: denied { listen } for pid=1 comm="systemd" \
+  path="/run/systemd/journal/stdout" \
+  scontext=system_u:system_r:init_t:s0-s15:c0.c1023 \
+  tcontext=system_u:system_r:syslogd_t:s15:c0.c1023 \
+  tclass=unix_stream_socket permissive=1
+
+  systemd[1]: Failded to listen on Journal Socket
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/init.te | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
+index 9c0a98eb7..5a19f0e43 100644
+--- a/policy/modules/system/init.te
++++ b/policy/modules/system/init.te
+@@ -224,6 +224,9 @@ mls_key_write_all_levels(init_t)
+ mls_file_downgrade(init_t)
+ mls_file_upgrade(init_t)
+ 
++# MLS trusted for reading from sockets at any level
++mls_socket_read_all_levels(init_t)
++
+ # the following one is needed for libselinux:is_selinux_enabled()
+ # otherwise the call fails and sysvinit tries to load the policy
+ # again when using the initramfs
+-- 
+2.17.1
+

@@ -1,0 +1,27 @@
+From e159e70b533b500390337ec666d678c7424afb90 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 10:45:23 +0800
+Subject: [PATCH] fc/ntp: apply policy to ntpd alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/ntp.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/services/ntp.fc b/policy/modules/services/ntp.fc
+index cd69ea5d5..49ffe6f68 100644
+--- a/policy/modules/services/ntp.fc
++++ b/policy/modules/services/ntp.fc
+@@ -25,6 +25,7 @@
+ /usr/lib/systemd/systemd-timesyncd	--	gen_context(system_u:object_r:ntpd_exec_t,s0)
+ 
+ /usr/sbin/ntpd				--	gen_context(system_u:object_r:ntpd_exec_t,s0)
++/usr/sbin/ntpd\.ntp				--	gen_context(system_u:object_r:ntpd_exec_t,s0)
+ /usr/sbin/ntpdate			--	gen_context(system_u:object_r:ntpdate_exec_t,s0)
+ /usr/sbin/sntp				--	gen_context(system_u:object_r:ntpdate_exec_t,s0)
+ 
+-- 
+2.17.1
+

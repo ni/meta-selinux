@@ -1,0 +1,40 @@
+From ef2b9196f3a51745a3644489d316bda7cd67f72d Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Mon, 28 Jan 2019 14:05:18 +0800
+Subject: [PATCH] policy/modules/roles/sysadm: MLS - sysadm rw to clearance
+
+The two new rules make sysadm_t domain MLS trusted for:
+ - reading from files at all levels.
+ - writing to processes up to its clearance(s0-s15).
+
+With default MLS policy, root user would login in as sysadm_t:s0 by
+default. Most processes will run in sysadm_t:s0 because no
+domtrans/rangetrans rules, as a result, even root could not access
+high level files/processes.
+
+So with the two new rules, root user could work easier in MLS policy.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/roles/sysadm.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
+index e1933a5bd..0682ed31a 100644
+--- a/policy/modules/roles/sysadm.te
++++ b/policy/modules/roles/sysadm.te
+@@ -44,6 +44,8 @@ logging_watch_all_logs(sysadm_t)
+ logging_watch_audit_log(sysadm_t)
+ 
+ mls_process_read_all_levels(sysadm_t)
++mls_file_read_all_levels(sysadm_t)
++mls_process_write_to_clearance(sysadm_t)
+ 
+ selinux_read_policy(sysadm_t)
+ 
+-- 
+2.17.1
+

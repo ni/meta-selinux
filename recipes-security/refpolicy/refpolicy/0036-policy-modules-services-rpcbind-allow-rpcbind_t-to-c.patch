@@ -1,0 +1,45 @@
+From d1352b688603b16eb6da7a30198d8b7abfc55d1e Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Wed, 1 Jul 2020 08:44:07 +0800
+Subject: [PATCH] policy/modules/services/rpcbind: allow rpcbind_t to create
+ directory with label rpcbind_runtime_t
+
+Fixes:
+avc:  denied  { create } for  pid=136 comm="rpcbind" name="rpcbind"
+scontext=system_u:system_r:rpcbind_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:var_run_t:s0 tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/rpcbind.te | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/policy/modules/services/rpcbind.te b/policy/modules/services/rpcbind.te
+index 168c28ca3..e1eb7d5fc 100644
+--- a/policy/modules/services/rpcbind.te
++++ b/policy/modules/services/rpcbind.te
+@@ -25,16 +25,17 @@ files_type(rpcbind_var_lib_t)
+ # Local policy
+ #
+ 
+-allow rpcbind_t self:capability { dac_override setgid setuid sys_tty_config };
++allow rpcbind_t self:capability { dac_override setgid setuid sys_tty_config chown };
+ # net_admin is for SO_SNDBUFFORCE
+ dontaudit rpcbind_t self:capability net_admin;
+ allow rpcbind_t self:fifo_file rw_fifo_file_perms;
+ allow rpcbind_t self:unix_stream_socket { accept listen };
+ allow rpcbind_t self:tcp_socket { accept listen };
+ 
++manage_dirs_pattern(rpcbind_t, rpcbind_runtime_t, rpcbind_runtime_t)
+ manage_files_pattern(rpcbind_t, rpcbind_runtime_t, rpcbind_runtime_t)
+ manage_sock_files_pattern(rpcbind_t, rpcbind_runtime_t, rpcbind_runtime_t)
+-files_runtime_filetrans(rpcbind_t, rpcbind_runtime_t, { file sock_file })
++files_runtime_filetrans(rpcbind_t, rpcbind_runtime_t, { file sock_file dir })
+ 
+ manage_dirs_pattern(rpcbind_t, rpcbind_var_lib_t, rpcbind_var_lib_t)
+ manage_files_pattern(rpcbind_t, rpcbind_var_lib_t, rpcbind_var_lib_t)
+-- 
+2.17.1
+

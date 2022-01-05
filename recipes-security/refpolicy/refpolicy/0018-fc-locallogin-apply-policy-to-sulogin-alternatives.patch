@@ -1,0 +1,25 @@
+From cfb86acce9fe9da9b88c853c0b22d48d99602fbb Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 10:43:28 +0800
+Subject: [PATCH] fc/locallogin: apply policy to sulogin alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/locallogin.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/locallogin.fc b/policy/modules/system/locallogin.fc
+index fc8d58507..59e6e9601 100644
+--- a/policy/modules/system/locallogin.fc
++++ b/policy/modules/system/locallogin.fc
+@@ -2,4 +2,5 @@
+ /usr/bin/sushell	--	gen_context(system_u:object_r:sulogin_exec_t,s0)
+ 
+ /usr/sbin/sulogin	--	gen_context(system_u:object_r:sulogin_exec_t,s0)
++/usr/sbin/sulogin\.util-linux	--	gen_context(system_u:object_r:sulogin_exec_t,s0)
+ /usr/sbin/sushell	--	gen_context(system_u:object_r:sulogin_exec_t,s0)
+-- 
+2.17.1
+

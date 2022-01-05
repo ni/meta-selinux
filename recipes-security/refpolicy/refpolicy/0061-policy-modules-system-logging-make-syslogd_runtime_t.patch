@@ -1,0 +1,48 @@
+From f8a12b28b70689ab520e7ae94d306afe9dcbb556 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Sat, 18 Dec 2021 17:31:45 +0800
+Subject: [PATCH] policy/modules/system/logging: make syslogd_runtime_t MLS
+ trusted.
+
+Make syslogd_runtime_t MLS trusted to allow all levels to read and write
+the object.
+
+Fixes:
+avc:  denied  { search } for  pid=314 comm="useradd" name="journal"
+dev="tmpfs" ino=34 scontext=root:sysadm_r:useradd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+avc:  denied  { search } for  pid=319 comm="passwd" name="journal"
+dev="tmpfs" ino=34 scontext=root:sysadm_r:passwd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+avc:  denied  { search } for pid=374 comm="rpc.statd" name="journal"
+dev="tmpfs" ino=9854 scontext=system_u:system_r:rpcd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_var_run_t:s15:c0.c1023 tclass=dir
+permissive=0
+
+Upstream-Status: Pending
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index f8d8b73f0..badf56f16 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -438,6 +438,8 @@ allow syslogd_t syslogd_runtime_t:file map;
+ manage_files_pattern(syslogd_t, syslogd_runtime_t, syslogd_runtime_t)
+ files_runtime_filetrans(syslogd_t, syslogd_runtime_t, file)
+ 
++mls_trusted_object(syslogd_runtime_t)
++
+ kernel_read_crypto_sysctls(syslogd_t)
+ kernel_read_system_state(syslogd_t)
+ kernel_read_network_state(syslogd_t)
+-- 
+2.17.1
+

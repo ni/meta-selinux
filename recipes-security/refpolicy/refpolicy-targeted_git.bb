@@ -14,4 +14,5 @@ include refpolicy_${PV}.inc
 
 SRC_URI += " \
         file://0001-refpolicy-targeted-make-unconfined_u-the-default-sel.patch \
+        file://0002-refpolicy-targeted-add-capability2-bpf-and-perfmon-f.patch \
         "

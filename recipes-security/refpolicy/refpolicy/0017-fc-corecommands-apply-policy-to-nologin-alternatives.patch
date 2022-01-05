@@ -1,0 +1,28 @@
+From ab0267f77e38bcda797cfe00ba6fa49ba89e334a Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 10:21:51 +0800
+Subject: [PATCH] fc/corecommands: apply policy to nologin alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/kernel/corecommands.fc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
+index 0ecabe34e..e27e701ef 100644
+--- a/policy/modules/kernel/corecommands.fc
++++ b/policy/modules/kernel/corecommands.fc
+@@ -304,6 +304,8 @@ ifdef(`distro_debian',`
+ /usr/sbin/insmod_ksymoops_clean	--	gen_context(system_u:object_r:bin_t,s0)
+ /usr/sbin/mkfs\.cramfs		--	gen_context(system_u:object_r:bin_t,s0)
+ /usr/sbin/nologin		--	gen_context(system_u:object_r:shell_exec_t,s0)
++/usr/sbin/nologin\.shadow		--	gen_context(system_u:object_r:shell_exec_t,s0)
++/usr/sbin/nologin\.util-linux		--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/sbin/scponlyc		--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/sbin/sesh			--	gen_context(system_u:object_r:shell_exec_t,s0)
+ /usr/sbin/smrsh			--	gen_context(system_u:object_r:shell_exec_t,s0)
+-- 
+2.17.1
+

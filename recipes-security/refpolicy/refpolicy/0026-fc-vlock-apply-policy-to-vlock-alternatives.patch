@@ -1,0 +1,25 @@
+From 0280f05e2c9665f094d7098cd03e11d75908bcdb Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Wed, 18 Dec 2019 15:04:41 +0800
+Subject: [PATCH] fc/vlock: apply policy to vlock alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/apps/vlock.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/apps/vlock.fc b/policy/modules/apps/vlock.fc
+index f668cde9c..c4bc50984 100644
+--- a/policy/modules/apps/vlock.fc
++++ b/policy/modules/apps/vlock.fc
+@@ -1,4 +1,5 @@
+ /usr/bin/vlock		--	gen_context(system_u:object_r:vlock_exec_t,s0)
++/usr/bin/vlock\.kbd		--	gen_context(system_u:object_r:vlock_exec_t,s0)
+ /usr/bin/vlock-main	--	gen_context(system_u:object_r:vlock_exec_t,s0)
+ 
+ /usr/sbin/vlock-main	--	gen_context(system_u:object_r:vlock_exec_t,s0)
+-- 
+2.17.1
+

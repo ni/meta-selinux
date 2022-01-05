@@ -1,0 +1,48 @@
+From 18ad027229a06fdcb833482dff0c2ae637d08e78 Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Fri, 23 Aug 2013 12:01:53 +0800
+Subject: [PATCH] policy/modules/services/rpc: make nfsd_t domain MLS trusted
+ for reading from files up to its clearance
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/kernel/kernel.te    | 2 ++
+ policy/modules/services/rpcbind.te | 5 +++++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
+index ca951cb44..a32c59eb1 100644
+--- a/policy/modules/kernel/kernel.te
++++ b/policy/modules/kernel/kernel.te
+@@ -356,6 +356,8 @@ mls_process_read_all_levels(kernel_t)
+ mls_process_write_all_levels(kernel_t)
+ mls_file_write_all_levels(kernel_t)
+ mls_file_read_all_levels(kernel_t)
++mls_socket_write_all_levels(kernel_t)
++mls_fd_use_all_levels(kernel_t)
+ 
+ ifdef(`distro_redhat',`
+ 	# Bugzilla 222337
+diff --git a/policy/modules/services/rpcbind.te b/policy/modules/services/rpcbind.te
+index e1eb7d5fc..da0994749 100644
+--- a/policy/modules/services/rpcbind.te
++++ b/policy/modules/services/rpcbind.te
+@@ -73,6 +73,11 @@ logging_send_syslog_msg(rpcbind_t)
+ 
+ miscfiles_read_localization(rpcbind_t)
+ 
++# nfsd_t would not be allowed to send unix_stream_socket to rpcbind_t,
++# because the are running in different level. So add rules to allow this.
++mls_socket_read_all_levels(rpcbind_t)
++mls_socket_write_all_levels(rpcbind_t)
++
+ ifdef(`distro_debian',`
+ 	term_dontaudit_use_unallocated_ttys(rpcbind_t)
+ ')
+-- 
+2.17.1
+

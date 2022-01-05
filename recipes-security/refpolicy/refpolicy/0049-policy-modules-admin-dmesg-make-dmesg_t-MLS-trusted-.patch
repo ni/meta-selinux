@@ -1,0 +1,36 @@
+From b41a910654f5c5fe198b1695df18b6f6a1af7904 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 30 Jun 2020 10:18:20 +0800
+Subject: [PATCH] policy/modules/admin/dmesg: make dmesg_t MLS trusted reading
+ from files up to its clearance
+
+Fixes:
+avc:  denied  { read } for  pid=255 comm="dmesg" name="kmsg"
+dev="devtmpfs" ino=10032
+scontext=system_u:system_r:dmesg_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:kmsg_device_t:s15:c0.c1023 tclass=chr_file
+permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/admin/dmesg.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/admin/dmesg.te b/policy/modules/admin/dmesg.te
+index f3421fdbb..d87ee5583 100644
+--- a/policy/modules/admin/dmesg.te
++++ b/policy/modules/admin/dmesg.te
+@@ -52,6 +52,8 @@ miscfiles_read_localization(dmesg_t)
+ userdom_dontaudit_use_unpriv_user_fds(dmesg_t)
+ userdom_use_user_terminals(dmesg_t)
+ 
++mls_file_read_to_clearance(dmesg_t)
++
+ optional_policy(`
+ 	seutil_sigchld_newrole(dmesg_t)
+ ')
+-- 
+2.17.1
+

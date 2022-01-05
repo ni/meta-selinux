@@ -1,0 +1,25 @@
+From 2d1634127f8f5c9ec98f866711b8d15b7df815d1 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 11:15:33 +0800
+Subject: [PATCH] fc/screen: apply policy to screen alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/apps/screen.fc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/apps/screen.fc b/policy/modules/apps/screen.fc
+index e51e01d97..238dc263e 100644
+--- a/policy/modules/apps/screen.fc
++++ b/policy/modules/apps/screen.fc
+@@ -7,4 +7,5 @@ HOME_DIR/\.tmux\.conf	--	gen_context(system_u:object_r:screen_home_t,s0)
+ /run/tmux(/.*)?			gen_context(system_u:object_r:screen_runtime_t,s0)
+ 
+ /usr/bin/screen		--	gen_context(system_u:object_r:screen_exec_t,s0)
++/usr/bin/screen-.*		--	gen_context(system_u:object_r:screen_exec_t,s0)
+ /usr/bin/tmux		--	gen_context(system_u:object_r:screen_exec_t,s0)
+-- 
+2.17.1
+

@@ -1,0 +1,33 @@
+From 3f875fae6d9a4538b3e7d33f30dd2a98fc9ea2bd Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 28 May 2019 16:41:37 +0800
+Subject: [PATCH] policy/modules/system/init: make init_t MLS trusted for
+ writing to keys at all levels
+
+Fixes:
+type=AVC msg=audit(1559024138.454:31): avc:  denied  { link } for
+pid=190 comm="(mkdir)" scontext=system_u:system_r:init_t:s0-s15:c0.c1023
+tcontext=system_u:system_r:kernel_t:s15:c0.c1023 tclass=key permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/init.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
+index 36becaa6e..9c0a98eb7 100644
+--- a/policy/modules/system/init.te
++++ b/policy/modules/system/init.te
+@@ -218,6 +218,7 @@ mls_file_write_all_levels(init_t)
+ mls_process_write_all_levels(init_t)
+ mls_fd_use_all_levels(init_t)
+ mls_process_set_level(init_t)
++mls_key_write_all_levels(init_t)
+ 
+ # MLS trusted for lowering/raising the level of files
+ mls_file_downgrade(init_t)
+-- 
+2.17.1
+

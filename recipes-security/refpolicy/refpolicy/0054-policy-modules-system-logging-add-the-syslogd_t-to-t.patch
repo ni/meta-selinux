@@ -1,0 +1,37 @@
+From 511f7fdad45a150f7ea3666eb51463573eabab0a Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Thu, 22 Aug 2013 13:37:23 +0800
+Subject: [PATCH] policy/modules/system/logging: add the syslogd_t to trusted
+ object
+
+We add the syslogd_t to trusted object, because other process need
+to have the right to connectto/sendto /dev/log.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Roy.Li <rongqing.li@windriver.com>
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index 5b4b5ec5d..e67c25a9e 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -498,6 +498,10 @@ fs_search_auto_mountpoints(syslogd_t)
+ fs_search_tmpfs(syslogd_t)
+ 
+ mls_file_write_all_levels(syslogd_t) # Need to be able to write to /var/run/ and /var/log directories
++mls_file_read_all_levels(syslogd_t)
++mls_socket_write_all_levels(syslogd_t) # Need to be able to sendto dgram
++mls_trusted_object(syslogd_t) # Other process need to have the right to connectto/sendto /dev/log
++mls_fd_use_all_levels(syslogd_t)
+ 
+ term_write_console(syslogd_t)
+ # Allow syslog to a terminal
+-- 
+2.17.1
+

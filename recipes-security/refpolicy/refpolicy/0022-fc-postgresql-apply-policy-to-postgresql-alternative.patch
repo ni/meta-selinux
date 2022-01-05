@@ -1,0 +1,37 @@
+From 5f664c3a38853129fa1703032822c203dbeaf0a6 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 15 Nov 2019 11:13:16 +0800
+Subject: [PATCH] fc/postgresql: apply policy to postgresql alternatives
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/services/postgresql.fc | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/policy/modules/services/postgresql.fc b/policy/modules/services/postgresql.fc
+index f31a52cf8..f9bf46870 100644
+--- a/policy/modules/services/postgresql.fc
++++ b/policy/modules/services/postgresql.fc
+@@ -27,6 +27,17 @@
+ /usr/lib/postgresql(-.*)?/(.*/)?bin/postgres		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
+ /usr/lib/postgresql(-.*)?/(.*/)?bin/postmaster		-l	gen_context(system_u:object_r:postgresql_exec_t,s0)
+ 
++/usr/bin/pg_archivecleanup	--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_basebackup	--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_controldata	--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_ctl		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_resetxlog	--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_standby		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_upgrade		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/pg_xlogdump		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/postgres		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
++/usr/bin/postmaster		-l	gen_context(system_u:object_r:postgresql_exec_t,s0)
++
+ ifdef(`distro_redhat', `
+ /usr/share/jonas/pgsql(/.*)?		gen_context(system_u:object_r:postgresql_db_t,s0)
+ ')
+-- 
+2.17.1
+

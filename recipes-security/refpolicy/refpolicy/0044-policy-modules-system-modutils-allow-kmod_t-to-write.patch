@@ -1,0 +1,34 @@
+From 8343ff97a265836ba1e1e2f4159f888c21e5cabe Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 9 Feb 2021 17:31:55 +0800
+Subject: [PATCH] policy/modules/system/modutils: allow kmod_t to write keys
+
+Fixes:
+kernel: cfg80211: Problem loading in-kernel X.509 certificate (-13)
+
+avc:  denied  { write } for  pid=219 comm="modprobe"
+scontext=system_u:system_r:kmod_t tcontext=system_u:system_r:kmod_t
+tclass=key permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/modutils.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/modutils.te b/policy/modules/system/modutils.te
+index 5b4f0aca1..008f286a8 100644
+--- a/policy/modules/system/modutils.te
++++ b/policy/modules/system/modutils.te
+@@ -42,6 +42,7 @@ allow kmod_t self:udp_socket create_socket_perms;
+ allow kmod_t self:rawip_socket create_socket_perms;
+ 
+ allow kmod_t self:lockdown confidentiality;
++allow kmod_t self:key write;
+ 
+ # Read module config and dependency information
+ list_dirs_pattern(kmod_t, modules_conf_t, modules_conf_t)
+-- 
+2.17.1
+

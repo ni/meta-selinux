@@ -1,0 +1,41 @@
+From a196ae5e13b3f8e0d2e7ff27c8d481c9376b18e9 Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
+Date: Thu, 22 Aug 2013 13:37:23 +0800
+Subject: [PATCH] policy/modules/system/logging: fix auditd startup failures
+
+Fixes:
+avc:  denied  { read } for  pid=321 comm="auditd" name="log" dev="vda"
+ino=12552 scontext=system_u:system_r:auditd_t
+tcontext=system_u:object_r:var_log_t tclass=lnk_file permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index abee7df9c..cc530a2be 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -161,6 +161,7 @@ dontaudit auditd_t auditd_etc_t:file map;
+ manage_files_pattern(auditd_t, auditd_log_t, auditd_log_t)
+ allow auditd_t auditd_log_t:dir setattr;
+ manage_lnk_files_pattern(auditd_t, auditd_log_t, auditd_log_t)
++allow auditd_t var_log_t:lnk_file read_lnk_file_perms;
+ allow auditd_t var_log_t:dir search_dir_perms;
+ 
+ manage_files_pattern(auditd_t, auditd_runtime_t, auditd_runtime_t)
+@@ -290,6 +291,7 @@ optional_policy(`
+ allow audisp_remote_t self:capability { setpcap setuid };
+ allow audisp_remote_t self:process { getcap setcap };
+ allow audisp_remote_t self:tcp_socket create_socket_perms;
++allow audisp_remote_t var_log_t:lnk_file read_lnk_file_perms;
+ allow audisp_remote_t var_log_t:dir search_dir_perms;
+ 
+ manage_dirs_pattern(audisp_remote_t, audit_spool_t, audit_spool_t)
+-- 
+2.17.1
+

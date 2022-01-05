@@ -1,0 +1,42 @@
+From fe70aaf9a104b4b0c3439d2767eccb0136951f08 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Mon, 22 Feb 2021 11:28:12 +0800
+Subject: [PATCH] policy/modules/system/systemd: make *_systemd_t MLS trusted
+ for writing/reading from files at all levels
+
+Fixes:
+avc:  denied  { search } for  pid=1148 comm="systemd" name="journal"
+dev="tmpfs" ino=206
+scontext=root:sysadm_r:sysadm_systemd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:syslogd_runtime_t:s15:c0.c1023 tclass=dir
+permissive=0
+avc:  denied  { write } for  pid=1148 comm="systemd" name="kmsg"
+dev="devtmpfs" ino=3081
+scontext=root:sysadm_r:sysadm_systemd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:kmsg_device_t:s15:c0.c1023 tclass=chr_file
+permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.if | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/policy/modules/system/systemd.if b/policy/modules/system/systemd.if
+index 5c44d8d8a..5f2038f22 100644
+--- a/policy/modules/system/systemd.if
++++ b/policy/modules/system/systemd.if
+@@ -171,6 +171,9 @@ template(`systemd_role_template',`
+ 		xdg_read_config_files($1_systemd_t)
+ 		xdg_read_data_files($1_systemd_t)
+ 	')
++
++	mls_file_read_all_levels($1_systemd_t)
++	mls_file_write_all_levels($1_systemd_t)
+ ')
+ 
+ ######################################
+-- 
+2.17.1
+

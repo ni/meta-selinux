@@ -1,0 +1,30 @@
+From 0bb081084a2d12f9041bfae195481d898b5a0ba1 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Sun, 5 Apr 2020 22:03:45 +0800
+Subject: [PATCH] file_contexts.subs_dist: set aliase for /root directory
+
+The genhomedircon.py will expand /root directory to /home/root.
+Add an aliase for it
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ config/file_contexts.subs_dist | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/config/file_contexts.subs_dist b/config/file_contexts.subs_dist
+index 690007f22..f80499ebf 100644
+--- a/config/file_contexts.subs_dist
++++ b/config/file_contexts.subs_dist
+@@ -45,3 +45,7 @@
+ /usr/lib/busybox/bin /usr/bin
+ /usr/lib/busybox/sbin /usr/sbin
+ /usr/lib/busybox/usr /usr
++
++# The genhomedircon.py will expand /root home directory to /home/root
++# Add an aliase for it
++/root /home/root
+-- 
+2.17.1
+
