@@ -6,7 +6,7 @@ libraries designed to facilitate SELinux policy analysis. \
 This meta-package depends upon the main packages necessary to run \
 SETools."
 SECTION = "base"
-LICENSE = "GPLv2 & LGPLv2.1"
+LICENSE = "GPL-2.0-only & LGPL-2.1-only"
 
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.4;protocol=https \
