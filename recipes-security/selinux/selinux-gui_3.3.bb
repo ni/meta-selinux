@@ -3,7 +3,7 @@ DESCRIPTION = "\
 Provide SELinux Management tool (system-config-selinux) and SELinux \
 Policy Generation Tool (selinux-polgengui)"
 SECTION = "base"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc

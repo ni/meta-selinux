@@ -2,7 +2,7 @@ SUMMARY = "SELinux dbus service files"
 DESCRIPTION = "\
 Provide SELinux dbus service files and scripts."
 SECTION = "base"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc

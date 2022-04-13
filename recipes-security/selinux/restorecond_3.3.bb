@@ -5,7 +5,7 @@ The restorecond daemon uses inotify to watch files listed in the \
 will make sure they have the correct file context associated with \
 the policy."
 SECTION = "base"
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc
