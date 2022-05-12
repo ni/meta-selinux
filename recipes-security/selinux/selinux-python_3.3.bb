@@ -57,6 +57,7 @@ RDEPENDS:${BPN}-sepolicy += "\
         python3-core \
         python3-codecs \
         python3-syslog \
+        python3-multiprocessing \
         ${BPN} \
 "
 RDEPENDS:${BPN}-sepolgen-ifgen += "\
