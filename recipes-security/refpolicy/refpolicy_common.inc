@@ -77,6 +77,13 @@ SRC_URI += " \
         file://0059-policy-modules-system-setrans-allow-setrans_t-use-fd.patch \
         file://0060-policy-modules-system-systemd-make-_systemd_t-MLS-tr.patch \
         file://0061-policy-modules-system-logging-make-syslogd_runtime_t.patch \
+        file://0062-systemd-systemd-resolved-is-linked-to-libselinux.patch \
+        file://0063-sysnetwork-systemd-allow-DNS-resolution-over-io.syst.patch \
+        file://0064-term-init-allow-systemd-to-watch-and-watch-reads-on-.patch \
+        file://0065-systemd-add-file-transition-for-systemd-networkd-run.patch \
+        file://0066-systemd-add-missing-file-context-for-run-systemd-net.patch \
+        file://0067-systemd-add-file-contexts-for-systemd-network-genera.patch \
+        file://0068-systemd-udev-allow-udev-to-read-systemd-networkd-run.patch \
         "
 
 S = "${WORKDIR}/refpolicy"

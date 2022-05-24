@@ -1,0 +1,63 @@
+From 1ba0911e157c64ea15636c5707f38f1bdc9a46c8 Mon Sep 17 00:00:00 2001
+From: Kenton Groombridge <me@concord.sh>
+Date: Wed, 27 Apr 2022 01:09:52 -0400
+Subject: [PATCH] sysnetwork, systemd: allow DNS resolution over
+ io.systemd.Resolve
+
+Upstream-Status: Backport
+[https://github.com/SELinuxProject/refpolicy/commit/1a0acc9c0d8c7c49ad4ca2cabd44bc66450f45e0]
+
+Signed-off-by: Kenton Groombridge <me@concord.sh>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/sysnetwork.if |  1 +
+ policy/modules/system/systemd.if    | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+
+diff --git a/policy/modules/system/sysnetwork.if b/policy/modules/system/sysnetwork.if
+index 8664a67c8..140d48508 100644
+--- a/policy/modules/system/sysnetwork.if
++++ b/policy/modules/system/sysnetwork.if
+@@ -844,6 +844,7 @@ interface(`sysnet_dns_name_resolve',`
+ 	ifdef(`init_systemd',`
+ 		optional_policy(`
+ 			systemd_dbus_chat_resolved($1)
++			systemd_stream_connect_resolved($1)
+ 		')
+ 		# This seems needed when the mymachines NSS module is used
+ 		optional_policy(`
+diff --git a/policy/modules/system/systemd.if b/policy/modules/system/systemd.if
+index 5f2038f22..9143fb4c0 100644
+--- a/policy/modules/system/systemd.if
++++ b/policy/modules/system/systemd.if
+@@ -1835,6 +1835,27 @@ interface(`systemd_tmpfilesd_managed',`
+ 	')
+ ')
+ 
++#######################################
++## <summary>
++##	Connect to systemd resolved over
++##	/run/systemd/resolve/io.systemd.Resolve .
++## </summary>
++## <param name="domain">
++##	<summary>
++##	Domain allowed access.
++##	</summary>
++## </param>
++#
++interface(`systemd_stream_connect_resolved',`
++	gen_require(`
++		type systemd_resolved_t;
++		type systemd_resolved_runtime_t;
++	')
++
++	files_search_runtime($1)
++	stream_connect_pattern($1, systemd_resolved_runtime_t, systemd_resolved_runtime_t, systemd_resolved_t)
++')
++
+ ########################################
+ ## <summary>
+ ##   Send and receive messages from
+-- 
+2.25.1
+

@@ -1,0 +1,33 @@
+From 52a4222397f5d3b28ca15a45bb2ace209a4afc3e Mon Sep 17 00:00:00 2001
+From: Kenton Groombridge <me@concord.sh>
+Date: Thu, 31 Mar 2022 13:09:10 -0400
+Subject: [PATCH] systemd: systemd-resolved is linked to libselinux
+
+systemd-resolved as of systemd 250 fails to start with this error:
+
+Failed to initialize SELinux labeling handle: No such file or directory
+
+Upstream-Status: Backport
+[https://github.com/SELinuxProject/refpolicy/commit/3a22db2410de479e5baa88f3f668a7a4ac198950]
+
+Signed-off-by: Kenton Groombridge <me@concord.sh>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 8cea6baa1..beb301cc6 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -1261,6 +1261,7 @@ fs_getattr_cgroup(systemd_resolved_t)
+ 
+ init_dgram_send(systemd_resolved_t)
+ 
++seutil_libselinux_linked(systemd_resolved_t)
+ seutil_read_file_contexts(systemd_resolved_t)
+ 
+ systemd_log_parse_environment(systemd_resolved_t)
+-- 
+2.25.1
+
