@@ -1,0 +1,32 @@
+From 6f8a8ecd8bafd6e8a3515b53db2a2982a02ff254 Mon Sep 17 00:00:00 2001
+From: Kenton Groombridge <me@concord.sh>
+Date: Thu, 31 Mar 2022 13:22:37 -0400
+Subject: [PATCH] systemd: add file transition for systemd-networkd runtime
+
+systemd-networkd creates the /run/systemd/network directory which should
+be labeled appropriately.
+
+Upstream-Status: Backport
+[https://github.com/SELinuxProject/refpolicy/commit/663b62f27cb12c22f056eba9326cf3f7f78d8a9e]
+
+Signed-off-by: Kenton Groombridge <me@concord.sh>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index beb301cc6..654c6a42a 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -917,6 +917,7 @@ auth_use_nsswitch(systemd_networkd_t)
+ 
+ init_dgram_send(systemd_networkd_t)
+ init_read_state(systemd_networkd_t)
++init_runtime_filetrans(systemd_networkd_t, systemd_networkd_runtime_t, dir)
+ 
+ logging_send_syslog_msg(systemd_networkd_t)
+ 
+-- 
+2.25.1
+
