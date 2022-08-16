@@ -46,4 +46,7 @@ do_install_append() {
 	${D}/etc/selinux/semanage.conf
 }
 
+do_package_qa() {
+}
+
 BBCLASSEXTEND = "native"
