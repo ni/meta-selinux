@@ -9,7 +9,7 @@ require selinux_common.inc
 
 S = "${WORKDIR}/git/dbus"
 
-RDEPENDS:${PN} += "python3-core selinux-python-sepolicy"
+RDEPENDS:${PN} = "python3-core selinux-python-sepolicy"
 
 FILES:${PN} += "\
         ${datadir}/system-config-selinux/selinux_server.py \
