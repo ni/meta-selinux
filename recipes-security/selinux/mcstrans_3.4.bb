@@ -9,18 +9,18 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 require selinux_common.inc
 
-inherit systemd update-rc.d
+inherit pkgconfig systemd update-rc.d
 
 SRC_URI += "file://mcstrans-de-bashify.patch \
             file://mcstrans-fix-the-init-script.patch \
            "
 
-DEPENDS += "libsepol libselinux libcap"
+DEPENDS = "libsepol libselinux libcap"
 
-EXTRA_OEMAKE += "SBINDIR=${base_sbindir} \
-                 INITDIR=${sysconfdir}/init.d \
-                 SYSTEMDDIR=${systemd_unitdir} \
-                "
+EXTRA_OEMAKE = "SBINDIR=${base_sbindir} \
+                INITDIR=${sysconfdir}/init.d \
+                SYSTEMDDIR=${systemd_unitdir} \
+               "
 
 S = "${WORKDIR}/git/mcstrans"
 

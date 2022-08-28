@@ -1,4 +1,4 @@
-From 4d918a9679d2902ca2d41fe769a4d76f07a67b5f Mon Sep 17 00:00:00 2001
+From 123d5b6413905bfad535a072ff0ab5a495cb2a2a Mon Sep 17 00:00:00 2001
 From: Roy Li <rongqing.li@windriver.com>
 Date: Wed, 6 Nov 2019 22:13:33 +0800
 Subject: [PATCH] mcstrans: fix the init script
@@ -28,5 +28,5 @@ index 8b4737d..86c89ea 100644
  	echo
  	if test $RETVAL = 0 ; then
 -- 
-2.7.4
+2.25.1
 
