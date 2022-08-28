@@ -11,10 +11,7 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc
 
-DEPENDS += "libsepol bison-native flex-native"
-
-EXTRA_OEMAKE += "LEX='flex'"
-EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
+DEPENDS = "libsepol bison-native"
 
 S = "${WORKDIR}/git/checkpolicy"
 
