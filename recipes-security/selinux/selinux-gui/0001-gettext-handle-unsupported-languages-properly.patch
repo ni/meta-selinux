@@ -1,0 +1,199 @@
+From a0a67119412622141a7f8365eff10de6395be7ca Mon Sep 17 00:00:00 2001
+From: Vit Mojzis <vmojzis@redhat.com>
+Date: Fri, 24 Jun 2022 16:24:25 +0200
+Subject: [PATCH] gettext: handle unsupported languages properly
+
+With "fallback=True" gettext.translation behaves the same as
+gettext.install and uses NullTranslations in case the
+translation file for given language was not found (as opposed to
+throwing an exception).
+
+Fixes:
+  # LANG is set to any "unsupported" language, e.g. en_US.UTF-8
+  $ chcat --help
+  Traceback (most recent call last):
+  File "/usr/bin/chcat", line 39, in <module>
+    t = gettext.translation(PROGNAME,
+  File "/usr/lib64/python3.9/gettext.py", line 592, in translation
+    raise FileNotFoundError(ENOENT,
+  FileNotFoundError: [Errno 2] No translation file found for domain: 'selinux-python'
+
+Signed-off-by: Vit Mojzis <vmojzis@redhat.com>
+Reviewed-by: Daniel Burgener <dburgener@linux.microsoft.com>
+Acked-by: Petr Lautrbach <plautrba@redhat.com>
+
+Upstream-Status: Backport
+[https://github.com/SELinuxProject/selinux/commit/344463076b2a91e1d2c7f5cc3835dc1a53a05e88]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ booleansPage.py          | 3 ++-
+ domainsPage.py           | 3 ++-
+ fcontextPage.py          | 3 ++-
+ loginsPage.py            | 3 ++-
+ modulesPage.py           | 3 ++-
+ polgengui.py             | 3 ++-
+ portsPage.py             | 3 ++-
+ semanagePage.py          | 3 ++-
+ statusPage.py            | 3 ++-
+ system-config-selinux.py | 3 ++-
+ usersPage.py             | 3 ++-
+ 11 files changed, 22 insertions(+), 11 deletions(-)
+
+diff --git a/booleansPage.py b/booleansPage.py
+index 5beec58..ad11a9b 100644
+--- a/booleansPage.py
++++ b/booleansPage.py
+@@ -46,7 +46,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/domainsPage.py b/domainsPage.py
+index e08f34b..e6eadd6 100644
+--- a/domainsPage.py
++++ b/domainsPage.py
+@@ -38,7 +38,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/fcontextPage.py b/fcontextPage.py
+index bac2bec..767664f 100644
+--- a/fcontextPage.py
++++ b/fcontextPage.py
+@@ -55,7 +55,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/loginsPage.py b/loginsPage.py
+index 18b93d8..7e08232 100644
+--- a/loginsPage.py
++++ b/loginsPage.py
+@@ -37,7 +37,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/modulesPage.py b/modulesPage.py
+index c546d45..02b79f1 100644
+--- a/modulesPage.py
++++ b/modulesPage.py
+@@ -38,7 +38,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/polgengui.py b/polgengui.py
+index a18f1cb..7a3ecd5 100644
+--- a/polgengui.py
++++ b/polgengui.py
+@@ -71,7 +71,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/portsPage.py b/portsPage.py
+index 54aa80d..bee2bdf 100644
+--- a/portsPage.py
++++ b/portsPage.py
+@@ -43,7 +43,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/semanagePage.py b/semanagePage.py
+index 1371d4e..efad14d 100644
+--- a/semanagePage.py
++++ b/semanagePage.py
+@@ -30,7 +30,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/statusPage.py b/statusPage.py
+index c241ef8..832849e 100644
+--- a/statusPage.py
++++ b/statusPage.py
+@@ -43,7 +43,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/system-config-selinux.py b/system-config-selinux.py
+index 1b460c9..9f53b7f 100644
+--- a/system-config-selinux.py
++++ b/system-config-selinux.py
+@@ -53,7 +53,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+diff --git a/usersPage.py b/usersPage.py
+index d51bd96..9acd3b8 100644
+--- a/usersPage.py
++++ b/usersPage.py
+@@ -37,7 +37,8 @@ try:
+         kwargs['unicode'] = True
+     t = gettext.translation(PROGNAME,
+                     localedir="/usr/share/locale",
+-                    **kwargs)
++                    **kwargs,
++                    fallback=True)
+     _ = t.gettext
+ except:
+     try:
+-- 
+2.25.1
+

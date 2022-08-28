@@ -8,9 +8,12 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc
 
+SRC_URI += "file://0001-gettext-handle-unsupported-languages-properly.patch"
+
 S = "${WORKDIR}/git/gui"
 
-RDEPENDS:${PN} += "python3-core"
+DEPENDS = "gettext-native"
+RDEPENDS:${PN} = "python3-core"
 
 FILES:${PN} += " \
         ${datadir}/system-config-selinux/* \
