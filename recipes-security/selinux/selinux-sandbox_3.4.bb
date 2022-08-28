@@ -9,13 +9,15 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc
 
-SRC_URI += "file://sandbox-de-bashify.patch"
+SRC_URI += "file://sandbox-de-bashify.patch \
+            file://0001-gettext-handle-unsupported-languages-properly.patch \
+           "
 
 S = "${WORKDIR}/git/sandbox"
 
-DEPENDS += "libcap-ng libselinux"
+DEPENDS = "libselinux libcap-ng gettext-native"
 
-RDEPENDS:${PN} += "\
+RDEPENDS:${PN} = "\
         python3-core \
         python3-math \
         python3-shell \
