@@ -8,10 +8,7 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc
 
-DEPENDS += "libsepol"
-RDEPENDS:${PN}-dev = ""
-
-EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
+DEPENDS = "libsepol"
 
 S = "${WORKDIR}/git/semodule-utils"
 
@@ -21,9 +18,9 @@ PACKAGES =+ "\
         ${PN}-semodule-package \
 "
 
-FILES:${PN}-semodule-expand += "${bindir}/semodule_expand"
-FILES:${PN}-semodule-link += "${bindir}/semodule_link"
-FILES:${PN}-semodule-package += "\
+FILES:${PN}-semodule-expand = "${bindir}/semodule_expand"
+FILES:${PN}-semodule-link = "${bindir}/semodule_link"
+FILES:${PN}-semodule-package = "\
         ${bindir}/semodule_package \
         ${bindir}/semodule_unpackage \
 "
