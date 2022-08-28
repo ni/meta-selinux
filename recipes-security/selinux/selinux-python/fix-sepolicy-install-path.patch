@@ -1,4 +1,4 @@
-From df40fadfb251cc2aebdbd2e216f99a8ae7da7763 Mon Sep 17 00:00:00 2001
+From d43220e336edf8ccaaa7bd3eb9c13874ed34d468 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Mon, 23 Sep 2013 21:17:59 +0800
 Subject: [PATCH] sepolicy: fix install path for new pymodule sepolicy
@@ -26,5 +26,5 @@ index 3361be4..5842321 100644
  	install -m 755 sepolicy.py $(DESTDIR)$(BINDIR)/sepolicy
  	(cd $(DESTDIR)$(BINDIR); ln -sf sepolicy sepolgen)
 -- 
-2.17.1
+2.25.1
 

@@ -10,28 +10,15 @@ require selinux_common.inc
 
 inherit python3native
 
-SRC_URI += "file://fix-sepolicy-install-path.patch"
+SRC_URI += "file://fix-sepolicy-install-path.patch \
+            file://0001-gettext-handle-unsupported-languages-properly.patch \
+           "
 
 S = "${WORKDIR}/git/python"
 
-EXTRA_OEMAKE += "LIBSEPOLA=${STAGING_LIBDIR}/libsepol.a"
+DEPENDS = "libsepol libselinux gettext-native"
 
-DEPENDS += "python3 libsepol libselinux"
-RDEPENDS:${BPN}-audit2allow += "\
-        python3-core \
-        libselinux-python \
-        ${BPN}-sepolgen \
-"
-RDEPENDS:${BPN}-chcat += "\
-        python3-core \
-        python3-codecs \
-        python3-shell \
-        python3-stringold \
-        python3-unixadmin \
-        libselinux-python \
-        ${BPN} \
-"
-RDEPENDS:${BPN} += "\
+RDEPENDS:${PN} = "\
         python3-core \
         python3-codecs \
         python3-io \
@@ -43,7 +30,21 @@ RDEPENDS:${BPN} += "\
         libsemanage-python \
         setools \
 "
-RDEPENDS:${BPN}-semanage += "\
+RDEPENDS:${PN}-audit2allow = "\
+        python3-core \
+        libselinux-python \
+        ${PN}-sepolgen \
+"
+RDEPENDS:${PN}-chcat = "\
+        python3-core \
+        python3-codecs \
+        python3-shell \
+        python3-stringold \
+        python3-unixadmin \
+        libselinux-python \
+        ${PN} \
+"
+RDEPENDS:${PN}-semanage = "\
         python3-core \
         python3-ipy \
         python3-compression \
@@ -51,16 +52,16 @@ RDEPENDS:${BPN}-semanage += "\
         python3-misc \
         libselinux-python \
         audit-python \
-        ${BPN} \
+        ${PN} \
 "
-RDEPENDS:${BPN}-sepolicy += "\
+RDEPENDS:${PN}-sepolicy = "\
         python3-core \
         python3-codecs \
         python3-syslog \
         python3-multiprocessing \
-        ${BPN} \
+        ${PN} \
 "
-RDEPENDS:${BPN}-sepolgen-ifgen += "\
+RDEPENDS:${PN}-sepolgen-ifgen = "\
         python3-core \
         libselinux-python \
 "
@@ -85,16 +86,16 @@ FILES:${PN}-semanage = "\
         ${datadir}/bash-completion/completions/semanage \
 "
 # The ${bindir}/sepolgen is a symlink to ${bindir}/sepolicy
-FILES:${PN}-sepolicy += "\
+FILES:${PN}-sepolicy = "\
         ${bindir}/sepolgen \
         ${bindir}/sepolicy \
         ${datadir}/bash-completion/completions/sepolicy \
 "
-FILES:${PN}-sepolgen-ifgen += "\
+FILES:${PN}-sepolgen-ifgen = "\
         ${bindir}/sepolgen-ifgen \
         ${bindir}/sepolgen-ifgen-attr-helper \
 "
-FILES:${PN}-sepolgen += "\
+FILES:${PN}-sepolgen = "\
         ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolgen* \
         ${localstatedir}/lib/sepolgen/perm_map \
 "
