@@ -13,10 +13,6 @@ inherit lib_package
 
 S = "${WORKDIR}/git/libsepol"
 
-# Change RANLIB for cross compiling, use host-tools $(AR) rather than
-# local ranlib.
-EXTRA_OEMAKE += "RANLIB='$(AR) s'"
-
-DEPENDS += "flex-native"
+DEPENDS = "flex-native"
 
 BBCLASSEXTEND = "native"
