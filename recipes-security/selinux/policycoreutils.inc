@@ -54,7 +54,6 @@ RDEPENDS_${BPN}-setsebool += "\
 	libselinux \
 	libsemanage \
 "
-RDEPENDS_${BPN} += "selinux-python"
 
 PACKAGES =+ "\
 	${PN}-fixfiles \
