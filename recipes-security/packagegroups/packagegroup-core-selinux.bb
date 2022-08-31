@@ -15,10 +15,7 @@ RDEPENDS_${PN} = " \
 	libselinux-bin \
 	libsemanage \
 	checkpolicy \
-	selinux-python-sepolgen \
 	packagegroup-selinux-policycoreutils \
-	setools \
-	setools-console \
 	selinux-autorelabel \
 	selinux-init \
 	selinux-labeldev \

@@ -24,13 +24,4 @@ RDEPENDS_${PN} = "\
 	semodule-utils-semodule-expand \
 	semodule-utils-semodule-link \
 	semodule-utils-semodule-package \
-	selinux-python-audit2allow \
-	selinux-python-sepolgen-ifgen \
-	selinux-python-semanage \
-	selinux-python-sepolicy \
-	selinux-python-chcat \
-	selinux-python \
-	selinux-sandbox \
-	selinux-dbus \
-	selinux-gui \
 "
