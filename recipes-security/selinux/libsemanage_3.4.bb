@@ -16,7 +16,7 @@ SRC_URI += "file://libsemanage-Fix-execve-segfaults-on-Ubuntu.patch \
             file://libsemanage-disable-expand-check-on-policy-load.patch \
            "
 
-DEPENDS = "libsepol libselinux bison-native swig-native"
+DEPENDS = "libsepol libselinux python3 bison-native swig-native"
 
 DEPENDS:append:class-target = " audit"
 
