@@ -11,6 +11,8 @@ require selinux_common.inc
 
 inherit lib_package
 
+SRC_URI += "file://0001-libsepol-fix-validation-of-user-declarations-in-modu.patch"
+
 S = "${WORKDIR}/git/libsepol"
 
 DEPENDS = "flex-native"
