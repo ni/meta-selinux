@@ -47,7 +47,6 @@ controls could be added to an operating system.
 To enable SELinux features, this layers has done these works:
 
    * new DISTRO_FEATURES "selinux" defined
-   * new DISTRO "poky-selinux" defined, with DISTRO_FEATURES += "pam selinux"
    * config file for Linux kernel to enable SELinux
    * recipes for SELinux userland libraries and tools
    * package group (packagegroup-core-selinux) for SELinux userland packages
@@ -67,7 +66,7 @@ After init Poky build environment, please follow these steps:
 
    1. Add meta-selinux path to BUILDDIR/conf/bblayers.conf file.
 
-   2. Set DISTRO="poky-selinux" or add DISTRO_FEATURES:append=" pam selinux"
+   2. Add DISTRO_FEATURES:append=" acl xattr pam selinux"
       in BUILDDIR/conf/local.conf file.
 
    3. Build the default selinux image.
@@ -94,7 +93,6 @@ the following steps:
        $ bitbake core-image-custom
 
 
-
 ==============================================================================
 
 3 - Using SELinux 
@@ -109,7 +107,7 @@ Alternatively, you can add "selinux=0" to your kernel boot parameters. It is
 not recommended but useful on some testing situations.
 For example, when you are using qemu targets,  
 
-  $ runqemu qemumips core-image-selinux ext3 nographic bootparams="selinux=0"
+  $ runqemu qemumips core-image-selinux nographic bootparams="selinux=0"
 
 The initial filesystem relabel step requires considerable memory and can result
 in unexpected, sometimes impossible to reproduce, failures if an OOM condition
