@@ -1,4 +1,4 @@
-From e1439aa43af6ef15b35eac3cdbf0cea561768362 Mon Sep 17 00:00:00 2001
+From 6d2a96abd1e292d0c34ff77501e618cfc193655f Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] fc/init: fix update-alternatives for sysvinit
@@ -26,7 +26,7 @@ index bf51c103f..91ed72be0 100644
  
  /run/shutdown\.pid	--	gen_context(system_u:object_r:shutdown_runtime_t,s0)
 diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
-index 9187e50af..0ecabe34e 100644
+index b70940928..e6077fd5b 100644
 --- a/policy/modules/kernel/corecommands.fc
 +++ b/policy/modules/kernel/corecommands.fc
 @@ -151,6 +151,8 @@ ifdef(`distro_gentoo',`
@@ -39,10 +39,10 @@ index 9187e50af..0ecabe34e 100644
  /usr/bin/sash			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /usr/bin/sesh			--	gen_context(system_u:object_r:shell_exec_t,s0)
 diff --git a/policy/modules/system/init.fc b/policy/modules/system/init.fc
-index 63cf195e6..5268bddb2 100644
+index 1a99e5824..7f0b7c699 100644
 --- a/policy/modules/system/init.fc
 +++ b/policy/modules/system/init.fc
-@@ -40,6 +40,7 @@ ifdef(`distro_gentoo',`
+@@ -41,6 +41,7 @@ ifdef(`distro_gentoo',`
  /usr/libexec/dcc/stop-.* --	gen_context(system_u:object_r:initrc_exec_t,s0)
  
  /usr/sbin/init(ng)?	--	gen_context(system_u:object_r:init_exec_t,s0)
@@ -51,5 +51,5 @@ index 63cf195e6..5268bddb2 100644
  /usr/sbin/upstart	--	gen_context(system_u:object_r:init_exec_t,s0)
  
 -- 
-2.17.1
+2.25.1
 

@@ -1,4 +1,4 @@
-From e159e70b533b500390337ec666d678c7424afb90 Mon Sep 17 00:00:00 2001
+From 5841a5bd25e6017b6ccff4f56628ad6e950eadad Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 10:45:23 +0800
 Subject: [PATCH] fc/ntp: apply policy to ntpd alternatives
@@ -23,5 +23,5 @@ index cd69ea5d5..49ffe6f68 100644
  /usr/sbin/sntp				--	gen_context(system_u:object_r:ntpdate_exec_t,s0)
  
 -- 
-2.17.1
+2.25.1
 

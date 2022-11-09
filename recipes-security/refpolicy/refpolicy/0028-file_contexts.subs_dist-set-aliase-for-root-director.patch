@@ -1,4 +1,4 @@
-From 0bb081084a2d12f9041bfae195481d898b5a0ba1 Mon Sep 17 00:00:00 2001
+From 01f57c996e09fb68daf3d97805c46c27a6d34304 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Sun, 5 Apr 2020 22:03:45 +0800
 Subject: [PATCH] file_contexts.subs_dist: set aliase for /root directory
@@ -26,5 +26,5 @@ index 690007f22..f80499ebf 100644
 +# Add an aliase for it
 +/root /home/root
 -- 
-2.17.1
+2.25.1
 

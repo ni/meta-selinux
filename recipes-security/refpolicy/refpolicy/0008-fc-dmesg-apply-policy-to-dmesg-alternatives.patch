@@ -1,4 +1,4 @@
-From 504e8429500ab0984adfd52bb09a3e993b87f2f1 Mon Sep 17 00:00:00 2001
+From ac6536f04674ccc051744e6eb3644e68fe38da33 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 08:26:55 -0400
 Subject: [PATCH] fc/dmesg: apply policy to dmesg alternatives
@@ -19,5 +19,5 @@ index e52fdfcf8..526b92ed2 100644
  /usr/bin/dmesg		--		gen_context(system_u:object_r:dmesg_exec_t,s0)
 +/usr/bin/dmesg\.util-linux		--		gen_context(system_u:object_r:dmesg_exec_t,s0)
 -- 
-2.17.1
+2.25.1
 

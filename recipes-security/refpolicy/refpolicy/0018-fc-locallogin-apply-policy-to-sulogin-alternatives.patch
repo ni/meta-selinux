@@ -1,4 +1,4 @@
-From cfb86acce9fe9da9b88c853c0b22d48d99602fbb Mon Sep 17 00:00:00 2001
+From 11c95928e325aea7e4c41a9cdf969f9bdd306611 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 10:43:28 +0800
 Subject: [PATCH] fc/locallogin: apply policy to sulogin alternatives
@@ -21,5 +21,5 @@ index fc8d58507..59e6e9601 100644
 +/usr/sbin/sulogin\.util-linux	--	gen_context(system_u:object_r:sulogin_exec_t,s0)
  /usr/sbin/sushell	--	gen_context(system_u:object_r:sulogin_exec_t,s0)
 -- 
-2.17.1
+2.25.1
 

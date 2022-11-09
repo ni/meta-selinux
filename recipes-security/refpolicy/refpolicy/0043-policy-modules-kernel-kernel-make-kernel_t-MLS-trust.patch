@@ -1,4 +1,4 @@
-From c2e99e27acc1454d792b3e8d6f24d3a2a3be29e3 Mon Sep 17 00:00:00 2001
+From 057e4e6a6e2e87edcd6a93dd533620700b00b1c2 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Fri, 13 Oct 2017 07:20:40 +0000
 Subject: [PATCH] policy/modules/kernel/kernel: make kernel_t MLS trusted for
@@ -59,10 +59,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
-index a32c59eb1..1c53754ee 100644
+index a40db8507..40cd52825 100644
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -358,6 +358,8 @@ mls_file_write_all_levels(kernel_t)
+@@ -370,6 +370,8 @@ mls_file_write_all_levels(kernel_t)
  mls_file_read_all_levels(kernel_t)
  mls_socket_write_all_levels(kernel_t)
  mls_fd_use_all_levels(kernel_t)
@@ -72,5 +72,5 @@ index a32c59eb1..1c53754ee 100644
  ifdef(`distro_redhat',`
  	# Bugzilla 222337
 -- 
-2.17.1
+2.25.1
 

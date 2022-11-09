@@ -1,0 +1,36 @@
+From e28807393f105a16528cb5304283bde0b771fc4e Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Wed, 9 Nov 2022 10:53:26 +0800
+Subject: [PATCH] refpolicy-minimum: make dbus module optional
+
+The mount module invokes interface
+dbus_dontaudit_write_system_bus_runtime_named_sockets which is from dbus
+module. Since dbus is not a core moudle in sysvinit system, we could
+make this interface optional in mount module by optional_policy. Then we
+could make the minimum policy without dbus module.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/mount.te | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/mount.te b/policy/modules/system/mount.te
+index 97f49e58e..b59529a01 100644
+--- a/policy/modules/system/mount.te
++++ b/policy/modules/system/mount.te
+@@ -146,7 +146,9 @@ selinux_getattr_fs(mount_t)
+ 
+ userdom_use_all_users_fds(mount_t)
+ 
+-dbus_dontaudit_write_system_bus_runtime_named_sockets(mount_t)
++optional_policy(`
++	dbus_dontaudit_write_system_bus_runtime_named_sockets(mount_t)
++')
+ 
+ ifdef(`distro_redhat',`
+ 	optional_policy(`
+-- 
+2.25.1
+

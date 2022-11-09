@@ -1,4 +1,4 @@
-From 4f3a637c0385204c0b87806d158e106fb9f88972 Mon Sep 17 00:00:00 2001
+From f64a5d6a2f2e72ae6c5122220eb759117b6384c8 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Mon, 27 Jan 2014 03:54:01 -0500
 Subject: [PATCH] fc/fstools: fix real path for fstools
@@ -10,14 +10,14 @@ Signed-off-by: Shrikant Bobade <shrikant_bobade@mentor.com>
 Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
- policy/modules/system/fstools.fc | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ policy/modules/system/fstools.fc | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/policy/modules/system/fstools.fc b/policy/modules/system/fstools.fc
-index d871294e8..bef711850 100644
+index 8fbd5ce44..2842afbcc 100644
 --- a/policy/modules/system/fstools.fc
 +++ b/policy/modules/system/fstools.fc
-@@ -59,7 +59,9 @@
+@@ -58,7 +58,9 @@
  /usr/sbin/addpart		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/badblocks		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/blkid			--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -27,12 +27,13 @@ index d871294e8..bef711850 100644
  /usr/sbin/cfdisk		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/clubufflush		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/delpart		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -73,10 +75,12 @@
+@@ -72,10 +74,13 @@
  /usr/sbin/efibootmgr		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/fatsort		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/fdisk			--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 +/usr/sbin/fdisk\.util-linux			--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/findfs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
++/usr/sbin/findfs\.util-linux		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/fsck.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/gdisk			--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/hdparm		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -40,7 +41,7 @@ index d871294e8..bef711850 100644
  /usr/sbin/install-mbr		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/jfs_.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/losetup.*		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
-@@ -84,24 +88,30 @@
+@@ -83,24 +88,30 @@
  /usr/sbin/make_reiser4		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/mkdosfs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/mke2fs		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
@@ -72,5 +73,5 @@ index d871294e8..bef711850 100644
  /usr/sbin/zhack			--	gen_context(system_u:object_r:fsadm_exec_t,s0)
  /usr/sbin/zinject		--	gen_context(system_u:object_r:fsadm_exec_t,s0)
 -- 
-2.17.1
+2.25.1
 

@@ -1,14 +1,14 @@
-From bf7b74e7c38b546e162eb5a3bd4774e3d84d593d Mon Sep 17 00:00:00 2001
-From: Yi Zhao <yi.zhao@windriver.com>
+From 60b4e5ea5668a71b2a0660461daecea66fd11d51 Mon Sep 17 00:00:00 2001
+From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Mon, 20 Apr 2020 11:50:03 +0800
 Subject: [PATCH] refpolicy-targeted: make unconfined_u the default selinux
  user
 
 For targeted policy type, we define unconfined_u as the default selinux
-user for root and normal users, so users could login in and run most
+user for root and normal users, so users could login and run most
 commands and services on unconfined domains.
 
-Upstream-Status: Inappropriate [configuration]
+Upstream-Status: Inappropriate [embedded specific]
 
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
@@ -38,7 +38,7 @@ index ce614b41b..c0903d98b 100644
 +root:unconfined_u:s0-mcs_systemhigh
 +__default__:unconfined_u:s0
 diff --git a/policy/modules/system/unconfined.te b/policy/modules/system/unconfined.te
-index 4972094cb..b6d769412 100644
+index d116a1b9b..32720f68f 100644
 --- a/policy/modules/system/unconfined.te
 +++ b/policy/modules/system/unconfined.te
 @@ -20,6 +20,11 @@ type unconfined_execmem_t alias ada_t;
@@ -77,5 +77,5 @@ index ca203758c..e737cd9cc 100644
 +	gen_user(root, sysadm, unconfined_r sysadm_r staff_r ifdef(`enable_mls',`secadm_r auditadm_r'), s0, s0 - mls_systemhigh, mcs_allcats)
  ')
 -- 
-2.17.1
+2.25.1
 

@@ -1,0 +1,36 @@
+From 51a7f8058fee569322c1a0597fccd36c318ad943 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 28 Oct 2022 11:56:09 +0800
+Subject: [PATCH] policy/modules/roles/sysadm: allow sysadm to use init file
+ descriptors
+
+Root can not login via console without this.
+
+Fixes:
+avc: denied { use } for pid=323 comm="sh" path="/dev/tty1"
+dev="devtmpfs" ino=21 scontext=root:sysadm_r:sysadm_t
+tcontext=system_u:system_r:init_t tclass=fd permissive=0
+
+Upstream-Status: Pending
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/roles/sysadm.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
+index bb715a847..088c954f5 100644
+--- a/policy/modules/roles/sysadm.te
++++ b/policy/modules/roles/sysadm.te
+@@ -86,6 +86,8 @@ ifdef(`init_systemd',`
+ 	# LookupDynamicUserByUID on org.freedesktop.systemd1.
+ 	init_dbus_chat(sysadm_t)
+ 
++	init_use_fds(sysadm_t)
++
+ 	# Allow sysadm to get the status of and set properties of other users,
+ 	# sessions, and seats on the system.
+ 	systemd_dbus_chat_logind(sysadm_t)
+-- 
+2.25.1
+

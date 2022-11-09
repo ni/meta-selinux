@@ -1,4 +1,4 @@
-From 6b43af067ec45bce1b7059fc549e246f53311d3a Mon Sep 17 00:00:00 2001
+From c71ea08245069001b56aadd7bb0af28e019f45e4 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 11:06:13 +0800
 Subject: [PATCH] fc/ldap: apply policy to ldap alternatives
@@ -36,5 +36,5 @@ index 0a1d08d0f..65b202962 100644
  /run/openldap(/.*)?	gen_context(system_u:object_r:slapd_runtime_t,s0)
  /run/slapd.*	-s	gen_context(system_u:object_r:slapd_runtime_t,s0)
 -- 
-2.17.1
+2.25.1
 

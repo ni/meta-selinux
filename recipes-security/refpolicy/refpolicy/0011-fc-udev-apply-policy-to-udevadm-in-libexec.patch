@@ -1,4 +1,4 @@
-From aa2635a54f9c36205ebc469f799a56ece01ac610 Mon Sep 17 00:00:00 2001
+From bbc6eb20e9509a61236051df7a5fa552a8f2654d Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 09:36:08 -0400
 Subject: [PATCH] fc/udev: apply policy to udevadm in libexec
@@ -25,5 +25,5 @@ index 7898ff01c..bc717e60c 100644
  /usr/sbin/start_udev --	gen_context(system_u:object_r:udev_exec_t,s0)
  ')
 -- 
-2.17.1
+2.25.1
 

@@ -1,4 +1,4 @@
-From 9c676fe5ff2a14206f25bf8ed932c305f13dcfdc Mon Sep 17 00:00:00 2001
+From 2e9b42143ccb92f04d8d57430b3ae1e9f55eb00e Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: add rules for the symlink of
@@ -30,7 +30,7 @@ index 4ff5f990a..dee26a9f4 100644
  /var/log/dmesg		--	gen_context(system_u:object_r:var_log_t,s0)
  /var/log/syslog		--	gen_context(system_u:object_r:var_log_t,s0)
 diff --git a/policy/modules/system/logging.if b/policy/modules/system/logging.if
-index 341763730..30d402c75 100644
+index cf7ef1721..b627cacb8 100644
 --- a/policy/modules/system/logging.if
 +++ b/policy/modules/system/logging.if
 @@ -1086,10 +1086,12 @@ interface(`logging_append_all_inherited_logs',`
@@ -100,5 +100,5 @@ index 341763730..30d402c75 100644
  
  ########################################
 -- 
-2.17.1
+2.25.1
 

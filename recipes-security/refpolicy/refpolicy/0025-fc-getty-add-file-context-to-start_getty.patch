@@ -1,4 +1,4 @@
-From dbd399143d6fbda828cfc9f2546bc730e0da584c Mon Sep 17 00:00:00 2001
+From 863ece4fd9815997486c04ce89180707435669e4 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 16:07:30 +0800
 Subject: [PATCH] fc/getty: add file context to start_getty
@@ -23,5 +23,5 @@ index 116ea6421..53ff6137b 100644
  /usr/sbin/.*getty	--	gen_context(system_u:object_r:getty_exec_t,s0)
  
 -- 
-2.17.1
+2.25.1
 

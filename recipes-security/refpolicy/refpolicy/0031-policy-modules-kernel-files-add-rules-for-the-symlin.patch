@@ -1,4 +1,4 @@
-From fd55f9f292617c7475c62c07ed6c478b4bd9eda5 Mon Sep 17 00:00:00 2001
+From 9052089dfc4f7466fcf304ab282c2e32933a5881 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/kernel/files: add rules for the symlink of
@@ -18,10 +18,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  2 files changed, 9 insertions(+)
 
 diff --git a/policy/modules/kernel/files.fc b/policy/modules/kernel/files.fc
-index 826722f4e..677ae96c3 100644
+index f6ff6b079..279df3d3c 100644
 --- a/policy/modules/kernel/files.fc
 +++ b/policy/modules/kernel/files.fc
-@@ -172,6 +172,7 @@ HOME_ROOT/lost\+found/.*	<<none>>
+@@ -170,6 +170,7 @@ HOME_ROOT/lost\+found/.*	<<none>>
  # /tmp
  #
  /tmp			-d	gen_context(system_u:object_r:tmp_t,s0-mls_systemhigh)
@@ -30,10 +30,10 @@ index 826722f4e..677ae96c3 100644
  /tmp/\.journal			<<none>>
  
 diff --git a/policy/modules/kernel/files.if b/policy/modules/kernel/files.if
-index 495cbe2f4..b308eefd9 100644
+index f7217b226..451f302af 100644
 --- a/policy/modules/kernel/files.if
 +++ b/policy/modules/kernel/files.if
-@@ -4555,6 +4555,7 @@ interface(`files_search_tmp',`
+@@ -4750,6 +4750,7 @@ interface(`files_search_tmp',`
  	')
  
  	allow $1 tmp_t:dir search_dir_perms;
@@ -41,7 +41,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4591,6 +4592,7 @@ interface(`files_list_tmp',`
+@@ -4786,6 +4787,7 @@ interface(`files_list_tmp',`
  	')
  
  	allow $1 tmp_t:dir list_dir_perms;
@@ -49,7 +49,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4627,6 +4629,7 @@ interface(`files_delete_tmp_dir_entry',`
+@@ -4822,6 +4824,7 @@ interface(`files_delete_tmp_dir_entry',`
  	')
  
  	allow $1 tmp_t:dir del_entry_dir_perms;
@@ -57,7 +57,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4645,6 +4648,7 @@ interface(`files_read_generic_tmp_files',`
+@@ -4840,6 +4843,7 @@ interface(`files_read_generic_tmp_files',`
  	')
  
  	read_files_pattern($1, tmp_t, tmp_t)
@@ -65,7 +65,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4663,6 +4667,7 @@ interface(`files_manage_generic_tmp_dirs',`
+@@ -4858,6 +4862,7 @@ interface(`files_manage_generic_tmp_dirs',`
  	')
  
  	manage_dirs_pattern($1, tmp_t, tmp_t)
@@ -73,7 +73,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4699,6 +4704,7 @@ interface(`files_manage_generic_tmp_files',`
+@@ -4894,6 +4899,7 @@ interface(`files_manage_generic_tmp_files',`
  	')
  
  	manage_files_pattern($1, tmp_t, tmp_t)
@@ -81,7 +81,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4735,6 +4741,7 @@ interface(`files_rw_generic_tmp_sockets',`
+@@ -4930,6 +4936,7 @@ interface(`files_rw_generic_tmp_sockets',`
  	')
  
  	rw_sock_files_pattern($1, tmp_t, tmp_t)
@@ -89,7 +89,7 @@ index 495cbe2f4..b308eefd9 100644
  ')
  
  ########################################
-@@ -4942,6 +4949,7 @@ interface(`files_tmp_filetrans',`
+@@ -5137,6 +5144,7 @@ interface(`files_tmp_filetrans',`
  	')
  
  	filetrans_pattern($1, tmp_t, $2, $3, $4)
@@ -98,5 +98,5 @@ index 495cbe2f4..b308eefd9 100644
  
  ########################################
 -- 
-2.17.1
+2.25.1
 

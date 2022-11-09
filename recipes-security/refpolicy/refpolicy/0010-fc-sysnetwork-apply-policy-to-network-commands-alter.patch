@@ -1,4 +1,4 @@
-From c85fd7d9c45770b31de44bb35521e2251882df10 Mon Sep 17 00:00:00 2001
+From 47a5e9a0bd4960534998798ab1a5ab62e77b2b61 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Tue, 9 Jun 2015 21:22:52 +0530
 Subject: [PATCH] fc/sysnetwork: apply policy to network commands alternatives
@@ -43,5 +43,5 @@ index c9ec4e5ab..4ca151524 100644
  /usr/sbin/tc			--	gen_context(system_u:object_r:ifconfig_exec_t,s0)
  
 -- 
-2.17.1
+2.25.1
 

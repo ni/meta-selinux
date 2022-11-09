@@ -1,4 +1,4 @@
-From 8ad451ceff2ba4ea26290a7ba9918406a90bb10f Mon Sep 17 00:00:00 2001
+From a56887ca448b60ad6715348b2cfe533e8109a040 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 09:20:58 -0400
 Subject: [PATCH] fc/ssh: apply policy to ssh alternatives
@@ -12,11 +12,11 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/policy/modules/services/ssh.fc b/policy/modules/services/ssh.fc
-index 60060c35c..518043a9b 100644
+index 5c512e972..0448c1877 100644
 --- a/policy/modules/services/ssh.fc
 +++ b/policy/modules/services/ssh.fc
 @@ -4,6 +4,7 @@ HOME_DIR/\.ssh(/.*)?			gen_context(system_u:object_r:ssh_home_t,s0)
- /etc/ssh/ssh_host.*_key		--	gen_context(system_u:object_r:sshd_key_t,s0)
+ /etc/ssh/ssh_host.*_key(\.pub)?	--	gen_context(system_u:object_r:sshd_key_t,s0)
  
  /usr/bin/ssh			--	gen_context(system_u:object_r:ssh_exec_t,s0)
 +/usr/bin/ssh\.openssh	--	gen_context(system_u:object_r:ssh_exec_t,s0)
@@ -24,5 +24,5 @@ index 60060c35c..518043a9b 100644
  /usr/bin/ssh-keygen		--	gen_context(system_u:object_r:ssh_keygen_exec_t,s0)
  /usr/bin/sshd			--	gen_context(system_u:object_r:sshd_exec_t,s0)
 -- 
-2.17.1
+2.25.1
 

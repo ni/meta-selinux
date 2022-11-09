@@ -1,4 +1,4 @@
-From 0280f05e2c9665f094d7098cd03e11d75908bcdb Mon Sep 17 00:00:00 2001
+From 5bb33b7d9d7915399cca7d8c6fbdd9c0e27c1cd8 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Wed, 18 Dec 2019 15:04:41 +0800
 Subject: [PATCH] fc/vlock: apply policy to vlock alternatives
@@ -21,5 +21,5 @@ index f668cde9c..c4bc50984 100644
  
  /usr/sbin/vlock-main	--	gen_context(system_u:object_r:vlock_exec_t,s0)
 -- 
-2.17.1
+2.25.1
 

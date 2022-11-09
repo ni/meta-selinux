@@ -1,4 +1,4 @@
-From 2d1634127f8f5c9ec98f866711b8d15b7df815d1 Mon Sep 17 00:00:00 2001
+From 003a22f73563ef7b8b4ab6a6a0cb4a920a43570f Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 11:15:33 +0800
 Subject: [PATCH] fc/screen: apply policy to screen alternatives
@@ -21,5 +21,5 @@ index e51e01d97..238dc263e 100644
 +/usr/bin/screen-.*		--	gen_context(system_u:object_r:screen_exec_t,s0)
  /usr/bin/tmux		--	gen_context(system_u:object_r:screen_exec_t,s0)
 -- 
-2.17.1
+2.25.1
 

@@ -1,0 +1,84 @@
+From 5b6f3fcb1ddabd0a66541959306e7b0adfe2b2b0 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Thu, 4 Feb 2021 10:48:54 +0800
+Subject: [PATCH] policy/modules/system/systemd: systemd --user fixes
+
+Fixes:
+systemctl[277]: Failed to connect to bus: No medium found
+
+avc: denied { mknod } for  pid=297 comm="systemd" capability=27
+scontext=root:sysadm_r:sysadm_systemd_t
+tcontext=root:sysadm_r:sysadm_systemd_t tclass=capability permissive=0
+
+avc: denied { bpf } for pid=297 comm="systemd" capability=39
+scontext=root:sysadm_r:sysadm_systemd_t
+tcontext=root:sysadm_r:sysadm_systemd_t tclass=capability2 permissive=0
+
+avc: denied { sys_admin } for pid=297 comm="systemd" capability=21
+scontext=root:sysadm_r:sysadm_systemd_t
+tcontext=root:sysadm_r:sysadm_systemd_t tclass=capability permissive=0
+
+avc: denied { perfmon } for pid=297 comm="systemd" capability=38
+scontext=root:sysadm_r:sysadm_systemd_t
+tcontext=root:sysadm_r:sysadm_systemd_t tclass=capability2 permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/roles/sysadm.te   |  2 ++
+ policy/modules/system/systemd.if | 21 ++++++++++++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
+index 088c954f5..92f50fd5a 100644
+--- a/policy/modules/roles/sysadm.te
++++ b/policy/modules/roles/sysadm.te
+@@ -98,6 +98,8 @@ ifdef(`init_systemd',`
+ 
+ 	# Allow sysadm to follow logs in the journal, i.e. with podman logs -f
+ 	systemd_watch_journal_dirs(sysadm_t)
++
++	systemd_sysadm_user(sysadm_t)
+ ')
+ 
+ tunable_policy(`allow_ptrace',`
+diff --git a/policy/modules/system/systemd.if b/policy/modules/system/systemd.if
+index 9dc91fbb7..325ca548b 100644
+--- a/policy/modules/system/systemd.if
++++ b/policy/modules/system/systemd.if
+@@ -58,7 +58,7 @@ template(`systemd_role_template',`
+ 	allow $1_systemd_t self:process { getsched signal };
+ 	allow $1_systemd_t self:netlink_kobject_uevent_socket create_socket_perms;
+ 	allow $1_systemd_t self:unix_stream_socket create_stream_socket_perms;
+-	allow $1_systemd_t $3:process { setsched rlimitinh signal_perms };
++	allow $1_systemd_t $3:process { setsched rlimitinh signal_perms noatsecure };
+ 	corecmd_shell_domtrans($1_systemd_t, $3)
+ 	corecmd_bin_domtrans($1_systemd_t, $3)
+ 
+@@ -2613,3 +2613,22 @@ interface(`systemd_use_inherited_machined_ptys', `
+ 	allow $1 systemd_machined_t:fd use;
+ 	allow $1 systemd_machined_devpts_t:chr_file rw_inherited_term_perms;
+ ')
++
++#########################################
++## <summary>
++##	sysadm user for systemd --user
++## </summary>
++## <param name="role">
++##	<summary>
++##  Role allowed access.
++##	</summary>
++## </param>
++#
++interface(`systemd_sysadm_user',`
++	gen_require(`
++		type sysadm_systemd_t;
++	')
++
++	allow sysadm_systemd_t self:capability { mknod sys_admin };
++	allow sysadm_systemd_t self:capability2 { bpf perfmon };
++')
+-- 
+2.25.1
+

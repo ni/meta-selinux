@@ -1,4 +1,4 @@
-From c9759b1024873819cf594fe7ac3bf06bcf0d959d Mon Sep 17 00:00:00 2001
+From 26dc5529db7664ae248eba4dbc5d17915c371137 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 10:33:18 -0400
 Subject: [PATCH] policy/modules/system/logging: add rules for syslogd symlink
@@ -18,10 +18,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 21e3285a9..abee7df9c 100644
+index abd61e6bd..90d8ccd31 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -411,6 +411,7 @@ files_search_spool(syslogd_t)
+@@ -420,6 +420,7 @@ files_search_spool(syslogd_t)
  
  # Allow access for syslog-ng
  allow syslogd_t var_log_t:dir { create setattr };
@@ -30,5 +30,5 @@ index 21e3285a9..abee7df9c 100644
  # for systemd but can not be conditional
  files_runtime_filetrans(syslogd_t, syslogd_tmp_t, dir, "log")
 -- 
-2.17.1
+2.25.1
 
