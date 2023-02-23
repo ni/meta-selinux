@@ -8,9 +8,9 @@ LICENSE = "GPL-2.0-only & LGPL-2.1-only"
 SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.4;protocol=https \
            file://setools4-fixes-for-cross-compiling.patch \
           "
-SRCREV = "4758cdf803d93274f49cb6445cb2bab527d6549f"
+SRCREV = "bec5c81d4fc41c45c63f0ba19f132fab94f8d2e5"
 
-LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=83a5eb6974c11f30785e90d0eeccf40c \
+LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=69a7b68f0a4a570d7c0c43465333ecbc \
                     file://${S}/COPYING.GPL;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
                     file://${S}/COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c"
 
