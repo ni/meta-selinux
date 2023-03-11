@@ -18,7 +18,7 @@ SRC_URI += "\
 
 S = "${WORKDIR}/git/libselinux"
 
-DEPENDS = "libsepol libpcre2 swig-native"
+DEPENDS = "libsepol libpcre2 swig-native python3-setuptools-scm-native"
 DEPENDS:append:libc-musl = " fts"
 
 RDEPENDS:${PN} = "libselinux python3-core python3-shell"
@@ -33,12 +33,12 @@ def get_policyconfigarch(d):
 EXTRA_OEMAKE = "${@get_policyconfigarch(d)}"
 EXTRA_OEMAKE:append:libc-musl = " FTS_LDLIBS=-lfts"
 
-FILES:${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
+FILES:${PN} = "${PYTHON_SITEPACKAGES_DIR}/*"
 INSANE_SKIP:${PN} = "dev-so"
 
 do_compile() {
     oe_runmake pywrap -j1 \
-        PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \
+        PYLIBVER='python${PYTHON_BASEVERSION}' \
         PYINC='-I${STAGING_INCDIR}/${PYLIBVER}' \
         PYLIBS='-L${STAGING_LIBDIR}/${PYLIBVER} -l${PYLIBVER}'
 }
@@ -46,6 +46,10 @@ do_compile() {
 do_install() {
     oe_runmake install-pywrap \
         DESTDIR=${D} \
-        PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \
-        PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages'
+        PYLIBVER='python${PYTHON_BASEVERSION}' \
+        PYTHONLIBDIR='${PYTHON_SITEPACKAGES_DIR}'
+
+    # Fix buildpaths issue
+    sed -i -e 's,${WORKDIR},,g' \
+        ${D}${PYTHON_SITEPACKAGES_DIR}/selinux-${PV}.dist-info/direct_url.json
 }
