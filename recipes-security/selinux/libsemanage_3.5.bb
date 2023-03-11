@@ -5,7 +5,7 @@ as by programs like load_policy that need to perform specific transformations \
 on binary policies such as customizing policy boolean settings."
 SECTION = "base"
 LICENSE = "LGPL-2.1-or-later"
-LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=a6f89e2100d9b6cdffcea4f398e37343"
+LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=a6f89e2100d9b6cdffcea4f398e37343"
 
 require selinux_common.inc
 
@@ -29,23 +29,24 @@ PACKAGES =+ "${PN}-python"
 # For /usr/libexec/selinux/semanage_migrate_store
 RDEPENDS:${PN}-python = "python3-core"
 
-FILES:${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/* \
+FILES:${PN}-python = "${PYTHON_SITEPACKAGES_DIR}/* \
                       ${libexecdir}/selinux/semanage_migrate_store"
-FILES:${PN}-dbg += "${libdir}/python${PYTHON_BASEVERSION}/site-packages/.debug/*"
+FILES:${PN}-dbg += "${PYTHON_SITEPACKAGES_DIR}/.debug/*"
 FILES:${PN} += "${libexecdir}"
 
 do_compile:append() {
     oe_runmake pywrap \
-        PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \
+        PYLIBVER='python${PYTHON_BASEVERSION}' \
         PYINC='-I${STAGING_INCDIR}/${PYLIBVER}' \
         PYLIBS='-L${STAGING_LIBDIR}/${PYLIBVER} -l${PYLIBVER}'
 }
 
 do_install:append() {
     oe_runmake install-pywrap \
+        DESTDIR=${D} \
         PYCEXT='.so' \
-        PYLIBVER='python${PYTHON_BASEVERSION}${PYTHON_ABI}' \
-        PYTHONLIBDIR='${D}${libdir}/python${PYTHON_BASEVERSION}/site-packages'
+        PYLIBVER='python${PYTHON_BASEVERSION}' \
+        PYTHONLIBDIR='${PYTHON_SITEPACKAGES_DIR}'
 
     # Update "policy-version" for semanage.conf
     sed -i 's/^#\s*\(policy-version\s*=\).*$/\1 33/' \
