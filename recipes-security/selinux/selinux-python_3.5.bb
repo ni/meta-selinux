@@ -4,19 +4,18 @@ This package contains Python modules sepolgen, sepolicy; And the \
 SELinux utilities audit2allow, chcat, semanage ..."
 SECTION = "base"
 LICENSE = "GPL-2.0-or-later"
-LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=393a5ca445f6965873eca0259a17f833"
+LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=393a5ca445f6965873eca0259a17f833"
 
 require selinux_common.inc
 
-inherit python3native
+inherit python3targetconfig
 
 SRC_URI += "file://fix-sepolicy-install-path.patch \
-            file://0001-gettext-handle-unsupported-languages-properly.patch \
            "
 
 S = "${WORKDIR}/git/python"
 
-DEPENDS = "libsepol libselinux gettext-native"
+DEPENDS = "libsepol libselinux gettext-native python3-setuptools-scm-native"
 
 RDEPENDS:${PN} = "\
         python3-core \
@@ -96,19 +95,26 @@ FILES:${PN}-sepolgen-ifgen = "\
         ${bindir}/sepolgen-ifgen-attr-helper \
 "
 FILES:${PN}-sepolgen = "\
-        ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolgen* \
+        ${PYTHON_SITEPACKAGES_DIR}/sepolgen* \
         ${localstatedir}/lib/sepolgen/perm_map \
 "
 
 FILES:${PN} += "\
-        ${libdir}/python${PYTHON_BASEVERSION}/site-packages/seobject.py* \
-        ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy*.egg-info \
-        ${libdir}/python${PYTHON_BASEVERSION}/site-packages/sepolicy/* \
+        ${PYTHON_SITEPACKAGES_DIR}/seobject.py* \
+        ${PYTHON_SITEPACKAGES_DIR}/sepolicy*.dist-info \
+        ${PYTHON_SITEPACKAGES_DIR}/sepolicy/* \
 "
 
 do_install() {
     oe_runmake DESTDIR="${D}" \
         PYLIBVER='python${PYTHON_BASEVERSION}' \
-        PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
+        PYTHONLIBDIR='${PYTHON_SITEPACKAGES_DIR}' \
         install
+
+    # Remove .pyc files
+    find ${D} -name *.pyc -delete
+
+    # Fix buildpaths issue
+    sed -i -e 's,${WORKDIR},,g' \
+        ${D}${PYTHON_SITEPACKAGES_DIR}/sepolicy-${PV}.dist-info/direct_url.json
 }

@@ -1,4 +1,4 @@
-From d43220e336edf8ccaaa7bd3eb9c13874ed34d468 Mon Sep 17 00:00:00 2001
+From 2a0c2489e9d245502e7a9dc5878da01f9d64db2a Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Mon, 23 Sep 2013 21:17:59 +0800
 Subject: [PATCH] sepolicy: fix install path for new pymodule sepolicy
@@ -13,15 +13,15 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sepolicy/Makefile b/sepolicy/Makefile
-index 3361be4..5842321 100644
+index 4e9e93d..512aab5 100644
 --- a/sepolicy/Makefile
 +++ b/sepolicy/Makefile
 @@ -27,7 +27,7 @@ test:
  	@$(PYTHON) test_sepolicy.py -v
  
  install:
--	$(PYTHON) setup.py install --prefix=$(PREFIX) `test -n "$(DESTDIR)" && echo --root $(DESTDIR)` $(PYTHON_SETUP_ARGS)
-+	$(PYTHON) setup.py install --prefix=$(PREFIX) --root=$(DESTDIR) --install-lib=$(PYTHONLIBDIR) --no-compile $(PYTHON_SETUP_ARGS)
+-	$(PYTHON) -m pip install --prefix=$(PREFIX) `test -n "$(DESTDIR)" && echo --root $(DESTDIR) --ignore-installed --no-deps` $(PYTHON_SETUP_ARGS) .
++	$(PYTHON) -m pip install --prefix=$(PREFIX) --root $(DESTDIR) --ignore-installed --no-deps $(PYTHON_SETUP_ARGS) .
  	[ -d $(DESTDIR)$(BINDIR) ] || mkdir -p $(DESTDIR)$(BINDIR)
  	install -m 755 sepolicy.py $(DESTDIR)$(BINDIR)/sepolicy
  	(cd $(DESTDIR)$(BINDIR); ln -sf sepolicy sepolgen)
