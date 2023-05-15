@@ -17,3 +17,5 @@ do_install() {
         LIBDIR="${libdir}" \
         SHLIBDIR="${base_libdir}"
 }
+
+CVE_PRODUCT ?= "kernel:selinux"
