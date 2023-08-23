@@ -14,6 +14,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/libselinux:"
 SRC_URI += "\
         file://0001-Makefile-fix-python-modules-install-path-for-multili.patch \
         file://0002-Do-not-use-PYCEXT-and-rely-on-the-installed-file-nam.patch \
+        file://0003-libselinux-restore-drop-the-obsolete-LSF-transitiona.patch \
         "
 
 S = "${WORKDIR}/git/libselinux"
