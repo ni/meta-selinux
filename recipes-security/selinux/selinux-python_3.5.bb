@@ -54,8 +54,10 @@ RDEPENDS:${PN}-semanage = "\
         ${PN} \
 "
 RDEPENDS:${PN}-sepolicy = "\
+        binutils \
         python3-core \
         python3-codecs \
+        python3-distro \
         python3-syslog \
         python3-multiprocessing \
         ${PN} \
