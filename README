@@ -75,6 +75,14 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED = ""
 
 
+Enable labeling on first boot
+----------------------------
+By default, the system will label selinux contexts during build. To enable
+labeling on first boot. Set FIRST_BOOT_RELABEL to 1 in local.conf:
+
+FIRST_BOOT_RELABEL = "1"
+
+
 Starting up the system
 ----------------------
 Most likely the reference policy selected will not just work "out of the box".
