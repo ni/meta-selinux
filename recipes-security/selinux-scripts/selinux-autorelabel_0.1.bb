@@ -20,7 +20,7 @@ INITSCRIPT_PARAMS = "start 01 S ."
 require selinux-initsh.inc
 
 do_install:append() {
-	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
-		echo "# first boot relabelling" > ${D}/.autorelabel
-	fi
+    if ${@bb.utils.contains('FIRST_BOOT_RELABEL', '1', 'true', 'false', d)}; then
+        echo "# first boot relabelling" > ${D}/.autorelabel
+    fi
 }
