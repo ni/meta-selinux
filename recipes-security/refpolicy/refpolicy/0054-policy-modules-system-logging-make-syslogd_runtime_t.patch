@@ -1,4 +1,4 @@
-From 7a65c9f3636b43f3a29349ea1c045d5281efa5aa Mon Sep 17 00:00:00 2001
+From 1536eaea2cc68074f55ca50eff2d129b7e1894d8 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Sat, 18 Dec 2021 17:31:45 +0800
 Subject: [PATCH] policy/modules/system/logging: make syslogd_runtime_t MLS
@@ -31,10 +31,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 7e41596f4..0c25457d6 100644
+index 25e1d1397..ba0fd10e0 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -447,6 +447,8 @@ allow syslogd_t syslogd_runtime_t:file map;
+@@ -456,6 +456,8 @@ allow syslogd_t syslogd_runtime_t:file map;
  manage_files_pattern(syslogd_t, syslogd_runtime_t, syslogd_runtime_t)
  files_runtime_filetrans(syslogd_t, syslogd_runtime_t, file)
  

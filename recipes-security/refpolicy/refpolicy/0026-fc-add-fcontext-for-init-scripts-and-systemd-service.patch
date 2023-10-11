@@ -1,4 +1,4 @@
-From 574df1810c8f32bbf24b223f72f6622b0df7e82c Mon Sep 17 00:00:00 2001
+From 1096b2eb1172506006691e90769e51a086b8374f Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Tue, 30 Jun 2020 10:45:57 +0800
 Subject: [PATCH] fc: add fcontext for init scripts and systemd service files
@@ -48,7 +48,7 @@ index 75c2f0617..fa881ba2e 100644
  
  /usr/bin/nfsdcld	--	gen_context(system_u:object_r:rpcd_exec_t,s0)
 diff --git a/policy/modules/system/logging.fc b/policy/modules/system/logging.fc
-index 5681acb51..4ff5f990a 100644
+index 3b0dea51b..0ce2bec4b 100644
 --- a/policy/modules/system/logging.fc
 +++ b/policy/modules/system/logging.fc
 @@ -24,6 +24,7 @@

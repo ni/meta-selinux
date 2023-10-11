@@ -1,0 +1,43 @@
+From 1f7fb5de202cb30c45b4051b0bce6e9b1aa53ea8 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Sat, 30 Sep 2023 17:20:29 +0800
+Subject: [PATCH] policy/modules/system/logging: allow systemd-tmpfiles to
+ create /var/log/audit
+
+Fixes:
+systemd[1]: Starting Security Auditing Service...
+auditd[246]: Could not open dir /var/log/audit (No such file or directory)
+auditd[246]: The audit daemon is exiting.
+systemd[1]: auditd.service: Control process exited, code=exited, status=6/NOTCONFIGURED
+systemd[1]: auditd.service: Failed with result 'exit-code'.
+systemd[1]: Failed to start Security Auditing Service.
+
+AVC avc:  denied  { create } for  pid=224 comm="systemd-tmpfile"
+name="audit" scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=system_u:object_r:auditd_log_t tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index 8bc70b81d..3cab14381 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -27,6 +27,10 @@ type auditd_log_t;
+ files_security_file(auditd_log_t)
+ files_security_mountpoint(auditd_log_t)
+ 
++optional_policy(`
++	systemd_tmpfilesd_managed(auditd_log_t)
++')
++
+ type audit_spool_t;
+ files_security_file(audit_spool_t)
+ files_security_mountpoint(audit_spool_t)
+-- 
+2.25.1
+

@@ -1,4 +1,4 @@
-From 00533fded8e2264f8bdc68c8ed79644a10e4e2ad Mon Sep 17 00:00:00 2001
+From cfb5cec05c98a65d8eb086868444a6e74e1f96bf Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 09:54:07 -0400
 Subject: [PATCH] fc/rpm: apply rpm_exec policy to cpio binaries

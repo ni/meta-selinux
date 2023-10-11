@@ -1,4 +1,4 @@
-From 863ece4fd9815997486c04ce89180707435669e4 Mon Sep 17 00:00:00 2001
+From dca38e304bb64a5c3a18d02521f56ffe461ec126 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 15 Nov 2019 16:07:30 +0800
 Subject: [PATCH] fc/getty: add file context to start_getty

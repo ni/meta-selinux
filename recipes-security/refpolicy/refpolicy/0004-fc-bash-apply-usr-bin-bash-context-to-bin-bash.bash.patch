@@ -1,4 +1,4 @@
-From c9219d2f7be1e641b3866b770a9b570c12333b93 Mon Sep 17 00:00:00 2001
+From 23f156d0adc37eb9f6f8308c28da4db0bac48200 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Thu, 28 Mar 2019 21:37:32 -0400
 Subject: [PATCH] fc/bash: apply /usr/bin/bash context to /bin/bash.bash
@@ -15,10 +15,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
-index 0c05c693d..b70940928 100644
+index f031e1704..30ac066e4 100644
 --- a/policy/modules/kernel/corecommands.fc
 +++ b/policy/modules/kernel/corecommands.fc
-@@ -142,6 +142,7 @@ ifdef(`distro_gentoo',`
+@@ -144,6 +144,7 @@ ifdef(`distro_gentoo',`
  /usr/bin(/.*)?				gen_context(system_u:object_r:bin_t,s0)
  /usr/bin/d?ash			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /usr/bin/bash			--	gen_context(system_u:object_r:shell_exec_t,s0)

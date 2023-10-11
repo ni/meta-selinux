@@ -1,0 +1,46 @@
+From 48da8a2589b1d5bce2609fd307ca009605d801c3 Mon Sep 17 00:00:00 2001
+From: Wenzong Fan <wenzong.fan@windriver.com>
+Date: Thu, 4 Feb 2016 06:03:19 -0500
+Subject: [PATCH] policy/modules/system/systemd: enable support for
+ systemd-tmpfiles to manage all non-security files
+
+Fixes:
+systemd-tmpfiles[226]: Failed to create directory or subvolume "/root/.ssh", ignoring: Permission denied
+systemd-tmpfiles[226]: Failed to create directory or subvolume "/var/lib/systemd/ephemeral-trees": Permission denied
+
+AVC avc:  denied  { relabelfrom } for  pid=226 comm="systemd-tmpfile"
+name="root" dev="vda" ino=643 scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=root:object_r:user_home_dir_t tclass=dir permissive=0
+
+AVC avc:  denied  { write } for  pid=226 comm="systemd-tmpfile"
+name="root" dev="vda" ino=643 scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=root:object_r:user_home_dir_t tclass=dir permissive=0
+
+AVC avc:  denied  { create } for  pid=226 comm="systemd-tmpfile"
+name="ephemeral-trees" scontext=system_u:system_r:systemd_tmpfiles_t
+tcontext=system_u:object_r:init_var_lib_t tclass=dir permissive=0
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/systemd.te | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index b6d575f87..70a45ac58 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -10,7 +10,7 @@ policy_module(systemd)
+ ## Enable support for systemd-tmpfiles to manage all non-security files.
+ ## </p>
+ ## </desc>
+-gen_tunable(systemd_tmpfiles_manage_all, false)
++gen_tunable(systemd_tmpfiles_manage_all, true)
+ 
+ ## <desc>
+ ## <p>
+-- 
+2.25.1
+

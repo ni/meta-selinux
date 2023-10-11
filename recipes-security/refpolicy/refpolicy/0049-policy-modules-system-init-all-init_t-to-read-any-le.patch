@@ -1,4 +1,4 @@
-From f3c0f18b647631fd2ffc1e86c9e3f51cbf74d60f Mon Sep 17 00:00:00 2001
+From ad9b0e1542804060ac3cea69129c224074da6766 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Wed, 3 Feb 2016 04:16:06 -0500
 Subject: [PATCH] policy/modules/system/init: all init_t to read any level
@@ -22,10 +22,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 3 insertions(+)
 
 diff --git a/policy/modules/system/init.te b/policy/modules/system/init.te
-index df7f87f17..671b5aef3 100644
+index bd2ca0802..e94a29a73 100644
 --- a/policy/modules/system/init.te
 +++ b/policy/modules/system/init.te
-@@ -234,6 +234,9 @@ mls_key_write_all_levels(init_t)
+@@ -243,6 +243,9 @@ mls_key_write_all_levels(init_t)
  mls_file_downgrade(init_t)
  mls_file_upgrade(init_t)
  

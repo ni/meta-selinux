@@ -1,4 +1,4 @@
-From 5b6f3fcb1ddabd0a66541959306e7b0adfe2b2b0 Mon Sep 17 00:00:00 2001
+From 9dcbec008d4213c6649f894fda0e87b0829c56de Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Thu, 4 Feb 2021 10:48:54 +0800
 Subject: [PATCH] policy/modules/system/systemd: systemd --user fixes
@@ -26,59 +26,66 @@ Upstream-Status: Inappropriate [embedded specific]
 
 Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
- policy/modules/roles/sysadm.te   |  2 ++
- policy/modules/system/systemd.if | 21 ++++++++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ policy/modules/system/systemd.if    | 30 +++++++++++++++++++++++++++++
+ policy/modules/system/userdomain.if |  4 ++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
-index 088c954f5..92f50fd5a 100644
---- a/policy/modules/roles/sysadm.te
-+++ b/policy/modules/roles/sysadm.te
-@@ -98,6 +98,8 @@ ifdef(`init_systemd',`
- 
- 	# Allow sysadm to follow logs in the journal, i.e. with podman logs -f
- 	systemd_watch_journal_dirs(sysadm_t)
-+
-+	systemd_sysadm_user(sysadm_t)
- ')
- 
- tunable_policy(`allow_ptrace',`
 diff --git a/policy/modules/system/systemd.if b/policy/modules/system/systemd.if
-index 9dc91fbb7..325ca548b 100644
+index 6054b5038..d89ad35b1 100644
 --- a/policy/modules/system/systemd.if
 +++ b/policy/modules/system/systemd.if
-@@ -58,7 +58,7 @@ template(`systemd_role_template',`
- 	allow $1_systemd_t self:process { getsched signal };
- 	allow $1_systemd_t self:netlink_kobject_uevent_socket create_socket_perms;
- 	allow $1_systemd_t self:unix_stream_socket create_stream_socket_perms;
--	allow $1_systemd_t $3:process { setsched rlimitinh signal_perms };
-+	allow $1_systemd_t $3:process { setsched rlimitinh signal_perms noatsecure };
- 	corecmd_shell_domtrans($1_systemd_t, $3)
- 	corecmd_bin_domtrans($1_systemd_t, $3)
- 
-@@ -2613,3 +2613,22 @@ interface(`systemd_use_inherited_machined_ptys', `
- 	allow $1 systemd_machined_t:fd use;
- 	allow $1 systemd_machined_devpts_t:chr_file rw_inherited_term_perms;
+@@ -199,6 +199,36 @@ template(`systemd_role_template',`
+ 	')
  ')
-+
-+#########################################
+ 
++######################################
 +## <summary>
-+##	sysadm user for systemd --user
++##	Admin role for systemd --user
 +## </summary>
++## <param name="prefix">
++##	<summary>
++##	Prefix for generated types
++##	</summary>
++## </param>
 +## <param name="role">
 +##	<summary>
-+##  Role allowed access.
++##	The admin role.
++##	</summary>
++## </param>
++## <param name="userdomain">
++##	<summary>
++##	The amdin domain for the role.
 +##	</summary>
 +## </param>
 +#
-+interface(`systemd_sysadm_user',`
++template(`systemd_admin_role_extra',`
 +	gen_require(`
-+		type sysadm_systemd_t;
++		type $1_systemd_t;
 +	')
 +
-+	allow sysadm_systemd_t self:capability { mknod sys_admin };
-+	allow sysadm_systemd_t self:capability2 { bpf perfmon };
++	allow $1_systemd_t $3:process noatsecure;
++	allow $1_systemd_t self:capability { mknod sys_admin };
++	allow $1_systemd_t self:capability2 { bpf perfmon };
 +')
++
+ ######################################
+ ## <summary>
+ ##   Allow the specified domain to be started as a daemon by the
+diff --git a/policy/modules/system/userdomain.if b/policy/modules/system/userdomain.if
+index 24c3cb012..80072c03e 100644
+--- a/policy/modules/system/userdomain.if
++++ b/policy/modules/system/userdomain.if
+@@ -1455,6 +1455,10 @@ template(`userdom_admin_user_template',`
+ 	optional_policy(`
+ 		userhelper_exec($1_t)
+ 	')
++
++	optional_policy(`
++		systemd_admin_role_extra($1, $1_r, $1_t)
++	')
+ ')
+ 
+ ########################################
 -- 
 2.25.1
 

@@ -1,4 +1,4 @@
-From 2e9b42143ccb92f04d8d57430b3ae1e9f55eb00e Mon Sep 17 00:00:00 2001
+From f08f3c554d70c9cd11f0297678bb4a29b8ab034b Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: add rules for the symlink of
@@ -14,11 +14,11 @@ Signed-off-by: Joe MacDonald <joe_macdonald@mentor.com>
 Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
  policy/modules/system/logging.fc | 1 +
- policy/modules/system/logging.if | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ policy/modules/system/logging.if | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
 diff --git a/policy/modules/system/logging.fc b/policy/modules/system/logging.fc
-index 4ff5f990a..dee26a9f4 100644
+index 0ce2bec4b..8957366b0 100644
 --- a/policy/modules/system/logging.fc
 +++ b/policy/modules/system/logging.fc
 @@ -53,6 +53,7 @@ ifdef(`distro_suse', `
@@ -30,10 +30,10 @@ index 4ff5f990a..dee26a9f4 100644
  /var/log/dmesg		--	gen_context(system_u:object_r:var_log_t,s0)
  /var/log/syslog		--	gen_context(system_u:object_r:var_log_t,s0)
 diff --git a/policy/modules/system/logging.if b/policy/modules/system/logging.if
-index cf7ef1721..b627cacb8 100644
+index 49028a0cb..4381d2e83 100644
 --- a/policy/modules/system/logging.if
 +++ b/policy/modules/system/logging.if
-@@ -1086,10 +1086,12 @@ interface(`logging_append_all_inherited_logs',`
+@@ -1091,10 +1091,12 @@ interface(`logging_append_all_inherited_logs',`
  interface(`logging_read_all_logs',`
  	gen_require(`
  		attribute logfile;
@@ -46,20 +46,7 @@ index cf7ef1721..b627cacb8 100644
  	read_files_pattern($1, logfile, logfile)
  ')
  
-@@ -1127,10 +1129,12 @@ interface(`logging_watch_all_logs',`
- interface(`logging_exec_all_logs',`
- 	gen_require(`
- 		attribute logfile;
-+		type var_log_t;
- 	')
- 
- 	files_search_var($1)
- 	allow $1 logfile:dir list_dir_perms;
-+	allow $1 var_log_t:lnk_file read_lnk_file_perms;
- 	can_exec($1, logfile)
- ')
- 
-@@ -1192,6 +1196,7 @@ interface(`logging_manage_generic_log_dirs',`
+@@ -1175,6 +1177,7 @@ interface(`logging_manage_generic_log_dirs',`
  
  	files_search_var($1)
  	allow $1 var_log_t:dir manage_dir_perms;
@@ -67,7 +54,7 @@ index cf7ef1721..b627cacb8 100644
  ')
  
  ########################################
-@@ -1212,6 +1217,7 @@ interface(`logging_relabel_generic_log_dirs',`
+@@ -1195,6 +1198,7 @@ interface(`logging_relabel_generic_log_dirs',`
  
  	files_search_var($1)
  	allow $1 var_log_t:dir relabel_dir_perms;
@@ -75,7 +62,7 @@ index cf7ef1721..b627cacb8 100644
  ')
  
  ########################################
-@@ -1232,6 +1238,7 @@ interface(`logging_read_generic_logs',`
+@@ -1215,6 +1219,7 @@ interface(`logging_read_generic_logs',`
  
  	files_search_var($1)
  	allow $1 var_log_t:dir list_dir_perms;
@@ -83,7 +70,7 @@ index cf7ef1721..b627cacb8 100644
  	read_files_pattern($1, var_log_t, var_log_t)
  ')
  
-@@ -1333,6 +1340,7 @@ interface(`logging_manage_generic_logs',`
+@@ -1316,6 +1321,7 @@ interface(`logging_manage_generic_logs',`
  
  	files_search_var($1)
  	manage_files_pattern($1, var_log_t, var_log_t)
@@ -91,7 +78,7 @@ index cf7ef1721..b627cacb8 100644
  ')
  
  ########################################
-@@ -1351,6 +1359,7 @@ interface(`logging_watch_generic_logs_dir',`
+@@ -1334,6 +1340,7 @@ interface(`logging_watch_generic_logs_dir',`
  	')
  
  	allow $1 var_log_t:dir watch;

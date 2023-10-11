@@ -1,4 +1,4 @@
-From cb7a4ff6081f19d05b109512275ec9a537f2f6d2 Mon Sep 17 00:00:00 2001
+From 315a53e50dd8957787e3a71c57ffc8ac46d0c474 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Thu, 25 Feb 2016 04:25:08 -0500
 Subject: [PATCH] policy/modules/system/logging: allow auditd_t to write socket
@@ -22,10 +22,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index f63965d4d..7e41596f4 100644
+index caf319f04..25e1d1397 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -223,6 +223,8 @@ miscfiles_read_localization(auditd_t)
+@@ -235,6 +235,8 @@ miscfiles_read_localization(auditd_t)
  
  mls_file_read_all_levels(auditd_t)
  mls_file_write_all_levels(auditd_t) # Need to be able to write to /var/run/ directory

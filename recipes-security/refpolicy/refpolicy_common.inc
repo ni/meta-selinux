@@ -26,31 +26,31 @@ SRC_URI += " \
         file://0008-fc-dmesg-apply-policy-to-dmesg-alternatives.patch \
         file://0009-fc-ssh-apply-policy-to-ssh-alternatives.patch \
         file://0010-fc-sysnetwork-apply-policy-to-network-commands-alter.patch \
-        file://0011-fc-udev-apply-policy-to-udevadm-in-libexec.patch \
-        file://0012-fc-rpm-apply-rpm_exec-policy-to-cpio-binaries.patch \
-        file://0013-fc-su-apply-policy-to-su-alternatives.patch \
-        file://0014-fc-fstools-fix-real-path-for-fstools.patch \
-        file://0015-fc-init-fix-update-alternatives-for-sysvinit.patch \
-        file://0016-fc-brctl-apply-policy-to-brctl-alternatives.patch \
-        file://0017-fc-corecommands-apply-policy-to-nologin-alternatives.patch \
-        file://0018-fc-locallogin-apply-policy-to-sulogin-alternatives.patch \
-        file://0019-fc-ntp-apply-policy-to-ntpd-alternatives.patch \
-        file://0020-fc-kerberos-apply-policy-to-kerberos-alternatives.patch \
-        file://0021-fc-ldap-apply-policy-to-ldap-alternatives.patch \
-        file://0022-fc-postgresql-apply-policy-to-postgresql-alternative.patch \
-        file://0023-fc-screen-apply-policy-to-screen-alternatives.patch \
-        file://0024-fc-usermanage-apply-policy-to-usermanage-alternative.patch \
-        file://0025-fc-getty-add-file-context-to-start_getty.patch \
-        file://0026-fc-vlock-apply-policy-to-vlock-alternatives.patch \
-        file://0027-fc-add-fcontext-for-init-scripts-and-systemd-service.patch \
-        file://0028-file_contexts.subs_dist-set-aliase-for-root-director.patch \
-        file://0029-policy-modules-system-logging-add-rules-for-the-syml.patch \
-        file://0030-policy-modules-system-logging-add-rules-for-syslogd-.patch \
-        file://0031-policy-modules-kernel-files-add-rules-for-the-symlin.patch \
-        file://0032-policy-modules-system-logging-fix-auditd-startup-fai.patch \
-        file://0033-policy-modules-kernel-terminal-don-t-audit-tty_devic.patch \
-        file://0034-policy-modules-services-rpcbind-allow-rpcbind_t-to-c.patch \
-        file://0035-policy-modules-system-systemd-enable-support-for-sys.patch \
+        file://0011-fc-rpm-apply-rpm_exec-policy-to-cpio-binaries.patch \
+        file://0012-fc-su-apply-policy-to-su-alternatives.patch \
+        file://0013-fc-fstools-fix-real-path-for-fstools.patch \
+        file://0014-fc-init-fix-update-alternatives-for-sysvinit.patch \
+        file://0015-fc-brctl-apply-policy-to-brctl-alternatives.patch \
+        file://0016-fc-corecommands-apply-policy-to-nologin-alternatives.patch \
+        file://0017-fc-locallogin-apply-policy-to-sulogin-alternatives.patch \
+        file://0018-fc-ntp-apply-policy-to-ntpd-alternatives.patch \
+        file://0019-fc-kerberos-apply-policy-to-kerberos-alternatives.patch \
+        file://0020-fc-ldap-apply-policy-to-ldap-alternatives.patch \
+        file://0021-fc-postgresql-apply-policy-to-postgresql-alternative.patch \
+        file://0022-fc-screen-apply-policy-to-screen-alternatives.patch \
+        file://0023-fc-usermanage-apply-policy-to-usermanage-alternative.patch \
+        file://0024-fc-getty-add-file-context-to-start_getty.patch \
+        file://0025-fc-vlock-apply-policy-to-vlock-alternatives.patch \
+        file://0026-fc-add-fcontext-for-init-scripts-and-systemd-service.patch \
+        file://0027-file_contexts.subs_dist-set-aliase-for-root-director.patch \
+        file://0028-policy-modules-system-logging-add-rules-for-the-syml.patch \
+        file://0029-policy-modules-system-logging-add-rules-for-syslogd-.patch \
+        file://0030-policy-modules-kernel-files-add-rules-for-the-symlin.patch \
+        file://0031-policy-modules-system-logging-fix-auditd-startup-fai.patch \
+        file://0032-policy-modules-kernel-terminal-don-t-audit-tty_devic.patch \
+        file://0033-policy-modules-services-rpcbind-allow-rpcbind_t-to-c.patch \
+        file://0034-policy-modules-system-systemd-enable-support-for-sys.patch \
+        file://0035-policy-modules-system-logging-allow-systemd-tmpfiles.patch \
         file://0036-policy-modules-system-systemd-allow-systemd_logind_t.patch \
         file://0037-policy-modules-roles-sysadm-allow-sysadm-to-use-init.patch \
         file://0038-policy-modules-system-systemd-systemd-user-fixes.patch \

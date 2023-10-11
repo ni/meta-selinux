@@ -1,4 +1,4 @@
-From 4b202554e646a60000c1acad7bbdfae1078bdc10 Mon Sep 17 00:00:00 2001
+From dd1663aaffec1f7b36097c742094c9c239342d9f Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Thu, 13 Feb 2014 00:33:07 -0500
 Subject: [PATCH] fc/su: apply policy to su alternatives

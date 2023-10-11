@@ -1,4 +1,4 @@
-From ccdd22cc2776b695f96faffc88699aa2b182e085 Mon Sep 17 00:00:00 2001
+From 15e29022299d44fbb172560b448c531b9714616b Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Sat, 15 Feb 2014 04:22:47 -0500
 Subject: [PATCH] policy/modules/system/mount: make mount_t domain MLS trusted
@@ -19,10 +19,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/policy/modules/system/mount.te b/policy/modules/system/mount.te
-index d028723ce..97f49e58e 100644
+index e08df77a5..30b26841f 100644
 --- a/policy/modules/system/mount.te
 +++ b/policy/modules/system/mount.te
-@@ -112,6 +112,7 @@ fs_dontaudit_write_all_image_files(mount_t)
+@@ -113,6 +113,7 @@ fs_dontaudit_write_all_image_files(mount_t)
  
  mls_file_read_all_levels(mount_t)
  mls_file_write_all_levels(mount_t)

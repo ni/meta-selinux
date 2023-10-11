@@ -1,4 +1,4 @@
-From eed095029b270bbc49dc67d6b7b6b2fe9c3bca07 Mon Sep 17 00:00:00 2001
+From bd4f7608f50da4a829d9042311163922776146ca Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: fix auditd startup failures
@@ -17,10 +17,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 90d8ccd31..d3b06db7d 100644
+index 45584dba6..8bc70b81d 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -169,6 +169,7 @@ dontaudit auditd_t auditd_etc_t:file map;
+@@ -177,6 +177,7 @@ dontaudit auditd_t auditd_etc_t:file map;
  manage_files_pattern(auditd_t, auditd_log_t, auditd_log_t)
  allow auditd_t auditd_log_t:dir setattr;
  manage_lnk_files_pattern(auditd_t, auditd_log_t, auditd_log_t)
@@ -28,7 +28,7 @@ index 90d8ccd31..d3b06db7d 100644
  allow auditd_t var_log_t:dir search_dir_perms;
  
  manage_files_pattern(auditd_t, auditd_runtime_t, auditd_runtime_t)
-@@ -298,6 +299,7 @@ optional_policy(`
+@@ -306,6 +307,7 @@ optional_policy(`
  allow audisp_remote_t self:capability { setpcap setuid };
  allow audisp_remote_t self:process { getcap setcap };
  allow audisp_remote_t self:tcp_socket create_socket_perms;

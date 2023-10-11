@@ -1,4 +1,4 @@
-From 9343914c0486b5aa6ff7cceeb8f6c399115e5fb3 Mon Sep 17 00:00:00 2001
+From 7b5cac323ea0638fcd5d35658f49c644f32d3442 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Tue, 30 Jun 2020 10:18:20 +0800
 Subject: [PATCH] policy/modules/admin/dmesg: make dmesg_t MLS trusted reading
