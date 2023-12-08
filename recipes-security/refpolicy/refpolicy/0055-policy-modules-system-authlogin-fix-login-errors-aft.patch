@@ -1,0 +1,104 @@
+From 2824a6c927bf6df4be997a138a27d159d533d08b Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Fri, 8 Dec 2023 14:16:26 +0800
+Subject: [PATCH] policy/modules/system/authlogin: fix login errors after
+ enabling systemd DynamicUser
+
+Allow domains using PAM to read /etc/shadow to fix login errors after
+enabling systemd DynamicUser.
+
+Fixes:
+avc:  denied  { read } for  pid=434 comm="login" name="shadow"
+dev="sda2" ino=26314
+scontext=system_u:system_r:local_login_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:shadow_t:s0 tclass=file permissive=1
+
+avc:  denied  { open } for  pid=434 comm="login" path="/etc/shadow"
+dev="sda2" ino=26314
+scontext=system_u:system_r:local_login_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:shadow_t:s0 tclass=file permissive=1
+
+avc:  denied  { getattr } for  pid=434 comm="login" path="/etc/shadow"
+dev="sda2" ino=26314
+scontext=system_u:system_r:local_login_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:shadow_t:s0 tclass=file permissive=1
+
+avc:  denied  { read } for  pid=457 comm="sshd" name="shadow" dev="sda2"
+ino=26314 scontext=system_u:system_r:sshd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:shadow_t:s0 tclass=file permissive=1
+
+avc:  denied  { open } for  pid=457 comm="sshd" path="/etc/shadow"
+dev="sda2" ino=26314 scontext=system_u:system_r:sshd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:shadow_t:s0 tclass=file permissive=1
+
+avc:  denied  { getattr } for  pid=457 comm="sshd" path="/etc/shadow"
+dev="sda2" ino=26314 scontext=system_u:system_r:sshd_t:s0-s15:c0.c1023
+tcontext=system_u:object_r:shadow_t:s0 tclass=file permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/admin/su.if           | 4 ++--
+ policy/modules/system/authlogin.te   | 2 +-
+ policy/modules/system/selinuxutil.te | 2 ++
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/policy/modules/admin/su.if b/policy/modules/admin/su.if
+index cd34cd9dd..b867f58b9 100644
+--- a/policy/modules/admin/su.if
++++ b/policy/modules/admin/su.if
+@@ -75,7 +75,7 @@ template(`su_restricted_domain_template', `
+ 	selinux_compute_access_vector($1_su_t)
+ 
+ 	auth_domtrans_chk_passwd($1_su_t)
+-	auth_dontaudit_read_shadow($1_su_t)
++	auth_read_shadow($1_su_t)
+ 	auth_use_nsswitch($1_su_t)
+ 	auth_rw_faillog($1_su_t)
+ 
+@@ -176,7 +176,7 @@ template(`su_role_template',`
+ 	selinux_use_status_page($1_su_t)
+ 
+ 	auth_domtrans_chk_passwd($1_su_t)
+-	auth_dontaudit_read_shadow($1_su_t)
++	auth_read_shadow($1_su_t)
+ 	auth_use_nsswitch($1_su_t)
+ 	auth_rw_faillog($1_su_t)
+ 
+diff --git a/policy/modules/system/authlogin.te b/policy/modules/system/authlogin.te
+index 3a5d1ac3e..f9d50a8d4 100644
+--- a/policy/modules/system/authlogin.te
++++ b/policy/modules/system/authlogin.te
+@@ -10,7 +10,7 @@ policy_module(authlogin)
+ ## Allow PAM usage.  If disabled, read access /etc/shadow is allowed for domains that normally use PAM.
+ ## </p>
+ ## </desc>
+-gen_tunable(authlogin_pam, true)
++gen_tunable(authlogin_pam, false)
+ 
+ ## <desc>
+ ## <p>
+diff --git a/policy/modules/system/selinuxutil.te b/policy/modules/system/selinuxutil.te
+index f9b735081..6ec5e2cd4 100644
+--- a/policy/modules/system/selinuxutil.te
++++ b/policy/modules/system/selinuxutil.te
+@@ -246,6 +246,7 @@ allow newrole_t self:netlink_audit_socket { create_netlink_socket_perms nlmsg_re
+ read_files_pattern(newrole_t, default_context_t, default_context_t)
+ read_lnk_files_pattern(newrole_t, default_context_t, default_context_t)
+ 
++kernel_getattr_proc(newrole_t)
+ kernel_read_system_state(newrole_t)
+ kernel_read_kernel_sysctls(newrole_t)
+ 
+@@ -288,6 +289,7 @@ auth_use_nsswitch(newrole_t)
+ auth_run_chk_passwd(newrole_t, newrole_roles)
+ auth_run_upd_passwd(newrole_t, newrole_roles)
+ auth_rw_faillog(newrole_t)
++auth_read_shadow(newrole_t)
+ 
+ # Write to utmp.
+ init_rw_utmp(newrole_t)
+-- 
+2.25.1
+

@@ -70,6 +70,7 @@ SRC_URI += " \
         file://0052-policy-modules-system-setrans-allow-setrans_t-use-fd.patch \
         file://0053-policy-modules-system-systemd-make-_systemd_t-MLS-tr.patch \
         file://0054-policy-modules-system-logging-make-syslogd_runtime_t.patch \
+        file://0055-policy-modules-system-authlogin-fix-login-errors-aft.patch \
         "
 
 S = "${WORKDIR}/refpolicy"
