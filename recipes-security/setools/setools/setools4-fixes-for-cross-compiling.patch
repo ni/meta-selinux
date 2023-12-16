@@ -1,4 +1,4 @@
-From e0a112874d10dbf741c27b107edddedd86d51529 Mon Sep 17 00:00:00 2001
+From 673bac44ce13f475845e0b69dc73bfaa5a0866aa Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Tue, 14 Feb 2017 06:32:35 +0000
 Subject: [PATCH] setools4: fixes for cross compiling
@@ -15,10 +15,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/setup.py b/setup.py
-index ac8a876..df7ebbc 100644
+index 5584e55..057bbb5 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -78,7 +78,7 @@ class QtHelpCommand(Command):
+@@ -79,7 +79,7 @@ class QtHelpCommand(Command):
  
  
  # Library linkage
@@ -28,5 +28,5 @@ index ac8a876..df7ebbc 100644
  
  with suppress(KeyError):
 -- 
-2.7.4
+2.25.1
 
