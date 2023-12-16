@@ -1,4 +1,4 @@
-From a822176c6f181d1e6989900dfc58bbdab6d9065a Mon Sep 17 00:00:00 2001
+From 6c2af45ec8cff9b282d599dc098db0ca127bdc59 Mon Sep 17 00:00:00 2001
 From: Renato Caldas <renato@calgera.com>
 Date: Thu, 29 Jun 2023 13:59:11 +0100
 Subject: [PATCH] libselinux: restore: drop the obsolete LSF transitional API.
@@ -10,23 +10,23 @@ Upstream-Status: Submitted [https://github.com/SELinuxProject/selinux/pull/401]
 
 Signed-off-by: Renato Caldas <renato@calgera.com>
 ---
- libselinux/src/selinux_restorecon.c | 4 ++--
+ src/selinux_restorecon.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/libselinux/src/selinux_restorecon.c b/libselinux/src/selinux_restorecon.c
-index 7ef2d45d..2ff920b0 100644
+diff --git a/src/selinux_restorecon.c b/src/selinux_restorecon.c
+index 38f10f1..5b3d035 100644
 --- a/src/selinux_restorecon.c
 +++ b/src/selinux_restorecon.c
-@@ -437,7 +437,7 @@ static int filespec_add(ino_t ino, const char *con, const char *file,
+@@ -436,7 +436,7 @@ static int filespec_add(ino_t ino, const char *con, const char *file,
  	file_spec_t *prevfl, *fl;
  	uint32_t h;
  	int ret;
 -	struct stat64 sb;
 +	struct stat sb;
-
+ 
  	__pthread_mutex_lock(&fl_mutex);
-
-@@ -451,7 +451,7 @@ static int filespec_add(ino_t ino, const char *con, const char *file,
+ 
+@@ -450,7 +450,7 @@ static int filespec_add(ino_t ino, const char *con, const char *file,
  	for (prevfl = &fl_head[h], fl = fl_head[h].next; fl;
  	     prevfl = fl, fl = fl->next) {
  		if (ino == fl->ino) {
@@ -35,5 +35,6 @@ index 7ef2d45d..2ff920b0 100644
  			if (ret < 0 || sb.st_ino != ino) {
  				freecon(fl->con);
  				free(fl->file);
---
-2.41.0
+-- 
+2.25.1
+
