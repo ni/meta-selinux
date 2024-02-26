@@ -1,4 +1,4 @@
-PV = "2.20231002+git${SRCPV}"
+PV = "2.20231002+git"
 
 SRC_URI = "git://github.com/SELinuxProject/refpolicy.git;protocol=https;branch=main;name=refpolicy;destsuffix=refpolicy"
 
