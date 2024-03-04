@@ -1,4 +1,4 @@
-From 3b93adc08461ebea92d018bf7704386426f129d3 Mon Sep 17 00:00:00 2001
+From 3b260a0dc07f61b9bf873a8ac976430c80a653c3 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Fri, 23 Aug 2013 12:01:53 +0800
 Subject: [PATCH] policy/modules/services/rpc: make nfsd_t domain MLS trusted
@@ -15,10 +15,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  2 files changed, 7 insertions(+)
 
 diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
-index e449160d8..9ef5e0b6f 100644
+index 887ca3332..f6ca775e6 100644
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -373,6 +373,8 @@ mls_process_read_all_levels(kernel_t)
+@@ -380,6 +380,8 @@ mls_process_read_all_levels(kernel_t)
  mls_process_write_all_levels(kernel_t)
  mls_file_write_all_levels(kernel_t)
  mls_file_read_all_levels(kernel_t)

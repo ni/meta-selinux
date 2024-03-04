@@ -1,4 +1,4 @@
-From e393201b6f3c0242ccc41dd86eada8be97326a08 Mon Sep 17 00:00:00 2001
+From f274bbf18ef930a506c7fe7cc90c32698e51b318 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Thu, 28 Mar 2019 21:59:18 -0400
 Subject: [PATCH] fc/hwclock: add hwclock alternatives

@@ -1,4 +1,4 @@
-From c69e55b03777ee15701ebb9b53b288fc773dbd87 Mon Sep 17 00:00:00 2001
+From 39b825d24a34864c3d9bae684b083a9b656f641a Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Wed, 29 Sep 2021 11:08:49 +0800
 Subject: [PATCH] refpolicy-minimum: make xdg module optional
@@ -15,10 +15,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
-index 52c7b5346..d9f21b6bf 100644
+index a0e6bb405..b1fc414ea 100644
 --- a/policy/modules/system/systemd.te
 +++ b/policy/modules/system/systemd.te
-@@ -305,10 +305,14 @@ init_unit_file(systemd_user_manager_unit_t)
+@@ -313,10 +313,14 @@ init_unit_file(systemd_user_manager_unit_t)
  
  type systemd_conf_home_t;
  init_unit_file(systemd_conf_home_t)

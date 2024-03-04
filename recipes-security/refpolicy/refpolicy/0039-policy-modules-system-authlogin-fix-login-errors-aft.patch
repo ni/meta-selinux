@@ -1,4 +1,4 @@
-From b8b80a2a07c451a1c9dfc166efcd7985f7a0a966 Mon Sep 17 00:00:00 2001
+From b81fc26631ad56608eed244c3a07f6f9b0c7e8c7 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 8 Dec 2023 14:16:26 +0800
 Subject: [PATCH] policy/modules/system/authlogin: fix login errors after
@@ -80,18 +80,18 @@ index 3a5d1ac3e..f9d50a8d4 100644
  ## <desc>
  ## <p>
 diff --git a/policy/modules/system/selinuxutil.te b/policy/modules/system/selinuxutil.te
-index f9b735081..6ec5e2cd4 100644
+index 3eedf82c3..875f0a02f 100644
 --- a/policy/modules/system/selinuxutil.te
 +++ b/policy/modules/system/selinuxutil.te
-@@ -246,6 +246,7 @@ allow newrole_t self:netlink_audit_socket { create_netlink_socket_perms nlmsg_re
+@@ -247,6 +247,7 @@ allow newrole_t self:netlink_audit_socket { create_netlink_socket_perms nlmsg_re
  read_files_pattern(newrole_t, default_context_t, default_context_t)
  read_lnk_files_pattern(newrole_t, default_context_t, default_context_t)
  
 +kernel_getattr_proc(newrole_t)
  kernel_read_system_state(newrole_t)
  kernel_read_kernel_sysctls(newrole_t)
- 
-@@ -288,6 +289,7 @@ auth_use_nsswitch(newrole_t)
+ kernel_dontaudit_getattr_proc(newrole_t)
+@@ -290,6 +291,7 @@ auth_use_nsswitch(newrole_t)
  auth_run_chk_passwd(newrole_t, newrole_roles)
  auth_run_upd_passwd(newrole_t, newrole_roles)
  auth_rw_faillog(newrole_t)

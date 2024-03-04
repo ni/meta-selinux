@@ -1,4 +1,4 @@
-From 1f7fb5de202cb30c45b4051b0bce6e9b1aa53ea8 Mon Sep 17 00:00:00 2001
+From feb50cfed6d7a08bb4e61b47f95df729a4fba9ea Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Sat, 30 Sep 2023 17:20:29 +0800
 Subject: [PATCH] policy/modules/system/logging: allow systemd-tmpfiles to

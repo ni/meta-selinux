@@ -1,4 +1,4 @@
-From 7af0a6b367cb21943d111c9f6386e40efdc02907 Mon Sep 17 00:00:00 2001
+From 3d5751659380eb04b63f8fc1e6113132dd1310d7 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Mon, 22 Feb 2021 11:28:12 +0800
 Subject: [PATCH] policy/modules/system/systemd: make *_systemd_t MLS trusted
@@ -24,10 +24,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 3 insertions(+)
 
 diff --git a/policy/modules/system/systemd.if b/policy/modules/system/systemd.if
-index d89ad35b1..00ac2f27e 100644
+index d7219dc37..7717e0034 100644
 --- a/policy/modules/system/systemd.if
 +++ b/policy/modules/system/systemd.if
-@@ -197,6 +197,9 @@ template(`systemd_role_template',`
+@@ -226,6 +226,9 @@ template(`systemd_role_template',`
  		xdg_read_config_files($1_systemd_t)
  		xdg_read_data_files($1_systemd_t)
  	')

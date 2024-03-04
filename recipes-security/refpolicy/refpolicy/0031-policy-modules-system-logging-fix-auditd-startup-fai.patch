@@ -1,4 +1,4 @@
-From bd4f7608f50da4a829d9042311163922776146ca Mon Sep 17 00:00:00 2001
+From d7dfe01114f9a1449ce2efd792ddf4b18fe91a45 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: fix auditd startup failures

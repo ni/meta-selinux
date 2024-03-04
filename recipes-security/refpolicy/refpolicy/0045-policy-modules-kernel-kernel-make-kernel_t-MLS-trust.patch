@@ -1,4 +1,4 @@
-From fd0d3887275237c1f1968d20972b535b9fdc9954 Mon Sep 17 00:00:00 2001
+From 2892de4636a61c237688d73c277edbf7a46163ab Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Fri, 13 Oct 2017 07:20:40 +0000
 Subject: [PATCH] policy/modules/kernel/kernel: make kernel_t MLS trusted for
@@ -59,10 +59,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
-index 9ef5e0b6f..8082cf6b7 100644
+index f6ca775e6..b4b089823 100644
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -375,6 +375,8 @@ mls_file_write_all_levels(kernel_t)
+@@ -382,6 +382,8 @@ mls_file_write_all_levels(kernel_t)
  mls_file_read_all_levels(kernel_t)
  mls_socket_write_all_levels(kernel_t)
  mls_fd_use_all_levels(kernel_t)

@@ -1,4 +1,4 @@
-From 1c275b335fd047c678b449bf90a75a7ac48c2b38 Mon Sep 17 00:00:00 2001
+From 35351cd7cb07622b5e43254b95d7801a5669358d Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Thu, 31 Oct 2019 17:35:59 +0800
 Subject: [PATCH] policy/modules/kernel/kernel: make kernel_t MLS trusted for
@@ -15,10 +15,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/policy/modules/kernel/kernel.te b/policy/modules/kernel/kernel.te
-index 8082cf6b7..63c2087f7 100644
+index b4b089823..5835d28b2 100644
 --- a/policy/modules/kernel/kernel.te
 +++ b/policy/modules/kernel/kernel.te
-@@ -377,6 +377,7 @@ mls_socket_write_all_levels(kernel_t)
+@@ -384,6 +384,7 @@ mls_socket_write_all_levels(kernel_t)
  mls_fd_use_all_levels(kernel_t)
  # https://bugzilla.redhat.com/show_bug.cgi?id=667370
  mls_file_downgrade(kernel_t)

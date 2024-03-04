@@ -1,4 +1,4 @@
-From 11c172fe44a22341b686dc537fde4991b7a49ed5 Mon Sep 17 00:00:00 2001
+From e561ad9a73c949768f0b4e91943a32f10a9f4acc Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 28 Oct 2022 11:56:09 +0800
 Subject: [PATCH] policy/modules/roles/sysadm: allow sysadm to use init file
@@ -19,10 +19,10 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/policy/modules/roles/sysadm.te b/policy/modules/roles/sysadm.te
-index 936381f25..a6b0c35f3 100644
+index 08cc0e117..c08226dc3 100644
 --- a/policy/modules/roles/sysadm.te
 +++ b/policy/modules/roles/sysadm.te
-@@ -92,6 +92,8 @@ ifdef(`init_systemd',`
+@@ -95,6 +95,8 @@ ifdef(`init_systemd',`
  	# LookupDynamicUserByUID on org.freedesktop.systemd1.
  	init_dbus_chat(sysadm_t)
  

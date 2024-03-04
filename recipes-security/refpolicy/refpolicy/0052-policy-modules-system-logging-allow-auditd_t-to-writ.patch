@@ -1,4 +1,4 @@
-From 315a53e50dd8957787e3a71c57ffc8ac46d0c474 Mon Sep 17 00:00:00 2001
+From 2b64eabf0cf8982bbb3c537e84fc3a99085858d3 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Thu, 25 Feb 2016 04:25:08 -0500
 Subject: [PATCH] policy/modules/system/logging: allow auditd_t to write socket

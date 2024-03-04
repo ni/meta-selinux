@@ -1,4 +1,4 @@
-From 4784a7fe74fd3842c1ade228e148cd6f5d6fd22e Mon Sep 17 00:00:00 2001
+From 3cf1f270369d7a2c75faf1a90d1485fe699dbbfe Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Tue, 30 Jun 2020 10:45:57 +0800
 Subject: [PATCH] fc: add fcontext for init scripts and systemd service files
@@ -34,11 +34,11 @@ index 382c067f9..0ecc5acc4 100644
  /usr/bin/rngd	--	gen_context(system_u:object_r:rngd_exec_t,s0)
  
 diff --git a/policy/modules/services/rpc.fc b/policy/modules/services/rpc.fc
-index 18c204908..95f06d8de 100644
+index 7edc09fac..7416fa39f 100644
 --- a/policy/modules/services/rpc.fc
 +++ b/policy/modules/services/rpc.fc
 @@ -2,7 +2,9 @@
- /etc/exports\.d(/.*)?	--	gen_context(system_u:object_r:exports_t,s0)
+ /etc/exports\.d(/.*)?		gen_context(system_u:object_r:exports_t,s0)
  
  /etc/rc\.d/init\.d/nfs	--	gen_context(system_u:object_r:nfsd_initrc_exec_t,s0)
 +/etc/rc\.d/init\.d/nfsserver	--	gen_context(system_u:object_r:nfsd_initrc_exec_t,s0)
