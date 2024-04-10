@@ -1,4 +1,4 @@
-From a40442cbc570b9b028ebc1da0115bc368e165c29 Mon Sep 17 00:00:00 2001
+From 9d4f8d201dbdea28a38b5faaef9abc016bcbaab3 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Fri, 29 Mar 2019 10:33:18 -0400
 Subject: [PATCH] policy/modules/system/logging: add rules for syslogd symlink

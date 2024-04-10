@@ -1,4 +1,4 @@
-From 61900d0f5576fa0cd8297a011f60cb9a40cefc7b Mon Sep 17 00:00:00 2001
+From df2801c3f9689d6c173dca05ee970756ba3b3d04 Mon Sep 17 00:00:00 2001
 From: Joe MacDonald <joe_macdonald@mentor.com>
 Date: Thu, 28 Mar 2019 21:43:53 -0400
 Subject: [PATCH] fc/login: apply login context to login.shadow

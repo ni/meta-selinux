@@ -1,4 +1,4 @@
-From 288c0c4b20a80846691d113a1759325b214d64f9 Mon Sep 17 00:00:00 2001
+From 8cbc09769a08cf3f5dcb611d471e5da298bde67c Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Wed, 1 Jul 2020 08:44:07 +0800
 Subject: [PATCH] policy/modules/services/rpcbind: allow rpcbind_t to create

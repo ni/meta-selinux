@@ -1,4 +1,4 @@
-From 8c45c5d48f7125ce47252c6ea36ed771c9baaf4d Mon Sep 17 00:00:00 2001
+From de58aa981e1c05ce06938704089c7c87c765add6 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: add the syslogd_t to trusted

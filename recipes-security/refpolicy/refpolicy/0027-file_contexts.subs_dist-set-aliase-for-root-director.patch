@@ -1,4 +1,4 @@
-From 153bdbda047a3e769983000b4c8263eb4bfd2031 Mon Sep 17 00:00:00 2001
+From 8b5ff44ba4a7819efb694cba6237bc572835628b Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Sun, 5 Apr 2020 22:03:45 +0800
 Subject: [PATCH] file_contexts.subs_dist: set aliase for /root directory

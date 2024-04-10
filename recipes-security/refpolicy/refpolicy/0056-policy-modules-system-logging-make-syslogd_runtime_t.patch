@@ -1,4 +1,4 @@
-From 1536eaea2cc68074f55ca50eff2d129b7e1894d8 Mon Sep 17 00:00:00 2001
+From 2476910f6d7f116148bb9311498b5c98692c1ef3 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Sat, 18 Dec 2021 17:31:45 +0800
 Subject: [PATCH] policy/modules/system/logging: make syslogd_runtime_t MLS

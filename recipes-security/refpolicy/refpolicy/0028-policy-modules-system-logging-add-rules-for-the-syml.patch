@@ -1,4 +1,4 @@
-From f08f3c554d70c9cd11f0297678bb4a29b8ab034b Mon Sep 17 00:00:00 2001
+From 6f73afe1d8647bd917f6c06b46b0f0cebc276776 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: add rules for the symlink of

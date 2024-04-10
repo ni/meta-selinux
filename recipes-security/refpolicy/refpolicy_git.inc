@@ -1,8 +1,8 @@
-PV = "2.20231002+git${SRCPV}"
+PV = "2.20240226+git"
 
 SRC_URI = "git://github.com/SELinuxProject/refpolicy.git;protocol=https;branch=main;name=refpolicy;destsuffix=refpolicy"
 
-SRCREV_refpolicy ?= "d7d41288b162b8786de844bde6daac25e4485565"
+SRCREV_refpolicy ?= "fa84ee8fc04af56cced5ab8ed7abfb1abbd246dc"
 
 UPSTREAM_CHECK_GITTAGREGEX = "RELEASE_(?P<pver>\d+_\d+)"
 

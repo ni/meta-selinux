@@ -8,7 +8,7 @@ python create_sh_wrapper_reset_alternative_vars () {
     # We need to load the full set of busybox provides from the /etc/busybox.links
     # Use this to see the update-alternatives with the right information
 
-    dvar = d.getVar('D')
+    dvar = d.getVar('PKGD')
     pn = d.getVar('PN')
     base_bindir = d.getVar('base_bindir')
 
@@ -55,9 +55,9 @@ python create_sh_wrapper_reset_alternative_vars () {
         create_sh_alternative_vars("/etc/busybox.links.suid", "%s/busybox.suid" % base_bindir, 0o4755)
 }
 
-# Add to PACKAGEBUILDPKGD so it could override the alternatives, which are set in
+# Add to PACKAGE_PREPROCESS_FUNCS so it could override the alternatives, which are set in
 # do_package:prepend() section of busybox_*.bb.
-PACKAGEBUILDPKGD:prepend = "create_sh_wrapper_reset_alternative_vars "
+PACKAGE_PREPROCESS_FUNCS:prepend = "create_sh_wrapper_reset_alternative_vars "
 
 # Use sh wrappers instead of links
 pkg_postinst:${PN} () {

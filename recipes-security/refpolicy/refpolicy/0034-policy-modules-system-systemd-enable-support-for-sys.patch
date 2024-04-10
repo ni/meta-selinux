@@ -1,4 +1,4 @@
-From 48da8a2589b1d5bce2609fd307ca009605d801c3 Mon Sep 17 00:00:00 2001
+From 59b8730de7af45617a6125c7e23cecf896c30ce4 Mon Sep 17 00:00:00 2001
 From: Wenzong Fan <wenzong.fan@windriver.com>
 Date: Thu, 4 Feb 2016 06:03:19 -0500
 Subject: [PATCH] policy/modules/system/systemd: enable support for
@@ -29,7 +29,7 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
-index b6d575f87..70a45ac58 100644
+index aa9198591..abc324cf1 100644
 --- a/policy/modules/system/systemd.te
 +++ b/policy/modules/system/systemd.te
 @@ -10,7 +10,7 @@ policy_module(systemd)
