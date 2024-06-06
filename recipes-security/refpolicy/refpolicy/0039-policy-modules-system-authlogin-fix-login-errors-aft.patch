@@ -1,4 +1,4 @@
-From b81fc26631ad56608eed244c3a07f6f9b0c7e8c7 Mon Sep 17 00:00:00 2001
+From b5dae809f2b46b82b75abcb562974212b370aa39 Mon Sep 17 00:00:00 2001
 From: Yi Zhao <yi.zhao@windriver.com>
 Date: Fri, 8 Dec 2023 14:16:26 +0800
 Subject: [PATCH] policy/modules/system/authlogin: fix login errors after
@@ -67,7 +67,7 @@ index dce1a0ea9..c55cdfc09 100644
  	auth_create_faillog_files($1_su_t)
  	auth_rw_faillog($1_su_t)
 diff --git a/policy/modules/system/authlogin.te b/policy/modules/system/authlogin.te
-index 3a5d1ac3e..f9d50a8d4 100644
+index 5d675bc15..2ca79e95d 100644
 --- a/policy/modules/system/authlogin.te
 +++ b/policy/modules/system/authlogin.te
 @@ -10,7 +10,7 @@ policy_module(authlogin)
@@ -80,10 +80,10 @@ index 3a5d1ac3e..f9d50a8d4 100644
  ## <desc>
  ## <p>
 diff --git a/policy/modules/system/selinuxutil.te b/policy/modules/system/selinuxutil.te
-index 3eedf82c3..875f0a02f 100644
+index ebc1abc10..c6b2ec47a 100644
 --- a/policy/modules/system/selinuxutil.te
 +++ b/policy/modules/system/selinuxutil.te
-@@ -247,6 +247,7 @@ allow newrole_t self:netlink_audit_socket { create_netlink_socket_perms nlmsg_re
+@@ -251,6 +251,7 @@ allow newrole_t self:netlink_audit_socket { create_netlink_socket_perms nlmsg_re
  read_files_pattern(newrole_t, default_context_t, default_context_t)
  read_lnk_files_pattern(newrole_t, default_context_t, default_context_t)
  
@@ -91,10 +91,10 @@ index 3eedf82c3..875f0a02f 100644
  kernel_read_system_state(newrole_t)
  kernel_read_kernel_sysctls(newrole_t)
  kernel_dontaudit_getattr_proc(newrole_t)
-@@ -290,6 +291,7 @@ auth_use_nsswitch(newrole_t)
- auth_run_chk_passwd(newrole_t, newrole_roles)
+@@ -295,6 +296,7 @@ auth_run_chk_passwd(newrole_t, newrole_roles)
  auth_run_upd_passwd(newrole_t, newrole_roles)
  auth_rw_faillog(newrole_t)
+ auth_search_faillog(newrole_t)
 +auth_read_shadow(newrole_t)
  
  # Write to utmp.
