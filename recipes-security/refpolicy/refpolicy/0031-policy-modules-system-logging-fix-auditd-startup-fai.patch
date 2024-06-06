@@ -1,4 +1,4 @@
-From d7dfe01114f9a1449ce2efd792ddf4b18fe91a45 Mon Sep 17 00:00:00 2001
+From 5b33f07f60b20eb6e07ea3f517c43a539ee21332 Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] policy/modules/system/logging: fix auditd startup failures
@@ -13,14 +13,22 @@ Upstream-Status: Inappropriate [embedded specific]
 Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
 Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
 ---
- policy/modules/system/logging.te | 2 ++
- 1 file changed, 2 insertions(+)
+ policy/modules/system/logging.te | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
-index 45584dba6..8bc70b81d 100644
+index 45584dba6..4fb2fb63c 100644
 --- a/policy/modules/system/logging.te
 +++ b/policy/modules/system/logging.te
-@@ -177,6 +177,7 @@ dontaudit auditd_t auditd_etc_t:file map;
+@@ -117,6 +117,7 @@ allow auditctl_t self:netlink_audit_socket nlmsg_readpriv;
+ 
+ read_files_pattern(auditctl_t, auditd_etc_t, auditd_etc_t)
+ allow auditctl_t auditd_etc_t:dir list_dir_perms;
++allow auditctl_t var_log_t:lnk_file read_lnk_file_perms;
+ dontaudit auditctl_t auditd_etc_t:file map;
+ 
+ corecmd_search_bin(auditctl_t)
+@@ -177,6 +178,7 @@ dontaudit auditd_t auditd_etc_t:file map;
  manage_files_pattern(auditd_t, auditd_log_t, auditd_log_t)
  allow auditd_t auditd_log_t:dir setattr;
  manage_lnk_files_pattern(auditd_t, auditd_log_t, auditd_log_t)
@@ -28,7 +36,7 @@ index 45584dba6..8bc70b81d 100644
  allow auditd_t var_log_t:dir search_dir_perms;
  
  manage_files_pattern(auditd_t, auditd_runtime_t, auditd_runtime_t)
-@@ -306,6 +307,7 @@ optional_policy(`
+@@ -306,6 +308,7 @@ optional_policy(`
  allow audisp_remote_t self:capability { setpcap setuid };
  allow audisp_remote_t self:process { getcap setcap };
  allow audisp_remote_t self:tcp_socket create_socket_perms;
