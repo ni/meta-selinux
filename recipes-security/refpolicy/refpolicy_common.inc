@@ -55,7 +55,7 @@ SRC_URI += " \
         file://0037-policy-modules-roles-sysadm-allow-sysadm-to-use-init.patch \
         file://0038-policy-modules-system-systemd-systemd-user-fixes.patch \
         file://0039-policy-modules-system-authlogin-fix-login-errors-aft.patch \
-        file://0040-policy-modules-system-systemd-allow-systemd-logind-t.patch \
+        file://0040-policy-modules-system-logging-grant-getpcap-capabili.patch \
         file://0041-policy-modules-system-mount-make-mount_t-domain-MLS-.patch \
         file://0042-policy-modules-roles-sysadm-MLS-sysadm-rw-to-clearan.patch \
         file://0043-policy-modules-services-rpc-make-nfsd_t-domain-MLS-t.patch \
@@ -72,7 +72,6 @@ SRC_URI += " \
         file://0054-policy-modules-system-setrans-allow-setrans_t-use-fd.patch \
         file://0055-policy-modules-system-systemd-make-_systemd_t-MLS-tr.patch \
         file://0056-policy-modules-system-logging-make-syslogd_runtime_t.patch \
-        file://0057-policy-modules-system-logging-grant-getpcap-capabili.patch \
         "
 
 S = "${WORKDIR}/refpolicy"
