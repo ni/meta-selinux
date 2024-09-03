@@ -19,6 +19,7 @@ RDEPENDS:${PN} = "\
 	policycoreutils-semodule \
 	policycoreutils-sestatus \
 	policycoreutils-setfiles \
+	selinux-autorelabel \
 	selinux-init \
 	selinux-labeldev \
 	refpolicy \

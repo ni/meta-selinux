@@ -1,4 +1,4 @@
-From 8eefd8242e8b08fee6886d6bba12c4af202890d0 Mon Sep 17 00:00:00 2001
+From a733674bb530f070ce5363c0b50848d3cb4e113b Mon Sep 17 00:00:00 2001
 From: Xin Ouyang <Xin.Ouyang@windriver.com>
 Date: Thu, 22 Aug 2013 13:37:23 +0800
 Subject: [PATCH] fc/init: fix update-alternatives for sysvinit
@@ -15,16 +15,17 @@ Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
  3 files changed, 4 insertions(+)
 
 diff --git a/policy/modules/admin/shutdown.fc b/policy/modules/admin/shutdown.fc
-index 89d682d36..354f4d1d9 100644
+index 2e47783c2..e359539be 100644
 --- a/policy/modules/admin/shutdown.fc
 +++ b/policy/modules/admin/shutdown.fc
-@@ -7,5 +7,6 @@
+@@ -7,6 +7,7 @@
  
  /usr/sbin/halt		--	gen_context(system_u:object_r:shutdown_exec_t,s0)
  /usr/sbin/shutdown	--	gen_context(system_u:object_r:shutdown_exec_t,s0)
 +/usr/sbin/shutdown\.sysvinit	--	gen_context(system_u:object_r:shutdown_exec_t,s0)
  
  /run/shutdown\.pid	--	gen_context(system_u:object_r:shutdown_runtime_t,s0)
+ 
 diff --git a/policy/modules/kernel/corecommands.fc b/policy/modules/kernel/corecommands.fc
 index 7d2efef0a..9a5711a83 100644
 --- a/policy/modules/kernel/corecommands.fc
@@ -39,7 +40,7 @@ index 7d2efef0a..9a5711a83 100644
  /usr/bin/sash			--	gen_context(system_u:object_r:shell_exec_t,s0)
  /usr/bin/sesh			--	gen_context(system_u:object_r:shell_exec_t,s0)
 diff --git a/policy/modules/system/init.fc b/policy/modules/system/init.fc
-index 07b12de2e..d99767ce8 100644
+index 75c75e7d1..962f18099 100644
 --- a/policy/modules/system/init.fc
 +++ b/policy/modules/system/init.fc
 @@ -49,6 +49,7 @@ ifdef(`distro_gentoo',`

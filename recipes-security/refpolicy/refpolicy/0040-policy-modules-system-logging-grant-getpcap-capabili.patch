@@ -1,0 +1,38 @@
+From f48edb588d799a7aab9110e4f67468d8e5e41c10 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 28 May 2024 11:21:48 +0800
+Subject: [PATCH] policy/modules/system/logging: grant getpcap capability to
+ syslogd_t
+
+The rsyslog is configured with --enable-libpcap which requires getpcap
+capability.
+
+Fixes:
+avc: denied { setpcap } for pid=317 comm="rsyslogd" capability=8
+scontext=system_u:system_r:syslogd_t:s15:c0.c1023
+tcontext=system_u:system_r:syslogd_t:s15:c0.c1023 tclass=capability
+permissive=1
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/logging.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/system/logging.te b/policy/modules/system/logging.te
+index 511604493..9c0a58aef 100644
+--- a/policy/modules/system/logging.te
++++ b/policy/modules/system/logging.te
+@@ -404,6 +404,8 @@ optional_policy(`
+ # sys_admin for the integrated klog of syslog-ng and metalog
+ # sys_nice for rsyslog
+ allow syslogd_t self:capability { chown dac_override fsetid setgid setuid sys_admin sys_nice sys_resource sys_tty_config };
++# Rsyslog configures with --enable-libcap-ng
++allow syslogd_t self:capability setpcap;
+ dontaudit syslogd_t self:capability { sys_ptrace };
+ dontaudit syslogd_t self:cap_userns { kill sys_ptrace };
+ # setpgid for metalog
+-- 
+2.25.1
+
