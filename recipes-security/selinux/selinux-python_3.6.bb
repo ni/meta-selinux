@@ -11,6 +11,7 @@ require selinux_common.inc
 inherit python3targetconfig
 
 SRC_URI += "file://fix-sepolicy-install-path.patch \
+            file://0001-sepolicy-set-conf.substitutions-releasever-to-empty-.patch \
            "
 
 S = "${WORKDIR}/git/python"
