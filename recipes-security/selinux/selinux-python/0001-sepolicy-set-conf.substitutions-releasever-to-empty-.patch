@@ -1,0 +1,61 @@
+From 70187651a2239d5d8d70130e82c6f108eee77aa1 Mon Sep 17 00:00:00 2001
+From: Yi Zhao <yi.zhao@windriver.com>
+Date: Tue, 24 Sep 2024 14:07:41 +0800
+Subject: [PATCH] sepolicy: set conf.substitutions['releasever'] to empty str
+ when releasever is None
+
+For some distributions (e.g. Yocto) that do not provide
+system-release/distribution-release file, libdnf can not get releasever
+variable, causing conf.substitutions['releasever'] to not be set.
+This will cause 'sepolicy generate' command to fail with the following
+error on these distributions:
+
+$ sepolicy generate --init /usr/local/bin/foo
+Traceback (most recent call last):
+  File "/usr/bin/sepolicy", line 702, in <module>
+    args.func(args)
+  File "/usr/bin/sepolicy", line 569, in generate
+    mypolicy.gen_writeable()
+  File "/usr/lib/python3.12/site-packages/sepolicy/generate.py", line 1302, in gen_writeable
+    self.__extract_rpms()
+  File "/usr/lib/python3.12/site-packages/sepolicy/generate.py", line 1268, in __extract_rpms
+    base.read_all_repos()
+  File "/usr/lib/python3.12/site-packages/dnf/base.py", line 554, in read_all_repos
+    for repo in reader:
+                ^^^^^^
+  File "/usr/lib/python3.12/site-packages/dnf/conf/read.py", line 42, in __iter__
+    for r in self._get_repos(self.conf.config_file_path):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/site-packages/dnf/conf/read.py", line 109, in _get_repos
+    parser.setSubstitutions(substs)
+  File "/usr/lib/python3.12/site-packages/libdnf/conf.py", line 1643, in setSubstitutions
+    return _conf.ConfigParser_setSubstitutions(self, substitutions)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: in method 'ConfigParser_setSubstitutions', argument 2 of type 'std::map< std::string,std::string,std::less< std::string >,std::allocator< std::pair< std::string const,std::string > > > const &'
+
+Set conf.substitutions['releasever'] to empty str if releasever is None.
+
+Upstream-Status: Submitted [https://github.com/SELinuxProject/selinux/pull/444]
+
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ sepolicy/sepolicy/generate.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/sepolicy/sepolicy/generate.py b/sepolicy/sepolicy/generate.py
+index adf65f2..56923dc 100644
+--- a/sepolicy/sepolicy/generate.py
++++ b/sepolicy/sepolicy/generate.py
+@@ -1265,6 +1265,9 @@ allow %s_t %s_t:%s_socket name_%s;
+         import dnf
+ 
+         with dnf.Base() as base:
++            if base.conf.substitutions.get('releasever') is None:
++                base.conf.substitutions['releasever'] = ''
++
+             base.read_all_repos()
+             base.fill_sack(load_system_repo=True)
+ 
+-- 
+2.25.1
+
