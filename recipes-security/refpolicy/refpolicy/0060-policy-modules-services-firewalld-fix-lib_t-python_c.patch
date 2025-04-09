@@ -1,0 +1,122 @@
+From f53e48c7a68c28b66d20416ebf81217e4892104f Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Tue, 4 Mar 2025 08:17:47 -0700
+Subject: [PATCH] firewalld: fix lib_t Python cache denial auditing
+
+type=PATH item=3 name=(null) inode=15343 dev=fe:00 mode=file,644
+ouid=root ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0
+nametype=CREATE cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
+cap_frootid=0
+type=PATH item=2 name=(null) inode=3055 dev=fe:00 mode=dir,755 ouid=root
+ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0 nametype=PARENT
+cap_fp=none cap_fi=none cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH item=1 name=(null) nametype=CREATE cap_fp=none cap_fi=none
+cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH item=0 name=(null) inode=3055 dev=fe:00 mode=dir,755
+ouid=root ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0
+nametype=PARENT cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
+cap_frootid=0
+type=CWD cwd=/
+type=SYSCALL arch=armeb syscall=openat per=PER_LINUX success=yes exit=3
+a0=AT_FDCWD a1=0xb6551ce8
+a2=O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC a3=0x1a4 items=4 ppid=1
+pid=225 auid=unset uid=root gid=root euid=root suid=root fsuid=root
+egid=root sgid=root fsgid=root tty=(none) ses=unset comm=firewalld
+exe=/usr/bin/python3.12 subj=system_u:system_r:firewalld_t:s0 key=(null)
+type=AVC avc:  denied  { write } for  pid=225 comm=firewalld
+path=/usr/lib/python3.12/__pycache__/traceback.cpython-312.pyc.3059098912
+dev="vda" ino=15343 scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=file
+type=AVC avc:  denied  { create } for  pid=225 comm=firewalld
+name=traceback.cpython-312.pyc.3059098912
+scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=file
+type=AVC avc:  denied  { add_name } for  pid=225 comm=firewalld
+name=traceback.cpython-312.pyc.3059098912
+scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=dir
+type=AVC avc:  denied  { write } for  pid=225 comm=firewalld
+name=__pycache__ dev="vda" ino=3055
+scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=dir
+----
+type=PROCTITLE
+proctitle=/usr/bin/python3 /usr/sbin/firewalld --nofork --nopid
+type=PATH item=1 name=(null) inode=15343 dev=fe:00 mode=file,644
+ouid=root ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0
+nametype=CREATE cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
+cap_frootid=0
+type=PATH item=0 name=(null) inode=3055 dev=fe:00 mode=dir,755
+ouid=root ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0
+nametype=PARENT cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
+cap_frootid=0
+type=CWD cwd=/
+type=SYSCALL arch=armeb syscall=rename per=PER_LINUX success=yes
+exit=0 a0=0xb6551ce8 a1=0xb6562f80 a2=0x1 a3=0x0 items=2 ppid=1 pid=225
+auid=unset uid=root gid=root euid=root suid=root fsuid=root egid=root
+sgid=root fsgid=root tty=(none) ses=unset comm=firewalld
+exe=/usr/bin/python3.12 subj=system_u:system_r:firewalld_t:s0 key=(null)
+type=AVC avc:  denied  { rename } for  pid=225 comm=firewalld
+name=traceback.cpython-312.pyc.3059098912 dev="vda" ino=15343
+scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=file
+type=AVC avc:  denied  { remove_name } for  pid=225 comm=firewalld
+name=traceback.cpython-312.pyc.3059098912 dev="vda" ino=15343
+scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=dir
+----
+type=PROCTITLE
+proctitle=/usr/bin/python3 /usr/sbin/firewalld --nofork --nopid
+type=PATH item=1 name=(null) inode=15344 dev=fe:00 mode=dir,755
+ouid=root ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0
+nametype=CREATE cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
+cap_frootid=0
+type=PATH item=0 name=(null) inode=7795 dev=fe:00 mode=dir,755
+ouid=root ogid=root rdev=00:00 obj=system_u:object_r:lib_t:s0
+nametype=PARENT cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
+cap_frootid=0
+type=CWD cwd=/
+type=SYSCALL arch=armeb syscall=mkdir per=PER_LINUX success=yes exit=0
+a0=0xb64a46f0 a1=0777 a2=0x1 a3=0x0 items=2 ppid=1 pid=225 auid=unset
+uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root
+fsgid=root tty=(none) ses=unset comm=firewalld exe=/usr/bin/python3.12
+subj=system_u:system_r:firewalld_t:s0 key=(null)
+type=AVC avc:  denied  { create } for  pid=225 comm=firewalld
+name=__pycache__ scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:lib_t:s0 tclass=dir
+
+--
+
+Fedora
+
+dontaudit firewalld_t lib_t:dir write;
+https://github.com/fedora-selinux/selinux-policy/commit/38c318fb0da5ffe99b6d1c599d8f0b9968efa640
+
+Other lib_t seems to be handled with:
+dontaudit firewalld_t filesystem_type:dir audit_access;
+dontaudit firewalld_t filesystem_type:file audit_access;
+
+https://github.com/fedora-selinux/selinux-policy/blob/1e6221cdad83095faff06774c600a308544d64b8/policy/modules/contrib/firewalld.te#L94
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/8a4043060d847630170acfc588551311bb072966]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/firewalld.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/services/firewalld.te b/policy/modules/services/firewalld.te
+index e686270b1..f592cf4f6 100644
+--- a/policy/modules/services/firewalld.te
++++ b/policy/modules/services/firewalld.te
+@@ -86,6 +86,8 @@ fs_getattr_xattr_fs(firewalld_t)
+ 
+ logging_send_syslog_msg(firewalld_t)
+ 
++libs_dontaudit_manage_lib_dirs(firewalld_t)
++libs_dontaudit_manage_lib_files(firewalld_t)
+ libs_watch_lib_dirs(firewalld_t)
+ 
+ miscfiles_read_generic_certs(firewalld_t)

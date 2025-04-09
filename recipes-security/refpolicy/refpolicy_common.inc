@@ -72,6 +72,13 @@ SRC_URI += " \
         file://0054-policy-modules-system-setrans-allow-setrans_t-use-fd.patch \
         file://0055-policy-modules-system-systemd-make-_systemd_t-MLS-tr.patch \
         file://0056-policy-modules-system-logging-make-syslogd_runtime_t.patch \
+        file://0057-policy-modules-system-authlogin-chkpwd_t-dac_read_se.patch \
+        file://0058-policy-modules-services-chronyd-allow_dac_read_searc.patch \
+        file://0059-policy-modules-system-unconfined-fix-oddjob-security.patch \
+        file://0060-policy-modules-services-firewalld-fix-lib_t-python_c.patch \
+        file://0061-policy-modules-services-firewalld-fix-firewalld_t-fi.patch \
+        file://0062-policy-modules-multiple-filetrans-run_machine_id-etc.patch \
+        file://0063-policy-modules-system-locallogin-dontaudit-sulogin_t.patch \
         "
 
 S = "${WORKDIR}/refpolicy"

@@ -1,0 +1,58 @@
+From 385d7ea5347ecadacc97701aca0e859b3be09161 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Thu, 27 Feb 2025 15:53:30 -0700
+Subject: [PATCH] chronyd: fix dac_read_search denials
+
+avc:  denied  { dac_read_search }
+comm=chronyd
+capability=dac_read_search
+scontext=system_u:system_r:chronyd_t:s0
+tcontext=system_u:system_r:chronyd_t:s0
+tclass=capability
+
+--
+
+Fedora
+
+chronyd_t
+https://github.com/fedora-selinux/selinux-policy/blob/281599ec3a5f0cc0d423b98bb76c71c1a5d76870/policy/modules/contrib/chronyd.te#L55
+
+chronyc_t
+https://github.com/fedora-selinux/selinux-policy/blob/281599ec3a5f0cc0d423b98bb76c71c1a5d76870/policy/modules/contrib/chronyd.te#L257
+
+--
+
+Reference:
+https://danwalsh.livejournal.com/77140.html
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/231960371da6ed49fdde1891dee3cf607791c76f]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/chronyd.te | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/policy/modules/services/chronyd.te b/policy/modules/services/chronyd.te
+index 9e6ba5bf1..3d4007a57 100644
+--- a/policy/modules/services/chronyd.te
++++ b/policy/modules/services/chronyd.te
+@@ -54,7 +54,7 @@ logging_log_file(chronyd_var_log_t)
+ # chronyd local policy
+ #
+ 
+-allow chronyd_t self:capability { chown dac_override ipc_lock setgid setuid sys_resource sys_time };
++allow chronyd_t self:capability { chown dac_override dac_read_search ipc_lock setgid setuid sys_resource sys_time };
+ allow chronyd_t self:process { getcap setcap setrlimit signal };
+ allow chronyd_t self:shm create_shm_perms;
+ allow chronyd_t self:fifo_file rw_fifo_file_perms;
+@@ -134,7 +134,7 @@ optional_policy(`
+ # chronyc local policy
+ #
+ 
+-allow chronyc_t self:capability { dac_override };
++allow chronyc_t self:capability { dac_override dac_read_search };
+ allow chronyc_t self:process { signal };
+ allow chronyc_t self:udp_socket create_socket_perms;
+ allow chronyc_t self:netlink_route_socket create_netlink_socket_perms;

@@ -5,10 +5,10 @@ libraries designed to facilitate SELinux policy analysis."
 SECTION = "base"
 LICENSE = "GPL-2.0-only & LGPL-2.1-only"
 
-SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.4;protocol=https \
+SRC_URI = "git://github.com/SELinuxProject/${BPN}.git;branch=4.5;protocol=https \
            file://setools4-fixes-for-cross-compiling.patch \
           "
-SRCREV = "a04b015459512d0460ff6bc50f28d746861f4a0b"
+SRCREV = "659ec47aba0126e3a198362ed1659bf600c067eb"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=69a7b68f0a4a570d7c0c43465333ecbc \
                     file://${S}/COPYING.GPL;md5=b234ee4d69f5fce4486a80fdaf4a4263 \

@@ -1,0 +1,49 @@
+From 05da7b33197569f1a2c650cea77c53c6a143f2f0 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Mon, 10 Mar 2025 14:15:39 -0600
+Subject: [PATCH] firewalld: fix firewalld_t firewalld_tmpfs_t exec
+
+type=PROCTITLE proctitle=/usr/bin/python3 /usr/sbin/firewalld --nofork
+--nopid
+type=MMAP fd=9 flags=MAP_SHARED
+type=SYSCALL arch=armeb syscall=mmap2 per=PER_LINUX success=yes
+exit=(null)(Unknown error 1238224896) a0=0x0 a1=0x1000 a2=0x5 a3=0x1
+items=0 ppid=1 pid=270 auid=unset uid=root gid=root euid=root suid=root
+fsuid=root egid=root sgid=root fsgid=root tty=(none) ses=unset
+comm=firewalld exe=/usr/bin/python3.12
+subj=system_u:system_r:firewalld_t:s0 key=(null)
+type=AVC avc:  denied  { execute } for  pid=270 comm=firewalld
+path=/memfd:libffi (deleted) dev="tmpfs" ino=44
+scontext=system_u:system_r:firewalld_t:s0
+tcontext=system_u:object_r:firewalld_tmpfs_t:s0 tclass=file
+
+Fedora:
+$ sesearch -A --source firewalld_t --target firewalld_tmpfs_t --perm execute
+allow firewalld_t firewalld_tmpfs_t:file { append create execute getattr
+ioctl link lock map open read rename setattr unlink watch watch_reads
+write };
+
+https://github.com/fedora-selinux/selinux-policy/blob/v41.33/policy/modules/contrib/firewalld.te#L66
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/c5a76add70965ae8c988310f79c8cb750afc9bc4]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/firewalld.te | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/policy/modules/services/firewalld.te b/policy/modules/services/firewalld.te
+index f592cf4f6..7573f3cc0 100644
+--- a/policy/modules/services/firewalld.te
++++ b/policy/modules/services/firewalld.te
+@@ -62,7 +62,7 @@ files_runtime_filetrans(firewalld_t, firewalld_runtime_t, { dir file })
+ 
+ manage_dirs_pattern(firewalld_t, firewalld_tmpfs_t, firewalld_tmpfs_t)
+ manage_files_pattern(firewalld_t, firewalld_tmpfs_t, firewalld_tmpfs_t)
+-mmap_read_files_pattern(firewalld_t, firewalld_tmpfs_t, firewalld_tmpfs_t)
++mmap_exec_files_pattern(firewalld_t, firewalld_tmpfs_t, firewalld_tmpfs_t)
+ fs_tmpfs_filetrans(firewalld_t, firewalld_tmpfs_t, { dir file })
+ 
+ kernel_read_network_state(firewalld_t)

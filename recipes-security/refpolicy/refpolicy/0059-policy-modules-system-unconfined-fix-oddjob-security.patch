@@ -1,0 +1,58 @@
+From b876446d03eb31178c0cb0d1b082baabdea14793 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Mon, 3 Mar 2025 10:40:41 -0700
+Subject: [PATCH] unconfined: fix oddjob security_compute_sid
+
+type=PROCTITLE proctitle=mkhomedir_helper user123 0077
+
+type=SYSCALL syscall=socket per=PER_LINUX success=yes exit=3 a0=local
+a1=SOCK_STREAM a2=ip a3=0xbee9d8a8 items=0 ppid=404 pid=1386 auid=unset
+uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root
+fsgid=root tty=ttyAMA0 ses=unset comm=mkhomedir_helpe
+exe=/usr/sbin/mkhomedir_helper
+subj=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+key=(null)
+
+type=SELINUX_ERR op=security_compute_sid
+invalid_context=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+scontext=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+tcontext=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+tclass=unix_stream_socket
+
+--
+
+Similar problem and resolution:
+https://github.com/SELinuxProject/refpolicy/pull/171
+
+--
+
+Fedora:
+https://github.com/fedora-selinux/selinux-policy/blob/v41.33/policy/modules/roles/unconfineduser.te#L365
+
+--
+
+Reference:
+https://github.com/SELinuxProject/selinux-notebook/blob/main/src/auditing.md#general-selinux-audit-events
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/bcb8e1d4dbff48477a9a8a7d215e32370c6e779b]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/system/unconfined.te | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/unconfined.te b/policy/modules/system/unconfined.te
+index d54fe2fd4..a2f898551 100644
+--- a/policy/modules/system/unconfined.te
++++ b/policy/modules/system/unconfined.te
+@@ -157,7 +157,7 @@ optional_policy(`
+ ')
+ 
+ optional_policy(`
+-	oddjob_domtrans_mkhomedir(unconfined_t)
++	oddjob_run_mkhomedir(unconfined_t, unconfined_r)
+ ')
+ 
+ optional_policy(`
