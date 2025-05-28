@@ -1,0 +1,62 @@
+From ad8e85e918b0312ebe1266d92b2ee862db28b767 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Wed, 9 Apr 2025 17:34:10 -0600
+Subject: [PATCH] oddjob: allow oddjob_mkhomedir_t privfd:fd use
+
+type=PROCTITLE proctitle=mkhomedir_helper user123 0077
+
+type=EXECVE argc=3 a0=mkhomedir_helper a1=user123 a2=0077
+
+type=SYSCALL arch=armeb syscall=execve per=PER_LINUX success=yes exit=0
+a0=0x5b79d8 a1=0x5a64d0 a2=0x5b0f10 a3=0x0 items=0 ppid=429 pid=1369
+auid=unset uid=root gid=root euid=root suid=root fsuid=root egid=root
+sgid=root fsgid=root tty=ttyAMA0 ses=unset comm=mkhomedir_helpe
+exe=/usr/sbin/mkhomedir_helper
+subj=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+key=(null)
+
+type=AVC avc:  denied  { use } for  pid=1369 comm=mkhomedir_helpe
+path=/dev/ttyAMA0 dev="devtmpfs" ino=2
+scontext=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+tcontext=system_u:system_r:getty_t:s0 tclass=fd
+
+--
+
+Ref:
+https://github.com/SELinuxProject/refpolicy/blob/RELEASE_2_20250213/policy/modules/system/getty.te#L12
+
+https://danwalsh.livejournal.com/77728.html
+https://github.com/SELinuxProject/selinux-notebook/blob/20240430/src/type_statements.md#typeattribute
+
+--
+
+Fedora:
+$ sesearch -A --source oddjob_mkhomedir_t --target getty_t --class fd
+allow application_domain_type privfd:fd use;
+allow domain domain:fd use; [ domain_fd_use ]:True
+
+$ getsebool domain_fd_use
+domain_fd_use --> on
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/a3a6b17045412be07f63581f6e10310175e82ddf]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/oddjob.te | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/policy/modules/services/oddjob.te b/policy/modules/services/oddjob.te
+index 6ea785851..299077739 100644
+--- a/policy/modules/services/oddjob.te
++++ b/policy/modules/services/oddjob.te
+@@ -79,6 +79,8 @@ kernel_read_system_state(oddjob_mkhomedir_t)
+ 
+ auth_use_nsswitch(oddjob_mkhomedir_t)
+ 
++domain_use_interactive_fds(oddjob_mkhomedir_t)
++
+ logging_send_syslog_msg(oddjob_mkhomedir_t)
+ 
+ miscfiles_read_localization(oddjob_mkhomedir_t)
