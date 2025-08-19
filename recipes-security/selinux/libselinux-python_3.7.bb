@@ -55,3 +55,5 @@ do_install() {
     sed -i -e 's,${WORKDIR},,g' \
         ${D}${PYTHON_SITEPACKAGES_DIR}/selinux-${PV}.dist-info/direct_url.json
 }
+
+BBCLASSEXTEND += "native"
