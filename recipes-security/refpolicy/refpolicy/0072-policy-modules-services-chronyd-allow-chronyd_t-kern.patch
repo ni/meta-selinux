@@ -1,0 +1,53 @@
+From 0586fd29500c3d9d2b37dd0a1498f19184676610 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Tue, 10 Jun 2025 21:30:13 -0600
+Subject: [PATCH] chronyd: allow chronyd_t kernel_t:system module_request
+
+type=PROCTITLE proctitle=/usr/sbin/chronyd
+
+type=SYSCALL arch=armeb syscall=socket per=PER_LINUX success=no
+exit=EAFNOSUPPORT(Address family not supported by protocol) a0=inet6
+a1=SOCK_DGRAM a2=ip a3=0x80800 items=0 ppid=1 pid=1308 auid=unset
+uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root
+fsgid=root tty=(none) ses=unset comm=chronyd exe=/usr/sbin/chronyd
+subj=system_u:system_r:chronyd_t:s0 key=(null)
+
+type=AVC avc:  denied  { module_request } for  pid=1308 comm=chronyd
+kmod="net-pf-10" scontext=system_u:system_r:chronyd_t:s0
+tcontext=system_u:system_r:kernel_t:s0 tclass=system
+
+--
+
+Issue background: https://access.redhat.com/solutions/6768131
+
+--
+
+Fedora:
+
+https://github.com/fedora-selinux/selinux-policy/commit/d5acb7734d02012c54bee0064155c477b96f0bdd
+
+$ sesearch -A --source chronyd_t --target kernel_t --class system --perm module_request
+allow chronyd_t kernel_t:system module_request;
+allow domain kernel_t:system module_request; [ domain_kernel_load_modules ]:True
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/2836207462b68c54cf21ad21f7f6befffbb1aef0]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/chronyd.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/services/chronyd.te b/policy/modules/services/chronyd.te
+index 3d4007a57..0cac72e13 100644
+--- a/policy/modules/services/chronyd.te
++++ b/policy/modules/services/chronyd.te
+@@ -83,6 +83,7 @@ files_runtime_filetrans(chronyd_t, chronyd_runtime_t, { dir file sock_file })
+ 
+ kernel_read_system_state(chronyd_t)
+ kernel_read_network_state(chronyd_t)
++kernel_request_load_module(chronyd_t)
+ 
+ corenet_all_recvfrom_netlabel(chronyd_t)
+ corenet_udp_sendrecv_generic_if(chronyd_t)

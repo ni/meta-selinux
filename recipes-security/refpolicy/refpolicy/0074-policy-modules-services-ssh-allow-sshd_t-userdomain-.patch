@@ -1,0 +1,80 @@
+From 965e1c66c8c3bd5087a5f8d276a57974d0378855 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Mon, 7 Jul 2025 16:38:49 -0600
+Subject: [PATCH] ssh: allow sshd_t userdomain:key search
+
+~# grep key /etc/pam.d/sshd
+session    optional     pam_keyinit.so force revoke
+
+--
+
+type=PROCTITLE proctitle=sshd: user123 [priv]
+
+type=SYSCALL arch=armeb syscall=keyctl per=PER_LINUX success=no
+exit=ENOKEY(Required key not available) a0=0x8 a1=0xfffffffc
+a2=0xfffffffd a3=0x3e8 items=0 ppid=1 pid=557 auid=unset uid=user123
+gid=user123 euid=root suid=root fsuid=root egid=root sgid=root fsgid=root
+tty=(none) ses=unset comm=sshd exe=/usr/sbin/sshd
+subj=system_u:system_r:sshd_t:s0 key=(null)
+
+type=AVC avc:  denied  { search } for  pid=557 comm=sshd
+scontext=system_u:system_r:sshd_t:s0
+tcontext=unconfined_u:unconfined_r:unconfined_t:s0 tclass=key
+
+--
+
+Fedora:
+$ sesearch -A --source sshd_t --target unconfined_t --class key --perm search
+allow domain domain:key { link search };
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/c4a2989845ef3fedc4036041ed1fa61c28594842]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/ssh.if      |  1 +
+ policy/modules/system/userdomain.if | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/policy/modules/services/ssh.if b/policy/modules/services/ssh.if
+index b3394bd92..4935d2e9d 100644
+--- a/policy/modules/services/ssh.if
++++ b/policy/modules/services/ssh.if
+@@ -254,6 +254,7 @@ template(`ssh_server_template', `
+ 
+ 	miscfiles_read_localization($1_t)
+ 
++	userdom_search_all_users_keys($1_t)
+ 	userdom_create_all_users_keys($1_t)
+ 	userdom_dontaudit_relabelfrom_user_ptys($1_t)
+ 	userdom_search_user_home_dirs($1_t)
+diff --git a/policy/modules/system/userdomain.if b/policy/modules/system/userdomain.if
+index ea7a90a5d..3775ee8b5 100644
+--- a/policy/modules/system/userdomain.if
++++ b/policy/modules/system/userdomain.if
+@@ -4915,6 +4915,24 @@ interface(`userdom_sigchld_all_users',`
+ 	allow $1 userdomain:process sigchld;
+ ')
+ 
++########################################
++## <summary>
++##	Search keys for all user domains.
++## </summary>
++## <param name="domain">
++##	<summary>
++##	Domain allowed access.
++##	</summary>
++## </param>
++#
++interface(`userdom_search_all_users_keys',`
++	gen_require(`
++		attribute userdomain;
++	')
++
++	allow $1 userdomain:key search;
++')
++
+ ########################################
+ ## <summary>
+ ##	Read keys for all user domains.

@@ -1,0 +1,45 @@
+From 684b47eddf512402db552601c33e2d0ad4eef578 Mon Sep 17 00:00:00 2001
+From: Nicolas PARLANT <nicolas.parlant@parhuet.fr>
+Date: Fri, 17 Jan 2025 15:51:48 +0100
+Subject: [PATCH] fixdep dbus
+
+auth_use_pam_systemd requires dbus  :
+
+> /var/lib/selinux/targeted/tmp/modules/400/authlogin/cil:133 =
+> (typeattributeset cil_gen_require dbusd_system_bus_client)
+
+Upstream-Status: Backport
+[https://github.com/SELinuxProject/refpolicy/commit/684b47eddf512402db552601c33e2d0ad4eef578]
+
+Signed-off-by: Nicolas PARLANT <nicolas.parlant@parhuet.fr>
+Signed-off-by: Yi Zhao <yi.zhao@windriver.com>
+---
+ policy/modules/system/authlogin.te | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/policy/modules/system/authlogin.te b/policy/modules/system/authlogin.te
+index a75a669b9..d9d1a1428 100644
+--- a/policy/modules/system/authlogin.te
++++ b/policy/modules/system/authlogin.te
+@@ -142,7 +142,6 @@ term_dontaudit_use_all_ptys(chkpwd_t)
+ 
+ auth_read_shadow_history(chkpwd_t)
+ auth_use_nsswitch(chkpwd_t)
+-auth_use_pam_systemd(chkpwd_t)
+ 
+ logging_send_audit_msgs(chkpwd_t)
+ logging_send_syslog_msg(chkpwd_t)
+@@ -160,6 +159,10 @@ ifdef(`distro_ubuntu',`
+ 	')
+ ')
+ 
++ifdef(`init_systemd',`
++	auth_use_pam_systemd(chkpwd_t)
++')
++
+ optional_policy(`
+ 	# apache leaks file descriptors
+ 	apache_dontaudit_rw_tcp_sockets(chkpwd_t)
+-- 
+2.34.1
+

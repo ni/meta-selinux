@@ -1,0 +1,56 @@
+From 4425ec31bc654f1b9bccea9e95fe18c532458200 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Tue, 8 Jul 2025 17:06:19 -0600
+Subject: [PATCH] systemd: allow systemd_logind_t unconfined_t:fd use
+
+"sudo su -"
+
+--
+
+type=PROCTITLE proctitle=/usr/lib/systemd/systemd-logind
+
+type=SYSCALL arch=armeb syscall=recvmsg per=PER_LINUX success=yes
+exit=24 a0=0xe a1=0xbee507e4 a2=MSG_DONTWAIT|MSG_CMSG_CLOEXEC a3=0x1
+items=0 ppid=1 pid=186 auid=unset uid=root gid=root euid=root suid=root
+fsuid=root egid=root sgid=root fsgid=root tty=(none) ses=unset
+comm=systemd-logind exe=/usr/lib/systemd/systemd-logind
+subj=system_u:system_r:systemd_logind_t:s0 key=(null)
+
+type=AVC avc:  denied  { use } for  pid=186 comm=systemd-logind
+path=anon_inode:[pidfd] dev="pidfs" ino=311
+scontext=system_u:system_r:systemd_logind_t:s0
+tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=fd
+
+--
+
+Fedora:
+
+$ sesearch -A --source systemd_logind_t --target unconfined_t --class fd --perm use
+allow daemon initrc_transition_domain:fd use;
+allow domain domain:fd use; [ domain_fd_use ]:True
+allow domain unconfined_t:fd use;
+
+$ getsebool domain_fd_use
+domain_fd_use --> on
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/a742066011070c6696eda00442a46d1e9970a614]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/system/systemd.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index bbcded640..757976594 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -1114,6 +1114,7 @@ optional_policy(`
+ 
+ optional_policy(`
+ 	unconfined_dbus_send(systemd_logind_t)
++	unconfined_use_fds(systemd_logind_t)
+ ')
+ 
+ #########################################

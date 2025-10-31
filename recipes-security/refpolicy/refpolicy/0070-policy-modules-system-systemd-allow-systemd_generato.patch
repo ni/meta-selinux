@@ -1,0 +1,77 @@
+From 853593e232e1ec568482c42e8d27052990d08e91 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Mon, 5 May 2025 11:15:14 -0600
+Subject: [PATCH] systemd: allow systemd_generator_t use user ttys
+
+type=PROCTITLE
+proctitle=/usr/lib/systemd/system-generators/systemd-getty-generator
+/run/systemd/generator /run/systemd/generator.early /run/systemd/gene
+
+type=SYSCALL arch=armeb syscall=openat per=PER_LINUX success=yes exit=4
+a0=AT_FDCWD a1=0xbea41b28
+a2=O_RDWR|O_NOCTTY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC a3=0x0 items=0
+ppid=1106 pid=1109 auid=unset uid=root gid=root euid=root suid=root
+fsuid=root egid=root sgid=root fsgid=root tty=(none) ses=unset
+comm=systemd-getty-g
+exe=/usr/lib/systemd/system-generators/systemd-getty-generator
+subj=system_u:system_r:systemd_generator_t:s0 key=(null)
+
+type=AVC avc:  denied  { open } for  pid=1109 comm=systemd-getty-g
+path=/dev/ttyAMA0 dev="devtmpfs" ino=2
+scontext=system_u:system_r:systemd_generator_t:s0
+tcontext=unconfined_u:object_r:user_tty_device_t:s0 tclass=chr_file
+
+type=AVC avc:  denied  { read write } for  pid=1109 comm=systemd-getty-g
+name=ttyAMA0 dev="devtmpfs" ino=2
+scontext=system_u:system_r:systemd_generator_t:s0
+tcontext=unconfined_u:object_r:user_tty_device_t:s0 tclass=chr_file
+----
+type=PROCTITLE
+proctitle=/usr/lib/systemd/system-generators/systemd-getty-generator
+/run/systemd/generator /run/systemd/generator.early /run/systemd/gene
+
+type=SYSCALL arch=armeb syscall=ioctl per=PER_LINUX success=yes exit=0
+a0=0x4 a1=TCGETS a2=0xbea41ab0 a3=0xbea41ae4 items=0 ppid=1106 pid=1109
+auid=unset uid=root gid=root euid=root suid=root fsuid=root egid=root
+sgid=root fsgid=root tty=(none) ses=unset comm=systemd-getty-g
+exe=/usr/lib/systemd/system-generators/systemd-getty-generator
+subj=system_u:system_r:systemd_generator_t:s0 key=(null)
+
+type=AVC avc:  denied  { ioctl } for  pid=1109 comm=systemd-getty-g
+path=/dev/ttyAMA0 dev="devtmpfs" ino=2 ioctlcmd=TCGETS
+scontext=system_u:system_r:systemd_generator_t:s0
+tcontext=unconfined_u:object_r:user_tty_device_t:s0 tclass=chr_file
+
+--
+
+Fedora:
+
+matchpathcon /usr/lib/systemd/system-generators/systemd-getty-generator
+
+system_u:object_r:systemd_getty_generator_exec_t:s0
+
+https://github.com/fedora-selinux/selinux-policy/commit/6adfc23f83c3b9078c0245c66095eb78f411bedd#diff-20413b38529167819e3ef86a39929b3638ea684202dc692282e633cd05065969R1322
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/930e04f861ab3e753ca831b0c3a1fe51f4b423f9]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/system/systemd.te | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/policy/modules/system/systemd.te b/policy/modules/system/systemd.te
+index 5823fd543..bbcded640 100644
+--- a/policy/modules/system/systemd.te
++++ b/policy/modules/system/systemd.te
+@@ -595,6 +595,9 @@ udev_read_runtime_files(systemd_generator_t)
+ mls_file_read_to_clearance(systemd_generator_t)
+ mls_file_write_to_clearance(systemd_generator_t)
+ 
++# for systemd-getty-generator
++userdom_use_user_ttys(systemd_generator_t)
++
+ ifdef(`distro_gentoo',`
+ 	corecmd_shell_entry_type(systemd_generator_t)
+ ')

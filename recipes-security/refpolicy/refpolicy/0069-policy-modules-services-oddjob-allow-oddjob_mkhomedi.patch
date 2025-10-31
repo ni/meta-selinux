@@ -1,0 +1,54 @@
+From d382b824f4976935ccd81ef68d547cb30289a068 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Wed, 16 Apr 2025 16:45:56 -0600
+Subject: [PATCH] oddjob: allow oddjob_mkhomedir_t user_terminals
+
+type=EXECVE argc=3 a0=mkhomedir_helper a1=user123 a2=0077
+
+type=SYSCALL arch=armeb syscall=execve per=PER_LINUX success=yes exit=0
+a0=0x5685f8 a1=0x577518 a2=0x572f10 a3=0x0 items=0 ppid=427 pid=1367
+auid=unset uid=root gid=root euid=root suid=root fsuid=root egid=root
+sgid=root fsgid=root tty=ttyAMA0 ses=unset comm=mkhomedir_helpe
+exe=/usr/sbin/mkhomedir_helper
+subj=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+key=(null)
+
+type=AVC avc:  denied  { append } for  pid=1367 comm=mkhomedir_helpe
+path=/dev/ttyAMA0 dev="devtmpfs" ino=2
+scontext=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+tcontext=unconfined_u:object_r:user_tty_device_t:s0 tclass=chr_file
+
+type=AVC avc:  denied  { read write } for  pid=1367 comm=mkhomedir_helpe
+path=/dev/ttyAMA0 dev="devtmpfs" ino=2
+scontext=unconfined_u:unconfined_r:oddjob_mkhomedir_t:s0-s0:c0.c1023
+tcontext=unconfined_u:object_r:user_tty_device_t:s0 tclass=chr_file
+
+--
+
+https://github.com/SELinuxProject/refpolicy/blob/RELEASE_2_20250213/policy/modules/system/userdomain.if#L4340
+https://github.com/SELinuxProject/refpolicy/blob/RELEASE_2_20250213/policy/support/obj_perm_sets.spt#L272
+
+--
+
+Fedora:
+https://github.com/fedora-selinux/selinux-policy/commit/c03dfdc29340d93008b9ff2edc6d6b55b1f2d2a0
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/e9a7c96ba0bca21d455bcc80cbe96caaebf32a33]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/oddjob.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/services/oddjob.te b/policy/modules/services/oddjob.te
+index 299077739..814d48460 100644
+--- a/policy/modules/services/oddjob.te
++++ b/policy/modules/services/oddjob.te
+@@ -100,4 +100,5 @@ userdom_home_filetrans_user_home_dir(oddjob_mkhomedir_t)
+ userdom_manage_user_home_content_dirs(oddjob_mkhomedir_t)
+ userdom_manage_user_home_content_files(oddjob_mkhomedir_t)
+ userdom_manage_user_home_dirs(oddjob_mkhomedir_t)
++userdom_use_inherited_user_terminals(oddjob_mkhomedir_t)
+ userdom_user_home_dir_filetrans_user_home_content(oddjob_mkhomedir_t, notdevfile_class_set)

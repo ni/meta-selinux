@@ -1,0 +1,59 @@
+From b3928a226cc6a197e4a27e11104b3df418db0536 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Tue, 8 Jul 2025 16:58:05 -0600
+Subject: [PATCH] dbus: allow system_dbusd_t unconfined_t:fd use
+
+"sudo su -"
+
+--
+
+type=PROCTITLE proctitle=/usr/bin/dbus-daemon --system
+--address=systemd: --nofork --nopidfile --systemd-activation
+--syslog-only
+
+type=SYSCALL arch=armeb syscall=recvmsg per=PER_LINUX success=yes
+exit=312 a0=0x12 a1=0xbef207c8 a2=MSG_CMSG_CLOEXEC a3=0x1 items=0
+ppid=1 pid=184 auid=unset uid=messagebus gid=messagebus euid=messagebus
+suid=messagebus fsuid=messagebus egid=messagebus sgid=messagebus
+fsgid=messagebus tty=(none) ses=unset comm=dbus-daemon
+exe=/usr/bin/dbus-daemon subj=system_u:system_r:system_dbusd_t:s0
+key=(null)
+
+type=AVC avc:  denied  { use } for  pid=184 comm=dbus-daemon
+path=anon_inode:[pidfd] dev="pidfs" ino=303
+scontext=system_u:system_r:system_dbusd_t:s0
+tcontext=unconfined_u:unconfined_r:unconfined_t:s0 tclass=fd
+
+--
+
+Fedora:
+
+$ sesearch -A --source system_dbusd_t --target unconfined_t --class fd --perm use
+allow domain domain:fd use; [ domain_fd_use ]:True
+allow domain unconfined_t:fd use;
+allow systemprocess initrc_transition_domain:fd use;
+
+$ getsebool domain_fd_use
+domain_fd_use --> on
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/c0848ca7b7469436ae1ec3190c808ea5a92e6bc6]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/dbus.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/services/dbus.te b/policy/modules/services/dbus.te
+index 672aeddf4..14f1ee35a 100644
+--- a/policy/modules/services/dbus.te
++++ b/policy/modules/services/dbus.te
+@@ -282,6 +282,7 @@ optional_policy(`
+ 
+ optional_policy(`
+ 	unconfined_dbus_send(system_dbusd_t)
++	unconfined_use_fds(system_dbusd_t)
+ ')
+ 
+ optional_policy(`

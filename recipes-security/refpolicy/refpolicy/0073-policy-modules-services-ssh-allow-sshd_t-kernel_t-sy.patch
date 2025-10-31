@@ -1,0 +1,53 @@
+From e74e846a65e33e922c893ad21417348ae5d46ba8 Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Wed, 11 Jun 2025 07:51:24 -0600
+Subject: [PATCH] ssh: allow sshd_t kernel_t:system module_request
+
+type=PROCTITLE proctitle=sshd -G -f /etc/ssh/sshd_config
+
+type=SYSCALL arch=armeb syscall=socket per=PER_LINUX success=no
+exit=EAFNOSUPPORT(Address family not supported by protocol) a0=inet6
+a1=SOCK_DGRAM a2=ip a3=0x0 items=0 ppid=1333 pid=1334 auid=unset
+uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root
+fsgid=root tty=(none) ses=unset comm=sshd exe=/usr/sbin/sshd
+subj=system_u:system_r:sshd_t:s0 key=(null)
+
+type=AVC avc:  denied  { module_request } for  pid=1334 comm=sshd
+kmod="net-pf-10" scontext=system_u:system_r:sshd_t:s0
+tcontext=system_u:system_r:kernel_t:s0 tclass=system
+
+--
+
+Issue background: https://access.redhat.com/solutions/6768131
+
+--
+
+Fedora:
+
+https://github.com/fedora-selinux/selinux-policy/blob/v41.43/policy/modules/services/ssh.if#L244
+
+$ sesearch -A --source sshd_t --target kernel_t --class system --perm module_request
+allow domain kernel_t:system module_request; [ domain_kernel_load_modules ]:True
+allow sshd_t kernel_t:system module_request;
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/e3d3cd244f048304af882f00c56f48c3820bfe8d]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/services/ssh.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/policy/modules/services/ssh.te b/policy/modules/services/ssh.te
+index 2d10ecb73..86fa0cf99 100644
+--- a/policy/modules/services/ssh.te
++++ b/policy/modules/services/ssh.te
+@@ -249,6 +249,7 @@ corecmd_exec_bin(sshd_t)
+ 
+ kernel_link_key(sshd_t)
+ kernel_search_key(sshd_t)
++kernel_request_load_module(sshd_t)
+ 
+ term_use_all_ptys(sshd_t)
+ term_setattr_all_ptys(sshd_t)

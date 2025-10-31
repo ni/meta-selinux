@@ -1,0 +1,55 @@
+From a0b77eed40994a02d577062025a0834fa4097a3b Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Mon, 26 May 2025 18:35:20 -0600
+Subject: [PATCH] unconfined: allow firewalld_t unconfined_t:dbus send_msg
+
+~# firewall-cmd --state
+ERROR:dbus.proxies:Introspect error on
+:1.3:/org/fedoraproject/FirewallD1: dbus.exceptions.DBusException:
+org.freedesktop.DBus.Error.NoReply: Did not receive a reply. Possible
+causes include: the remote application did not send a reply, the
+message bus security policy blocked the reply, the reply timeout
+expired, or the network connection was broken.
+
+--
+
+type=USER_AVC pid=178 uid=messagebus auid=unset ses=unset
+subj=system_u:system_r:system_dbusd_t:s0
+msg='avc:  denied  { send_msg } for msgtype=method_return dest=:1.8
+spid=228 tpid=525 scontext=system_u:system_r:firewalld_t:s0
+tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+tclass=dbus exe=/usr/bin/dbus-daemon sauid=messagebus hostname=? addr=?
+terminal=?'
+
+--
+
+Fedora:
+
+$ sesearch -A --source firewalld_t --target unconfined_t --class dbus
+allow nsswitch_domain dbusd_unconfined:dbus send_msg;
+allow system_bus_type dbusd_unconfined:dbus send_msg;
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/182ec344461e8e7f0c8cf9002688bffd35ae80f5]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/system/unconfined.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/policy/modules/system/unconfined.te b/policy/modules/system/unconfined.te
+index a2f898551..b2db9f3ee 100644
+--- a/policy/modules/system/unconfined.te
++++ b/policy/modules/system/unconfined.te
+@@ -108,6 +108,10 @@ optional_policy(`
+ 	dpkg_run(unconfined_t, unconfined_r)
+ ')
+ 
++optional_policy(`
++	firewalld_dbus_chat(unconfined_t)
++')
++
+ optional_policy(`
+ 	firstboot_run(unconfined_t, unconfined_r)
+ ')

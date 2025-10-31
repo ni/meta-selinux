@@ -82,6 +82,17 @@ SRC_URI += " \
         file://0064-policy-modules-system-locallogin-allow-sulogin_t-unc.patch \
         file://0065-policy-modules-system-locallogin-allow-sulogin_t-use.patch \
         file://0066-policy-modules-services-oddjob-allow-oddjob_mkhomedi.patch \
+        file://0067-fixdep-dbus.patch \
+        file://0068-fix-building-when-dbus-module-is-not-enabled.patch \
+        file://0069-policy-modules-services-oddjob-allow-oddjob_mkhomedi.patch \
+        file://0070-policy-modules-system-systemd-allow-systemd_generato.patch \
+        file://0071-policy-modules-system-unconfined-allow-firewalld_t-u.patch \
+        file://0072-policy-modules-services-chronyd-allow-chronyd_t-kern.patch \
+        file://0073-policy-modules-services-ssh-allow-sshd_t-kernel_t-sy.patch \
+        file://0074-policy-modules-services-ssh-allow-sshd_t-userdomain-.patch \
+        file://0075-policy-modules-services-dbus-allow-system_dbusd_t-un.patch \
+        file://0076-policy-modules-system-systemd-allow-systemd_logind_t.patch \
+        file://0077-policy-modules-kernel-files-add-files_delete_var_chr.patch \
         "
 
 S = "${WORKDIR}/refpolicy"

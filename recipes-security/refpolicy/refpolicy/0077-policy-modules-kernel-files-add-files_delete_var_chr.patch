@@ -1,0 +1,44 @@
+From a8379a82beb37fbe36775575b8d43d1281342bba Mon Sep 17 00:00:00 2001
+From: Clayton Casciato <ccasciato@21sw.us>
+Date: Mon, 12 May 2025 12:39:10 -0600
+Subject: [PATCH] files: add files_delete_var_chr_files interface
+
+Signed-off-by: Clayton Casciato <ccasciato@21sw.us>
+
+Upstream-Status: Backport [https://github.com/SELinuxProject/refpolicy/commit/605ee571a04d7db29f61dc086ad4675793d94864]
+
+Signed-off-by: Clayton Casciato <majortomtosourcecontrol@gmail.com>
+---
+ policy/modules/kernel/files.if | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/policy/modules/kernel/files.if b/policy/modules/kernel/files.if
+index 9ade962a9..7223210f4 100644
+--- a/policy/modules/kernel/files.if
++++ b/policy/modules/kernel/files.if
+@@ -6127,6 +6127,25 @@ interface(`files_manage_var_symlinks',`
+ 	manage_lnk_files_pattern($1, var_t, var_t)
+ ')
+ 
++########################################
++## <summary>
++##	Delete character device nodes in
++##	the var directory.
++## </summary>
++## <param name="domain">
++##	<summary>
++##	Domain allowed access.
++##	</summary>
++## </param>
++#
++interface(`files_delete_var_chr_files',`
++	gen_require(`
++		type var_t;
++	')
++
++	delete_chr_files_pattern($1, var_t, var_t)
++')
++
+ ########################################
+ ## <summary>
+ ##	Create objects in the /var directory
