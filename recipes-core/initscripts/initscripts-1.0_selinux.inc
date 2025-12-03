@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-do_install:append () {
+restore_context() {
 	cat <<-EOF >> ${D}${sysconfdir}/init.d/populate-volatile.sh
 touch /var/log/lastlog
 test ! -x /sbin/restorecon || /sbin/restorecon -iRF /var/volatile/ /var/lib /run \
@@ -9,3 +9,5 @@ EOF
 	sed -i '/mount -n -o remount,$rootmode/i\test ! -x /sbin/restorecon || /sbin/restorecon -iRF /run' \
 	    ${D}${sysconfdir}/init.d/checkroot.sh
 }
+
+do_install[postfuncs] += "${@'' if 'read-only-rootfs' in d.getVar('IMAGE_FEATURES') else 'restore_context'}"
