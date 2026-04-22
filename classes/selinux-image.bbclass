@@ -26,4 +26,6 @@ python selinux_setlabels_handler() {
 addhandler selinux_setlabels_handler
 selinux_setlabels_handler[eventmask] = "bb.event.RecipePreFinalise"
 
+IMAGE_CMD_TAR:append = " --selinux"
+
 inherit core-image
