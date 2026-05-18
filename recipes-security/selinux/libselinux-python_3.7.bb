@@ -47,7 +47,7 @@ do_compile() {
 do_install() {
     oe_runmake install-pywrap \
         DESTDIR=${D} \
-        PREFIX=${prefix}
+        PREFIX=${prefix} \
         PYLIBVER='python${PYTHON_BASEVERSION}' \
         PYTHONLIBDIR='${PYTHON_SITEPACKAGES_DIR}'
 
